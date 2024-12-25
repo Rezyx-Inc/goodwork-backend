@@ -20,7 +20,7 @@ router.get('/getRecruiters/:orgId', async (req, res) => {
             return res.status(200).send({success: false, message: "Organization not found."});
         }
 
-        res.status(200).send({success: true, message: org.recruiters});
+        res.status(200).send({success: true, message: "Recruiter(s) found.", data: { recruiters: org.recruiters } });
 
     } catch (err) {
 
@@ -46,7 +46,7 @@ router.post('/checkRecruiter', async (req, res) => {
             return res.status(200).send({success:false, message : "Organization not found."});
         }
 
-        res.status(200).send({success: true, message : org});
+        res.status(200).send({success: true, message : "Check done.", data: { org: org } });
 
     } catch (err) {
 
@@ -221,7 +221,7 @@ router.post('/assignUpNextRecruiter', async (req, res) => {
         await org.save();
 
         // i want to return it with the recruiter id
-        res.status(200).send({success: true, data: upNextRecruiter.id});
+        res.status(200).send({success: true, message: "Up next assignment done.", data: { id: upNextRecruiter.id } });
 
     } catch (err) {
 
@@ -272,10 +272,10 @@ router.post('/get-preferences', async (req, res) => {
         const org = await Organizations.findOne({ orgId: req.body.id });
 
         if (!org) {
-            return res.status(200).send({success: false, message: "Organization not found", data: {"requiredToSubmit":[],"requiredToApply":[]}});
+            return res.status(200).send({success: false, message: "Organization not found", data: { requiredToSubmit:[], requiredToApply:[] } });
         }
 
-        res.status(200).send({success:true, message : org.preferences});
+        res.status(200).send({success:true, message: "Found preferences.", data : { preferences: org.preferences } });
 
     } catch (err) {
 
