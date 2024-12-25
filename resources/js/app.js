@@ -8,7 +8,7 @@ require('./bootstrap');
 
 //window.Vue = require('vue');
 import * as Vue from 'vue';
-window.$ = window.jQuery = require('jquery');
+//window.$ = window.jQuery = require('jquery');
 
 /**
  * The following block of code may be used to automatically register your
