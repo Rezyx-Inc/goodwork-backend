@@ -104,3 +104,15 @@ module.exports.getNewJobId = async function (pool) {
     throw err;
   }
 }
+
+module.exports.checkIfSpreadsheetExists = async (auth, organizationId, google) => {
+
+  const drive = google.drive({ version: 'v3', headers: { Authorization: `Bearer ${auth}` } });
+
+  const response = await drive.files.list({
+    q: `mimeType='application/vnd.google-apps.spreadsheet' and name contains '${organizationId}'`,
+    fields: 'files(id, name)'
+  });
+
+  return response.data.files.length > 0 ? response.data.files[0] : null;
+};
