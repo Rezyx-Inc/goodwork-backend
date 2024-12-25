@@ -1,3 +1,12 @@
+/*
+  some notes
+  This script here is supposed to manage storage types, either disk (using path in docs.files model) or mongodb, or any other type of storage.
+  Each storage is yet to be defined, for now it is only mongodb, although a disk storage is already set by default by creating a directory for it since it will most likely be used very soon.
+
+  This script also acts as an entry point for integrations cron jobs
+
+*/
+
 const pm2 = require('pm2');
 var path = require("path");
 var cron = require('node-cron');
@@ -115,13 +124,3 @@ pm2.connect( async function(err) {
   }
 
 })
-
-
-/*
-  some notes
-  This script here is supposed to manage storage types, either disk (using path in docs.files model) or mongodb, or any other type of storage.
-  Each storage is yet to be defined, for now it is only mongodb, although a disk storage is already set by default by creating a directory for it since it will most likely be used very soon.
-
-  This script also acts as an entry point for integrations cron jobs
-
-*/
