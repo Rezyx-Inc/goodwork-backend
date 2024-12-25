@@ -278,7 +278,7 @@
                                                 <input type="text" name="password"
                                                     placeholder="Please enter your new password">
                                             </div> --}}
-                                            </div> --}}
+                                           {{-- </div> --}}
                                             {{-- Change 2FA --}}
                                             {{-- <div class="ss-form-group row col-11">
                                                 <label>Two-factor authentication (2FA)</label>
@@ -301,7 +301,7 @@
                                                     placeholder="Please enter your new phone number">
                                             </div>
                                             <span class="help-block-new_mobile"></span> --}}
-                                            <span class="help-block-new_mobile"></span> --}}
+                                            {{-- <span class="help-block-new_mobile"></span> --}} 
 
                                             {{-- <span class="help-block-validation"></span> --}}
 
