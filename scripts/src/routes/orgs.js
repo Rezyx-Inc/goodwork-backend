@@ -8,6 +8,7 @@ const {GlobalRuleFields} = require('../models/Orgs');
 router.get('/getRecruiters/:orgId', async (req, res) => {
 
     if (!Object.keys(req.body).length) {
+
         return res.status(200).send({success:false, message : "Empty request"});
     }
 
