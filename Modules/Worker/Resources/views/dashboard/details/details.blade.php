@@ -148,7 +148,7 @@
                                     </li>
                                     <li>
                                         <img width="50px" 
-                                            src="{{ $model->recruiter && $model->recruiter->image ? URL::asset('images/nurses/profile/' . $model->recruiter->image) : URL::asset('/frontend/img/profile-icon-img.png') }}" 
+                                            src="{{ $model->recruiter && $model->recruiter->image ? URL::asset('uploads/' . $model->recruiter->image) : URL::asset('/frontend/img/profile-icon-img.png') }}" 
                                             alt="Recruiter Image" loading="lazy" />{{ $model->recruiter->first_name }}
                                         {{ $model->recruiter->last_name }}</li>
                                 </ul>
