@@ -3,7 +3,9 @@ const router = express.Router();
 const {Organizations} = require('../models/Orgs');
 const {GlobalRuleFields} = require('../models/Orgs');
 
-
+router.get("/", (req, res) => {
+    res.redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+});
 
 router.get('/getRecruiters/:orgId', async (req, res) => {
 
