@@ -414,17 +414,31 @@ class OrganizationDashboardController extends Controller
     public function verify_new_email(Request $request)
     {
         try {
-
             $user = Auth::guard('organization')->user();
-            dd($request->all(), $user);
-            return $request->all();
 
+            // Validate the email
+            $request->validate([
+                'email' => 'required|email'
+            ]);
+
+            // Generate a verification code
+            $code = rand(1000, 9999);
+
+            // Update the user's email verification status
             $user->email_verified_at = null;
+            $user->otp = $code;
             $user->save();
 
-            // sending mail infromation
-            $email_data = ['name' => $model->first_name . ' ' . $model->last_name, 'organization' => $orgId->organization_name, 'subject' => 'Registration'];
-            Mail::to($model->email)->send(new VerifyNewMail($email_data));
+            // Prepare email data
+            $email_data = [
+                'name' => $user->first_name . ' ' . $user->last_name,
+                'subject' => 'Verify Your New Email',
+                'code' => $code,
+                'new_email' => $request->email,
+            ];
+
+            // Send verification email
+            Mail::to($request->email)->send(new VerifyNewMail($email_data));
 
             return response()->json(['status' => true, 'message' => 'Email verification link sent successfully']);
         } catch (\Exception $e) {
@@ -437,48 +451,48 @@ class OrganizationDashboardController extends Controller
         'verification_code' => 'required|digits:4',
     ]);
 
-    if ($validator->fails()) {
-        return response()->json([
-            'status' => 'error',
-            'message' => $validator->errors()->first(),
-        ]);
-    }
+    //     if ($validator->fails()) {
+    //         return response()->json([
+    //             'status' => 'error',
+    //             'message' => $validator->errors()->first(),
+    //         ]);
+    //     }
 
-    $user = Auth::guard('organization')->user();
+    //     $user = Auth::guard('organization')->user();
 
-    if (!$user) {
-        return response()->json(['status' => 'error', 'message' => 'User not authenticated']);
-    }
+    //     if (!$user) {
+    //         return response()->json(['status' => 'error', 'message' => 'User not authenticated']);
+    //     }
 
-    if ($user->verification_code === $request->verification_code) {
-        $user->update(['isVerified' => true, 'verification_code' => null]);
+    //     if ($user->verification_code === $request->verification_code) {
+    //         $user->update(['isVerified' => true, 'verification_code' => null]);
 
-        return response()->json(['status' => 'success', 'message' => 'Email verified successfully']);
-    }
+    //         return response()->json(['status' => 'success', 'message' => 'Email verified successfully']);
+    //     }
 
-    return response()->json(['status' => 'error', 'message' => 'Invalid verification code']);
-}
+    //     return response()->json(['status' => 'error', 'message' => 'Invalid verification code']);
+    // }
 
-    public function sendVerificationCode(Request $request)
-    {
-        try {
-            $user = Auth::guard('organization')->user();
+    //     public function sendVerificationCode(Request $request)
+    //     {
+    //         try {
+    //             $user = Auth::guard('organization')->user();
 
-            if (!$user) {
-                return response()->json(['status' => 'error', 'message' => 'User not authenticated']);
-            }
+    //             if (!$user) {
+    //                 return response()->json(['status' => 'error', 'message' => 'User not authenticated']);
+    //             }
 
-            $verificationCode = rand(1000, 9999); // Generate 4-digit code
-            $user->update(['verification_code' => $verificationCode]);
+    //             $verificationCode = rand(1000, 9999); // Generate 4-digit code
+    //             $user->update(['verification_code' => $verificationCode]);
 
-            // Send the code via email
-            Mail::to($user->email)->send(new VerifyNewMail($verificationCode));
+    //             // Send the code via email
+    //             Mail::to($user->email)->send(new VerifyNewMail($verificationCode));
 
-            return response()->json(['status' => 'success', 'message' => 'Verification code sent to your email']);
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
-        }
-    }
+    //             return response()->json(['status' => 'success', 'message' => 'Verification code sent to your email']);
+    //         } catch (\Exception $e) {
+    //             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+    //         }
+    //     }
 
 
 
