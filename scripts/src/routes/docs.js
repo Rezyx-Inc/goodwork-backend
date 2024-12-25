@@ -20,18 +20,18 @@ router.post("/add-docs", async (req, res) => {
     
     if (!Object.keys(req.body).length) {
 
-        return res.status(200).send({success:false, message:"Empty request"});
+        return res.status(200).send({ success:false, message:"Empty request" });
     }
 
     if (!req.body.workerId || !req.body.files) {
 
         if (!Array.isArray(req.body.files) || req.body.files.length == 0) {
 
-            return res.status(200).send({ success: false, message: "No file sent."});
+            return res.status(200).send({ success: false, message: "No file sent." });
 
         } else {
 
-            return res.status(200).send({success: false, message: "Missing parameters."});
+            return res.status(200).send({ success: false, message: "Missing parameters." });
         }
     }
 
@@ -44,14 +44,14 @@ router.post("/add-docs", async (req, res) => {
         if (!docs) {
 
             let doc = await Docs.create(req.body);
-            return res.status(200).json({ success: true , message: "Doc created."});
+            return res.status(200).json({ success: true , message: "Doc created." });
         }
 
         bsonId = docs._id;
     })
     .catch((e) => {
         console.log("Unexpected error", e);
-        res.status(200).send({success:false, message: e});
+        res.status(200).send({ success:false, message: e.message });
     });
 
     var files = req.body.files;
@@ -95,7 +95,7 @@ router.post("/add-docs", async (req, res) => {
             }else{
 
                 console.log("Unable to Update document.", e);
-                return res.status(200).send({success:false, message: e.message});
+                return res.status(200).send({ success:false, message: e.message });
             }
         }
     }
@@ -112,11 +112,11 @@ router.post("/get-docs", async (req, res) => {
 
     if (!Object.keys(req.body).length) {
 
-        return res.status(200).send({success:false, message: "Empty request"});
+        return res.status(200).send({ success:false, message: "Empty request" });
 
     } else if (!req.body.workerId) {
 
-        return res.status(200).send({success: false, message: "Missing parameters."});
+        return res.status(200).send({ success: false, message: "Missing parameters." });
     }
 
     let doc = await Docs.findOne({ workerId: req.body.workerId })
@@ -124,7 +124,7 @@ router.post("/get-docs", async (req, res) => {
 
             if (!docs) {
 
-                return res.status(200).send({success: false, message: "Document not found."});
+                return res.status(200).send({ success: false, message: "Document not found." });
             }
 
             let docsFiles = docs.files;
@@ -143,7 +143,7 @@ router.post("/get-docs", async (req, res) => {
         .catch((e) => {
 
             console.log("Unexpected error", e);
-            return res.status(200).send({success:false, message : "Unexpected error."});
+            return res.status(200).send({success:false, message : e.message });
         });
 });
 
@@ -157,7 +157,7 @@ router.get("/get-doc", async (req, res) => {
 
     if (!Object.keys(req.query).length) {
 
-        return res.status(200).send({success: false , message: "Empty request"});
+        return res.status(200).send({ success: false , message: "Empty request" });
     }
 
     try {
@@ -166,7 +166,7 @@ router.get("/get-doc", async (req, res) => {
 
         if (!doc) {
 
-            return res.status(200).send({success: false , message: "Document not found."});
+            return res.status(200).send({ success: false , message: "Document not found." });
         }
 
         for (let file of doc.files) {
@@ -207,12 +207,12 @@ router.get("/get-doc", async (req, res) => {
             }
         }
 
-        return res.status(200).send({success:false, message: "Document found but file not found."});
+        return res.status(200).send({ success:false, message: "Document found but file not found." });
 
     } catch (e) {
 
         console.log("Unexpected error", e);
-        return res.status(200).send({success:false, message: "Unexpected error."});
+        return res.status(200).send({ success:false, message: e.message });
     }
 });
 
@@ -226,7 +226,7 @@ router.get("/list-docs", async (req, res) => {
 
     if (!Object.keys(req.query).length) {
 
-        return res.status(200).send({success:false, message: "Empty request"});
+        return res.status(200).send({ success:false, message: "Empty request" });
     }
 
     let doc = await Docs.findOne({ workerId: req.query.workerId })
@@ -234,7 +234,7 @@ router.get("/list-docs", async (req, res) => {
 
             if (!docs) {
 
-                return res.status(200).send({success:false, message: "Document not found."});
+                return res.status(200).send({ success:false, message: "Document not found." });
             }
 
             var list = [];
@@ -262,12 +262,12 @@ router.get("/list-docs", async (req, res) => {
                 }
             }
 
-            return res.status(200).json({success:true, message: "Documents listed.", data : { list: list } });
+            return res.status(200).json({ success:true, message: "Documents listed.", data : { list: list } });
         })
         .catch((e) => {
 
             console.log("Unexpected error", e);
-            return res.status(200).send({success:false, message: "Unexpected error."});
+            return res.status(200).send({ success:false, message: e.message });
         });
 });
 
@@ -281,7 +281,7 @@ router.post("/del-doc", async (req, res) => {
 
     if (!Object.keys(req.body).length) {
 
-        return res.status(200).send({success:false, message: "Empty request"});
+        return res.status(200).send({ success:false, message: "Empty request" });
     }
 
     let doc = await Docs.findOne({ "files._id": req.body.bsonId })
@@ -289,7 +289,7 @@ router.post("/del-doc", async (req, res) => {
 
             if (!docs) {
 
-                return res.status(200).send({success:false, message: "Document not found."});
+                return res.status(200).send({ success:false, message: "Document not found." });
             }
 
             for (let [index, file] of docs.files.entries()) {
@@ -300,14 +300,14 @@ router.post("/del-doc", async (req, res) => {
                     docs.save()
                     .then((docs) => {
 
-                        return res.status(200).send({success:true, message: "OK"});
+                        return res.status(200).send({ success:true, message: "Document Deleted." });
                     })
                     .catch((e) => {
 
                         console.log("Unable to save document.", e);
                         return res
                             .status(200)
-                            .send({success:false, message: "Unable to save document."});
+                            .send({ success:false, message: "Unable to save document." });
                     });
                 }
             }
@@ -315,7 +315,7 @@ router.post("/del-doc", async (req, res) => {
         .catch((e) => {
 
             console.log("Unexpected error", e);
-            return res.status(200).send({success: true, message : "Unexpected error."});
+            return res.status(200).send({ success: true, message : e.message });
         });
 });
 
@@ -337,12 +337,12 @@ router.post("/del-docs", async (req, res) => {
 
             if (!docs) {
 
-                return res.status(200).send({success: false, message: "Document not found."});
+                return res.status(200).send({ success: false, message: "Document not found." });
             }
 
             if (docs.length > 1) {
 
-                return res.status(200).send({success: false, message: "Provide BSON IDs from a single user at the time."});
+                return res.status(200).send({ success: false, message: "Provide BSON IDs from a single user at the time." });
             }
 
             let filesFilter = docs.files.filter((file) => {
@@ -355,18 +355,18 @@ router.post("/del-docs", async (req, res) => {
             docs.save()
                 .then((docs) => {
 
-                    return res.status(200).send({success: true, message: "OK"});
+                    return res.status(200).send({ success: true, message: "Documents deleted." });
                 })
                 .catch((e) => {
 
                     console.log("Unable to save document.", e);
-                    return res.status(200).send({success: false, message: "Unable to save document."});
+                    return res.status(200).send({ success: false, message: "Unable to save document." });
                 });
         })
         .catch((e) => {
 
             console.log("Unexpected error", e);
-            return res.status(200).send({success: false, message: "Unexpected error."});
+            return res.status(200).send({ success: false, message: e.message });
         });
 });
 
