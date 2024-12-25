@@ -109,7 +109,7 @@ module.exports.insertJob = async function (orgaId, jobData) {
         jobData["Guaranteed Hrs/wk"],
         jobData["Hrs/Shift"],
         jobData["Shift/Wk"],
-        Number(jobData["Wks/Contract"]),
+        Number(jobData["Wks/Contract"]) || 0 ,
         moment(jobData["Start Date"], ["MM/DD/YYYY", "MM-DD-YYYY"]).format("YYYY-MM-DD"),
         moment(jobData["End Date"].replace(/[/-]/g, "-")).format("YYYY-MM-DD"),
         jobData["RTO"],

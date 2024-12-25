@@ -7,11 +7,41 @@ const axios = require('axios');
 const queries = require("../../mysql/sheet.js");
 
 
+async function processJobs(json) {
+
+    const OrgaId = "GWU000007";
+    let recruiterID = null;
+
+    try {
+        recruiterID = await axios.post("http://localhost:4545/organizations/assignUpNextRecruiter", { id: OrgaId });
+    } catch (error) {
+        console.error("Error fetching recruiter ID:", /*error*/);
+    }
+
+    if (recruiterID !== "Up next recruiter not found.") {
+        for (const job of json) {
+            try {
+                await queries.insertJob(OrgaId, job);
+
+                await queries.updateJobRecruiterID(job["Org Job Id"], recruiterID.data.data);
+
+            } catch (err) {
+                console.error(`Error in job with ID ${job["Org Job Id"]}:`, err);
+            }
+        }
+    } else {
+        console.log("No recruiter found for this organization");
+    }
+}
 
 // insert data from local data
 async function addJobsWithLocalData() {
 
-    const filePath = path.join(__dirname, "Test Jobs.csv");
+    // to test 
+    const xlsx_file = "yassine.xlsx"
+    const csv_file = "Test Jobs.csv"
+
+    const filePath = path.join(__dirname, xlsx_file);
 
     // Get the file extension and base filename
     const fileExtension = path.extname(filePath).toLowerCase();
@@ -25,14 +55,14 @@ async function addJobsWithLocalData() {
 
         // Convert CSV to JSON
         json = await csv().fromFile(filePath);
-        console.log("CSV converted to JSON:", json);
+        // console.log("CSV converted to JSON:", json);
 
     } else if (fileExtension === '.json') {
 
         // Read and parse the JSON file
         const fileContent = fs.readFileSync(filePath, 'utf8');
         json = JSON.parse(fileContent);
-        console.log("File is already JSON:", json);
+        // console.log("File is already JSON:", json);
 
     } else if (fileExtension === '.xlsx') {
 
@@ -41,7 +71,7 @@ async function addJobsWithLocalData() {
         const sheetName = workbook.SheetNames[0]; // Use the first sheet
         const worksheet = workbook.Sheets[sheetName];
         json = xlsx.utils.sheet_to_json(worksheet);
-        console.log("XLSX converted to JSON:", json);
+        // console.log("XLSX converted to JSON:", json);
 
     } else {
 
@@ -55,35 +85,19 @@ async function addJobsWithLocalData() {
     console.log(`Converted JSON saved to: ${outputFilePath}`);
 
 
-    const OrgaId = "GWU000007";
-    let recruiterID = null;
-
-    try {
-        recruiterID = await axios.post("http://localhost:4545/organizations/assignUpNextRecruiter", { id: OrgaId });
-    } catch (error) {
-        console.error("Error fetching recruiter ID:", /*error*/);
-    }
-
-    if (recruiterID !== "Up next recruiter not found.") {
-    for (const job of json) {
-        try {
-            await queries.insertJob(OrgaId, job);
-
-            await queries.updateJobRecruiterID(job["Org Job Id"], recruiterID.data.data);
-            
-        } catch (err) {
-            console.error(`Error in job with ID ${job["Org Job Id"]}:`, err);
-        }
-    }
-    } else {
-        console.log("No recruiter found for this organization");
-    }
+    // Process the jobs
+    await processJobs(json);
 
 }
 
 
 async function addJobsFromPublicSheet(url) {
     try {
+        // Modify the URL for raw data export
+        if (url.includes('/edit')) {
+            url = url.replace(/\/edit.*$/, '/export?format=csv');
+        }
+
         // Fetch the spreadsheet content
         const response = await axios.get(url, { responseType: 'arraybuffer' });
         const contentType = response.headers['content-type'];
@@ -93,10 +107,6 @@ async function addJobsFromPublicSheet(url) {
             // If the content is CSV
             const csvData = response.data.toString('utf8');
             json = await csv().fromString(csvData);
-        } else if (contentType.includes('application/json')) {
-            // If the content is JSON
-            const jsonData = response.data.toString('utf8');
-            json = JSON.parse(jsonData);
         } else if (contentType.includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')) {
             // If the content is an Excel sheet
             const workbook = xlsx.read(response.data, { type: 'buffer' });
@@ -107,34 +117,16 @@ async function addJobsFromPublicSheet(url) {
             throw new Error('Unsupported file format.');
         }
 
-        console.log("Data fetched and converted to JSON:", json);
+        // console.log("Data fetched and converted to JSON:", json);
 
         // Process the jobs
         await processJobs(json);
 
     } catch (error) {
-        console.error("Error fetching or processing data from public sheet:", error);
+        console.error("Error fetching or processing data from public sheet:", error.message);
     }
 }
 
-async function processJobs(json) {
-    const OrgaId = "GWU000007";
-    let recruiterID = null;
-
-    try {
-        recruiterID = await axios.post("http://localhost:4545/organizations/assignUpNextRecruiter", { id: OrgaId });
-    } catch (error) {
-        console.error("Error fetching recruiter ID:", /*error*/);
-    }
-
-    for (const job of json) {
-        try {
-            await queries.insertJob(OrgaId, job);
-        } catch (err) {
-            console.error(`Error in job with ID ${job["Org Job Id"]}:`, err);
-        }
-    }
-}
 
 
 // Function to add data to the Google Sheet

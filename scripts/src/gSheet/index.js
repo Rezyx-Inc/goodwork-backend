@@ -263,11 +263,11 @@ async function main() {
   try {
    
     //from local file
-    await addJobsWithLocalData()
+    //await addJobsWithLocalData()
 
     //from public sheet
-    const url = "https://docs.google.com/spreadsheets/d/1IWv1voLSTzIRWZkBj4wB0PyYAQdU0-nOQ4Y28wY9xC4/export?format=csv";
-    //await addJobsFromPublicSheet(url)
+    const url = "https://docs.google.com/spreadsheets/d/19V064m9xqBDoRNH9zRRfP4XIOUHpBIgRHs2XwiJWC5Q/edit?gid=0#gid=0";
+    await addJobsFromPublicSheet(url)
     
   } catch (err) {
     console.error('Error in main execution:', err.message);
