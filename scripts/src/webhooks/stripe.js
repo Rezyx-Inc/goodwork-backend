@@ -26,7 +26,7 @@ app.post(
             );
         } catch (err) {
             response.status(400).send(`Webhook Error: ${err.message}`);
-            report(error, 'stripe.js', "Webhook Error");
+            await report('error', 'stripe.js', "Webhook Error");
             return;
         }
 
@@ -77,7 +77,7 @@ app.post(
                 await queries.setWorkerPaymentStatus(offerId);
             } catch (e) {
                 console.log(e);
-                report('error', 'stripe.js', "Worker Transfer Failed " + workerId);
+                await report('error', 'stripe.js', "Worker Transfer Failed " + workerId);
                 return false;
             }
         }
