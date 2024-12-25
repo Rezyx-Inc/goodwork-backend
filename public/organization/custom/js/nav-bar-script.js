@@ -1,5 +1,5 @@
 // Graph
-var ctxnew = document.getElementById("myChart");
+/*var ctxnew = document.getElementById("myChart");
 
 var myChart = new Chart(ctxnew, {
   type: "line",
@@ -38,4 +38,4 @@ var myChart = new Chart(ctxnew, {
       display: false,
     },
   },
-});
+});*/
