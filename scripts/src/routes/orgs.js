@@ -172,8 +172,7 @@ router.post('/manualRecruiterAssignment/:orgId', async (req, res) => {
         console.error("Unable to save organization.", e);
         res.status(200).send({ success: false, message: "unable to manually assign recruiter." });
     }
-}
-);
+});
 
 
 router.post('/assignUpNextRecruiter', async (req, res) => {
