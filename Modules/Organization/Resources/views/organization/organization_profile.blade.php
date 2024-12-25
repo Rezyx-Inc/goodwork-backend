@@ -13,15 +13,6 @@
                     <div class="col-lg-5">
                         <div class="ss-my-profil-div">
                             <h2>My <span class="ss-pink-color">Profile</span></h2>
-                            {{-- <div class="ss-my-profil-img-div">
-                                <img src="{{ URL::asset('frontend/img/account-img.png') }}"
-                                    onerror="this.onerror=null;this.src='{{ USER_IMG }}';" id="preview"
-                                    width="112px" height="112px" style="object-fit: cover;" />
-                                <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
-                                <p>{{ $user->id }}</p>
-                                <p>{{ $user->about_me }}</p>
-                            </div> --}}
-
                             <div class="ss-my-profil-img-div">
                                 <div class="profile-pic">
                                     <label class="-label" for="file">
@@ -30,22 +21,17 @@
                                     </label>
                                     <input id="file" type="file" onchange="loadFile(event)"/>
                                     <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200" onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';"/>
-                                  </div>
+                                </div>
                                 <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
                                 <p><b>{{ $user->organization_name }}</b></p>
                                 <p>{{ $user->id }}</p>
                                 <p>{{ $user->about_me }}</p>
                             </div>
 
-
-
-
                             <div class="ss-my-presnl-btn-mn">
-
                                 <div class="ss-my-prsnl-wrapper">
                                     <div class="ss-my-prosnl-rdio-btn">
-                                        <input type="radio" name="select" id="option-1" checked
-                                            onclick="ProfileIinformationDisplay()" />
+                                        <input type="radio" name="select" id="option-1" checked onclick="ProfileIinformationDisplay()" />
                                         <label for="option-1" class="option option-1">
                                             <div class="dot"></div>
                                             <ul>
@@ -134,16 +120,18 @@
                         </div>
                     </div>
 
-                    {{-- ---------------------------------------------------------- Profile settings Form ---------------------------------------------------------- --}}
+                    {{-- ----------------------------------------- Profile settings Form ----------------------------------------- --}}
                     <div class="col-lg-7 bodyAll profile_setting">
                         <div class="ss-pers-info-form-mn-dv">
 
                             <div class="ss-persnl-frm-hed">
                                 {{-- Basic Information Or Professional Information Or Document management --}}
-                                <p id="information_type"><span><img
-                                            src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Basic
-                                    Information</p>
-
+                                <p id="information_type">
+                                    <span>
+                                        <img src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" />
+                                    </span>
+                                    Basic Information
+                                </p>
                             </div>
                             <div class="form-outer">
                                 <form method="post" action="{{ route('update-organization-profile') }}">
@@ -206,8 +194,8 @@
                             </div>
                         </div>
                     </div>
-                    {{-- ---------------------------------------------------------- End Profile settings Form ---------------------------------------------------------- --}}
-                    {{-- ---------------------------------------------------------- Account settings Form ---------------------------------------------------------- --}}
+                    {{-- -------------------------------- End Profile settings Form -------------------------------- --}}
+                    {{-- -------------------------------- Account settings Form -------------------------------- --}}
 
                     <div class="col-lg-7 bodyAll account_setting d-none">
                         <div class="ss-pers-info-form-mn-dv">
@@ -277,8 +265,8 @@
 
                         </div>
                     </div>
-                    {{-- ---------------------------------------------------------- End Account settings  ---------------------------------------------------------- --}}
-                    {{-- ----------------------------------------------------------  Bonus Area -------------------------------------------------------------------- --}}
+                    {{-- -------------------------------- End Account settings  -------------------------------- --}}
+                    {{-- --------------------------------  Bonus Area -------------------------------- --}}
                     <div class="col-lg-7 bodyAll bonus_transfers d-none">
                         <div class="ss-pers-info-form-mn-dv" style="width: 100% !important">
                             <div class="ss-persnl-frm-hed">
@@ -306,8 +294,8 @@
 
                         </div>
                     </div>
-                    {{-- ----------------------------------------------------------  End Bonus Area -------------------------------------------------------------------- --}}
-                    {{-- ----------------------------------------------------------  Support Area -------------------------------------------------------------------- --}}
+                    {{-- --------------------------------  End Bonus Area -------------------------------- --}}
+                    {{-- --------------------------------  Support Area -------------------------------- --}}
                     <div class="col-lg-7 bodyAll support_info d-none">
                         <div class="ss-pers-info-form-mn-dv" style="width:100%">
                             <div class="ss-persnl-frm-hed">
@@ -317,56 +305,16 @@
                                 </h1>
                             </div>
                             <div class="form-outer">
-                                {{-- <form method="post">
-                                    @csrf
-
-                                    <div class="page slide-page">
-                                        <div class="row justify-content-center">
-
-                                            <div class="ss-form-group col-11">
-                                                <label>Subject</label>
-                                                <select name="support_subject" id="support_subject">
-                                                    <option value="">Please select your issue</option>
-                                                    <option value="login">Login</option>
-                                                    <option value="payment">Payment</option>
-                                                    <option value="other">Other</option>
-                                                </select>
-
-                                            </div>
-                                            <span class="help-block-support_subject"></span>
-
-                                            <div class="ss-form-group col-11">
-                                                <label>Issue</label>
-                                                <textarea style="width: 100%; height:40vh;" name="support_subject_issue" placeholder="Tell us how can we help."></textarea>
-                                            </div>
-                                            <span class="help-block-support_subject_issue"></span>
-
-                                            <div
-                                                class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                                <button type="text" class=" col-12 ss-prsnl-save-btn"
-                                                    id="SaveSupportTicket">
-
-                                                    <span id="loading" class="d-none">
-                                                        <span id="loadSpan" class="spinner-border spinner-border-sm"
-                                                            role="status" aria-hidden="true"></span>
-                                                        Loading...
-                                                    </span>
-                                                    <span id="send_ticket">Send now</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form> --}}
                                 <p style="
                                 margin-top: 20px;
-                            ">Please contact us at <span style="font-weight: 500">support@goodwork.com</span></p>
+                            ">Please contact us at <span style="font-weight: 500">support@goodwork.world</span></p>
                             </div>
 
                         </div>
                     </div>
-                    {{-- ------------------------------------------------------- End Support Area -------------------------------------------------------------------- --}}
+                    {{-- -------------------------------- End Support Area -------------------------------- --}}
 
-                    {{-- ------------------------------------------------------- Disable account area -------------------------------------------------------------------- --}}
+                    {{-- -------------------------------- Disable account area -------------------------------- --}}
                     <div class="col-lg-7 bodyAll disable_account d-none">
                         <div class="ss-pers-info-form-mn-dv">
                             <div class="ss-persnl-frm-hed">
@@ -404,7 +352,7 @@
 
                         </div>
                     </div>
-                    {{-- ------------------------------------------------------- Disable account area -------------------------------------------------------------------- --}}
+                    {{-- -------------------------------- Disable account area -------------------------------- --}}
                 </div>
     </main>
 @stop
