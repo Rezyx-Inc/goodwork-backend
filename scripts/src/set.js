@@ -5,7 +5,7 @@ const axios = require('axios');
 
 module.exports.report = async (type, indicator, msg) => {
 
-  if(process.env.ENABLE_REPORTER){
+  if(process.env.ENABLE_REPORTER == true){
     type.toLowerCase() == "error" ? type=":rotating_light: ERROR :rotating_light:": type.toUpperCase();
     type.toLowerCase() == "notification" ? type=":loudspeaker: notification :loudspeaker:": type.toUpperCase();
 
