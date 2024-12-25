@@ -6,7 +6,7 @@ var fs = require("fs");
 var path = require("path");
 
 router.get("/", (req, res) => {
-    res.send("Docs page");
+    res.redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 });
 
 /*
@@ -51,7 +51,7 @@ router.post("/add-docs", async (req, res) => {
     })
     .catch((e) => {
         console.log("Unexpected error", e);
-        res.status(200).send({success:false. message: e});
+        res.status(200).send({success:false, message: e});
     });
 
     var files = req.body.files;
@@ -143,7 +143,7 @@ router.post("/get-docs", async (req, res) => {
         .catch((e) => {
 
             console.log("Unexpected error", e);
-            return res.status(200).send({success:false. message : "Unexpected error."});
+            return res.status(200).send({success:false, message : "Unexpected error."});
         });
 });
 
