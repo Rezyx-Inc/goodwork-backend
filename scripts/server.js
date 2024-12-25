@@ -47,13 +47,13 @@ app.get("/", (req, res) => {
 //Connect to DB
 mongoose
   .connect(process.env.MONGODB_FILES_URI)
-  .then(async () => {
+  .then(() => {
 
     console.log("SERVER START : Connected to MongoDB");
     createGlobalRuleFields();
 
   })
-  .catch((error) => {
+  .catch(async (error) => {
 
     console.error("Error connecting to MongoDB:", error);
     await report('error', 'server.js', 'MongoDB connection : ' + error);
