@@ -233,52 +233,36 @@
                                             {{-- Email Information --}}
                                             <div class="ss-form-group col-9">
                                                 <label>New Email</label>
-                                                <input type="text" name="email" id="email"
+                                                <input type="text" name="email"
                                                     placeholder="Please enter your new Email">
                                             </div>
-                                            <span class="help-block-email"></span>
-                                            <span class="help-block-email"></span>
                                             <button type="text" class="mt-3 col-11 w-50 ss-prsnl-save-btn rounded-5"
                                                 id="sendOTPforVerifyEmail">
                                                 Send OTP
                                             </button>
+                                            <span class="help-block-email"></span>
 
                                             {{-- OTP for new mail --}}
-                                            <form method="post" action="{{ route('new-otp') }}" id="otp-form"
-                                                class="">
-                                                <ul class="ss-otp-v-ul mt-4">
-                                                    <li><input type="text" name="otp1"
-                                                            oninput='digitValidate(this)' onkeyup='tabChange(1)'
-                                                            maxlength=1></li>
-                                                    <li><input type="text" name="otp2"
-                                                            oninput='digitValidate(this)' onkeyup='tabChange(2)'
-                                                            maxlength=1></li>
-                                                    <li><input type="text" name="otp3"
-                                                            oninput='digitValidate(this)' onkeyup='tabChange(3)'
-                                                            maxlength=1></li>
-                                                    <li><input type="text" name="otp4"
-                                                            oninput='digitValidate(this)'onkeyup='tabChange(4)'
-                                                            maxlength=1></li>
-                                                </ul>
-                                                <span class="help-block-otp"></span>
-                                                <div
-                                                    class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                                    <button type="submit" class=" col-12 ss-prsnl-save-btn"> Save
-                                                    </button>
-                                                </div>
-                                                <span class="help-block-validation"></span>
-                                            </form>
+                                            <div class="ss-form-group col-7 d-flex align-items-center">
+                                                <label class="me-3">OTP:</label>
+                                                <input type="text" name="otp"
+                                                    placeholder="Please check your email for OTP">
+                                            </div>
+                                            <span class="help-block-otp"></span>
 
                                             {{-- <input class="help-verif-otp" type="d-none"> --}}
 
                                             {{-- Change Password --}}
-                                            {{-- <div class="ss-form-group col-11">
-                                            {{-- <div class="ss-form-group col-11">
+                                            <div class="ss-form-group col-11">
                                                 <label>New Password</label>
                                                 <input type="text" name="password"
                                                     placeholder="Please enter your new password">
+<<<<<<< HEAD
                                             </div> --}}
                                            {{-- </div> --}}
+=======
+                                            </div>
+>>>>>>> parent of da617c55 (add new mail ( without otp veriy ))
                                             {{-- Change 2FA --}}
                                             {{-- <div class="ss-form-group row col-11">
                                                 <label>Two-factor authentication (2FA)</label>
@@ -294,16 +278,19 @@
                                                 </div>
                                             </div> --}}
                                             {{-- Change Phone Number --}}
-                                            {{-- <div class="ss-form-group col-11">
-                                            {{-- <div class="ss-form-group col-11">
+                                            <div class="ss-form-group col-11">
                                                 <label>New Phone Number</label>
                                                 <input id="new_contact_number" type="text" name="new_mobile"
                                                     placeholder="Please enter your new phone number">
                                             </div>
+<<<<<<< HEAD
                                             <span class="help-block-new_mobile"></span> --}}
                                             {{-- <span class="help-block-new_mobile"></span> --}} 
+=======
+                                            <span class="help-block-new_mobile"></span>
+>>>>>>> parent of da617c55 (add new mail ( without otp veriy ))
 
-                                            {{-- <span class="help-block-validation"></span> --}}
+                                            <span class="help-block-validation"></span>
 
                                             {{-- Email Information --}}
                                             {{-- <div class="ss-form-group col-11">
@@ -314,12 +301,12 @@
                                             <span class="help-block-email"></span>
                                             <span class="help-block-validation"></span> --}}
                                             {{-- Skip && Save --}}
-                                            {{-- <div
+                                            <div
                                                 class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
                                                 <button type="text" class=" col-12 ss-prsnl-save-btn"
                                                     id="SaveAccountInformation"> Save
                                                 </button>
-                                            </div> --}}
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
@@ -461,29 +448,6 @@
 @stop
 
 @section('js')
-
-    <script type="text/javascript">
-        let digitValidate = function(ele) {
-            // console.log(ele.value);
-            ele.value = ele.value.replace(/[^0-9]/g, '');
-        };
-        let tabChange = function(val) {
-            let ele = document.querySelectorAll("input");
-            if (ele[val - 1].value != "") {
-                if (val < 4) {
-                    ele[val].focus();
-                }
-                // else{
-                //     auto_submit();
-                // }
-            } else if (ele[val - 1].value == "") {
-                ele[val - 2].focus();
-            }
-            auto_submit();
-        };
-    </script>
-
-
     <script type="text/javascript">
         // loding states cities docs on page load
 
@@ -944,39 +908,76 @@
         function validateEmail() {
             $('.help-block-email').text('');
             let isValid = true;
-            const email = document.getElementById('email');
-            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            inputs = [email];
 
+            //Email validation
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailRegex.test(email.value)) {
                 $('.help-block-email').text('Please enter a valid email');
                 $('.help-block-email').addClass('text-danger');
                 isValid = false;
+            } else {
+                notie.alert({
+                    type: 'success',
+                    text: '<i class="fa fa-check"></i> OTP sent to your email, please check your email',
+                    time: 8
+                });
+
+                // Send OTP to email
+                $.ajax({
+                    url: '/organization/verify-new-email',
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    data: email.value,
+                    success: function(resp) {
+                        console.log(resp);
+                        if (resp.status) {
+                            notie.alert({
+                                type: 'success',
+                                text: '<i class="fa fa-check"></i> ' + resp.message,
+                                time: 5
+                            });
+
+                        } else {
+                            notie.alert({
+                                type: 'error',
+                                text: '<i class="fa fa-check"></i> ' + resp.message,
+                                time: 5
+                            });
+                        }
+                    },
+                    error: function(resp) {
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-check"></i> Please try again later !',
+                            time: 5
+                        });
+                    }
+                });
+                isValid = false;
+                return isValid;
             }
 
-            return isValid;
         }
-
 
         // send OTP for email verification
         const sendOTPforVerifyEmail = document.getElementById('sendOTPforVerifyEmail');
-
-        sendOTPforVerifyEmail.addEventListener('click', function(event) {
+        sendOTPforVerifyEmail.addEventListener('click', function() {
             event.preventDefault();
-
             if (!validateEmail()) {
                 return;
             }
-
             // Send OTP to email
             $.ajax({
-                url: "{{ route('verify-new-email') }}", // Use Laravel's route helper
+                url: "{{ route('verify-new-email') }}",
                 type: 'POST',
                 data: {
                     email: document.getElementById('email').value,
-                    _token: "{{ csrf_token() }}" // Include CSRF token
+                    _token: "{{ csrf_token() }}"
                 },
                 success: function(resp) {
-                    if (resp.status) { // Expecting boolean 'status' from response
+                    if (resp.status == 'success') {
                         notie.alert({
                             type: 'success',
                             text: '<i class="fa fa-check"></i> ' + resp.message,
@@ -993,14 +994,13 @@
                 error: function(resp) {
                     notie.alert({
                         type: 'error',
-                        text: '<i class="fa fa-check"></i> ' + (resp.responseJSON?.message ||
-                            'An unexpected error occurred'),
+                        text: '<i class="fa fa-check"></i> ' + resp.message,
                         time: 5
                     });
                 }
             });
-        });
 
+        });
 
         // send request to update here
         const SaveAccountInformation = document.getElementById('SaveAccountInformation');
@@ -1139,159 +1139,8 @@
 
         };
     </script>
-<script>
-    let digitValidate = function(ele) {
-        // console.log(ele.value);
-        ele.value = ele.value.replace(/[^0-9]/g, '');
-    };
-
-    let tabChange = function(val) {
-        let ele = document.querySelectorAll("input");
-        if (ele[val - 1].value != "") {
-            if (val < 4) {
-                ele[val].focus();
-            }
-            // else{
-            //     auto_submit();
-            // }
-        } else if (ele[val - 1].value == "") {
-            ele[val - 2].focus();
-        }
-        auto_submit();
-    };
-
-    let auto_submit = function() {
-        if (
-            $("input").filter(function() {
-                return $.trim($(this).val()).length == 0
-            }).length == 0
-        ) {
-            submit_form('otp-form');
-            $('#loadingVerify').removeClass('d-none');
-            $('#verify').addClass('d-none');
-        }
-    }
-
-
-    var timer2 = $('#otp-timer').val();
-    var interval = setInterval(function() {
-
-        console.log(timer2, 'timer2');
-        var timer = timer2.split(':');
-        //by parsing integer, I avoid all extra string processing
-        var minutes = parseInt(timer[0], 10);
-        console.log(minutes, 'minutes');
-        var seconds = parseInt(timer[1], 10);
-        console.log(seconds, 'seconds');
-        --seconds;
-        minutes = (seconds < 0) ? --minutes : minutes;
-        if (minutes < 0 || (minutes == 0 && seconds < 0)) clearInterval(interval);
-        seconds = (seconds < 0) ? 59 : seconds;
-        seconds = (seconds < 10) ? '0' + seconds : seconds;
-        //minutes = (minutes < 10) ?  minutes : minutes;
-        $('.countdown').html(minutes + ':' + seconds);
-        timer2 = minutes + ':' + seconds;
-        if (minutes == 0 && seconds == 0) {
-            $('.countdown').html('Reloading...');
-            resend_otp();
-            clearInterval(interval);
-            return;
-        }
-        if (minutes < 4) {
-            document.getElementById("resendotp").removeAttribute("disabled");
-            document.getElementById('resendotp').setAttribute('onclick', 'resend_otp()');
-        }
-    }, 1000);
-</script>
-
-<script>
-    function resend_otp() {
-        ajaxindicatorstart();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: full_path + "organization/resend-otp",
-            type: 'GET',
-            dataType: 'json',
-            // processData: false,
-            // contentType: false,
-            success: function(data) {
-                ajaxindicatorstop();
-                if (data.success) {
-                    notie.alert({
-                        type: 'success',
-                        text: '<i class="fa fa-check"></i> ' + data.msg,
-                        time: 5
-                    });
-                    setTimeout(() => {
-                        location.reload();
-                    }, 3000);
-                } else {
-                    location.reload();
-                }
-            },
-            error: function(resp) {
-                console.log(resp);
-                ajaxindicatorstop();
-                notie.alert({
-                    type: 'error',
-                    text: '<i class="fa fa-check"></i> Something went wrong, try later.',
-                    time: 5
-                });
-            }
-        });
-    }
-</script>
 
 @stop
-<style>
-    /* OTP page css  */
-    .inputOtp input {
-        display: inline-block !important;
-        width: 50px !important;
-        height: 50px !important;
-        text-align: center !important;
-        border: 1px solid #DADADA !important;
-        border-radius: 4px !important;
-        font-size: 28px !important;
-        margin: 15px 7px !important;
-    }
-
-    .inputOtp input:focus {
-        outline: none;
-    }
-</style>
-<style>
-    #loadingVerify,
-    #verify,
-    #loadSpanVerify {
-        color: #fff;
-    }
-
-    ul.ss-otp-v-ul {
-        list-style: none;
-        width: 100%;
-    }
-
-    ul.ss-otp-v-ul li {
-        width: 10%;
-        margin: 0 7px;
-        display: inline-block;
-    }
-
-    ul.ss-otp-v-ul input {
-        border: 2px solid #111011;
-        box-shadow: 8px 8px 0px 0px #403B4BE5;
-        padding: 12px 15px;
-        border-radius: 10px;
-        width: 100%;
-    }
-</style>
-
-
 
 <style>
     .add {
@@ -1712,50 +1561,4 @@
         padding: .2em;
         height: 2em;
     }
-</style>
-<style>
-    /* OTP page css  */
-    .inputOtp input {
-        display: inline-block !important;
-        width: 50px !important;
-        height: 50px !important;
-        text-align: center !important;
-        border: 1px solid #DADADA !important;
-        border-radius: 4px !important;
-        font-size: 28px !important;
-        margin: 15px 7px !important;
-    }
-
-    .inputOtp input:focus {
-        outline: none;
-    }
-</style>
-
-<style>
-    #loadingVerify,
-    #verify,
-    #loadSpanVerify {
-        color: #fff;
-    }
-
-    ul.ss-otp-v-ul {
-
-list-style: none;
-width: 100%;
-}
-
-ul.ss-otp-v-ul li {
-width: 10%;
-margin: 0 7px;
-display: inline-block;
-}
-
-ul.ss-otp-v-ul input {
-border: 2px solid #111011;
-box-shadow: 8px 8px 0px 0px #403B4BE5;
-padding: 12px 15px;
-border-radius: 10px;
-width: 100%;
-}
-
 </style>

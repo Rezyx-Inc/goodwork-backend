@@ -29,8 +29,7 @@ class VerifyNewMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mail-templates.verifyNewMail')
-        ->with(['data' => $this->data]);
+        return $this->view('mail-templates.verifyNewMail',$this->data);
     }
 }
 

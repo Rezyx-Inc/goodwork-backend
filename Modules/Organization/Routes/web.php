@@ -63,8 +63,6 @@ Route::prefix('organization')->group(function () {
 
         // new post route for verify the new email
         Route::post('verify-new-email', ['uses' => 'OrganizationDashboardController@verify_new_email', 'as' => 'verify-new-email']);
-        Route::post('new-otp', ['uses' => 'OrganizationDashboardController@submit_otp_new_mail', 'as' => 'new-otp']);
-
 
         // Route::post('send-verification-code',['uses' => 'OrganizationDashboardController@sendVerificationCode', 'as' => 'send-verification-code']);
         // Route::post('verify-email',['uses' => 'OrganizationDashboardController@verifyEmail', 'as' => 'verify-email']);
