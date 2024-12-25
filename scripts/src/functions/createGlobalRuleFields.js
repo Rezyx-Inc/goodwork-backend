@@ -20,7 +20,7 @@ const createGlobalRuleFields = async () => {
     } catch (err) {
 
         console.error("Error while checking or creating global rule fields", err);
-        report('error', 'createGlobalRuleFields.js', err);
+        await report('error', 'createGlobalRuleFields.js', err.message);
 
     }
 };
