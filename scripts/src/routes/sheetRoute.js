@@ -130,12 +130,12 @@ router.post('/createSheet', async (req, res) => {
 
     });
 
-    return res.status(200).json({ success: true, message: 'Spreadsheet created and initialized successfully' , data : { link: `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit?gid=0#gid=0`, spreadsheetId } });
+    return res.status(200).json({ success: true, message: 'Spreadsheet created and initialized successfully' , data : { link: `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit?gid=0#gid=0`, spreadsheetId: spreadsheetId } });
 
   } catch (error) {
 
     console.error('Error creating spreadsheet:', error);
-    report('error', 'sheetRoute.js',`Unable to create a spreadsheet for ${organizationName}-${organizationId} : ${error.message}`);
+    await report('error', 'sheetRoute.js',`Unable to create a spreadsheet for ${organizationName}-${organizationId} : ${error.message}`);
 
     return res.status(200).json({ success: false, message: 'Internal server error' });
 
