@@ -334,7 +334,6 @@ router.post("/del-docs", async (req, res) => {
                 return res.status(200).send({success: false, message: "Document not found."});
             }
 
-            // Need to rework this
             if (docs.length > 1) {
 
                 return res.status(200).send({success: false, message: "Provide BSON IDs from a single user at the time."});
