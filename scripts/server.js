@@ -47,7 +47,7 @@ app.get("/", (req, res) => {
 //Connect to DB
 mongoose
   .connect(process.env.MONGODB_FILES_URI)
-  .then(() => {
+  .then(async () => {
 
     console.log("SERVER START : Connected to MongoDB");
     createGlobalRuleFields();
@@ -56,7 +56,7 @@ mongoose
   .catch((error) => {
 
     console.error("Error connecting to MongoDB:", error);
-    report('error', 'server.js', 'MongoDB connection : ' + error);
+    await report('error', 'server.js', 'MongoDB connection : ' + error);
 
   });
 
@@ -65,5 +65,5 @@ app.listen(process.env.FILE_API_PORT);
 // catches uncaught exceptions
 process.on("uncaughtException", async function (ercc) {
   console.log(ercc);
-  report('error', 'server.js', "Unexpected Server exit | uncaughtException");
+  await report('error', 'server.js', "Unexpected Server exit | uncaughtException");
 });
