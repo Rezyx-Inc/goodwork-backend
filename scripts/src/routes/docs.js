@@ -138,7 +138,7 @@ router.post("/get-docs", async (req, res) => {
                 }
             }
 
-            return res.status(200).send({success:true, message: docs});
+            return res.status(200).send({ success:true, message: "Documents found.", data: { docs: docs } });
         })
         .catch((e) => {
 
@@ -180,10 +180,13 @@ router.get("/get-doc", async (req, res) => {
 
                     return res.status(200).json({
                         success:true,
-                        name: file.name,
-                        content: {
-                            data: `${base64Content}`,
-                        },
+                        message: "Document found.",
+                        data: {
+                            name: file.name,
+                            content: {
+                                data: `${base64Content}`,
+                            }
+                        }
                     });
 
                 }else{
@@ -192,10 +195,13 @@ router.get("/get-doc", async (req, res) => {
 
                     return res.status(200).json({
                         success:true,
-                        name: file.name,
-                        content: {
-                            data: `${base64Content}`,
-                        },
+                        message: "Document found.",
+                        data: {
+                            name: file.name,
+                            content: {
+                                data: `${base64Content}`,
+                            }
+                        }
                     });
                 }
             }
@@ -256,7 +262,7 @@ router.get("/list-docs", async (req, res) => {
                 }
             }
 
-            return res.status(200).json({success:true, message : list});
+            return res.status(200).json({success:true, message: "Documents listed.", data : { list: list } });
         })
         .catch((e) => {
 
