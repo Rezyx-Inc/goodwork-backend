@@ -24,7 +24,9 @@
 </head>
 
 <body>
-    <script>$(document).ready(function() {
+    <script type="module">
+
+    $(document).ready(function() {
         $.ajaxSetup({
             xhrFields: {
                 withCredentials: true
@@ -39,6 +41,7 @@
     });</script>
 
     <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <header>
         @include('organization::partials.sidebar')
@@ -57,14 +60,8 @@
     <script type="text/javascript" src="{{URL::asset('organization/custom/js/nav-bar-script.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('frontend/custom/js/profile.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('frontend/custom/js/script.js')}}"></script>
-    <script type="text/javascript">
-</script>
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-    @yield('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    @yield('js')
     <script>$(document).ready(function() {
         $.ajaxSetup({
             xhrFields: {
