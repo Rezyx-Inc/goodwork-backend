@@ -12,7 +12,7 @@ module.exports.validateFields = async function (jobData) {
       'preferred_work_location': value => typeof value === 'string' || value === null,
       'description': value => typeof value === 'string' || value === null,
       'terms': value => typeof value === 'string' || value === null,
-      'start_date': value => value === null || !isNaN(Date.parse(value)),
+      'start_date': value => value === null || !Number.isNaN(Date.parse(value)),
       'hours_shift': value => Number.isInteger(value) || value === null,
       'hours_per_week': value => Number.isInteger(value) || value === null,
       'preferred_experience': value => Number.isInteger(value) || value === null,
