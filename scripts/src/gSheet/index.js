@@ -8,6 +8,7 @@ const { exit } = require('process');
 const { deleteAllSpreadsheets, deleteSpreadsheetById, addDataToSpreadsheet } = require('./crud/crud.js');
 const csv = require('csvtojson');
 const queries = require("../mysql/sheet.js");
+const { addJobsWithLocalData , addJobsFromPublicSheet } = require('./funcs/functionsGsheet.js');
 
 const axios = require('axios');
 const { authorize } = require('./services/authService');
@@ -260,31 +261,45 @@ async function processAllSpreadsheets(auth) {
 
 async function main() {
   try {
-    const auth = await authorize();
+   
+    //from local file
+    await addJobsWithLocalData()
 
-    //await processAllSpreadsheets(auth.credentials.access_token);
-
-    await getDataAndSaveAsJson()
-
-    const id_for_add = "1IWv1voLSTzIRWZkBj4wB0PyYAQdU0-nOQ4Y28wY9xC4"
-    //await addDataToSpreadsheet(auth.credentials.access_token, id_for_add);
-
-    //await deleteAllSpreadsheets(auth.credentials.access_token);
-
-    const idd_for_delete = "1YsIGVl2l19r_j-bFkm7aWSnUNZXPf19HWcoBHO_xqc4"
-    //await deleteSpreadsheetById(auth.credentials.access_token, idd_for_delete);
-
-    const liste_id_to_delete = [
-      "1Z6WN5LHXTtX7S9XCBhwP8etxtNi3PEIqgWiuOEiZgIs",
-      "19l41OgezIeArouJIpJSlmmFtV7JxMFlDa2KDY2_VA60",
-      "1YsIGVl2l19r_j-bFkm7aWSnUNZXPf19HWcoBHO_xqc4",
-      "1kY6Xp8TydZevV39p3BoQZ7r8tw4tDZs-CFzHJKVLKa4",
-    ]
-    //liste_id_to_delete.forEach(id => { deleteSpreadsheetById(auth.credentials.access_token, id);});
+    //from public sheet
+    const url = "https://docs.google.com/spreadsheets/d/1IWv1voLSTzIRWZkBj4wB0PyYAQdU0-nOQ4Y28wY9xC4/export?format=csv";
+    //await addJobsFromPublicSheet(url)
+    
   } catch (err) {
     console.error('Error in main execution:', err.message);
   }
 }
+// async function main() {
+//   try {
+//     const auth = await authorize();
+
+//     //await processAllSpreadsheets(auth.credentials.access_token);
+
+//     await getDataAndSaveAsJson()
+
+//     const id_for_add = "1IWv1voLSTzIRWZkBj4wB0PyYAQdU0-nOQ4Y28wY9xC4"
+//     //await addDataToSpreadsheet(auth.credentials.access_token, id_for_add);
+
+//     //await deleteAllSpreadsheets(auth.credentials.access_token);
+
+//     const idd_for_delete = "1YsIGVl2l19r_j-bFkm7aWSnUNZXPf19HWcoBHO_xqc4"
+//     //await deleteSpreadsheetById(auth.credentials.access_token, idd_for_delete);
+
+//     const liste_id_to_delete = [
+//       "1Z6WN5LHXTtX7S9XCBhwP8etxtNi3PEIqgWiuOEiZgIs",
+//       "19l41OgezIeArouJIpJSlmmFtV7JxMFlDa2KDY2_VA60",
+//       "1YsIGVl2l19r_j-bFkm7aWSnUNZXPf19HWcoBHO_xqc4",
+//       "1kY6Xp8TydZevV39p3BoQZ7r8tw4tDZs-CFzHJKVLKa4",
+//     ]
+//     //liste_id_to_delete.forEach(id => { deleteSpreadsheetById(auth.credentials.access_token, id);});
+//   } catch (err) {
+//     console.error('Error in main execution:', err.message);
+//   }
+// }
 
 main().catch(console.error);
 

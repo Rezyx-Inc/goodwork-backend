@@ -379,6 +379,7 @@ module.exports.updateJobRecruiterID = async function (jobdbId, recruiter_id) {
       [recruiter_id, jobdbId]
     );
 
+    console.log(`Job ${jobdbId} assigned to recruiter ${recruiter_id}`);
     return result;
 
   } catch (err) {
