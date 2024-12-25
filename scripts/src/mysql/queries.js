@@ -1,6 +1,6 @@
 const { pool } = require("./mysql.js");
 
-module.exports.getStripeId = async function (stripeId) {
+module.exports.getStripeId = async function (userId) {
 
     const [result, fields] = await pool.query(
         "SELECT stripeAccountId FROM users WHERE id=?;",
