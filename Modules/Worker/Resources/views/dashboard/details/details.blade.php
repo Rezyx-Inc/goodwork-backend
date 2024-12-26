@@ -688,7 +688,7 @@
                                     @endif
 
                                     @if (isset($model->on_call_rate))
-                                        <ul id="worker_on_call_rate"
+                                        <ul id="worker_on_call"
                                             class="ss-s-jb-apl-on-inf-txt-ul on_call_rate_item {{ $matches['on_call_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                             <li>
                                                 <span>On Call Rate</span>
@@ -698,9 +698,9 @@
                                                 <span>Your On Call Rate</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="What rate is fair?" data-placeholder="What rate is fair?"
-                                                    data-name="worker_on_call_rate" onclick="open_modal(this)">
-                                                    @if (!!$nurse->worker_on_call_rate)
-                                                        {{ $nurse->worker_on_call_rate }}
+                                                    data-name="worker_on_call" onclick="open_modal(this)">
+                                                    @if (!!$nurse->worker_on_call)
+                                                        {{ $nurse->worker_on_call }}
                                                     @else
                                                         What rate is fair?
                                                     @endif
@@ -1533,7 +1533,7 @@
                                     @endif
 
                                     @if (isset($model->on_call))
-                                        <ul id="worker_on_call"
+                                        <ul id="worker_on_call_check"
                                             class="ss-s-jb-apl-on-inf-txt-ul on_call_item {{ $matches['on_call']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                             <li>
                                                 <span>On call</span>
@@ -1542,10 +1542,10 @@
                                             <li>
                                                 <span>Your On call</span>
                                                 <p class="profile_info_text" data-target="binary"
-                                                    data-title="Will you do call?" data-name="worker_on_call"
+                                                    data-title="Will you do call?" data-name="worker_on_call_check"
                                                     onclick="open_modal(this)">
-                                                    @if (!!$nurse->worker_on_call)
-                                                        {{ $nurse->worker_on_call }}
+                                                    @if (!!$nurse->worker_on_call_check)
+                                                        {{ $nurse->worker_on_call_check }}
                                                     @else
                                                         Will you do
                                                         call?
