@@ -1022,7 +1022,7 @@
         }
 
         async function get_all_files_displayName_by_type(type) {
-            let files = worker_files.filter(file => file.type == type);
+            let files = worker_files?.filter(file => file.type == type);
             let displayNames = files.map(file => file.displayName);
             worker_files_displayname_by_type = displayNames;
             return displayNames;
