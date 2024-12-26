@@ -6,6 +6,93 @@ const xlsx = require('xlsx');
 const axios = require('axios');
 const queries = require("../../mysql/sheet.js");
 
+async function authorize() {
+    const auth = new google.auth.GoogleAuth({
+        keyFile: path.resolve(__dirname, 'service-account.json'),
+        scopes: ['https://www.googleapis.com/auth/drive.readonly', 'https://www.googleapis.com/auth/spreadsheets.readonly']
+    });
+    return await auth.getClient();
+}
+
+async function listSpreadsheets(auth) {
+    const drive = google.drive({ version: 'v3', auth });
+    try {
+        const res = await drive.files.list({
+            q: "mimeType='application/vnd.google-apps.spreadsheet'", // Filter for Google Sheets
+            fields: 'files(id, name)',
+        });
+        return res.data.files;
+    } catch (error) {
+        console.error("Error listing spreadsheets:", error.message);
+        return [];
+    }
+}
+
+async function fetchSpreadsheetData(auth, spreadsheetId) {
+    const sheets = google.sheets({ version: 'v4', auth });
+    try {
+        const response = await sheets.spreadsheets.values.get({
+            spreadsheetId,
+            range: 'Sheet1', // Adjust if the data is on a different sheet or range
+        });
+        const rows = response.data.values;
+
+        if (!rows || rows.length === 0) {
+            console.log(`No data found in spreadsheet ${spreadsheetId}`);
+            return [];
+        }
+
+        // Convert rows to JSON (assuming the first row contains headers)
+        const headers = rows[0];
+        const json = rows.slice(1).map(row => {
+            return headers.reduce((acc, header, idx) => {
+                acc[header] = row[idx] || null;
+                return acc;
+            }, {});
+        });
+
+        return json;
+    } catch (error) {
+        console.error(`Error fetching data from spreadsheet ${spreadsheetId}:`, error.message);
+        return [];
+    }
+}
+
+async function addJobsFromLinkWithAuth() {
+    try {
+        const auth = await authorize();
+
+        // List all spreadsheets linked to the service account
+        const spreadsheets = await listSpreadsheets(auth);
+        console.log("========", spreadsheets);
+        if (spreadsheets.length === 0) {
+            console.log("No spreadsheets found.");
+            return;
+        }
+
+        for (const { id, name } of spreadsheets) {
+            console.log(`Processing spreadsheet: ${name} (ID: ${id})`);
+
+            // Fetch data from each spreadsheet
+            const jobData = await fetchSpreadsheetData(auth, id);
+            if (jobData.length > 0) {
+                console.log(`Inserting jobs from spreadsheet: ${name}`);
+                await processJobs(jobData);
+            } else {
+                console.log(`No valid job data in spreadsheet: ${name}`);
+            }
+        }
+    } catch (error) {
+        console.error("Error in addJobsFromLinkWithAuth:", error.message);
+    }
+}
+
+
+
+
+
+
+
 
 async function processJobs(json) {
 
@@ -34,7 +121,7 @@ async function processJobs(json) {
     }
 }
 
-// insert data from local data
+// insert jobs from local data
 async function addJobsWithLocalData() {
 
     // to test 
@@ -91,6 +178,7 @@ async function addJobsWithLocalData() {
 }
 
 
+// insert jobs from from a public Google Sheet
 async function addJobsFromPublicSheet(url) {
     try {
         // Modify the URL for raw data export
@@ -129,26 +217,7 @@ async function addJobsFromPublicSheet(url) {
 
 
 
-// Function to add data to the Google Sheet
-// async function addDataToSpreadsheet(auth, idForAdd) {
-//     try {
-//         const sheets = google.sheets({ version: 'v4', headers: { Authorization: `Bearer ${auth}` } });
 
 
 
-//         const res = await sheets.spreadsheets.values.append({
-//             spreadsheetId: idForAdd,
-//             range: `Sheet1!A:BH`, // Adjust this range based on the number of fields
-//             valueInputOption: 'RAW',
-//             insertDataOption: 'INSERT_ROWS',
-//             resource,
-//         });
-
-//         console.log(`${res.data.updates.updatedCells} cells appended.`);
-//     } catch (err) {
-//         console.error('Error adding data:', err.message);
-//     }
-// }
-
-
-module.exports = { addJobsWithLocalData, addJobsFromPublicSheet };
+module.exports = { addJobsWithLocalData, addJobsFromPublicSheet, addJobsFromLinkWithAuth };
