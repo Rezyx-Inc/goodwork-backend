@@ -109,7 +109,7 @@ module.exports.insertJob = async function (orgaId, jobData) {
         jobData["Guaranteed Hrs/wk"],
         jobData["Hrs/Shift"],
         jobData["Shift/Wk"],
-        Number(jobData["Wks/Contract"]) || 0 ,
+        Number(jobData["Wks/Contract"]) || 0,
         moment(jobData["Start Date"], ["MM/DD/YYYY", "MM-DD-YYYY"]).format("YYYY-MM-DD"),
         moment(jobData["End Date"].replace(/[/-]/g, "-")).format("YYYY-MM-DD"),
         jobData["RTO"],
@@ -155,7 +155,7 @@ module.exports.insertJob = async function (orgaId, jobData) {
         emptyValue,
         emptyValue,
         emptyValue,
-        jobData["Resume"]== "TRUE" ? "1" : "0",
+        jobData["Resume"] == "TRUE" ? "1" : "0",
 
       ]
     );
@@ -373,7 +373,7 @@ module.exports.deleteJob = async function (orgaId, jobId) {
 
 module.exports.updateJobRecruiterID = async function (jobdbId, recruiter_id) {
   try {
-    
+
     const [result] = await pool.query(
       `UPDATE jobs SET recruiter_id = ? WHERE job_id = ?`,
       [recruiter_id, jobdbId]
@@ -386,7 +386,19 @@ module.exports.updateJobRecruiterID = async function (jobdbId, recruiter_id) {
     console.error('Error updating job:', err.message);
     throw err;
   }
-  
-}
 
+};
+
+
+// delete all jobs from jobs table 
+module.exports.deleteAllJobs = async function () {
+  try {
+    const [result] = await pool.query(`DELETE FROM jobs`);
+    console.log('All jobs deleted successfully');
+    return result;
+  } catch (err) {
+    console.error('Error deleting all jobs:', err.message);
+    throw err;
+  }
+};
 

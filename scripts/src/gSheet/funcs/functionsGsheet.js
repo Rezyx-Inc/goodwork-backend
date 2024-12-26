@@ -6,6 +6,37 @@ const xlsx = require('xlsx');
 const axios = require('axios');
 const queries = require("../../mysql/sheet.js");
 
+// precess jobs
+async function processJobs(json) {
+
+    const OrgaId = "GWU000007";
+    let recruiterID = null;
+
+    try {
+        recruiterID = await axios.post("http://localhost:4545/organizations/assignUpNextRecruiter", { id: OrgaId });
+    } catch (error) {
+        console.error("Error fetching recruiter ID:", /*error*/);
+    }
+
+    if (recruiterID !== "Up next recruiter not found.") {
+        for (const job of json) {
+            try {
+                await queries.insertJob(OrgaId, job);
+
+                await queries.updateJobRecruiterID(job["Org Job Id"], recruiterID.data.data);
+
+            } catch (err) {
+                console.error(`Error in job with ID ${job["Org Job Id"]}:`, err);
+            }
+        }
+    } else {
+        console.log("No recruiter found for this organization");
+    }
+}
+
+//----------------------------------------------------------------------------------
+
+// addJobsFromLinkWithAuth function 
 async function authorize() {
     const auth = new google.auth.GoogleAuth({
         keyFile: path.resolve(__dirname, 'service-account.json'),
@@ -87,39 +118,8 @@ async function addJobsFromLinkWithAuth() {
     }
 }
 
+//----------------------------------------------------------------------------------
 
-
-
-
-
-
-
-async function processJobs(json) {
-
-    const OrgaId = "GWU000007";
-    let recruiterID = null;
-
-    try {
-        recruiterID = await axios.post("http://localhost:4545/organizations/assignUpNextRecruiter", { id: OrgaId });
-    } catch (error) {
-        console.error("Error fetching recruiter ID:", /*error*/);
-    }
-
-    if (recruiterID !== "Up next recruiter not found.") {
-        for (const job of json) {
-            try {
-                await queries.insertJob(OrgaId, job);
-
-                await queries.updateJobRecruiterID(job["Org Job Id"], recruiterID.data.data);
-
-            } catch (err) {
-                console.error(`Error in job with ID ${job["Org Job Id"]}:`, err);
-            }
-        }
-    } else {
-        console.log("No recruiter found for this organization");
-    }
-}
 
 // insert jobs from local data
 async function addJobsWithLocalData() {
@@ -177,6 +177,7 @@ async function addJobsWithLocalData() {
 
 }
 
+//----------------------------------------------------------------------------------
 
 // insert jobs from from a public Google Sheet
 async function addJobsFromPublicSheet(url) {
@@ -215,9 +216,17 @@ async function addJobsFromPublicSheet(url) {
     }
 }
 
+//----------------------------------------------------------------------------------
+// delete all jobs from the database
+async function deleteAllJobs() {
+    try {
+            await queries.deleteAllJobs()
+    } catch (error) {
+        console.error('Error deleting all jobs:', error.message);
+    }
+}
 
 
 
 
-
-module.exports = { addJobsWithLocalData, addJobsFromPublicSheet, addJobsFromLinkWithAuth };
+module.exports = { addJobsWithLocalData, addJobsFromPublicSheet, addJobsFromLinkWithAuth , deleteAllJobs};

@@ -9,7 +9,7 @@ const { exit } = require('process');
 const { deleteAllSpreadsheets, deleteSpreadsheetById, addDataToSpreadsheet } = require('./crud/crud.js');
 const csv = require('csvtojson');
 const queries = require("../mysql/sheet.js");
-const { addJobsWithLocalData , addJobsFromPublicSheet , addJobsFromLinkWithAuth } = require('./funcs/functionsGsheet.js');
+const { addJobsWithLocalData, addJobsFromPublicSheet, addJobsFromLinkWithAuth , deleteAllJobs} = require('./funcs/functionsGsheet.js');
 
 const axios = require('axios');
 // const { authorize } = require('./services/authService');
@@ -263,7 +263,7 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
         recruiterID = await axios.post("http://localhost:4545/organizations/assignUpNextRecruiter", { id: OrgaId });
         recruiterID = recruiterID.data;
 
-        if(recruiterID.success){
+        if (recruiterID.success) {
 
           await queries.insertJob(OrgaId, job);
 
@@ -275,7 +275,7 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
         console.error(`Error in job with ID ${job["Org Job Id"]}:`, err);
       }
     }
-    
+
   } catch (err) {
     console.error('Error fetching or saving data:', err);
   }
@@ -341,19 +341,19 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
 
 async function main() {
   try {
-   
+
     //from local file
     //await addJobsWithLocalData()
 
     //from public sheet
     const url = "https://docs.google.com/spreadsheets/d/19V064m9xqBDoRNH9zRRfP4XIOUHpBIgRHs2XwiJWC5Q/edit?gid=0#gid=0";
-    //await addJobsFromPublicSheet(url)
+    await addJobsFromPublicSheet(url)
 
     //from auth sheet
-    //const auth = await authorize();
-    //console.log(auth);
-    
-    await addJobsFromLinkWithAuth();
+    //await addJobsFromLinkWithAuth();
+
+    // delete all jobs
+    //await deleteAllJobs();
     
   } catch (err) {
     console.error('Error in main execution:', err.message);
