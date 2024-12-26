@@ -270,14 +270,14 @@
     <span class="help-block-worker_overtime"></span>
     {{-- End worker_overtime  --}}
 
-    {{-- worker_on_call --}}
+    {{-- worker_on_call_rate --}}
     <div class="ss-form-group">
         <label>Min On Call $/Hr</label>
-        <input id="worker_on_call" type="number" name="worker_on_call" placeholder="Minimun hourly rate for On Call?"
-            value="{{ $formatAmount($worker->worker_on_call) }}">
+        <input id="worker_on_call_rate" type="number" name="worker_on_call_rate" placeholder="Minimun hourly rate for On Call?"
+            value="{{ $formatAmount($worker->worker_on_call_rate) }}">
     </div>
-    <span class="help-block-worker_on_call"></span>
-    {{-- End worker_on_call  --}}
+    <span class="help-block-worker_on_call_rate"></span>
+    {{-- End worker_on_call_rate  --}}
 
     {{-- worker_call_back --}}
     <div class="ss-form-group">
