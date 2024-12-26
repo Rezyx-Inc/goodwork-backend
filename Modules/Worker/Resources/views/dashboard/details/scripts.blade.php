@@ -934,7 +934,7 @@
             let text = element.data('title');
             // console.log("*****************************element", element, "type", type, " =>text : ", text);
             if (worker_files.length > 0) {
-                text = worker_files.length + ' Files Uploaded';
+                text = worker_files.length + ' File(s) Uploaded';
             }
             element.html(text);
         }
