@@ -1802,12 +1802,16 @@ class WorkerController extends Controller
             
             $offer = Offer::where('id', $offer_id)->first();
 
+            $action  = '' ;
+
             if(OffersLogs::where('original_offer_id', $offer_id)->exists()){
                 
                 $offerLog = OffersLogs::where('original_offer_id', $offer_id)->first();
                 $offerLog->update([
                     'details' => json_encode($diff),
                 ]);
+
+                $action = 'has sent you a counter offer' ;
                 
             }else{
                 OffersLogs::create([
@@ -1818,6 +1822,8 @@ class WorkerController extends Controller
                     'details' => json_encode($diff),
                     'status' => 'Counter Offer'
                 ]);
+
+                $action = 'has sent you an offer' ;
             }
 
 
@@ -1832,6 +1838,16 @@ class WorkerController extends Controller
                 $receiver = $offer->recruiter_id;
                 $job_name = Job::where('id', $jobid)->first()->job_name;
                 event(new NotificationOffer('Offered', false, $time, $receiver, $worker_id, $full_name, $jobid, $job_name, $offer_id));
+
+                $message = $full_name . ' ' . $action;
+                $idOrganization = $offer->organization_id;
+                $idWorker = $worker->id;
+                $recruiter_id = $offer->recruiter_id;
+                $role = 'ADMIN';
+                $type = 'text';
+                $fileName = null;
+                $time = now()->toDateTimeString();
+                event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
 
                 return response()->json([
                     'status' => 'success',
@@ -1896,6 +1912,7 @@ class WorkerController extends Controller
 
     public function AcceptOrRejectJobOffer(Request $request)
     {
+       
         try {
             $user = Auth::guard('frontend')->user();
             $worker_id = $user->nurse->id;
@@ -1910,6 +1927,18 @@ class WorkerController extends Controller
                     'message' => $validator->errors()->first(),
                 ];
             } else {
+
+                $offer = Offer::where('id', $request->id)->first();
+                $time = now()->toDateTimeString();
+                $action = $request->type == 'rejectcounter' ? 'Rejected' : 'Accepted';
+                $message = $full_name . ' has ' . $action . ' the job offer';
+                $idOrganization = $offer->organization_id;
+                $idWorker = $user->id;
+                $recruiter_id = $offer->recruiter_id;
+                $role = 'ADMIN';
+                $type = 'text';
+                $fileName = null;
+
                 if ($request->type == 'rejectcounter') {
                     $update_array['is_counter'] = '0';
                     $update_array['is_draft'] = '0';
@@ -1929,18 +1958,17 @@ class WorkerController extends Controller
                         $receiver = $offer->worker_user_id;
                         $job_name = Job::where('id', $jobid)->first()->job_name;
 
+                        event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
 
-                        event(new NotificationOffer('Rejected', false, $time, $receiver, $worker_id, $full_name, $jobid, $job_name, $id));
+                        //event(new NotificationOffer('Rejected', false, $time, $receiver, $worker_id, $full_name, $jobid, $job_name, $id));
                     }
-                } elseif ($request->type == 'offersend') {
+                } else if ($request->type == 'offersend') {
                     $update_array['is_counter'] = '0';
                     $update_array['is_draft'] = '0';
                     $update_array['status'] = 'Onboarding';
-                    $job = Offer::find($request->id);
-                    if ($job) {
-                        $job->update($update_array);
-                    }
-
+                  
+                    $offer_updated = $offer->update($update_array);
+                    
                     $data = [
                         'offerId' => $request->id,
                         'amount' => '1',
@@ -1948,14 +1976,12 @@ class WorkerController extends Controller
                         'fullName' => $user->first_name . ' ' . $user->last_name,
                     ];
 
-                    ;
-
                     $responseData = [];
-                    if ($job) {
-                        $responseData = [
-                            'status' => 'success',
-                            'message' => $responseInvoice->json()['message'],
-                        ];
+                    if ($offer_updated) {
+                        // $responseData = [
+                        //     'status' => 'success',
+                        //     'message' => $responseInvoice->json()['message'],
+                        // ];
                         $offer = Offer::where('id', $request->id)->first();
                         $id = $request->id;
                         $jobid = $offer->job_id;
@@ -1963,8 +1989,8 @@ class WorkerController extends Controller
                         $receiver = $offer->worker_user_id;
                         $job_name = Job::where('id', $jobid)->first()->job_name;
 
-
-                        event(new NotificationOffer('Offered', false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $id));
+                        event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
+                        //event(new NotificationOffer('Offered', false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $id));
 
                     }
                 }
