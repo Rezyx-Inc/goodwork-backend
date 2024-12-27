@@ -1385,17 +1385,33 @@ class WorkerController extends Controller
     public function listDocs(Request $request)
     {
         try {
-            $workerId = $request->WorkerId;
-            //return response()->json(['workerId' => $workerId]);
+            // validate WorkerId
+            $validator = Validator::make($request->all(), [
+                'WorkerId' => 'required|exists:nurses,id'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
+            }
+
+            $workerId = $request->input('WorkerId');
 
             $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/list-docs', ['workerId' => $workerId]);
-            if ($response->successful()) {
-                return $response->body();
-            } else {
-                return response()->json(['success' => false], $response->status());
+
+            $body = json_decode($response->body());
+
+            if( $body->success)
+            {
+                return json_encode($body->data->list);
+                // return response()->json(['success' => true, 'data' => $body->data->list]);
+            }else{
+                return response()->json(['success' => false, 'message' => $body->message], $response->status());
             }
-        } catch (\Exception $e) {
+           
+        }catch(\Exception $e){
+
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
+           
         }
     }
 
