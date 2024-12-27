@@ -280,43 +280,34 @@ router.get("/list-docs", async (req, res) => {
 router.post("/del-doc", async (req, res) => {
 
     if (!Object.keys(req.body).length) {
-
-        return res.status(200).send({ success:false, message: "Empty request" });
+        return res.status(400).send({ success: false, message: "Empty request" });
     }
 
-    let doc = await Docs.findOne({ "files._id": req.body.bsonId })
-        .then((docs) => {
+    try {
+        const docs = await Docs.findOne({ "files._id": req.body.bsonId });
 
-            if (!docs) {
+        if (!docs) {
+            return res.status(404).send({ success: false, message: "Document not found." });
+        }
 
-                return res.status(200).send({ success:false, message: "Document not found." });
-            }
+        // Find the index of the file to delete
+        const fileIndex = docs.files.findIndex(file => file._id == req.body.bsonId);
 
-            for (let [index, file] of docs.files.entries()) {
-                if (file._id == req.body.bsonId) {
+        if (fileIndex === -1) {
+            return res.status(404).send({ success: false, message: "File not found in document." });
+        }
 
-                    docs.files.splice(index, 1);
+        // Remove the file
+        docs.files.splice(fileIndex, 1);
 
-                    docs.save()
-                    .then((docs) => {
+        await docs.save();
 
-                        return res.status(200).send({ success:true, message: "Document Deleted." });
-                    })
-                    .catch((e) => {
+        return res.status(200).send({ success: true, message: "Document deleted." });
 
-                        console.log("Unable to save document.", e);
-                        return res
-                            .status(200)
-                            .send({ success:false, message: "Unable to save document." });
-                    });
-                }
-            }
-        })
-        .catch((e) => {
-
-            console.log("Unexpected error", e);
-            return res.status(200).send({ success: true, message : e.message });
-        });
+    } catch (e) {
+        // console.log("Unexpected error", e);
+        return res.status(500).send({ success: false, message : e.message });
+    }
 });
 
 /*
