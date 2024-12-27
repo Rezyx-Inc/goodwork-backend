@@ -1360,22 +1360,27 @@ class WorkerController extends Controller
 
         try {
             $body = $request->getContent();
-            $bodyArray = json_decode($body, true);
 
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
             ])->withBody($body, 'application/json')->post('http://localhost:' . config('app.file_api_port') . '/documents/add-docs');
-            return $response;
-            if ($response->successful()) {
+            
+            $body = json_decode($response->body());
+
+            if ($response->successful() && $body->success) {
+                
                 return response()->json([
                     'ok' => true,
                     'message' => 'Files uploaded successfully',
                 ]);
+
             } else {
+
                 return response()->json([
                     'ok' => false,
-                    'message' => $response->body(),
+                    'message' => $body->message,
                 ], $response->status());
+                
             }
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
