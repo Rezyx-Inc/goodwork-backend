@@ -160,7 +160,7 @@ class WorkerController extends Controller
                 ]);
                 $requiredFields = $requiredFields->json();
 
-                if (isset($requiredFields[0]) && isset($requiredFields[0]['preferences']['requiredToApply'])) {
+                if ($requiredFields['success'] && isset($requiredFields[0]) && isset($requiredFields[0]['preferences']['requiredToApply'])) {
 
                     $requiredFieldsToApply = $requiredFields[0]['preferences']['requiredToApply'];
                     $data['requiredFieldsToApply'] = $requiredFieldsToApply;
@@ -172,7 +172,7 @@ class WorkerController extends Controller
                     'id' => $organization_id,
                 ]);
                 $requiredFields = $requiredFields->json();
-                if (isset($requiredFields['requiredToApply'])) {
+                if ($requiredFields['success'] && isset($requiredFields['requiredToApply'])) {
                     $requiredFieldsToApply = $requiredFields['requiredToApply'];
                     $data['requiredFieldsToApply'] = $requiredFieldsToApply;
                 }
