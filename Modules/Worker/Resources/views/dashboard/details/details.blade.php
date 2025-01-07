@@ -383,9 +383,18 @@
                                             </li>
                                             <li>
                                                 <span>Your Facility State</span>
-                                                <p class="profile_info_text" data-target="state"
+                                                {{-- <p class="profile_info_text" data-target="state"
                                                     data-title="States you'd like to work?" data-filter="State"
                                                     data-name="state" onclick="open_multiselect_modal(this)">
+                                                    @if (!!$nurse->state)
+                                                        {{  truncateText($nurse->state) }}
+                                                    @else
+                                                        States you'd like to work?
+                                                    @endif
+                                                </p> --}}
+                                                <p class="profile_info_text" data-target="dropdown"
+                                                    data-title="States you'd like to work?" data-filter="State"
+                                                    data-name="state" onclick="open_modal(this)">
                                                     @if (!!$nurse->state)
                                                         {{  truncateText($nurse->state) }}
                                                     @else
@@ -405,7 +414,7 @@
                                             </li>
                                             <li>
                                                 <span>Your Facility City</span>
-                                                <p class="profile_info_text" data-target="city"
+                                                {{-- <p class="profile_info_text" data-target="city"
                                                     data-title="Cities you'd like to work?" data-filter="City"
                                                     data-name="city" onclick="open_multiselect_modal(this)">
                                                     @if (!!$nurse->city)
@@ -413,8 +422,16 @@
                                                     @else
                                                         Do you want to work here ?
                                                     @endif
+                                                </p> --}}
+                                                <p class="profile_info_text" data-target="dropdown"
+                                                    data-title="Cities you'd like to work?" data-filter="City"
+                                                    data-name="city" onclick="open_modal(this)">
+                                                    @if (!!$nurse->city)
+                                                        {{ $nurse->city }}
+                                                    @else
+                                                        Do you want to work here ?
+                                                    @endif
                                                 </p>
-
                                             </li>
                                         </ul>
                                     @endif

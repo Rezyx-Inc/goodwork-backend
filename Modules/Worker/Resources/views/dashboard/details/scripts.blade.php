@@ -527,12 +527,12 @@
                         match = true;
                     }
                     break;
-                case 'worker_facility_state':
+                case 'state':
                     if (job['job_state'] == InsertedValue) {
                         match = true;
                     }
                     break;
-                case 'worker_facility_city':
+                case 'city':
                     if (job['job_city'] == InsertedValue) {
                         match = true;
                     }
@@ -763,6 +763,7 @@
                     ...dataToSend,
                     ...data
                 };
+                console.log(" data to append  : ", data);
             }
 
 
@@ -801,13 +802,15 @@
 
             // matching job / worker infromation
 
+            console.log(inputName, matchWithWorker(inputName, dataToSend[inputName]));
             if (matchWithWorker(inputName, dataToSend[inputName]) != undefined) {
                 if (matchWithWorker(inputName, dataToSend[inputName])) {
                     let areaDiv = document.getElementById(inputName);
                     areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
-                    areaDiv.classList.add('ss-s-jb-apl-bg-blue');
+                    areaDiv.classList.add('ss-s-jb-apl-bg-blue');   
                 } else {
                     let areaDiv = document.getElementById(inputName);
+                    console.log("--------------------", inputName);
                     areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
                     areaDiv.classList.add('ss-s-jb-apl-bg-pink');
                 }
