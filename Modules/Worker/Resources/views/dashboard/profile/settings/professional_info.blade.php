@@ -112,7 +112,7 @@
     {{-- State Information --}}
     <div class="ss-form-group">
    
-        @include('worker::components.custom_multiple_select_input', [
+        {{-- @include('worker::components.custom_multiple_select_input', [
             'id' => 'state',
             'label' => 'States',
             'placeholder' => "States you will work in?",
@@ -120,26 +120,43 @@
             'options' => $allKeywords['State'],
             'option_attribute' => 'title',
             'selected' => old('state', $worker->state),
-        ])
+        ]) --}}
+         
+        <label for="state">State</label>
 
+        <select name="state" onchange="get_cities(this)">
+            <option value="">Select a state</option>
+            @foreach ($states as $v)
+            <option value="{{$v->name}}" data-id="{{$v->id}}" {{ ($v->name == $worker->state) ? 'selected': ''}}>{{$v->name}}</option>
+            @endforeach
+        </select>
+        <span class="help-block-state"></span>
     </div>
-    <span class="help-block-state"></span>
 
 
     {{-- city --}}
 
     <div class="ss-form-group">
  
-        @include('worker::components.custom_multiple_select_input', [
+        {{-- @include('worker::components.custom_multiple_select_input', [
             'id' => 'city',
             'label' => 'Cities',
             'placeholder' => "Cities you will work in?",
             'name' => 'city',
-            'options' => $allKeywords['City'],
+            'options' => [],
             'option_attribute' => 'title',
             'selected' => old('city', $worker->city),
-        ])
+        ]) --}}
+        
+        <label for="city">City</label>
 
+        <select name="city" id="city">
+            @if(!empty($worker->city))
+            <option value="{{$worker->city}}" selected>{{$worker->city}}</option>
+            @else
+            <option value="">Select a state first</option>
+            @endif
+        </select>
         <span class="help-block-city"></span>
     </div>
     {{-- End city  --}}
