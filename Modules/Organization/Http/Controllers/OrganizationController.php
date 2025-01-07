@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\register;
 use App\Mail\RegisterRecruiter;
+use App\Mail\VerifyNewEmail;
 
 
 class OrganizationController extends Controller
@@ -1623,6 +1624,87 @@ public function recruiters_management()
             return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
 
         }
+    }
+
+
+
+    // Send OTP to the user's new email
+    public function sendOtp(Request $request)
+    {
+        try {
+        
+            $user = Auth::guard('organization')->user();
+        
+            // Validate the email
+            $request->validate([
+                'email' => 'required|email'
+            ]);
+        
+            // Generate a verification code
+            $code = rand(1000, 9999);
+        
+            // Update the user's email verification status
+            $user->email_verified_at = null;
+            $user->otp = $code;
+            $user->save();
+        
+            // Prepare email data
+            $email_data = [
+                'name' => $user->first_name . ' ' . $user->last_name,
+                'subject' => 'Verify Your New Email',
+                'code' => $code,
+                'new_email' => $request->email,
+            ];
+        
+            // Send the email
+            Mail::to($request->email)->send(new VerifyNewEmail($email_data));
+        
+            return response()->json(['message' => 'Verification email sent successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => "An error occurred while sending the verification email. Please try again later."], 500);
+        }
+    }
+
+
+    
+
+    // Verify the OTP entered by the user
+    public function verifyOtp(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'otp' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first()], 400);
+        }
+
+        $otp = session('otp');
+
+        if ($request->otp == $otp) {
+            session(['otp_verified' => true]);
+            return response()->json(['message' => 'OTP verified successfully.']);
+        }
+
+        return response()->json(['message' => 'Invalid OTP.'], 400);
+    }
+
+    // Update the user's email
+    public function updateEmail(Request $request)
+    {
+        if (!session('otp_verified')) {
+            return response()->json(['message' => 'Please verify OTP before saving.'], 400);
+        }
+
+        $newEmail = session('new_email');
+        $user = Auth::user();
+        $user->email = $newEmail;
+        $user->save();
+
+        // Clear session data
+        session()->forget(['otp', 'otp_verified', 'new_email']);
+
+        return response()->json(['message' => 'Email updated successfully.']);
     }
 
 }
