@@ -12,16 +12,16 @@
         ]) 
 --}}
 
+{{-- Helpers --}}
+{{-- get the selected values from the hidden input by name or by id-hidden --}}
+{{-- use the onChange function to execute a JS function after input change --}}
+
+
 
 {{-- TODO :: add validation on required field if field show message instead of the input --}}
 
 
-@php
-    use Illuminate\Support\Str;
-    $uniqueId = $id . '-' . Str::random(8);
-@endphp
-
-<span class="container-multiselect" id="{{ $uniqueId }}-container">
+<span class="container-multiselect" id="{{ $id }}-container">
     <label for="">{{ isset($label) ? $label : "" }}</label>
     <div class="select-btn" aria-expanded="false">
         <span class="btn-text input-placeholder">{{ isset($placeholder) ? $placeholder : "Select value" }}</span>
@@ -46,15 +46,15 @@
     </ul>
 
     {{-- Hidden input to store selected values --}}
-    <input name="{{ $name }}" id="{{ $uniqueId }}-hidden" value="{{ $selected }}" type="hidden">
+    <input name="{{ $name }}" id="{{ $id }}-hidden" value="{{ $selected }}" type="hidden">
 </span>
 
 <script defer>
     document.addEventListener('DOMContentLoaded', () => {
-        const container = document.getElementById('{{ $uniqueId }}-container');
+        const container = document.getElementById('{{ $id }}-container');
         const listItems = container.querySelectorAll('.item-elem');
         const placeholder = container.querySelector('.input-placeholder');
-        const hiddenInput = container.querySelector(`#{{ $uniqueId }}-hidden`);
+        const hiddenInput = container.querySelector(`#{{ $id }}-hidden`);
         const dropdownBtn = container.querySelector('.select-btn');
         const dropdownList = container.querySelector('.list-items');
 
