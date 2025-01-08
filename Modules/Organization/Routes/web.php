@@ -53,7 +53,6 @@ Route::prefix('organization')->group(function () {
         Route::post('add-job', ['uses' => 'OrganizationController@addJobStore', 'as' => 'organizationaddJob']);
 
         Route::post('/send-otp', ['uses' => 'OrganizationController@sendOtp', 'as' => 'sendOtp']) ;
-        Route::post('/verify-otp', ['uses' => 'OrganizationController@verifyOtp', 'as' => 'verifyOtp']) ;
         Route::post('/update-email', ['uses' => 'OrganizationController@updateEmail', 'as' => 'updateEmail']);
         
          // disactivate account

@@ -216,35 +216,31 @@
                                     Setting</p>
                             </div>
                             <div class="form-outer">
-                                <form method="post" action="{{ route('update-organization-profile') }}">
-                                    @csrf
-                                    <!-- slide Account Setting -->
-                                    <div class="page slide-page">
-                                        <div class="row justify-content-center">
-
-                                            {{-- Email Information --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>New Email</label>
-                                                <input type="text" name="email" id="email" placeholder="Please enter your new Email">
-                                            </div>
-                                            <button type="button" class="mt-3 col-11 w-50 ss-prsnl-save-btn rounded-5" id="sendOTPforVerifyEmail">
-                                                Send OTP
-                                            </button>
-                                            <span class="help-block-email"></span>
-                                        
-                                            {{-- OTP for new email --}}
-                                            {{-- <div class="ss-form-group col-7 d-flex align-items-center">
-                                                <label class="me-3">OTP:</label>
-                                                <input type="text" name="otp" id="otp" placeholder="Please check your email for OTP">
-                                            </div>
-                                            <span class="help-block-otp"></span>
-                                         --}}
-                                            <div class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                                <button type="button" class="col-12 ss-prsnl-save-btn" id="SaveAccountInformation">Save</button>
-                                            </div>
+                                <!-- slide Account Setting -->
+                                <div class="page slide-page">
+                                    <div class="row justify-content-center">
+                                        {{-- Email Information --}}
+                                        <div class="ss-form-group col-11">
+                                            <label>New Email</label>
+                                            <input type="text" name="email" id="email" placeholder="Please enter your new Email">
+                                        </div>
+                                        <button type="button" class="mt-3 col-11 w-50 ss-prsnl-save-btn rounded-5" id="sendOTPforVerifyEmail">
+                                            Send OTP
+                                        </button>
+                                        <span class="help-block-email"></span>
+                                    
+                                        {{-- OTP for new email --}}
+                                        <div class="ss-form-group col-7 d-flex align-items-center">
+                                            <label class="me-3">OTP:</label>
+                                            <input type="text" name="otp" id="otp" placeholder="Please check your email for OTP">
+                                        </div>
+                                        <span class="help-block-otp"></span>
+                                    
+                                        <div class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+                                            <button type="button" class="col-12 ss-prsnl-save-btn" id="SaveAccountInformation">Save</button>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
 
                         </div>
@@ -894,6 +890,7 @@
 
         // });
 
+        // send otp button
         const sendOTPButton = document.getElementById('sendOTPforVerifyEmail');
         sendOTPButton.addEventListener('click', function(e) {
             e.preventDefault();
@@ -940,6 +937,71 @@
             });
 
         })
+
+        function ValidateOTP(){
+            let otp = document.getElementById('otp').value;
+            let isValid = true;
+
+            if(otp == ''){
+                $('.help-block-otp').text('Please enter the OTP');
+                $('.help-block-otp').addClass('text-danger');
+                isValid = false;
+            }
+            return isValid;
+        }
+        // verify the otp and update the email
+        const saveButtonForVerifyEmail = document.getElementById('SaveAccountInformation');
+        saveButtonForVerifyEmail.addEventListener("click", function(event) {
+            event.preventDefault();
+            if (!ValidateOTP()) {                
+                return;
+            }
+            
+            let otp = document.getElementById('otp').value;
+            let email = document.getElementById('email').value;
+
+            let data = {
+                otp: otp,
+                email: email
+            };
+            $.ajax({
+                url: '/organization/update-email',
+                type: 'POST',
+                data: data,
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> ' + resp.message,
+                            time: 5
+                        });
+                    } else {
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-check"></i> ' + resp.message,
+                            time: 5
+                        });
+                    }
+                },
+                error: function(resp) {
+                    notie.alert({
+                        type: 'error',
+                        text: '<i class="fa fa-check"></i> Please try again later !',
+                        time: 5
+                    });
+                }
+            });
+
+
+
+
+            
+
+
+        });
+
+
 
         // this functions to display profile setting / account setting forms
         function AccountSettingDisplay() {
