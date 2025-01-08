@@ -232,12 +232,20 @@
                                         {{-- OTP for new email --}}
                                         <div class="ss-form-group col-7 d-flex align-items-center">
                                             <label class="me-3">OTP:</label>
-                                            <input type="text" name="otp" id="otp" placeholder="Please check your email for OTP">
+                                            {{-- <input type="text" name="otp" id="otp" placeholder="Please check your email for OTP"> --}}
+                                            <ul class="ss-otp-v-ul">
+                                                <li><input class="otp-input" type="text" name="otp1" oninput="digitValidate(this)" onkeyup="tabChange(1)" maxlength="1"></li>
+                                                <li><input class="otp-input" type="text" name="otp2" oninput="digitValidate(this)" onkeyup="tabChange(2)" maxlength="1"></li>
+                                                <li><input class="otp-input" type="text" name="otp3" oninput="digitValidate(this)" onkeyup="tabChange(3)" maxlength="1"></li>
+                                                <li><input class="otp-input" type="text" name="otp4" oninput="digitValidate(this)" onkeyup="tabChange(4)" maxlength="1"></li>
+                                            </ul>
+                                            
                                         </div>
                                         <span class="help-block-otp"></span>
                                     
                                         <div class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                            <button type="button" class="col-12 ss-prsnl-save-btn" id="SaveAccountInformation">Save</button>
+                                            <button type="button" class="col-12 ss-prsnl-save-btn" id="SaveAccountInformation" style="display:none;">Save</button>
+
                                         </div>
                                     </div>
                                 </div>
@@ -378,6 +386,36 @@
 @stop
 
 @section('js')
+<script type="text/javascript">
+   let tabChange = function (val) {
+    let inputs = document.querySelectorAll('.otp-input'); // Select all OTP input fields
+    let saveButton = document.getElementById('SaveAccountInformation'); // Save button element
+
+    if (inputs[val - 1].value !== "") {
+        if (val < inputs.length) {
+            inputs[val].focus(); // Move to the next input
+        }
+    } else if (inputs[val - 1].value === "" && val > 1) {
+        inputs[val - 2].focus(); // Move to the previous input
+    }
+
+    // Check if all inputs are filled
+    let allFilled = Array.from(inputs).every(input => input.value !== "");
+    saveButton.style.display = allFilled ? "block" : "none"; // Show or hide the Save button
+};
+
+let digitValidate = function (ele) {
+    ele.value = ele.value.replace(/[^0-9]/g, ""); // Allow only digits
+};
+
+
+
+
+
+
+</script>
+
+
     <script type="text/javascript">
         // loding states cities docs on page load
 
@@ -938,37 +976,50 @@
 
         })
 
-        function ValidateOTP(){
-            let otp = document.getElementById('otp').value;
+        function ValidateOTP() {
+            let inputs = document.querySelectorAll('.otp-input');
+            let otp = Array.from(inputs).map(input => input.value).join('');
             let isValid = true;
 
-            if(otp == ''){
+            if (otp === '') {
                 $('.help-block-otp').text('Please enter the OTP');
                 $('.help-block-otp').addClass('text-danger');
                 isValid = false;
+            } else if (otp.length < inputs.length) {
+                $('.help-block-otp').text('Please complete the OTP');
+                $('.help-block-otp').addClass('text-danger');
+                isValid = false;
+            } else {
+                $('.help-block-otp').text('');
+                $('.help-block-otp').removeClass('text-danger');
             }
+        
             return isValid;
         }
-        // verify the otp and update the email
+
+        // Verify the OTP and update the email
         const saveButtonForVerifyEmail = document.getElementById('SaveAccountInformation');
-        saveButtonForVerifyEmail.addEventListener("click", function(event) {
+        saveButtonForVerifyEmail.addEventListener("click", function (event) {
             event.preventDefault();
-            if (!ValidateOTP()) {                
+        
+            if (!ValidateOTP()) {
                 return;
             }
-            
-            let otp = document.getElementById('otp').value;
+        
+            let inputs = document.querySelectorAll('.otp-input');
+            let otp = Array.from(inputs).map(input => input.value).join('');
             let email = document.getElementById('email').value;
-
+        
             let data = {
                 otp: otp,
                 email: email
             };
+        
             $.ajax({
                 url: '/organization/update-email',
                 type: 'POST',
                 data: data,
-                success: function(resp) {
+                success: function (resp) {
                     console.log(resp);
                     if (resp.status) {
                         notie.alert({
@@ -979,27 +1030,21 @@
                     } else {
                         notie.alert({
                             type: 'error',
-                            text: '<i class="fa fa-check"></i> ' + resp.message,
+                            text: '<i class="fa fa-times"></i> ' + resp.message,
                             time: 5
                         });
                     }
                 },
-                error: function(resp) {
+                error: function () {
                     notie.alert({
                         type: 'error',
-                        text: '<i class="fa fa-check"></i> Please try again later !',
+                        text: '<i class="fa fa-times"></i> Please try again later!',
                         time: 5
                     });
                 }
             });
-
-
-
-
-            
-
-
         });
+
 
 
 
@@ -1509,7 +1554,26 @@
 }
 
 
+/* OTP page css  */
 
+ul.ss-otp-v-ul {
+    list-style: none;
+    width: 100%;
+}
+
+ul.ss-otp-v-ul li {
+    width: 19%;
+    margin: 0 7px;
+    display: inline-block;
+}
+
+ul.ss-otp-v-ul input {
+    border: 2px solid #111011;
+    box-shadow: 8px 8px 0px 0px #403B4BE5;
+    padding: 12px 15px;
+    border-radius: 10px;
+    width: 100%;
+}
 
 </style>
 
