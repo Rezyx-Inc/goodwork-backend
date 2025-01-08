@@ -532,7 +532,7 @@
                         match = true;
                     }
                     break;
-                case 'worker_facility_city':
+                case 'city':
                     if (job['job_city'] == InsertedValue) {
                         match = true;
                     }

@@ -185,6 +185,7 @@ class WorkerController extends Controller
                 $allKeywords[$filter] = $keywords;
             }
             $data['allKeywords'] = $allKeywords;
+            $data['states'] = State::select('id', 'name')->get();
             // $user = auth()->guard('frontend')->user();
             // dd($data["model"]->matchWithWorker()['diploma']['match']);
             $data['jobSaved'] = new JobSaved();
