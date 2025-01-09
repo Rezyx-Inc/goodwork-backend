@@ -799,12 +799,14 @@ class ApplicationController extends Controller
 
             $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/list-docs', ['workerId' => $workerId]);
             
-            if ($response->successful()) {
-                
-                return $response->body();
+            $body = json_decode($response->body());
 
-            } else {
-                return response()->json(['success' => false], $response->status());
+            if( $body->success)
+            {
+                //return json_encode($body->data->list);
+                return response()->json(['success' => true, 'data' => $body->data->list]);
+            }else{
+                return response()->json(['success' => false, 'message' => $body->message], $response->status());
             }
 
 
@@ -819,8 +821,15 @@ class ApplicationController extends Controller
             $bsonId = $request->input('bsonId');
             $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/get-doc', ['bsonId' => $bsonId]);
 
-            // Pass through the response from Node.js API
-            return $response->body();
+            $body = json_decode($response->body());
+
+            if( $body->success)
+            {
+                return json_encode($body->data);
+            }else{
+                return response()->json(['success' => false, 'message' => $body->message], $response->status());
+            }
+            
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
