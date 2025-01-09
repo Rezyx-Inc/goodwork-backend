@@ -150,7 +150,7 @@
     </div>
 
     {{-- city Modal --}}
-    <div class="modal fade ss-jb-dtl-pops-mn-dv" id="city_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+    {{-- <div class="modal fade ss-jb-dtl-pops-mn-dv" id="city_modal" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
@@ -159,7 +159,6 @@
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body mt-3">
-                    {{-- city --}}
                     <div class="ss-form-group">
                         
                         @include('worker::components.custom_multiple_select_input', [
@@ -177,7 +176,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
     {{-- worker_shift_time_of_day Modal --}}

@@ -117,8 +117,8 @@
             'label' => 'States',
             'placeholder' => "States you will work in?",
             'name' => 'state',
-            'options' => $allKeywords['State'],
-            'option_attribute' => 'title',
+            'options' => $states,
+            'option_attribute' => 'name',
             'selected' => old('state', $worker->state),
         ])
 
@@ -129,7 +129,7 @@
     {{-- city --}}
 
     <div class="ss-form-group">
- 
+        {{-- 
         @include('worker::components.custom_multiple_select_input', [
             'id' => 'city',
             'label' => 'Cities',
@@ -139,9 +139,15 @@
             'option_attribute' => 'title',
             'selected' => old('city', $worker->city),
         ])
+        --}}
 
-        <span class="help-block-city"></span>
+        <label>Cities</label>
+        <input type="text" id="city" name="city"
+            placeholder="Cities you will work in?"
+            value="{{ !empty($worker->city) ? $worker->city : '' }}">
+        <span class="help-block-city"></span> 
     </div>
+
     {{-- End city  --}}
 </div>
 
