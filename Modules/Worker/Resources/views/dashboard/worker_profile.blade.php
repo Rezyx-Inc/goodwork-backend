@@ -137,7 +137,7 @@
                                         {{-- Email Information --}}
                                         <div class="ss-form-group col-11">
                                             <label>New Email</label>
-                                            <input type="text" name="email" id="email" placeholder="Please enter your new Email">
+                                            <input type="text" name="newEmail" id="newEmail" placeholder="Please enter your new Email">
                                         </div>
                                         <button type="button" class="mt-3 col-11 w-50 ss-prsnl-save-btn rounded-5" id="sendOTPforVerifyEmail">
                                             Send OTP
@@ -1526,7 +1526,7 @@
         // inputs account settings
 
         //const new_mobile = document.querySelector('input[name="new_mobile"]');
-        const email = document.querySelector('input[name="email"]');
+        const email = document.querySelector('input[name="newEmail"]');
         var inputs = [];
 
         // account setting validation here
@@ -1538,8 +1538,7 @@
             let isValid = true;
             // Create an array of all inputs
             inputs = [email];
-            console.log("inputs", email.value);
-            
+          
            
 
             // Check if all inputs are empty
@@ -1626,14 +1625,10 @@
         sendOTPButton.addEventListener('click', function(e) {
             e.preventDefault();
             if (!validateAccountSettingInformation()) { 
-                console.log("noooooooooooooo");
-                               
                 return;
             }
-            console.log("yeeeeeeeeees");
             
-            let email = document.getElementById('email').value;
-            console.log('mail========================', email);
+            let email = document.getElementById('newEmail').value;
             
             let data = {
                 email: email
@@ -1699,7 +1694,7 @@
         
             let inputs = document.querySelectorAll('.otp-input');
             let otp = Array.from(inputs).map(input => input.value).join('');
-            let email = document.getElementById('email').value;
+            let email = document.getElementById('newEmail').value;
         
             let data = {
                 otp: otp,

@@ -271,35 +271,33 @@ class WorkerAuthController extends Controller
      {
          try {
  
-             //$user = Auth::guard('nurse')->user();
-            
-             Auth::guard('frontend')->login($user, true);
-             return "dd";
-            //  // Validate the email
-            //  $request->validate([
-            //      'email' => 'required|email'
-            //  ]);
+            $user = auth()->guard('frontend')->user();
+
+             // Validate the email
+             $request->validate([
+                 'email' => 'required|email'
+             ]);
  
-            //  // Generate a verification code
-            //  $code = rand(1000, 9999);
+             // Generate a verification code
+             $code = rand(1000, 9999);
  
-            //  // Update the user's email verification status
-            //  $user->email_verified_at = null;
-            //  $user->otp = $code;
-            //  $user->save();
+             // Update the user's email verification status
+             $user->email_verified_at = null;
+             $user->otp = $code;
+             $user->save();
  
-            //  // Prepare email data
-            //  $email_data = [
-            //      'name' => $user->first_name . ' ' . $user->last_name,
-            //      'subject' => 'Verify Your New Email',
-            //      'code' => $code,
-            //      'new_email' => $request->email,
-            //  ];
+             // Prepare email data
+             $email_data = [
+                 'name' => $user->first_name . ' ' . $user->last_name,
+                 'subject' => 'Verify Your New Email',
+                 'code' => $code,
+                 'new_email' => $request->email,
+             ];
  
-            //  // Send the email
-            //  Mail::to($request->email)->send(new VerifyNewEmail($email_data));
+             // Send the email
+             Mail::to($request->email)->send(new VerifyNewEmail($email_data));
  
-            //  return response()->json(['status' => true ,'message' => 'Verification email sent successfully.']);
+             return response()->json(['status' => true ,'message' => 'Verification email sent successfully.']);
          } catch (\Exception $e) {
              return response()->json(['error' => "An error occurred while sending the verification email. Please try again later."], 500);
          }
@@ -311,7 +309,7 @@ class WorkerAuthController extends Controller
      public function updateEmail_worker(Request $request)
      {
         try {
-             $user = Auth::guard('worker')->user();
+            $user = auth()->guard('frontend')->user();
  
              // Validate the email
              $request->validate([
