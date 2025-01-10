@@ -36,6 +36,8 @@ Route::prefix('recruiter')->group(function () {
         Route::post('recruiter-update-profile', ['uses' => 'RecruiterDashboardController@updateProfile', 'as' => 'recruiter-update-profile']);
         Route::post('recruiter-remove-qualities', ['uses' => 'RecruiterDashboardController@recruiterRemoveQualities', 'as' => 'recruiter-remove-qualities']);
 
+        Route::post('/send-otp-recruiter', ['uses' => 'RecruiterDashboardController@sendOtp_recruiter', 'as' => 'sendOtp-recruiter']) ;
+        Route::post('/update-email-recruiter', ['uses' => 'RecruiterDashboardController@updateEmail_recruiter', 'as' => 'updateEmail-recruiter']);
 
         Route::get('recruiter-application',  ['uses' => 'ApplicationController@application', 'as' => 'recruiter-application']);
         /**
