@@ -47,6 +47,8 @@ Route::prefix('worker')->group(function () {
             Route::get('/getMessages', ['uses' => 'WorkerController@get_private_messages', 'as' => 'WorkergetPrivateMessages']);
             Route::get('my-work-journey', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'worker.my-work-journey']);
 
+            Route::post('/send-otp-worker', ['uses' => 'WorkerAuthController@sendOtp_worker', 'as' => 'sendOtp-worker']) ;
+            Route::post('/update-email-worker', ['uses' => 'WorkerAuthController@updateEmail_worker', 'as' => 'updateEmail-worker']);
 
             //Route::get('my-work-journey', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'my-work-journey']);
             Route::post('fetch-job-content', ['uses' => 'WorkerController@fetch_job_content', 'as' => 'worker-fetch-job-content']);
