@@ -39,7 +39,7 @@
                     <input type="checkbox" id="{{ $id }}-{{ $key }}"
                            name="{{ $name }}-check" value="{{ $title }}"
                            {{ isset($selected) && !empty($selected) && in_array($title, explode(', ', $selected)) ? 'checked' : '' }} />
-                    <label for="{{ $id }}-{{ $key }}" style="display: inline; width: 100%;">{{ $title }}</label>
+                    <label for="{{ $id }}-{{ $key }}" style="display: inline; width: 100%;"> {{ $title }}</label>
                 </li>
             @endforeach
         @endif
