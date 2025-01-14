@@ -549,19 +549,25 @@ class ApplicationController extends Controller
             $fileresponse = Http::post($urlDocs, ['workerId' => $worker_id]);
             $files = [];
 
+            $re = $fileresponse->json();
+
 	        // return response()->json($fileresponse->json());	
-            if (!empty($fileresponse->json()['files'])) {
-                $hasFile = true;
-		
-                foreach ($fileresponse->json()['files'] as $file) {
-		            if(isset($file['content']) && isset($file['name']) && isset($file['type'])){	
-                        $files[] = [
-                            'name' => $file['name'],
-                            'content' => $file['content'],
-                            'type' => $file['type']
-                        ];
-		            }      
+            if ($re->success) {
+                if (!empty($fileresponse->json()['files'])) {
+                    $hasFile = true;
+            
+                    foreach ($fileresponse->json()['files'] as $file) {
+                        if(isset($file['content']) && isset($file['name']) && isset($file['type'])){	
+                            $files[] = [
+                                'name' => $file['name'],
+                                'content' => $file['content'],
+                                'type' => $file['type']
+                            ];
+                        }      
+                    }
                 }
+            }else{
+                $hasFile = false;
             }
 
             $response['content'] = view('recruiter::offers.workers_complete_information', ['type' => $type, 'hasFile' => $hasFile, 'userdetails' => $user, 'nursedetails' => $nurse, 'jobappliedcount' => $jobappliedcount, 'offerdetails' => $offers])->render();
