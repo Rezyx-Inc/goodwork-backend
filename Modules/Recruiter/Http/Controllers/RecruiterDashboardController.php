@@ -325,7 +325,6 @@ public function index()
                 'first_name' => 'required|string',
                 'last_name' => 'required|string',
                 'mobile' => 'nullable|string',
-                'about_me' => 'required|string',
             ]);
             $user_data = [];
 
@@ -339,7 +338,7 @@ public function index()
             isset($request->first_name) ? ($user_data['first_name'] = $request->first_name) : '';
             isset($request->last_name) ? ($user_data['last_name'] = $request->last_name) : '';
             isset($request->mobile) ? ($user_data['mobile'] = $request->mobile) : '';
-            isset($request->about_me) ? ($user_data['about_me'] = $request->about_me) : '';
+            isset($request->about_me) ? ($user_data['about_me'] = $request->about_me) : ($user_data['about_me'] = null);
 
             $user->update($user_data);
 
