@@ -272,7 +272,10 @@ class SpecialitiesTableSeeder extends Seeder
             'Visual Impairments Teacher',
             'Women\'s Services',
             'Wound Care',
-            'X-Ray Technician'
+            'X-Ray Technician',
+            'In-Patient',
+            'Outpatient Surgery',
+            'Crisis Stabilization Unit',
         ];
 
         foreach ($specialties as $specialty) {
