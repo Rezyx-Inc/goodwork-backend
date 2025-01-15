@@ -158,7 +158,7 @@
                     }),
                     success: function(resp) {
 
-                        let jsonResp = JSON.parse(resp);
+                        let jsonResp = resp.data;
                         all_files = jsonResp;
                         files = jsonResp;
                         resolve(

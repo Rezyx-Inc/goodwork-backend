@@ -305,7 +305,7 @@
             <div class="col-md-6 ">
                 <p>
                     {!! isset($userdetails->nurse->worker_hours_per_week)
-                        ? number_format($userdetails->nurse->worker_hours_per_week)
+                        ? ($userdetails->nurse->worker_hours_per_week)
                         : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_hours_per_week\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
@@ -427,7 +427,7 @@
             <div class="col-md-6 ">
                 <p>
                     {!! isset($userdetails->nurse->worker_guaranteed_hours)
-                        ? number_format($userdetails->nurse->worker_guaranteed_hours)
+                        ? ($userdetails->nurse->worker_guaranteed_hours)
                         : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_guaranteed_hours\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
@@ -455,7 +455,7 @@
             <div class="col-md-6 ">
                 <p>
                     {!! isset($userdetails->nurse->worker_hours_shift)
-                        ? number_format($userdetails->nurse->worker_hours_shift)
+                        ? ($userdetails->nurse->worker_hours_shift)
                         : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_hours_shift\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
@@ -483,7 +483,7 @@
             <div class="col-md-6 ">
                 <p>
                     {!! isset($userdetails->nurse->worker_shifts_week)
-                        ? number_format($userdetails->nurse->worker_shifts_week)
+                        ? ($userdetails->nurse->worker_shifts_week)
                         : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_shifts_week\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
@@ -511,7 +511,7 @@
             <div class="col-md-6 ">
                 <p>
                     {!! isset($userdetails->nurse->worker_weeks_assignment)
-                        ? number_format($userdetails->nurse->worker_weeks_assignment)
+                        ? ($userdetails->nurse->worker_weeks_assignment)
                         : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_weeks_assignment\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
@@ -1761,7 +1761,7 @@
                 }),
                 success: function(resp) {
 
-                    let jsonResp = JSON.parse(resp);
+                    let jsonResp = resp.data;
                     files = jsonResp;
                     resolve(
                         files

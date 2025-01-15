@@ -2009,7 +2009,7 @@
                         WorkerId: worker_id
                     }),
                     success: function(resp) {
-                        let jsonResp = JSON.parse(resp);
+                        let jsonResp = resp.data;
                         let files = jsonResp;
                         worker_files = files;
                       //  console.log('worker_files', worker_files);
