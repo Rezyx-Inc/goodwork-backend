@@ -70,7 +70,7 @@ class OpportunitiesController extends Controller
         }
 
 
-        $requiredFieldsToSubmit = $requiredFields->data->org->preferences->requiredToSubmit;
+        $requiredFieldsToSubmit = $requiredFields->data->org[0]->preferences->requiredToSubmit;
 
         return view('recruiter::recruiter/opportunitiesmanager/main', compact('draftJobs', 'specialities', 'professions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount', 'requiredFieldsToSubmit'));
     }
