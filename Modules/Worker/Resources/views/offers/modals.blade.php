@@ -80,7 +80,7 @@
                                 @if (isset($allKeywords['Certification']))
                                     @foreach ($allKeywords['Certification'] as $value)
                                         <li class="item" value="{{ $value->title }}">
-                                            <span class="checkbox">
+                                            <span class="checkbox" onclick="triggerFileInput({{ $loop->index }})">
                                                 <i class="fa-solid fa-check check-icon"></i>
                                             </span>
                                             <span class="item-text">{{ $value->title }}</span>
@@ -131,7 +131,7 @@
                                 @if (isset($allKeywords['Vaccinations']))
                                     @foreach ($allKeywords['Vaccinations'] as $value)
                                         <li class="item" value="{{ $value->title }}">
-                                            <span class="checkbox">
+                                            <span class="checkbox" onclick="triggerFileInput({{ $loop->index }})">
                                                 <i class="fa-solid fa-check check-icon"></i>
                                             </span>
                                             <span class="item-text">{{ $value->title }}</span>
@@ -266,7 +266,7 @@
                                 @if (isset($allKeywords['Speciality']))
                                     @foreach ($allKeywords['Speciality'] as $value)
                                         <li class="item" value="{{ $value->title }}">
-                                            <span class="checkbox">
+                                            <span class="checkbox" onclick="triggerFileInput({{ $loop->index }})">
                                                 <i class="fa-solid fa-check check-icon"></i>
                                             </span>
                                             <span class="item-text">{{ $value->title }}</span>
@@ -981,5 +981,8 @@
 
 
 
-
-
+<script>
+    function triggerFileInput(index) {
+        document.getElementById('upload-' + index).click();
+    }
+</script>

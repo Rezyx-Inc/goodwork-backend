@@ -19,6 +19,7 @@ class UpdateToVarcharToNurses extends Migration
             $table->string('worker_hours_shift', 255)->change();
             $table->string('worker_shifts_week', 255)->nullable()->change();
             $table->string('worker_weeks_assignment', 255)->nullable()->change();
+            $table->string('worker_benefits', 255)->nullable()->change();
         });
     }
 
@@ -35,6 +36,7 @@ class UpdateToVarcharToNurses extends Migration
             $table->string('worker_hours_shift', 255)->change();
             $table->string('worker_shifts_week', 255)->nullable(false)->change();
             $table->string('worker_weeks_assignment', 255)->nullable(false)->change();
+            $table->string('worker_benefits', 255)->nullable(false)->change();
         });
     }
 }

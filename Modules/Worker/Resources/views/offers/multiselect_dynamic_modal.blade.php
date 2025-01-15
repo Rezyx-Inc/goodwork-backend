@@ -94,11 +94,21 @@
             [
                 'id' => 'worker_job_location',
                 'label' => 'Professional Licensure',
-                'placeholder' => 'Select Job Location',
+                'placeholder' => 'Select a state',
                 'name' => 'worker_job_location',
                 'options' => $allKeywords['StateCode'],
                 'selected' => old('worker_job_location', $nurse->worker_job_location),
-            ]
+            ],
+            // worker_pay_frequency
+            [
+                'id' => 'worker_pay_frequency',
+                'label' => 'Pay Frequency',
+                'placeholder' => 'Select Pay Frequency',
+                'name' => 'worker_pay_frequency',
+                'options' => $allKeywords['PayFrequency'],
+                'selected' => old('worker_pay_frequency', $nurse->worker_pay_frequency),
+            ],
+
 
 
         ];

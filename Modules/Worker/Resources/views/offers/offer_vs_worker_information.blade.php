@@ -293,8 +293,8 @@
         </div>
         <div id="city" class="row  d-flex align-items-center" style="margin:auto;">
             <div class="col-md-6">
-                <p class="profile_info_text" data-target="city" data-title="Cities you'd like to work?"
-                    data-name="city" onclick="open_multiselect_modal(this)">
+                <p class="profile_info_text" data-target="input" data-title="Cities you'd like to work?"
+                 data-placeholder="Cities you'd like to work?'"    data-name="city" onclick="open_modal(this)">
 
                     @if (!!$userdetails->nurse->city)
                         {{ truncateText($userdetails->nurse->city) }}
@@ -1004,10 +1004,10 @@
 
             <div class="col-md-6">
                 {{-- <h6>{{ $userdetails->nurse->worker_pay_frequency ?? 'Missing Pay Frequency Information' }}</h6> --}}
-                <p class="profile_info_text" data-target="pay_frequency" data-title="Pay frequency"
-                    data-placeholder="Pay frequency?" data-name="worker_pay_frequency" onclick="open_modal(this)">
+                <p class="profile_info_text" data-target="worker_pay_frequency" data-title="Pay frequency"
+                    data-placeholder="Pay frequency?" data-name="worker_pay_frequency" onclick="open_multiselect_modal(this)">
                     @if (isset($userdetails->nurse->worker_pay_frequency))
-                        {{ $userdetails->nurse->worker_pay_frequency }}
+                        {{ truncateText($userdetails->nurse->worker_pay_frequency) }}
                     @else
                         Pay frequency?
                     @endif
@@ -1046,8 +1046,8 @@
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if (!empty($offerBenefits))
-                        {{ implode(', ', $offerBenefits) }}
+                    @if ($offerdetails->benefits)
+                        {{ $offerdetails->benefits }}
                     @else
                         <a style="cursor: pointer;"
                             onclick="askRecruiter(this, 'benefits', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
@@ -1138,13 +1138,13 @@
         <div id="worker_facility_name" class="row d-flex align-items-center" style="margin:auto;">
             <div class="col-md-6">
 
-                <p class="profile_info_text" data-target="input" data-title="Where do you prefer to work?"
+                <p class="profile_info_text" data-target="input" data-title="What facilities would you like to work at?"
                     data-placeholder="Where do you prefer to work?" data-name="worker_facility_name"
                     onclick="open_modal(this)">
                     @if (isset($userdetails->nurse->worker_facility_name) && $userdetails->nurse->worker_facility_name != '')
                         {{ $userdetails->nurse->worker_facility_name }}
                     @else
-                        What facilities have you worked at?
+                        What facilities would you like to work at?
                     @endif
                 </p>
 
@@ -1531,8 +1531,8 @@
         <div id="block_scheduling" class="row d-flex align-items-center" style="margin:auto;">
             <div class="col-md-6">
                 <p class="profile_info_text" data-target="binary"
-                    data-title="Are you willing to work block scheduling?"
-                    data-placeholder="Are you willing to work block scheduling?" data-name="block_scheduling"
+                    data-title="Do you require block scheduling?"
+                    data-placeholder="Do you require block scheduling?" data-name="block_scheduling"
                     onclick="open_modal(this)">
                     @if (isset($userdetails->nurse->block_scheduling))
                         @if ($userdetails->nurse->block_scheduling == '1')
@@ -1543,7 +1543,7 @@
                             Will you do block scheduling?
                         @endif
                     @else
-                        Are you willing to work block scheduling?
+                        Do you require block scheduling?
                     @endif
                 </p>
             </div>
@@ -1567,8 +1567,8 @@
         </div>
         <div id="float_requirement" class="row d-flex align-items-center" style="margin:auto;">
             <div class="col-md-6">
-                <p class="profile_info_text" data-target="binary" data-title="Are you willing to float?"
-                    data-placeholder="Are you willing to float?" data-name="float_requirement"
+                <p class="profile_info_text" data-target="binary" data-title="Are you willing float?"
+                    data-placeholder="Are you willing float?" data-name="float_requirement"
                     onclick="open_modal(this)">
                     @if (isset($userdetails->nurse->float_requirement))
                         @if ($userdetails->nurse->float_requirement == '1')
@@ -1579,7 +1579,7 @@
                             Will you float?
                         @endif
                     @else
-                        Are you willing to float?
+                        Are you willing float?
                     @endif
                 </p>
             </div>
@@ -1753,7 +1753,7 @@
 
         <div id="vaccination" class="row d-flex align-items-center" style="margin:auto;">
             <div class="col-md-6 ">
-                <p id="vaccination-placeholder" class="profile_info_text" class="certification_file"
+                <p id="vaccination-placeholder" class="profile_info_text" class="vaccination_file"
                     data-target="vaccination_file" onclick="open_modal(this)" data-title="No vaccination?"
                     data-placeholder="No vaccination?">
                 </p>
@@ -2306,7 +2306,8 @@
     ];
 
     var timeFields = [
-        'worker_experience'
+        'worker_experience',
+        'Patient_ratio'
     ];
 
     var multi_select_number_fields = [
@@ -2314,7 +2315,7 @@
         'hours_per_week',
         'hours_shift',
         'weeks_shift',
-        'preferred_assignment_duration',
+        'preferred_assignment_duration'
     ]
 
     var rateFields = [
@@ -2338,12 +2339,14 @@
         'profession',
         'specialty',
         'state',
-        'city',
         'worker_job_type',
         'terms',
         'clinical_setting_you_prefer',
         'worker_benefits',
-        'worker_job_location'
+        'worker_job_location',
+        'worker_pay_frequency',
+        'worker_emr',
+        'nurse_classification'
     ];
 
     var noMatchingField = [
