@@ -703,11 +703,11 @@ class RecruiterController extends Controller
 
                     // check if the recruiter is associated with an organization
                     $checkResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/checkRecruiter', ['id' => $created_by]);
-                    $checkResponse = $checkResponse->json();
+                    $checkResponse = json_decode($checkResponse->body());
                     if ($checkResponse->success) {
                         
-                        if (isset($checkResponse[0])) {
-                            $orgId = $checkResponse[0]['orgId'];
+                        if (isset($checkResponse->data)) {
+                            $orgId = $checkResponse->data->org;
                         } else {
                             $orgId = null;
                         }
@@ -900,12 +900,12 @@ class RecruiterController extends Controller
                 // Save the job data to the database
               
                 $checkResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/checkRecruiter', ['id' => $created_by]);
-                $checkResponse = $checkResponse->json();
+                $checkResponse = json_decode($checkResponse->body());
 
                 if ($checkResponse->success) {
                         
-                    if (isset($checkResponse[0])) {
-                        $orgId = $checkResponse[0]['orgId'];
+                    if (isset($checkResponse->data)) {
+                        $orgId = $checkResponse->data->org;
                     } else {
                         $orgId = null;
                     }

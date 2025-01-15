@@ -63,26 +63,14 @@ class OpportunitiesController extends Controller
             $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/checkRecruiter', [
                 'id' => $recruiter_id,
             ]);
+            $requiredFields = json_decode($requiredFields->body());
 
         } catch (\Exception $e) {
             return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
         }
 
-        $requiredFields = $requiredFields->json();
-
-        if ($requiredFields->success) {
-            if (isset($requiredFields[0]) && isset($requiredFields[0]['preferences']['requiredToSubmit'])) {
-
-            $requiredFieldsToSubmit = $requiredFields[0]['preferences']['requiredToSubmit'];
-        
-            } else {
-        
-                $requiredFieldsToSubmit = [];
-        
-            }
-        } else {
-            $requiredFieldsToSubmit = [];
-        }
+        $requiredFields = json_decode($requiredFields->body());
+        $requiredFieldsToSubmit = $requiredFields->data->preferences->requiredToSubmit;
 
         return view('recruiter::recruiter/opportunitiesmanager/main', compact('draftJobs', 'specialities', 'professions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount', 'requiredFieldsToSubmit'));
     }

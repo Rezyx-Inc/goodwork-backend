@@ -549,26 +549,19 @@ class ApplicationController extends Controller
             $urlDocs = 'http://localhost:' . config('app.file_api_port') . '/documents/get-docs';
             $fileresponse = Http::post($urlDocs, ['workerId' => $worker_id]);
             $files = [];
-
-            $re = $fileresponse->json();
-
-	        // return response()->json($fileresponse->json());	
-            if ($re->success) {
-                if (!empty($fileresponse->json()['files'])) {
+            $api_response = json_decode($fileresponse->body());
+            if ($api_response->success) {
+                if (!empty($api_response->data->docs->files)) {
                     $hasFile = true;
-            
-                    foreach ($fileresponse->json()['files'] as $file) {
-                        if(isset($file['content']) && isset($file['name']) && isset($file['type'])){	
-                            $files[] = [
-                                'name' => $file['name'],
-                                'content' => $file['content'],
-                                'type' => $file['type']
-                            ];
-                        }      
+
+                    foreach ($api_response->data->docs->files as $file) {
+                        $files[] = [
+                            'name' => $file->name,
+                            'content' => $file->content,
+                            'type' => $file->type
+                        ];
                     }
                 }
-            }else{
-                $hasFile = false;
             }
 
             $response['content'] = view('recruiter::offers.workers_complete_information', ['type' => $type, 'hasFile' => $hasFile, 'userdetails' => $user, 'nursedetails' => $nurse, 'jobappliedcount' => $jobappliedcount, 'offerdetails' => $offers])->render();
