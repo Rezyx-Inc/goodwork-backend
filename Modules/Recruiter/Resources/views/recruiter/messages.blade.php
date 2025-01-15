@@ -1,290 +1,158 @@
 @extends('recruiter::layouts.main')
 
 @section('content')
-    @php
-        $faker = app('Faker\Generator');
-    @endphp
+
     <script type="text/javascript" src="{{ URL::asset('frontend/vendor/mask/jquery.mask.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
-        $(document).ready(function() {
-
-            let id = @json($id);
-            var PrivateChannelNotification = 'private-notification.' + id;
-            // Listen for Message Notification messages event
-            window.Echo.private(PrivateChannelNotification)
-                .listen('NotificationMessage', (event) => {
-                    console.log('from the messages blade:', event);
-                    let room_last_messages = document.getElementById('room_' + event.sender);
-                    if (room_last_messages) {
-                        if (event.content.length > 16) {
-                            room_last_messages.innerHTML = event.content.substring(0, 16) + ' ...';
-                        } else {
-                            room_last_messages.innerHTML = event.content;
-                        }
-                    }
-                    let lastMessage = document.getElementById('lastMessage_' + event.sender);
-                    if (lastMessage) {
-                        lastMessage.innerHTML = 'Just now';
-                    }
-
-
-                    let messagesN = document.getElementById('messagesN_' + event.sender);
-                    if (messagesN) {
-                        messagesN.classList.remove("d-none");
-                        messagesN.innerHTML = parseInt(messagesN.innerHTML) + 1;
-                    }
-                });
-        });
+        // global variables :
         var idWorker_Global = '';
         var idOrganization_Global = '';
-
-
         var PrivateChannel = '';
-        var page = 1; // Initialize the page number (the number of the 10 messages to be loaded next)
+        var page = 1;
+
+        // functions : getPrivateMessages, createMessageHTML, getSenderClass, getMessageContent, updateRoomLastMessage, updateLastMessageTime, incrementMessageCount, resetMessageCount, updateChatUI, scrollToBottom, focusOnInput, sendMessage, sendAjaxRequest
+
         function getPrivateMessages(idWorker, fullName, idOrganization) {
-
-            // Leave the current channel
             window.Echo.leave(PrivateChannel);
-
 
             const data = {
                 sender: idWorker,
-                _token: $('meta[name="csrf-token"]').attr('content') // Include CSRF token for Laravel
+                _token: $('meta[name="csrf-token"]').attr('content')
             };
 
             $.ajax({
-                url: 'read-recruiter-message-notification', // Replace 'read-message-notification' with the actual path to your route
+                url: 'read-recruiter-message-notification',
                 type: 'POST',
                 data: data,
                 success: function(response) {
                     console.log('Success:', response);
-                    // Handle success response
-                    // Navigate to a new page after the AJAX call is successful
-                    let messagesN = document.getElementById('messagesN_' + idWorker);
-                    if (messagesN) {
-                        messagesN.classList.add("d-none");
-                        messagesN.innerHTML = 0;
-                    }
+                    resetMessageCount(idWorker);
                 },
                 error: function(xhr, status, error) {
                     console.error('Error:', error);
-                    // Handle errors here
                 }
             });
 
-            document.getElementById('fullName').innerHTML = fullName;
-
-            page = 1;
-            document.getElementById('empty_room').classList.add("d-none");
-            document.getElementById('body_room').classList.remove("d-none");
-            document.getElementsByClassName('ss-rply-msg-input')[0].classList.remove("d-none");
+            updateChatUI(fullName);
             idWorker_Global = idWorker;
             idOrganization_Global = idOrganization;
-
             let id = @json($id);
+            PrivateChannel = 'private-chat.' + idOrganization_Global + '.' + id + '.' + idWorker_Global;
 
-            PrivateChannel = 'private-chat.' + idOrganization + '.' + id + '.' + idWorker_Global;
-
-            let messageText = document.getElementById('message');
-            console.log(messageText);
-
-            function createRealMessageHTML(message) {
-                var senderClass;
-                if (message.senderRole == 'RECRUITER') {
-                    senderClass = 'ss-msg-rply-blue-dv';
-                } else if (message.senderRole == 'ORGANIZATION') {
-                    senderClass = 'ss-msg-rply-black-dv';
-                } else {
-                    senderClass = 'ss-msg-rply-recrut-dv';
-                }
-
-                var time = Array.isArray(message.time) ? message.messageTime.join(', ') : message.messageTime;
-
-                var messageContent;
-                if (message.type === 'file') {
-                    // If the message is a file, create a link to download the file
-                    // The file name is extracted from the base64 data URL
-                    var fileName = message.message.split(';')[1].split('=')[1];
-                    messageContent =
-                        `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.message}" download="${message.fileName}">${message.fileName}</a></p>`;
-                } else {
-                    // If the message is not a file, display the message text
-                    messageContent = `<p>${message.message}</p>`;
-                }
-
-                return `
-            <div class="${senderClass}">
-                ${messageContent}
-                <span>${message.messageTime}</span>
-            </div>
-        `;
-            }
-
-            // Listen for NewMessage event on the goodwork_database_messages channel : PUBLIC MESSAGES
             window.Echo.channel('goodwork_database_messages')
                 .listen('NewMessage', (event) => {
                     console.log('New message:', event.message);
                 });
-
-            // Listen for NewPrivateMessage event on the goodwork_database_private-private-chat.UserId channel
 
             window.Echo.private(PrivateChannel)
                 .listen('NewPrivateMessage', (event) => {
                     console.log('New private message Recruiter:', event);
-                    var messageHTML = createRealMessageHTML(event);
+                    var messageHTML = createMessageHTML(event);
                     $('.private-messages').append(messageHTML);
-                    var element = document.getElementById('body_room');
-                    element.scrollTop = element.scrollHeight;
+                    scrollToBottom('body_room');
                 });
 
             $('.private-messages').html('');
-            $.get('/recruiter/getMessages?page=1&workerId=' + idWorker + '&organizationId=' + idOrganization, function(
-            data) {
-                // Parse the returned data
-                var messages = data.messages;
 
-                console.log(data.messages);
-
-                // Function to create the HTML for a message
-                function createMessageHTML(message) {
-                    var senderClass;
-                    if (message.sender == 'RECRUITER') {
-                        senderClass = 'ss-msg-rply-blue-dv';
-                    } else if (message.sender == 'ORGANIZATION') {
-                        senderClass = 'ss-msg-rply-black-dv';
-                    } else {
-                        senderClass = 'ss-msg-rply-recrut-dv';
-                    }
-
-                    var time = Array.isArray(message.time) ? message.time.join(', ') : message.time;
-
-                    var messageContent;
-                    if (message.type === 'file') {
-                        // If the message is a file, create a link to download the file
-                        // The file name is extracted from the base64 data URL
-                        var fileName = message.fileName; // assuming 'fileName' is the key in the message data
-                        messageContent =
-                            `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.content}" download="${message.fileName}">${message.fileName}</a></p>`;
-                    } else {
-                        // If the message is not a file, display the message text
-                        messageContent = `<p>${message.content}</p>`;
-                    }
-
-                    return `
-            <div class="${senderClass}">
-                ${messageContent}
-                <span>${time}</span>
-            </div>
-        `;
-                }
-                // Create the HTML for each message and prepend it to the messages area
-                messages.forEach(function(message) {
-                    var messageHTML = createMessageHTML(message);
-                    $('.private-messages').prepend(messageHTML);
+            $.get('/recruiter/getMessages?page=1&workerId=' + idWorker_Global + '&organizationId=' + idOrganization_Global,
+                function(data) {
+                    console.log("Receiving data", data);
+                    var messages = data.messages;
+                    messages.forEach(function(message) {
+                        var messageHTML = createMessageHTML(message);
+                        $('.private-messages').prepend(messageHTML);
+                    });
+                    focusOnInput();
                 });
-                var messagesArea = $('.messages-area');
-                //messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
-
-            });
-            focusOnInput();
         }
 
-        $(document).ready(function() {
-            const urlParams = new URLSearchParams(window.location.search);
-                const idWorker = urlParams.get('worker_id');
-                const nameworker = urlParams.get('name');
-                const idOrganization = urlParams.get('organization_id');
-                if (idWorker && nameworker && idOrganization) {
-                    getPrivateMessages(@json($idWorker), nameworker, idOrganization);
-                }
-           
-            var messagesArea = $('.messages-area');
-            //messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
+        function createMessageHTML(message) {
+            var senderClass = getSenderClass(message.senderRole || message.sender);
+            var messageContent = getMessageContent(message);
+            return `
+                <div class="${senderClass}">
+                    ${messageContent}
+                    <span>${message.messageTime || message.time}</span>
+                </div>
+            `;
+        }
 
+        function getSenderClass(senderRole) {
+            if (senderRole == 'RECRUITER') {
+                return 'ss-msg-rply-blue-dv';
+            } else if (senderRole == 'ORGANIZATION') {
+                return 'ss-msg-rply-black-dv';
+            } else if (senderRole == 'WORKER') {
+                return 'ss-msg-rply-worker-dv';
+            } else if (senderRole == 'ADMIN') {
+                return 'ss-msg-rply-admin-dv';
+            }
+        }
 
-            $('.messages-area').scroll(function() {
-                if ($(this).scrollTop() == 0) { // If the scrollbar is at the top
-                    page++; // Increment the page number
+        function getMessageContent(message) {
+            if (message.type === 'file') {
+                var fileName = message.fileName || message.message.split(';')[1].split('=')[1];
+                return `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.message}" download="${fileName}">${fileName}</a></p>`;
+            } else {
+                return `<p>${message.message || message.content}</p>`;
+            }
+        }
 
-                    $('#loading').removeClass('d-none');
-                    $('#login').addClass('d-none');
-                    // Make an AJAX request to the API
-                    $.get('/recruiter/getMessages?page=' + page + '&workerId=' + idWorker_Global +
-                        '&organizationId=' + idOrganization_Global,
-                        function(data) {
-                            // Parse the returned data
-                            var messages = data.messages;
+        function updateRoomLastMessage(sender, content) {
+            let room_last_messages = document.getElementById('room_' + sender);
+            if (room_last_messages) {
+                room_last_messages.innerHTML = content.length > 16 ? content.substring(0, 16) + ' ...' : content;
+            }
+        }
 
-                            console.log(idWorker_Global);
-                            // Function to create the HTML for a message
-                            function createMessageHTML(message) {
-                                //  var senderClass = message.sender == 'ORGANIZATION' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
+        function updateLastMessageTime(sender, time) {
+            let lastMessage = document.getElementById('lastMessage_' + sender);
+            if (lastMessage) {
+                lastMessage.innerHTML = time;
+            }
+        }
 
+        function incrementMessageCount(sender) {
+            let messagesN = document.getElementById('messagesN_' + sender);
+            if (messagesN) {
+                messagesN.classList.remove("d-none");
+                messagesN.innerHTML = parseInt(messagesN.innerHTML) + 1;
+            }
+        }
 
-                                var senderClass;
-                                if (message.sender == 'RECRUITER') {
-                                    senderClass = 'ss-msg-rply-blue-dv';
-                                } else if (message.sender == 'ORGANIZATION') {
-                                    senderClass = 'ss-msg-rply-black-dv';
-                                } else {
-                                    senderClass = 'ss-msg-rply-recrut-dv';
-                                }
+        function resetMessageCount(idWorker) {
+            let messagesN = document.getElementById('messagesN_' + idWorker);
+            if (messagesN) {
+                messagesN.classList.add("d-none");
+                messagesN.innerHTML = 0;
+            }
+        }
 
+        function updateChatUI(fullName) {
+            document.getElementById('fullName').innerHTML = fullName;
+            document.getElementById('empty_room').classList.add("d-none");
+            document.getElementById('body_room').classList.remove("d-none");
+            document.getElementsByClassName('ss-rply-msg-input')[0].classList.remove("d-none");
+        }
 
+        function scrollToBottom(elementId) {
+            var element = document.getElementById(elementId);
+            element.scrollTop = element.scrollHeight;
+        }
 
-                                var time = Array.isArray(message.time) ? message.time.join(', ') :
-                                    message.time;
-
-                                var messageContent;
-                                if (message.type === 'file') {
-                                    // If the message is a file, create a link to download the file
-                                    // The file name is extracted from the base64 data URL
-                                    var fileName = message
-                                        .fileName; // assuming 'fileName' is the key in the message data
-                                    messageContent =
-                                        `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.content}" download="${message.fileName}">${message.fileName}</a></p>`;
-                                } else {
-                                    // If the message is not a file, display the message text
-                                    messageContent = `<p>${message.content}</p>`;
-                                }
-
-                                return `
-                        <div class="${senderClass}">
-                            ${messageContent}
-                            <span>${time}</span>
-                        </div>
-                    `;
-                            }
-                            // Create the HTML for each message and prepend it to the messages area
-                            messages.forEach(function(message) {
-                                var messageHTML = createMessageHTML(message);
-                                $('.private-messages').prepend(messageHTML);
-                            });
-
-                            $('#login').removeClass('d-none');
-                            $('#loading').addClass('d-none');
-                        });
-                }
-            });
-        });
-
-        window.onload = function() {
-            // Listen for NewMessage event on the goodwork_database_messages channel : PUBLIC MESSAGES
-            window.Echo.channel('goodwork_database_messages')
-                .listen('NewMessage', (event) => {
-                    console.log('New message:', event.message);
-                });
+        function focusOnInput() {
+            var inputField = document.getElementById('messageEnvoye');
+            if (inputField) {
+                inputField.focus();
+            }
         }
 
         function sendMessage(type) {
-            console.log(type);
             let id = @json($id);
-            console.log('recruiter id', id);
             PrivateChannel = 'private-chat.' + idOrganization_Global + '.' + id + '.' + idWorker_Global;
-            console.log(PrivateChannel);
             let messageInput = document.getElementById('messageEnvoye');
             let message = messageInput.value;
 
@@ -299,8 +167,6 @@
             } else if (type === 'file') {
                 let fileInput = document.getElementById('fileInput');
                 let file = fileInput.files[0];
-
-                // Append the file name to the FormData object
                 formData.append('fileName', file.name);
 
                 let reader = new FileReader();
@@ -310,7 +176,7 @@
                     sendAjaxRequest(formData);
                 }
                 reader.readAsDataURL(file);
-                return; // Return early because we'll send the AJAX request after the file is read
+                return;
             }
 
             sendAjaxRequest(formData);
@@ -321,8 +187,8 @@
                 url: 'send-message',
                 type: 'POST',
                 data: formData,
-                processData: false, // tell jQuery not to process the data
-                contentType: false, // tell jQuery not to set contentType
+                processData: false,
+                contentType: false,
                 success: function() {
                     document.getElementById('messageEnvoye').value = "";
                     console.log('message envoyé');
@@ -330,27 +196,66 @@
             });
         }
 
-
+        // DOM Manipulation
 
         $(document).ready(function() {
+
+            let id = @json($id);
+            var PrivateChannelNotification = 'private-notification.' + id;
+
+            window.Echo.private(PrivateChannelNotification)
+                .listen('NotificationMessage', (event) => {
+                    console.log('from the messages blade:', event);
+                    updateRoomLastMessage(event.sender, event.content);
+                    updateLastMessageTime(event.sender, 'Just now');
+                    incrementMessageCount(event.sender);
+            });
+
             $('#messageEnvoye').keypress(function(e) {
-                if (e.which == 13) { // 13 is the key code for the enter key
-                    e.preventDefault(); // Prevent the default action (form submission)
+                if (e.which == 13) {
+                    e.preventDefault();
                     let messageInput = document.getElementById('messageEnvoye');
-                    if (messageInput.value.trim() === '') {
-                        return;
-                    } else {
-                        sendMessage('text'); // Call your function
+                    if (messageInput.value.trim() !== '') {
+                        sendMessage('text');
                     }
-
-
                 }
             });
-        });
 
+            const urlParams = new URLSearchParams(window.location.search);
+            const idWorker = urlParams.get('worker_id');
+            const nameworker = urlParams.get('name');
+            const idOrganization = urlParams.get('organization_id');
+            if (idWorker && nameworker && idOrganization) {
+                getPrivateMessages(idWorker, nameworker, idOrganization);
+            }
 
+            $('.messages-area').scroll(function() {
+                if ($(this).scrollTop() == 0) {
+                    page++;
+                    $('#loading').removeClass('d-none');
+                    $('#login').addClass('d-none');
 
-        window.onload = function() {
+                    $.get('/recruiter/getMessages?page=' + page + '&workerId=' + idWorker_Global + '&organizationId=' + idOrganization_Global,
+                        function(data) {
+                            var messages = data.messages;
+                            messages.forEach(function(message) {
+                                var messageHTML = createMessageHTML(message);
+                                $('.private-messages').prepend(messageHTML);
+                            });
+
+                            $('#login').removeClass('d-none');
+                            $('#loading').addClass('d-none');
+                        });
+                }
+            });
+
+            window.onload = function() {
+                window.Echo.channel('goodwork_database_messages')
+                    .listen('NewMessage', (event) => {
+                        console.log('New message:', event.message);
+                    });
+            }
+
             let fileUpload = document.getElementById('fileUpload');
             let fileInput = document.getElementById('fileInput');
 
@@ -367,8 +272,7 @@
                     if (this.files && this.files[0]) {
                         document.getElementById('fileName').textContent = this.files[0].name;
                         document.getElementById('fileInfo').style.display = 'flex';
-                        var element = document.getElementById('body_room');
-                        element.scrollTop = element.scrollHeight;
+                        scrollToBottom('body_room');
                     }
                 });
             }
@@ -382,30 +286,21 @@
                     document.getElementById('fileInput').value = '';
                 });
             }
-
             if (sendFile) {
                 sendFile.addEventListener('click', function() {
                     sendMessage('file');
                     document.getElementById('fileInfo').style.display = 'none';
                 });
             }
-        }
-        function focusOnInput() {
-            var inputField = document.getElementById('messageEnvoye');
-            if (inputField) {
-                inputField.focus();
-            }
-        }
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             focusOnInput();
         });
-    </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    </script>
 
     <main style="padding-top: 100px" class="ss-main-body-sec">
-
-
         <div class="container" id="recruiters_messages">
             <div class="ss-message-pg-mn-div">
                 <div class="row">
@@ -414,28 +309,20 @@
                             <h2>Messages</h2>
                             <div class="ss-opport-mngr-hedr">
                                 <ul style="float:left;">
-
-                                    <li style="margin-left:0px;"><button id="published"
-                                            class="ss-darfts-sec-publsh-btn active">Workers</button></li>
+                                    <li style="margin-left:0px;"><button id="published" class="ss-darfts-sec-publsh-btn active">Workers</button></li>
                                 </ul>
                             </div>
 
-                            <!-- rooms  -->
                             @if ($data)
                                 @foreach ($data as $room)
-                                    <div onclick="getPrivateMessages('{{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['organizationId'] }}')"
-                                        class="ss-mesg-sml-div">
+                                    <div onclick="getPrivateMessages('{{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['organizationId'] }}')" class="ss-mesg-sml-div">
                                         <ul class="ss-msg-user-ul-dv">
                                             @php
-                                                // Models
-                                                    $worker = App\Models\User::find($room['workerId']);  
-                                                
-                                                    @endphp
+                                                $worker = App\Models\User::find($room['workerId']);  
+                                            @endphp
                                             @if(isset($worker))       
-                                            
-                                            <img width="50px" height="50px" src="{{ URL::asset('images/nurses/profile/' . $worker->image) }}"
-                                                onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/profile-pic-big.png') }}';"
-                                                id="preview" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
+                                                <img src="{{ isset($worker->image) ? URL::asset('uploads/' . $worker->image) : URL::asset('/frontend/img/profile-pic-big.png') }}"
+                                                class="rounded-3" id="preview" style="object-fit: cover;" height="40" width="40" alt="Profile Image" loading="lazy" />
                                             @endif
                                             <li>
                                                 <h5>{{ $room['fullName'] }}</h5>
@@ -456,24 +343,20 @@
                                             @if ($notificationMessages)
                                                 @foreach ($notificationMessages as $notificationMessage)
                                                     @if ($notificationMessage['sender'] == $room['workerId'])
-                                                        <li><span
-                                                                id="messagesN_{{ $room['workerId'] }}">{{ $notificationMessage['numOfMessagesStr'] }}</span>
-                                                        </li>
+                                                        <li><span id="messagesN_{{ $room['workerId'] }}">{{ $notificationMessage['numOfMessagesStr'] }}</span></li>
                                                     @endif
                                                 @endforeach
                                             @else
-                                                <li><span class="d-none" id="messagesN_{{ $room['workerId'] }}">0</span>
-                                                </li>
+                                                <li><span class="d-none" id="messagesN_{{ $room['workerId'] }}">0</span></li>
                                             @endif
                                         </ul>
                                     </div>
                                 @endforeach
                             @else
                                 <div class="ss-mesg-sml-div">
-                                    <h5>No chats founded</h5>
+                                    <h5>No chats for now ...</h5>
                                 </div>
                             @endif
-
                         </div>
                     </div>
 
@@ -484,68 +367,46 @@
                         <div id="body_room" class="d-none prv-msg-rply-mn-div messages-area parentMessages">
                             <div class="ss-msg-rply-profile-sec">
                                 <ul>
-                                    @if(isset($worker)) 
-                                    <li><img width="50px" height="50px" src="{{ URL::asset('images/nurses/profile/' . $worker->image) }}"
-                                        onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/profile-pic-big.png') }}';"
-                                        id="preview" style="object-fit: cover;" class="rounded-3" alt="Profile Picture"></li>
                                     <li>
-                                    @endif
+                                        <img src="{{ isset($worker->image) ? URL::asset('uploads/' . $worker->image) : URL::asset('/frontend/img/profile-pic-big.png') }}"
+                                        class="rounded-3" id="preview" style="object-fit: cover;" height="40" width="40" alt="Profile Image" loading="lazy" />
+                                    </li>
+                                    <li>
                                         <p id="fullName"></p>
                                     </li>
                                 </ul>
                             </div>
                             <div class="ss-msgrply-tody">
-
                                 <span id="loading" class="d-none">
-                                    <span id="loadSpan" class="spinner-border spinner-border-sm" role="status"
-                                        aria-hidden="true"></span>
+                                    <span id="loadSpan" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                     Loading...
                                 </span>
                                 <span id="login">
                                     <p>Today</p>
                                 </span>
                             </div>
-                            <div class="private-messages">
-                            </div>
+                            <div class="private-messages"></div>
                         </div>
                         <div class="ss-rply-msg-input d-none">
-                            <input type="text" id="messageEnvoye" name="fname"
-                                placeholder="Express yourself here!">
+                            <input type="text" id="messageEnvoye" name="fname" placeholder="Express yourself here!">
                             <input type="file" id="fileInput" style="display: none;">
-                            <button class="upload-file" id="fileUpload" type="button"><img
-                                    src="{{ URL::asset('frontend/img/msg-rply-btn.png') }}" /></button>
-
+                            <button class="upload-file" id="fileUpload" type="button"><img src="{{ URL::asset('frontend/img/msg-rply-btn.png') }}" /></button>
                         </div>
                         <div class="row" style="margin: 15px 0;">
                             <div class="row justify-content-end" id="fileInfo" style="display: none;">
                                 <div class="col-6">
                                     <span style=" margin-left: 16px;" id="fileName"></span>
                                 </div>
-                                <div style=" display: flex;
-                            justify-content: end;
-
-                            "
-                                    class="col-6">
-                                    <button
-                                        style="width: 30%;
-                                border-radius: 100px;
-                            "
-                                        class="ss-prsnl-save-btn button" id="deleteFile">Delete</button>
-                                    <button
-                                        style="width: 30%;
-                                border-radius: 100px;
-                                margin-left: 10px;
-                            "
-                                        class="ss-prsnl-save-btn button" id="sendFile">Send</button>
+                                <div style=" display: flex; justify-content: end;" class="col-6">
+                                    <button style="width: 30%; border-radius: 100px;" class="ss-prsnl-save-btn button" id="deleteFile">Delete</button>
+                                    <button style="width: 30%; border-radius: 100px; margin-left: 10px;" class="ss-prsnl-save-btn button" id="sendFile">Send</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-
     </main>
 
     <style>

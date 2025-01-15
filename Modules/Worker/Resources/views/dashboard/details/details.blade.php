@@ -405,13 +405,14 @@
                                             </li>
                                             <li>
                                                 <span>Your Facility City</span>
-                                                <p class="profile_info_text" data-target="city"
+                                                <p class="profile_info_text" data-target="input"
+                                                    data-placeholder="Cities you'd like to work?"
                                                     data-title="Cities you'd like to work?" data-filter="City"
-                                                    data-name="city" onclick="open_multiselect_modal(this)">
+                                                    data-name="city" onclick="open_modal(this)">
                                                     @if (!!$nurse->city)
                                                         {{ $nurse->city }}
                                                     @else
-                                                        Do you want to work here ?
+                                                        Cities you'll work in?
                                                     @endif
                                                 </p>
 
