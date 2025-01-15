@@ -15,7 +15,7 @@ class KeywordSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('keywords')->delete();
+        // DB::table('keywords')->delete();
         $mainSuperUserId = User::where([
             'email' => 'fulladmin@nurseify.io'
         ])->get()->first()->id;
@@ -28,11 +28,13 @@ class KeywordSeeder extends Seeder
         $keywords = $this->keywordData();
         foreach ($keywords as $key => $value) {
             foreach($value as $item){
-                factory(Keyword::class)->create([
-                    'created_by' => $mainSuperUserId,
-                    'filter' => $key,
-                    'title' => $item,
-                ]);
+                if (!Keyword::where(['filter' => $key, 'title' => $item])->exists()) {
+                    factory(Keyword::class)->create([
+                        'created_by' => $mainSuperUserId,
+                        'filter' => $key,
+                        'title' => $item,
+                    ]);
+                }
             }
         }
     }
