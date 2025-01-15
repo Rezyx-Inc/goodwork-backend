@@ -459,7 +459,8 @@
 
     <div class="ss-form-group col-md-12">
         <label>Fav States</label>
-        <input type="text" name="worker_facility_state" id="worker_facility_state" placeholder="Fav States">
+        <input type="text" name="worker_facility_state" id="worker_facility_state" placeholder="Fav States" 
+            value="{{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : '' }}">
     </div>
     <span class="helper help-block-worker_facility_state"></span>
 
@@ -468,7 +469,8 @@
 
     <div class="ss-form-group col-md-12">
         <label>Fav Cities</label>
-        <input type="text" name="worker_facility_city" id="worker_facility_city" placeholder="Fav Cities">
+        <input type="text" name="worker_facility_city" id="worker_facility_city" placeholder="Fav Cities"
+            value="{{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : '' }}">
     </div>
     <span class="helper help-block-worker_facility_city"></span>
 
