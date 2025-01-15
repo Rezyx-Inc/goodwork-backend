@@ -755,11 +755,12 @@ class OrganizationController extends Controller
                     'id' => $job->organization_id,
                 ]);
 
-                if ($AssignmentResponse->status() == 200) {
-                    $recruiterId = $AssignmentResponse->body();
+                $api_response = json_decode($AssignmentResponse->body());
+                if ($api_response->success) {
+                    $recruiterId = $api_response->data->id;
                     $job->recruiter_id = $recruiterId;
                     $job->save();
-                } 
+                }
 
             } else {
 
@@ -1197,15 +1198,14 @@ public function recruiters_management()
     $orgId = Auth::guard('organization')->user()->id;
 
     $scriptResponse = Http::get('http://localhost:'. config('app.file_api_port') .'/organizations/getRecruiters/' . $orgId);
-
-   
-
-    $responseData = $scriptResponse->json();
-    if(isset($responseData)) {
     
-    $ids = array_map(function($recruiter) {
-        return $recruiter['id'];
-    }, $responseData);
+    $responseData = json_decode($scriptResponse->body());
+    
+    if($responseData->success) {
+    
+        $ids = array_map(function($recruiter) {
+            return $recruiter->id;
+        }, $responseData->data->recruiters);
 
     $recruiters = User::whereIn('id', $ids)->where('role', 'RECRUITER')->get();
     } else {
@@ -1230,9 +1230,9 @@ public function recruiters_management()
             'id' => $recruiter_id,
         ]);
 
-        //return $scriptResponse;
+        $api_response = json_decode($scriptResponse->body());
 
-        if ($scriptResponse->failed()) {
+        if (!$api_response->success) {
             $data = [];
             $data['msg'] = "error 99";
             $data['success'] = false;
@@ -1406,7 +1406,9 @@ public function recruiters_management()
 
                     //return $scriptResponse;
 
-                    if ($scriptResponse->failed()) {
+                    $api_response = json_decode($scriptResponse->body());
+
+                    if (!$api_response->success) {
                         $data = [];
                         $data['msg'] = "Unexpected error, please contact support@goodwork.world";
                         $data['success'] = false;
@@ -1540,17 +1542,32 @@ public function recruiters_management()
     public function get_preferences(Request $request){
         try{    
 
-            // $columns = Schema::getColumnListing('jobs');
-            // $columns = array_diff($columns, ['id','import_id','facility_id','created_at','updated_at','created_by','deleted_at','recruiter_id','organization_id']);
             $orgId = Auth::guard('organization')->user()->id;
             $columns = Http::get('http://localhost:'. config('app.file_api_port') .'/organizations/getFieldsRules');
             $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/get-preferences', [
                 'id' => $orgId,
             ]);
-            $requiredFields = $requiredFields->json();
-            $columns = $columns->json();
+            $requiredFields = json_decode($requiredFields->body());
+            $columns = json_decode($columns->body());
 
-            $columns = $columns[0]["ruleFields"];
+            if($columns->success == false){
+                return response()->json([
+                    'msg' => $columns->message,
+                    'success' => false
+                ]);
+            }else{
+                $columns = $columns->data[0]->ruleFields;
+            }
+
+            if($requiredFields->success == false){
+                return response()->json([
+                    'msg' => $requiredFields->message,
+                    'success' => false
+                ]);
+            }else{
+                $requiredFields = $requiredFields->data->preferences;
+            }
+
             //return response()->json(['columns'=>$columns]);
             //return $columns;
             return view('organization::organization.organization_rules_management', compact('columns','requiredFields'));
@@ -1568,13 +1585,22 @@ public function recruiters_management()
 
     public function add_preferences(Request $request){
         try{
-
             $orgId = Auth::guard('organization')->user()->id;
+            $preferences = $request->preferences;
+            
             $response = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/add-preferences', [
                 'id' => $orgId,
-                'preferences' => $request->preferences,
+                'preferences' => $preferences,
             ]);
-            return $response;
+            $api_response = json_decode($response->body());
+
+            if($api_response->success == false){
+                return response()->json([
+                    'msg' => $api_response->message,
+                    'success' => false
+                ]);
+            }
+            return response()->json($api_response);
 
         }catch(\Exeption $ex ){
 
@@ -1595,11 +1621,13 @@ public function recruiters_management()
             $job = Job::where('id', $jobId)->first();
             $orgId = Auth::guard('organization')->user()->id;
 
-            $AssignmentResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/manuelRecruiterAssignment/' . $orgId, [
+            $AssignmentResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/manualRecruiterAssignment/' . $orgId, [
                 'id' => $recruiterId,
             ]);
 
-            if ($AssignmentResponse->status() == 200) {
+            $api_response = json_decode($AssignmentResponse->body());
+            
+            if ($api_response->success == true) {
                 $offers = Offer::where('job_id', $jobId)->get();
 
                 foreach ($offers as $offer) {
@@ -1612,7 +1640,7 @@ public function recruiters_management()
 
             } else {
 
-                return response()->json(['error' => "An error occurred: " . $AssignmentResponse->body()], 500);
+                return response()->json(['error' => "An error occurred: " . $api_response->message], 500);
 
             }
 

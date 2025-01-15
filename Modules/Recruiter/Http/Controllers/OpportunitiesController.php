@@ -58,20 +58,30 @@ class OpportunitiesController extends Controller
 
         }
 
-        $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/checkRecruiter', [
-            'id' => $recruiter_id,
-        ]);
+        try {
+            
+            $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/checkRecruiter', [
+                'id' => $recruiter_id,
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
+        }
 
         $requiredFields = $requiredFields->json();
 
-        if (isset($requiredFields[0]) && isset($requiredFields[0]['preferences']['requiredToSubmit'])) {
+        if ($requiredFields->success) {
+            if (isset($requiredFields[0]) && isset($requiredFields[0]['preferences']['requiredToSubmit'])) {
 
-        $requiredFieldsToSubmit = $requiredFields[0]['preferences']['requiredToSubmit'];
-
+            $requiredFieldsToSubmit = $requiredFields[0]['preferences']['requiredToSubmit'];
+        
+            } else {
+        
+                $requiredFieldsToSubmit = [];
+        
+            }
         } else {
-
             $requiredFieldsToSubmit = [];
-
         }
 
         return view('recruiter::recruiter/opportunitiesmanager/main', compact('draftJobs', 'specialities', 'professions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount', 'requiredFieldsToSubmit'));

@@ -704,19 +704,25 @@ class RecruiterController extends Controller
                     // check if the recruiter is associated with an organization
                     $checkResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/checkRecruiter', ['id' => $created_by]);
                     $checkResponse = $checkResponse->json();
-                    if (isset($checkResponse[0])) {
-                        $orgId = $checkResponse[0]['orgId'];
+                    if ($checkResponse->success) {
+                        
+                        if (isset($checkResponse[0])) {
+                            $orgId = $checkResponse[0]['orgId'];
+                        } else {
+                            $orgId = null;
+                        }
+
+                        // Check if the is_resume bool is set
+                        if (!isset($request->is_resume)){
+                            $job->is_resume = false;
+                        }
+
+                        $job->organization_id = $orgId;
+                        $job->save();
+
                     } else {
-                        $orgId = null;
+                        return response()->json(['success' => false, 'message' => $checkResponse->message]);
                     }
-
-                    // Check if the is_resume bool is set
-                    if (!isset($request->is_resume)){
-                        $job->is_resume = false;
-                    }
-
-                    $job->organization_id = $orgId;
-                    $job->save();
 
                 } catch (Exception $e) {
                     return response()->json(['success' => false, 'message' => $e->getMessage()]);
@@ -895,19 +901,27 @@ class RecruiterController extends Controller
               
                 $checkResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/checkRecruiter', ['id' => $created_by]);
                 $checkResponse = $checkResponse->json();
-                if (isset($checkResponse[0])) {
-                    $orgId = $checkResponse[0]['orgId'];
+
+                if ($checkResponse->success) {
+                        
+                    if (isset($checkResponse[0])) {
+                        $orgId = $checkResponse[0]['orgId'];
+                    } else {
+                        $orgId = null;
+                    }
+    
+                    // Check if the is_resume bool is set
+                    if (!isset($request->is_resume)){
+                        $job->is_resume = false;
+                    }
+    
+                    $job->organization_id = $orgId;
+                    $job->save();
+
                 } else {
-                    $orgId = null;
+                    return response()->json(['success' => false, 'message' => $checkResponse->message]);
                 }
-
-                // Check if the is_resume bool is set
-                if (!isset($request->is_resume)){
-                    $job->is_resume = false;
-                }
-
-                $job->organization_id = $orgId;
-                $job->save();
+                
 
             } else {
 

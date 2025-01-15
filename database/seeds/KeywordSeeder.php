@@ -333,6 +333,9 @@ class KeywordSeeder extends Seeder
                 'Women\'s Services',
                 'Wound Care',
                 'X-Ray Technician',
+                'In-Patient',
+                'Outpatient Surgery',
+                'Crisis Stabilization Unit',
             ],
             'GeographicPreference' => [
                 'Local Traveler (within 25 miles)',
@@ -518,6 +521,8 @@ class KeywordSeeder extends Seeder
                 'Medical Laboratory',
                 'Mid-Revenue Cycle Solutions',
                 'Security',
+                'Supervisor',
+                'Unit Manager',
             ],
             'Profession' => [
                 'Academic',

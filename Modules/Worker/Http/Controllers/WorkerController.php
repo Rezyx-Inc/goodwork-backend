@@ -160,7 +160,7 @@ class WorkerController extends Controller
                 ]);
                 $requiredFields = $requiredFields->json();
 
-                if (isset($requiredFields[0]) && isset($requiredFields[0]['preferences']['requiredToApply'])) {
+                if ($requiredFields['success'] && isset($requiredFields[0]) && isset($requiredFields[0]['preferences']['requiredToApply'])) {
 
                     $requiredFieldsToApply = $requiredFields[0]['preferences']['requiredToApply'];
                     $data['requiredFieldsToApply'] = $requiredFieldsToApply;
@@ -172,7 +172,7 @@ class WorkerController extends Controller
                     'id' => $organization_id,
                 ]);
                 $requiredFields = $requiredFields->json();
-                if (isset($requiredFields['requiredToApply'])) {
+                if ($requiredFields['success'] && isset($requiredFields['requiredToApply'])) {
                     $requiredFieldsToApply = $requiredFields['requiredToApply'];
                     $data['requiredFieldsToApply'] = $requiredFieldsToApply;
                 }
@@ -1361,22 +1361,27 @@ class WorkerController extends Controller
 
         try {
             $body = $request->getContent();
-            $bodyArray = json_decode($body, true);
 
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
             ])->withBody($body, 'application/json')->post('http://localhost:' . config('app.file_api_port') . '/documents/add-docs');
-            return $response;
-            if ($response->successful()) {
+            
+            $body = json_decode($response->body());
+
+            if ($response->successful() && $body->success) {
+                
                 return response()->json([
                     'ok' => true,
                     'message' => 'Files uploaded successfully',
                 ]);
+
             } else {
+
                 return response()->json([
                     'ok' => false,
-                    'message' => $response->body(),
+                    'message' => $body->message,
                 ], $response->status());
+                
             }
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
@@ -1386,28 +1391,59 @@ class WorkerController extends Controller
     public function listDocs(Request $request)
     {
         try {
-            $workerId = $request->WorkerId;
-            //return response()->json(['workerId' => $workerId]);
+            // validate WorkerId
+            $validator = Validator::make($request->all(), [
+                'WorkerId' => 'required|exists:nurses,id'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
+            }
+
+            $workerId = $request->input('WorkerId');
 
             $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/list-docs', ['workerId' => $workerId]);
-            if ($response->successful()) {
-                return $response->body();
-            } else {
-                return response()->json(['success' => false], $response->status());
+
+            $body = json_decode($response->body());
+
+            if( $body->success)
+            {
+                return json_encode($body->data->list);
+                // return response()->json(['success' => true, 'data' => $body->data->list]);
+            }else{
+                return response()->json(['success' => false, 'message' => $body->message], $response->status());
             }
-        } catch (\Exception $e) {
+           
+        }catch(\Exception $e){
+
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
+           
         }
     }
 
     public function getDoc(Request $request)
     {
         try {
+             $validator = Validator::make($request->all(), [
+                'bsonId' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
+            }
+
             $bsonId = $request->input('bsonId');
             $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/get-doc', ['bsonId' => $bsonId]);
 
-            // Pass through the response from Node.js API
-            return $response->body();
+            $body = json_decode($response->body());
+
+            if( $body->success)
+            {
+                return json_encode($body->data);
+            }else{
+                return response()->json(['success' => false, 'message' => $body->message], $response->status());
+            }
+           
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
