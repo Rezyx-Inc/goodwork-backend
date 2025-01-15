@@ -189,7 +189,7 @@
                                             {{-- About Me Information --}}
                                             <div class="ss-form-group col-11">
                                                 <label>About Me</label>
-                                                <textarea type="text" name="about_me">{{ isset($user->about_me) ? $user->about_me : '' }}</textarea>
+                                                <textarea type="text" name="about_me">{{ isset($user->about_me) && !empty($user->about_me) ? $user->about_me : '' }}</textarea>
                                             </div>
                                             <span class="help-block-about_me"></span>
                                             {{-- Skip && Save --}}
@@ -477,11 +477,11 @@
 
             }
 
-            if (about_me.value === '') {
-                $('.help-block-about_me').text('Please enter a description');
-                $('.help-block-about_me').addClass('text-danger');
-                isValid = false;
-            }
+            // if (about_me.value === '') {
+            //     $('.help-block-about_me').text('Please enter a description');
+            //     $('.help-block-about_me').addClass('text-danger');
+            //     isValid = false;
+            // }
 
             return isValid;
         }
@@ -618,6 +618,11 @@
                             text: '<i class="fa fa-check"></i> Account Information saved successfully',
                             time: 5
                         });
+
+                        // refresh page 
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2500);
 
                     }
                 },
