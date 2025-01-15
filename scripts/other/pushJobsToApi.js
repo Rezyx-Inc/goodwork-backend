@@ -25,9 +25,8 @@ var moment = require("moment");
 
       });
 
-      //newObj.api_key = 'OWUzOGRjODA5Yjg3YmZhNzk0ZjFjNDFiYzczNTY1MDYzODViOWU1ZTFjNjQ5ZmE1';
-      newObj.api_key = "YjRjM2NkM2Y2ODIxY2RhNGRmYjVmOGQ5MDc2ZmJlNzVkMjY3YmM5MDRkZjk3OGY0";
-      newObj.organization_id = "GWU000007";
+      newObj.api_key = 'OWUzOGRjODA5Yjg3YmZhNzk0ZjFjNDFiYzczNTY1MDYzODViOWU1ZTFjNjQ5ZmE1';
+      newObj.organization_id = "GWU000006";
 
       newObj.start_date = newObj.start_date.replace(/[/-]/g, "-");
       newObj.end_date = newObj.end_date.replace(/[/-]/g, "-");
@@ -42,7 +41,7 @@ var moment = require("moment");
 
   for(let i=0; i<updatedObj.length;i++){
 
-    axios.post('https://staging.goodwork.world/api/organization-add-job', updatedObj[i])
+    axios.post('http://localhost:8000/api/organization-add-job', updatedObj[i])
     .then(function (response) {
       console.log(response.data.success);
     })

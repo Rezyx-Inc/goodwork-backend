@@ -1,17 +1,17 @@
 {
-	"authHost": "https://staging.goodwork.world",
+	"authHost": "https://dev.goodwork.world",
 	"authEndpoint": "/custom/broadcasting/auth",
 	"clients": [],
 	"database": "redis",
 	"databaseConfig": {
-		"redis": {"port":"6376"},
+		"redis": {},
 		"sqlite": {
 			"databasePath": "/database/laravel-echo-server.sqlite"
 		}
 	},
 	"devMode": true,
 	"host": "127.0.0.1",
-	"port": "6006",
+	"port": "6001",
 	"protocol": "http",
 	"socketio": {},
 	"secureOptions": 67108864,
@@ -26,7 +26,7 @@
 	},
 	"apiOriginAllow": {
     "allowCors" : true,
-    "allowOrigin" : "https://staging.goodwork.world",
+    "allowOrigin" : "https://dev.goodwork.world",
     "allowMethods" : "GET, POST",
     "allowHeaders" : "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, X-CSRF-TOKEN, X-Socket-Id"
 }
