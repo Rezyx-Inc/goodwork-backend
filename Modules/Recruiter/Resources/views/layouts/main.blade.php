@@ -87,6 +87,9 @@
                 });
             });
         </script>
+        
+        <!-- Bootstrap 4 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>
