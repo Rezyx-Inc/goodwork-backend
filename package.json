@@ -51,6 +51,7 @@
         "socket.io-client": "^2.5.0",
         "stripe": "^15.1.0",
         "vuelidate": "^0.7.5",
-        "webpack": "^5.97.1"
+        "webpack": "^5.97.1",
+        "xlsx": "^0.18.5"
     }
 }
