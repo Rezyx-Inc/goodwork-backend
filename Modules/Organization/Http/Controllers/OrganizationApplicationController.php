@@ -509,15 +509,18 @@ class OrganizationApplicationController extends Controller
             $urlDocs = 'http://localhost:' . config('app.file_api_port') . '/documents/get-docs';
             $fileresponse = Http::post($urlDocs, ['workerId' => $worker_id]);
             $files = [];
-            if (!empty($fileresponse->json()['files'])) {
-                $hasFile = true;
+            $api_response = json_decode($fileresponse->body());
+            if ($api_response->success) {
+                if (!empty($api_response->data->docs->files)) {
+                    $hasFile = true;
 
-                foreach ($fileresponse->json()['files'] as $file) {
-                    $files[] = [
-                        'name' => $file['name'],
-                        'content' => $file['content'],
-                        'type' => $file['type']
-                    ];
+                    foreach ($api_response->data->docs->files as $file) {
+                        $files[] = [
+                            'name' => $file->name,
+                            'content' => $file->content,
+                            'type' => $file->type
+                        ];
+                    }
                 }
             }
             $response['content'] = view('organization::offers.workers_complete_information', ['type' => $type, 'hasFile' => $hasFile, 'userdetails' => $user, 'nursedetails' => $nurse, 'jobappliedcount' => $jobappliedcount, 'offerdetails' => $offers])->render();
@@ -542,13 +545,13 @@ class OrganizationApplicationController extends Controller
 
             $orgId = Auth::guard('organization')->user()->id;
             $scriptResponse = Http::get('http://localhost:'. config('app.file_api_port') .'/organizations/getRecruiters/' . $orgId);
-            $responseData = $scriptResponse->json();
+            $responseData = json_decode($scriptResponse->body());
             $allRecruiters = [];
             $ids = [];
-            if(isset($responseData)) {
+            if($responseData->success) {
                 $ids = array_map(function($recruiter) {
-                return $recruiter['id'];
-                }, $responseData);
+                return $recruiter->id;
+                }, $responseData->data->recruiters); 
             }
             $allRecruiters = User::whereIn('id', $ids)->where('role', 'RECRUITER')->get();
 
@@ -733,10 +736,11 @@ class OrganizationApplicationController extends Controller
             //return response()->json(['workerId' => $workerId]);
 
             $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/list-docs', ['workerId' => $workerId]);
-            if ($response->successful()) {
-                return $response->body();
+            $api_response = json_decode($response->body());
+            if ($api_response->success) {
+                return response()->json(['success' => true, 'data' => $api_response->data->list]);
             } else {
-                return response()->json(['success' => false], $response->status());
+                return response()->json(['success' => false, 'message' => $api_response->message], $response->status());
             }
 
 
@@ -750,6 +754,14 @@ class OrganizationApplicationController extends Controller
         try {
             $bsonId = $request->input('bsonId');
             $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/get-doc', ['bsonId' => $bsonId]);
+
+            $api_response = json_decode($response->body());
+
+            if ($api_response->success) {
+                return json_encode($api_response->data);
+            } else {
+                return response()->json(['success' => false, 'message' => $api_response->message], $response->status());
+            }
 
             // Pass through the response from Node.js API
             return $response->body();

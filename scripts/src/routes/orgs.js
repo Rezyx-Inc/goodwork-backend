@@ -9,10 +9,12 @@ router.get("/", (req, res) => {
 
 router.get('/getRecruiters/:orgId', async (req, res) => {
 
-    if (!Object.keys(req.body).length) {
+    // i comment this because we pass the orgId in the parameters to get the recruiters not in the body :
 
-        return res.status(200).send({ success:false, message : "Empty request" });
-    }
+    // if (!Object.keys(req.body).length) {
+
+    //     return res.status(200).send({ success:false, message : "Empty request" });
+    // }
 
     try {
 
@@ -306,7 +308,7 @@ router.post('/add-preferences', async (req, res) => {
     } catch (e) {
 
         console.error("Unable to save preferences.", e);
-        res.status(200).send({ success: true, message : e.message });
+        res.status(200).send({ success: false, message : e.message });
     }
 });
 
@@ -323,7 +325,7 @@ router.get('/getFieldsRules', async (req, res) => {
                 return res.status(200).send({ success: false, message: "Global rule fields not found." });
             }
 
-        res.status(200).send({ success: true, message: globalRuleFields });
+        res.status(200).send({ success: true, message: 'Global rule fields found.', data: globalRuleFields });
 
     } catch (e) {
 
