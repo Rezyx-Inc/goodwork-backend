@@ -14,7 +14,7 @@ return [
     */
 
     
-    'file_api_port' => env('FILE_API_PORT', 4545),
+    'file_api_port' => env('FILE_API_PORT'),
 
     'portal_link' => env('STRIPE_CUSTOMER_PORTAL', 'http://localhost:8000'),
 

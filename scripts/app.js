@@ -41,7 +41,7 @@ pm2.connect( async function(err) {
     // Files management
     await pm2.start({
       script    : server,
-      name      : 'files',
+      name      : 'files2',
       watch     : watch
     }, async function(err, apps) {
       if (err) {
@@ -58,7 +58,7 @@ pm2.connect( async function(err) {
     // Webhook management
     await pm2.start({
       script    : webhooks,
-      name      : 'webhooks',
+      name      : 'webhooks2',
       watch     : watch
     }, async function(err, apps) {
       if (err) {
@@ -77,7 +77,7 @@ pm2.connect( async function(err) {
       console.log("Starting the Cron service.")
       await pm2.start({
         script    : crons,
-        name      : 'crons',
+        name      : 'crons2',
         watch     : watch
       }, async function(err, apps) {
         if (err) {
@@ -122,5 +122,4 @@ pm2.connect( async function(err) {
     console.error("Invalid argument")
     await report('error','app.js',"Invalid app argument")
   }
-
 })
