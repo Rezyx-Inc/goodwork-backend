@@ -707,7 +707,7 @@ class RecruiterController extends Controller
                     if ($checkResponse->success) {
                         
                         if (isset($checkResponse->data)) {
-                            $orgId = $checkResponse->data->org->orgId;
+                            $orgId = $checkResponse->data->org[0]->orgId;
                         } else {
                             $orgId = null;
                         }
@@ -905,7 +905,7 @@ class RecruiterController extends Controller
                 if ($checkResponse->success) {
                         
                     if (isset($checkResponse->data)) {
-                        $orgId = $checkResponse->data->org->orgId;
+                        $orgId = $checkResponse->data->org[0]->orgId;
                     } else {
                         $orgId = null;
                     }
