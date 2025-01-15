@@ -953,24 +953,24 @@
             let check = false;
             if (inputName == 'certification') {
                 const is_job_certif_exist_in_worker_files = job_certification_displayname.every(element =>
-                    worker_files_displayname_by_type.includes(element));
+                    worker_files_displayname_by_type?.includes(element));
                 if (is_job_certif_exist_in_worker_files) {
                     check = true;
                 }
             } else if (inputName == 'vaccination') {
                 const is_job_vaccin_exist_in_worker_files = job_vaccination_displayname.every(element =>
-                    worker_files_displayname_by_type.includes(element));
+                    worker_files_displayname_by_type?.includes(element));
 
                 if (is_job_vaccin_exist_in_worker_files) {
                     check = true;
                 }
             } else if (inputName == 'references') {
-                if (number_of_references <= worker_files_displayname_by_type.length) {
+                if (number_of_references <= worker_files_displayname_by_type?.length) {
                     check = true;
                 }
             } else if (inputName == 'skills') {
                 const is_job_skill_exist_in_worker_files = job_skills_displayname.every(element =>
-                    worker_files_displayname_by_type.includes(element));
+                    worker_files_displayname_by_type?.includes(element));
                 // console.log('job skills job name :', job_skills_displayname)
                 // console.log('worker_files_displayname_by_type', worker_files_displayname_by_type)
                 // console.log('is_job_skill_exist_in_worker_files', is_job_skill_exist_in_worker_files);
@@ -978,7 +978,7 @@
                     check = true;
                 }
             } else if (inputName == 'driving_license') {
-                if (worker_files_displayname_by_type.length > 0) {
+                if (worker_files_displayname_by_type?.length > 0) {
                     check = true;
                 }
             
@@ -986,18 +986,18 @@
             
                 let is_resume = @json($model["is_resume"]);
 
-                if (worker_files_displayname_by_type.length > 0 && is_resume) {
+                if (worker_files_displayname_by_type?.length > 0 && is_resume) {
 
                     check = true;
                 
-                }else if (worker_files_displayname_by_type.length > 0 && !is_resume){
+                }else if (worker_files_displayname_by_type?.length > 0 && !is_resume){
                     check = true;
                 }else{
                     check = false;
                 }
 
             } else if (inputName == 'diploma') {
-                if (worker_files_displayname_by_type.length > 0) {
+                if (worker_files_displayname_by_type?.length > 0) {
                     check = true;
                 }
             }
@@ -1023,7 +1023,7 @@
 
         async function get_all_files_displayName_by_type(type) {
             let files = worker_files?.filter(file => file.type == type);
-            let displayNames = files.map(file => file.displayName);
+            let displayNames = files?.map(file => file.displayName);
             worker_files_displayname_by_type = displayNames;
             return displayNames;
         }
