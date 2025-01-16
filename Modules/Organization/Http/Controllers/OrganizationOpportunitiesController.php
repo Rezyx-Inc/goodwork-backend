@@ -77,8 +77,13 @@ class OrganizationOpportunitiesController extends Controller
         $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/get-preferences', [
             'id' => $orgId,
         ]);
+
+        $requiredFieldsToSubmit = [];
         $requiredFields = json_decode($requiredFields->body());
-        $requiredFieldsToSubmit = $requiredFields->data->preferences->requiredToSubmit;
+        
+        if($requiredFields->success) {
+            $requiredFieldsToSubmit = $requiredFields->data->preferences->requiredToSubmit;
+        }
         
         return view('organization::organization/opportunitiesmanager', compact('draftJobs', 'specialities', 'professions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount', 'requiredFieldsToSubmit'));
         //return response()->json(['success' => false, 'message' =>  $states]);

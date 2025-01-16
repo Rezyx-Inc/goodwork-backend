@@ -1561,10 +1561,7 @@ public function recruiters_management()
             }
 
             if($requiredFields->success == false){
-                return response()->json([
-                    'msg' => $requiredFields->message,
-                    'success' => false
-                ]);
+                $requiredFields = [];
             }else{
                 $requiredFields = $requiredFields->data->preferences;
             }
