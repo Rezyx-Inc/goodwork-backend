@@ -25,13 +25,18 @@
                                     <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
                                     <button class="ss-fliter-btn" type="submit">Filter</button>
                                 </div>
-                                <button type="button" class="btn first-collapse mt-3" data-toggle="collapse" data-target="#medInf">
+                               
+                               
+
+                                {{-- Organization Filters --}}
+                                <button type="button" class="btn first-collapse mt-3" data-toggle="collapse" data-target="#org_infos">
                                    Organization Filters
                                 </button>
                                 
-                                <div id="medInf" class="collapse">
+                                <div id="org_infos" class="collapse">
+                                    {{-- Full Name Organization --}}
                                     <div class="ss-input-slct-grp">
-                                        <label for="cars">Full Name</label>
+                                        <label for="cars">Full Name Organization</label>
                                         <select name="organization_full_name">
                                             <option value="">Select</option>
                                             @foreach ($organizations as $v)
@@ -41,6 +46,7 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    {{-- Organization Name --}}
                                     <div class="ss-input-slct-grp">
                                         <label for="cars">Organization Name</label>
                                         <select name="organization">
@@ -52,6 +58,50 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <br>
+                                </div>
+
+                                <button type="button" class="btn first-collapse mt-3" data-toggle="collapse" data-target="#recruiter_infos">
+                                   Recruiter Filters
+                                </button>
+                                
+                                <div id="recruiter_infos" class="collapse">
+                                    {{-- Recruiter Full Name --}}
+                                    <div class="ss-input-slct-grp">
+                                        <label for="cars">Full Name Recruiter</label>
+                                        <select name="recruiter_full_name">
+                                            <option value="">Select</option>
+                                            @foreach ($recruiters as $v)
+                                                <option value="{{ $v->first_name }}" data-id="{{ $v->first_name }}"
+                                                    {{ $recruiter_full_name == $v->first_name ? 'selected' : '' }}>{{ $v->first_name }} {{ $v->last_name }}</option>
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    {{-- Organization Name for Recruiter --}}
+                                    <div class="ss-input-slct-grp">
+                                        <label for="cars">Recruiter Name</label>
+                                        <select name="recruiter">
+                                            <option value="">Select</option>
+                                            @php
+                                                $uniqueRecruiters = [];
+                                            @endphp
+                                            @foreach ($recruiters as $v)
+                                                @if (!in_array($v->organization_name, $uniqueRecruiters))
+                                                    <option value="{{ $v->organization_name }}" 
+                                                            data-id="{{ $v->organization_name }}"
+                                                            {{ $recruiter == $v->organization_name ? 'selected' : '' }}>
+                                                        {{ $v->organization_name }}
+                                                    </option>
+                                                    @php
+                                                        $uniqueRecruiters[] = $v->organization_name;
+                                                    @endphp
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                        
+                                    </div>
+                                    <br>
                                 </div>
 
                                 <div class="ss-input-slct-grp">
