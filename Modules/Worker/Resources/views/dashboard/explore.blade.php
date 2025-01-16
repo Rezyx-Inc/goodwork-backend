@@ -116,6 +116,28 @@
                                 </div>
 
                                 <div class="ss-input-slct-grp">
+                                    <label for="cars">Facility</label>
+                                    <select name="facility_name">
+                                        <option value="">Select</option>
+                                        @php
+                                            $uniqueFacilities = [];
+                                        @endphp
+                                        @foreach ($facilities as $v)
+                                            @if (!in_array($v->facility_name, $uniqueFacilities))
+                                                <option value="{{ $v->facility_name }}" 
+                                                        data-id="{{ $v->facility_name }}"
+                                                        {{ $facilityName == $v->facility_name ? 'selected' : '' }}>
+                                                    {{ $v->facility_name }}
+                                                </option>
+                                                @php
+                                                    $uniqueFacilities[] = $v->facility_name;
+                                                @endphp
+                                            @endif
+                                        @endforeach
+                                    </select>                                    
+                                </div>
+
+                                <div class="ss-input-slct-grp">
                                     <label for="cars">Profession</label>
                                     <select name="profession">
                                         <option value="">Select</option>

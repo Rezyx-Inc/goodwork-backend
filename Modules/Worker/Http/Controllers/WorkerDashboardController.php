@@ -553,6 +553,7 @@ class WorkerDashboardController extends Controller
     // Fetch related data
     $data['organizations'] = User::where('role', 'ORGANIZATION')->get();
     $data['recruiters'] = User::where('role', 'RECRUITER')->get();
+    $data['facilities'] = Job::where('active', '1')->get();
     $data['specialities'] = Speciality::select('full_name')->get();
     $data['professions'] = Profession::select('full_name')->get();
     $data['terms_key'] = Keyword::where(['filter' => 'terms'])->get();
@@ -566,6 +567,7 @@ class WorkerDashboardController extends Controller
     $data['organization_full_name'] = $request->input('organization_full_name', null);
     $data['recruiter'] = $request->input('recruiter', null);
     $data['recruiter_full_name'] = $request->input('recruiter_full_name', null);
+    $data['facilityName'] = $request->input('facility_name', null);
     $data['job_id'] = $request->input('gw', null);
     $data['profession'] = $request->input('profession');
     $data['speciality'] = $request->input('speciality');
@@ -666,7 +668,9 @@ class WorkerDashboardController extends Controller
         }
     }
 
-
+    if (!empty($data['facilityName'])) {
+      $ret->where('facility_name', 'like', $data['facilityName']);
+    }
 
 
     if (!empty($data['job_type'])) {
