@@ -551,6 +551,8 @@ class WorkerDashboardController extends Controller
     $data['jobSaved'] = new JobSaved();
 
     // Fetch related data
+    $data['organizations'] = User::where('role', 'ORGANIZATION')->get();
+    $data['recruiters'] = User::where('role', 'RECRUITER')->get();
     $data['specialities'] = Speciality::select('full_name')->get();
     $data['professions'] = Profession::select('full_name')->get();
     $data['terms_key'] = Keyword::where(['filter' => 'terms'])->get();
@@ -560,6 +562,7 @@ class WorkerDashboardController extends Controller
     $data['us_states'] = State::select('id', 'name')->get();
     
     // Set filter values from the request, use null as the default if not provided
+    $data['organization'] = $request->input('organization', null);
     $data['job_id'] = $request->input('gw', null);
     $data['profession'] = $request->input('profession');
     $data['speciality'] = $request->input('speciality');
@@ -606,6 +609,15 @@ class WorkerDashboardController extends Controller
       return view('worker::dashboard.explore', $data);
     }
 
+    $data['organizations_id'] = [];
+    if (!empty($data['organization'])) {
+      foreach ($data['organizations'] as $org) {
+        if ($org->organization_name == $data['organization']) {
+          $data['organizations_id'][] = $org->id;
+        }
+      }
+      $ret->where('organization_id', 'like', $data['organizations_id']);
+    }
 
     if (!empty($data['job_type'])) {
       $ret->where('job_type', 'like', $data['job_type']);

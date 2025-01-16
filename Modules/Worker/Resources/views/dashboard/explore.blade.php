@@ -37,6 +37,17 @@
                                 </div>
 
                                 <div class="ss-input-slct-grp">
+                                    <label for="cars">Organization</label>
+                                    <select name="organization">
+                                        <option value="">Select</option>
+                                        @foreach ($organizations as $v)
+                                            <option value="{{ $v->organization_name }}" data-id="{{ $v->organization_name }}"
+                                                {{ $organization == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="ss-input-slct-grp">
                                     <label for="cars">Profession</label>
                                     <select name="profession">
                                         <option value="">Select</option>
