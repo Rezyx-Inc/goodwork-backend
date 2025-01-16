@@ -25,6 +25,35 @@
                                     <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
                                     <button class="ss-fliter-btn" type="submit">Filter</button>
                                 </div>
+                                <button type="button" class="btn first-collapse mt-3" data-toggle="collapse" data-target="#medInf">
+                                   Organization Filters
+                                </button>
+                                
+                                <div id="medInf" class="collapse">
+                                    <div class="ss-input-slct-grp">
+                                        <label for="cars">Full Name</label>
+                                        <select name="organization_full_name">
+                                            <option value="">Select</option>
+                                            @foreach ($organizations as $v)
+                                                <option value="{{ $v->first_name }}" data-id="{{ $v->first_name }}"
+                                                    {{ $organization_full_name == $v->first_name ? 'selected' : '' }}>{{ $v->first_name }} {{ $v->last_name }}</option>
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="ss-input-slct-grp">
+                                        <label for="cars">Organization Name</label>
+                                        <select name="organization">
+                                            <option value="">Select</option>
+                                            @foreach ($organizations as $v)
+                                                <option value="{{ $v->organization_name }}" data-id="{{ $v->organization_name }}"
+                                                    {{ $organization == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="ss-input-slct-grp">
                                     <label for="cars">Job Type</label>
                                     <select name="job_type">
@@ -36,17 +65,6 @@
                                     </select>
                                 </div>
 
-                                <div class="ss-input-slct-grp">
-                                    <label for="cars">Organization</label>
-                                    <select name="organization">
-                                        <option value="">Select</option>
-                                        @foreach ($organizations as $v)
-                                            <option value="{{ $v->organization_name }}" data-id="{{ $v->organization_name }}"
-                                                {{ $organization == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
                                 <div class="ss-input-slct-grp">
                                     <label for="cars">Profession</label>
                                     <select name="profession">
@@ -833,6 +851,19 @@ $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value"
         .value {
             left: 0%;
         }
+
+        .btn.first-collapse,
+    .btn.first-collapse:hover,
+    .btn.first-collapse:focus,
+    .btn.first-collapse:active {
+        background-color: #fff8fd;
+        color: rgb(65, 41, 57);
+        font-size: 14px;
+        font-family: 'Neue Kabel';
+        font-style: normal;
+        width: 100%;
+        background: #FFEEEF;
+    }
     </style>
 
 @stop

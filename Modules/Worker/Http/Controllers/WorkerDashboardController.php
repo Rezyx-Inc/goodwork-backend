@@ -563,6 +563,7 @@ class WorkerDashboardController extends Controller
     
     // Set filter values from the request, use null as the default if not provided
     $data['organization'] = $request->input('organization', null);
+    $data['organization_full_name'] = $request->input('organization_full_name', null);
     $data['job_id'] = $request->input('gw', null);
     $data['profession'] = $request->input('profession');
     $data['speciality'] = $request->input('speciality');
@@ -610,14 +611,34 @@ class WorkerDashboardController extends Controller
     }
 
     $data['organizations_id'] = [];
-    if (!empty($data['organization'])) {
-      foreach ($data['organizations'] as $org) {
-        if ($org->organization_name == $data['organization']) {
-          $data['organizations_id'][] = $org->id;
+if (!empty($data['organization']) || !empty($data['organization_full_name'])) {
+    foreach ($data['organizations'] as $org) {
+        // Check if both conditions are provided and match
+        if (!empty($data['organization']) && !empty($data['organization_full_name'])) {
+            if ($org->organization_name == $data['organization'] && $org->first_name == $data['organization_full_name']) {
+                $data['organizations_id'][] = $org->id;
+            }
+        } 
+        // Check only organization name
+        elseif (!empty($data['organization']) && $org->organization_name == $data['organization']) {
+            $data['organizations_id'][] = $org->id;
+        } 
+        // Check only organization full name
+        elseif (!empty($data['organization_full_name']) && $org->first_name == $data['organization_full_name']) {
+            $data['organizations_id'][] = $org->id;
         }
-      }
-      $ret->where('organization_id', 'like', $data['organizations_id']);
     }
+    // Apply query filter if organizations_id is not empty
+    if (!empty($data['organizations_id'])) {
+        $ret->whereIn('organization_id', $data['organizations_id']);
+    } else {
+        // Handle the case where no matching organization is found
+        $ret->whereRaw('1 = 0'); // No results will be returned
+    }
+}
+
+
+
 
     if (!empty($data['job_type'])) {
       $ret->where('job_type', 'like', $data['job_type']);
