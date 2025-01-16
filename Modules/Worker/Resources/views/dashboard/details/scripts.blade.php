@@ -1031,7 +1031,7 @@
 
         async function check_required_files_before_sent(obj) {
 
-            update_nurse_information(dataToSend)
+            update_nurse_information(dataToSend, true);
 
             let access = true;
             for (const requiredField of requiredFieldsToApply) {
@@ -1315,7 +1315,7 @@
         // update nurse information change every 50 seconds
         setInterval(() => {
             update_nurse_information(dataToSend);
-        }, 50000);
+        }, 5000);
 
         // Save on page exit
         window.addEventListener('beforeunload', function() {

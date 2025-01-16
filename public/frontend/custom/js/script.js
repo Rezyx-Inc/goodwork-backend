@@ -659,8 +659,8 @@ function update_nurse_information(data_to_send, notify = false)
             if (notify && resp.success) {
                 notie.alert({
                     type: 'success',
-                    text: '<i class="fa fa-check"></i> ' + resp.msg,
-                    time: 3
+                    text: '<i class="fa fa-check"></i> Data Saved.',
+                    time: 2
                 });
             }
         },
