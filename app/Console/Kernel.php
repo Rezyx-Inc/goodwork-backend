@@ -19,7 +19,8 @@ class Kernel extends ConsoleKernel
         Commands\weeklyCron::class,
         Commands\monthlyCron::class,
         BuildLocal::class,
-       BuildRefresh::class,
+        BuildRefresh::class,
+        Commands\dailyCron::class,
     ];
 
     /**
@@ -35,6 +36,7 @@ class Kernel extends ConsoleKernel
         })->weekly()->mondays()->at('08:00'); */
         $schedule->command('weekly:update')->weekly()->mondays()->at('08:00');
         $schedule->command('monthly:update')->monthlyOn(20, '10:00');
+        $schedule->command('daily:update')->dailyAt('01:00');
     }
 
     /**

@@ -235,4 +235,9 @@ class Offer extends Model
     {
         return $this->belongsTo(Job::class);
     }
+
+    public function organization()
+    {
+        return $this->belongsTo(User::class, 'organization_id');
+    }
 }
