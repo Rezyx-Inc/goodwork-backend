@@ -85,7 +85,7 @@
                                         </label>
                                     </div>
 
-                                    <div class="ss-my-prosnl-rdio-btn">
+                                    {{-- <div class="ss-my-prosnl-rdio-btn">
                                         <input type="radio" name="select" id="option-3"
                                             onclick="BonusTransfersDisplay()">
                                         <label for="option-3" class="option option-3">
@@ -101,7 +101,7 @@
                                                 </li>
                                             </ul>
                                         </label>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="ss-my-prosnl-rdio-btn">
                                         <input type="radio" name="select" id="option-4" onclick="SupportDisplay()">
@@ -253,7 +253,7 @@
                     </div>
                     {{-- ---------------------------------------------------------- End Account settings  ---------------------------------------------------------- --}}
                     {{-- ----------------------------------------------------------  Bonus Area -------------------------------------------------------------------- --}}
-                    <div class="col-lg-7 bodyAll bonus_transfers d-none">
+                    {{-- <div class="col-lg-7 bodyAll bonus_transfers d-none">
                         <div class="ss-pers-info-form-mn-dv" style="width: 100% !important">
                             <div class="ss-persnl-frm-hed">
                                 <p><span><img src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>
@@ -263,10 +263,10 @@
 
                                 <form method="post">
                                     @csrf
-                                    <!-- slide Bonus Transfer -->
+                                    
                                     <div class="page slide-page">
                                         <div class="row justify-content-center">
-                                            {{-- Skip && Save --}}
+                                            
                                             <div
                                                 class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
                                                 <button type="text" class=" col-12 ss-prsnl-save-btn" id="AddStripe">
@@ -279,7 +279,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- ----------------------------------------------------------  End Bonus Area -------------------------------------------------------------------- --}}
                     {{-- ----------------------------------------------------------  Support Area -------------------------------------------------------------------- --}}
                     <div class="col-lg-7 bodyAll support_info d-none">
@@ -641,48 +641,48 @@
 
         // saving amount transfer
 
-        AddStripe.addEventListener("click", function(event) {
-            event.preventDefault();
+        // AddStripe.addEventListener("click", function(event) {
+        //     event.preventDefault();
 
-            $('#loading').removeClass('d-none');
-            $('#send_ticket').addClass('d-none');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '/recruiter/send-amount-transfer',
-                type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    access: true,
-                }),
-                success: function(resp) {
-                    console.log(resp);
-                    if (resp.status) {
-                        notie.alert({
-                            type: 'success',
-                            text: '<i class="fa fa-check"></i> Redirecting ...',
-                            time: 5
-                        });
-                        $('#loading').addClass('d-none');
-                        $('#send_ticket').removeClass('d-none');
-                        window.location.href = resp.portal_link;
-                    } else {
-                        notie.alert({
-                            type: 'success',
-                            text: '<i class="fa fa-check"></i> Client Exists',
-                            time: 5
-                        });
-                        $('#loading').addClass('d-none');
-                        $('#send_ticket').removeClass('d-none');
-                        // window.location.href = resp.portal_link;
-                    }
-                }
-            });
-        });
+        //     $('#loading').removeClass('d-none');
+        //     $('#send_ticket').addClass('d-none');
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
+        //     $.ajax({
+        //         url: '/recruiter/send-amount-transfer',
+        //         type: 'POST',
+        //         dataType: 'json',
+        //         contentType: 'application/json',
+        //         data: JSON.stringify({
+        //             access: true,
+        //         }),
+        //         success: function(resp) {
+        //             console.log(resp);
+        //             if (resp.status) {
+        //                 notie.alert({
+        //                     type: 'success',
+        //                     text: '<i class="fa fa-check"></i> Redirecting ...',
+        //                     time: 5
+        //                 });
+        //                 $('#loading').addClass('d-none');
+        //                 $('#send_ticket').removeClass('d-none');
+        //                 window.location.href = resp.portal_link;
+        //             } else {
+        //                 notie.alert({
+        //                     type: 'success',
+        //                     text: '<i class="fa fa-check"></i> Client Exists',
+        //                     time: 5
+        //                 });
+        //                 $('#loading').addClass('d-none');
+        //                 $('#send_ticket').removeClass('d-none');
+        //                 // window.location.href = resp.portal_link;
+        //             }
+        //         }
+        //     });
+        // });
 
 
 
