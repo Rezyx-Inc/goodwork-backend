@@ -4623,7 +4623,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
 
     document.addEventListener('DOMContentLoaded', async function() {
 
-        fillData();
+        //fillData();
         // let workerClassification = document.getElementById("nurse_classification");
         // workerClassificationValue = workerClassification.value;
         // if(workerClassificationValue == 'W-2'){
