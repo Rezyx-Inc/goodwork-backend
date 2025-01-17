@@ -429,7 +429,7 @@ public function index()
         }
     }
 
-    public function send_amount(Request $request)
+    public function check_stripe(Request $request)
     {
 
         try {
