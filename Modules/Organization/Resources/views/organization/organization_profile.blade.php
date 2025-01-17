@@ -263,21 +263,39 @@
                             </div>
                             <div class="form-outer">
 
-                                <form method="post">
-                                    @csrf
-                                    <!-- slide Bonus Transfer -->
+                                @if ($user->stripeAccountId)
+                                
+                                    <form method="post">
+                                        @csrf
+                                        <!-- slide Bonus Transfer -->
+                                        <div class="page slide-page">
+                                            <div class="row justify-content-center">
+                                                {{-- Skip && Save --}}
+                                                <div
+                                                    class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+                                                    <button type="text" class=" col-12 ss-prsnl-save-btn" id="AddStripe">
+                                                        Add Stripe
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                @else 
+
                                     <div class="page slide-page">
                                         <div class="row justify-content-center">
                                             {{-- Skip && Save --}}
                                             <div
                                                 class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                                <button type="text" class=" col-12 ss-prsnl-save-btn" id="AddStripe">
-                                                    Add Stripe
-                                                </button>
+                                                <a type="text" class="btn col-12 ss-prsnl-save-btn" id="connectStripe" target="_blank" href="{{ Config::get('app.portal_link') }}">
+                                                    Connect to Stripe 
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+
+                                @endif
                             </div>
 
                         </div>
@@ -674,7 +692,7 @@ let digitValidate = function (ele) {
                 }
             });
             $.ajax({
-                url: '/organization/send-amount-transfer',
+                url: '/organization/check-stripe',
                 type: 'POST',
                 dataType: 'json',
                 contentType: 'application/json',
@@ -706,6 +724,7 @@ let digitValidate = function (ele) {
             });
         });
 
+        
 
 
 

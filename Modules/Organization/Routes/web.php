@@ -69,7 +69,7 @@ Route::prefix('organization')->group(function () {
 
         // Send amount
 
-        Route::post('send-amount-transfer',['uses' => 'OrganizationDashboardController@send_amount', 'as' => 'organization-send_amount']);
+        Route::post('check-stripe',['uses' => 'OrganizationDashboardController@check_stripe', 'as' => 'organization-check_stripe']);
 
         //edit job
         Route::post('get-job-to-edit', ['uses' => 'OrganizationController@get_job_to_edit', 'as' => 'organization-get_job_to_edit']);

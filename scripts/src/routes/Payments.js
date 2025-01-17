@@ -11,6 +11,64 @@ router.get("/", (req, res) => {
   res.redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 });
 
+/* Recruiters - Organizations (orgs) */
+
+// Create a customer
+router.post("/customer/create", async (req, res) => {
+
+  if (!Object.keys(req.body).length) {
+
+    return res.status(400).send({ status: false, message: "Empty request" });
+
+  } else if (!req.body.email) {
+
+    return res
+      .status(400)
+      .send({ status: false, message: "Missing parameter." });
+  }
+
+  // Check if the customer exists
+  try {
+
+    const customerTest = await stripe.customers.list({
+      email: req.body.email,
+    });
+
+    if (customerTest.data.length > 0) {
+      return res
+        .status(400)
+        .send({ status: false, message: "Client exists.", code: 101 });
+    }
+  } catch (e) {
+
+    return res.status(400).send({ status: false, message: e.message });
+  }
+
+  const portal = process.env.STRIPE_CUSTOMER_PORTAL;
+
+  // Create the customer
+  try {
+
+    const customer = await stripe.customers.create({
+
+      email: req.body.email,
+      payment_method: "pm_card_visa",
+      invoice_settings: {
+        default_payment_method: "pm_card_visa",
+      },
+
+    });
+
+    await queries.insertCustomerStripeId(customer.id, req.body.email);
+
+    res.status(200).json({ status: true, message: portal });
+
+  } catch (e) {
+
+    return res.status(400).send({ status: false, message: e.message });
+  }
+});
+
 // get - customer payment methods
 router.get("/customer/customer-payment-method", async (req, res) => {
 
