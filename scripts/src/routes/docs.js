@@ -6,7 +6,7 @@ var fs = require("fs");
 var path = require("path");
 
 router.get("/", (req, res) => {
-    res.send("Docs page");
+    res.redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 });
 
 /*
@@ -19,14 +19,19 @@ router.get("/", (req, res) => {
 router.post("/add-docs", async (req, res) => {
     
     if (!Object.keys(req.body).length) {
-        return res.status(400).send("Empty request");
+
+        return res.status(200).send({ success:false, message:"Empty request" });
     }
 
     if (!req.body.workerId || !req.body.files) {
+
         if (!Array.isArray(req.body.files) || req.body.files.length == 0) {
-            return res.status(400).send("No file sent.");
+
+            return res.status(200).send({ success: false, message: "No file sent." });
+
         } else {
-            return res.status(400).send("Missing parameters.");
+
+            return res.status(200).send({ success: false, message: "Missing parameters." });
         }
     }
 
@@ -35,16 +40,18 @@ router.post("/add-docs", async (req, res) => {
     // Check if the worker has files, if not, create one
     await Docs.findOne({ workerId: req.body.workerId })
     .then(async (docs) => {
+
         if (!docs) {
+
             let doc = await Docs.create(req.body);
-            return res.status(200).json({ ok: true });
+            return res.status(200).json({ success: true , message: "Doc created." });
         }
 
         bsonId = docs._id;
     })
     .catch((e) => {
         console.log("Unexpected error", e);
-        res.status(500).send(e);
+        res.status(200).send({ success:false, message: e.message });
     });
 
     var files = req.body.files;
@@ -54,15 +61,17 @@ router.post("/add-docs", async (req, res) => {
     
     // check if files length is less than 25
     if ((documentsLength[0].files + files.length) > 25) {
+
         return res
-            .status(500)
-            .json({ error: "Max 25 files per user." });
+            .status(200)
+            .json({ success:false, message: "Max 25 files per user." });
     }
 
     // Iterate the files array and update the records in the db
     for (let file of files) {
 
         try{
+
             file.path = "";
             await Docs.findOneAndUpdate({_id:bsonId}, {'$push': {files:file}});
 
@@ -76,20 +85,22 @@ router.post("/add-docs", async (req, res) => {
                 if (!fs.existsSync(path.join(process.cwd(), process.env.FILES_STORAGE_DIR_NAME, req.body.workerId ))) {
                     fs.mkdirSync(path.join(process.cwd(), process.env.FILES_STORAGE_DIR_NAME, req.body.workerId ));
                 }
+
                 fs.writeFileSync(file.path, file.content, {flag: 'w+'});
 
                 file.content = "";
+
                 await Docs.findOneAndUpdate({_id:bsonId}, {'$push': {files:file}});
 
             }else{
 
                 console.log("Unable to Update document.", e);
-                return res.status(400).send(e.message);
+                return res.status(200).send({ success:false, message: e.message });
             }
         }
     }
     
-    return res.status(200).json({ ok: true });   
+    return res.status(200).json({ success: true, message: "File(s) Added." });
 });
 
 /*
@@ -98,31 +109,41 @@ router.post("/add-docs", async (req, res) => {
     @param workerId required
 */
 router.post("/get-docs", async (req, res) => {
+
     if (!Object.keys(req.body).length) {
-        return res.status(400).send("Empty request");
+
+        return res.status(200).send({ success:false, message: "Empty request" });
+
     } else if (!req.body.workerId) {
-        return res.status(400).send("Missing parameters.");
+
+        return res.status(200).send({ success: false, message: "Missing parameters." });
     }
 
     let doc = await Docs.findOne({ workerId: req.body.workerId })
         .then((docs) => {
+
             if (!docs) {
-                return res.status(404).send("Document not found.");
+
+                return res.status(200).send({ success: false, message: "Document not found." });
             }
 
             let docsFiles = docs.files;
+
             // Check if any of the files is saved to disk and get it
             for (let [value, index] in docsFiles) {
+
                 if(value.content == ''){
+
                     docs.files[index].content = fs.readFileSync(value.path).toString();
                 }
             }
 
-            return res.status(200).send(docs);
+            return res.status(200).send({ success:true, message: "Documents found.", data: { docs: docs } });
         })
         .catch((e) => {
+
             console.log("Unexpected error", e);
-            return res.status(400).send("Unexpected error.");
+            return res.status(200).send({success:false, message : e.message });
         });
 });
 
@@ -133,14 +154,19 @@ router.post("/get-docs", async (req, res) => {
 
 */
 router.get("/get-doc", async (req, res) => {
+
     if (!Object.keys(req.query).length) {
-        return res.status(400).send("Empty request");
+
+        return res.status(200).send({ success: false , message: "Empty request" });
     }
 
     try {
+
         let doc = await Docs.findOne({ "files._id": req.query.bsonId });
+
         if (!doc) {
-            return res.status(404).send("Document not found.");
+
+            return res.status(200).send({ success: false , message: "Document not found." });
         }
 
         for (let file of doc.files) {
@@ -151,11 +177,16 @@ router.get("/get-doc", async (req, res) => {
                 if(file.content == ''){
                     
                     const base64Content = fs.readFileSync(file.path).toString();
+
                     return res.status(200).json({
-                        name: file.name,
-                        content: {
-                            data: `${base64Content}`,
-                        },
+                        success:true,
+                        message: "Document found.",
+                        data: {
+                            name: file.name,
+                            content: {
+                                data: `${base64Content}`,
+                            }
+                        }
                     });
 
                 }else{
@@ -163,19 +194,25 @@ router.get("/get-doc", async (req, res) => {
                     const base64Content = file.content.toString("base64");
 
                     return res.status(200).json({
-                        name: file.name,
-                        content: {
-                            data: `${base64Content}`,
-                        },
+                        success:true,
+                        message: "Document found.",
+                        data: {
+                            name: file.name,
+                            content: {
+                                data: `${base64Content}`,
+                            }
+                        }
                     });
                 }
             }
         }
 
-        return res.status(400).send("Document found but file not found.");
+        return res.status(200).send({ success:false, message: "Document found but file not found." });
+
     } catch (e) {
+
         console.log("Unexpected error", e);
-        return res.status(400).send("Unexpected error.");
+        return res.status(200).send({ success:false, message: e.message });
     }
 });
 
@@ -186,19 +223,26 @@ router.get("/get-doc", async (req, res) => {
 
 */
 router.get("/list-docs", async (req, res) => {
+
     if (!Object.keys(req.query).length) {
-        return res.status(400).send("Empty request");
+
+        return res.status(200).send({ success:false, message: "Empty request" });
     }
 
     let doc = await Docs.findOne({ workerId: req.query.workerId })
         .then((docs) => {
+
             if (!docs) {
-                return res.status(404).send("Document not found.");
+
+                return res.status(200).send({ success:false, message: "Document not found." });
             }
 
             var list = [];
+
             for (let file of docs.files) {
+
                 if (file.type == "references") {
+
                     list.push({
                         name: file.name,
                         id: file._id,
@@ -206,7 +250,9 @@ router.get("/list-docs", async (req, res) => {
                         displayName: file.displayName,
                         ReferenceInformation: file.ReferenceInformation,
                     });
+
                 } else {
+
                     list.push({
                         name: file.name,
                         id: file._id,
@@ -216,11 +262,12 @@ router.get("/list-docs", async (req, res) => {
                 }
             }
 
-            return res.status(200).json(list);
+            return res.status(200).json({ success:true, message: "Documents listed.", data : { list: list } });
         })
         .catch((e) => {
+
             console.log("Unexpected error", e);
-            return res.status(400).send("Unexpected error.");
+            return res.status(200).send({ success:false, message: e.message });
         });
 });
 
@@ -231,42 +278,36 @@ router.get("/list-docs", async (req, res) => {
 
 */
 router.post("/del-doc", async (req, res) => {
+
     if (!Object.keys(req.body).length) {
-        return res.status(400).send("Empty request");
+        return res.status(400).send({ success: false, message: "Empty request" });
     }
 
-    let doc = await Docs.findOne({ "files._id": req.body.bsonId })
-        .then((docs) => {
-            if (!docs) {
-                return res.status(404).send("Document not found.");
-            }
+    try {
+        const docs = await Docs.findOne({ "files._id": req.body.bsonId });
 
-            for (let [index, file] of docs.files.entries()) {
-                if (file._id == req.body.bsonId) {
-                    // const filesFilter = docs.files.splice(index, 1)
+        if (!docs) {
+            return res.status(404).send({ success: false, message: "Document not found." });
+        }
 
-                    // docs.files = filesFilter;
+        // Find the index of the file to delete
+        const fileIndex = docs.files.findIndex(file => file._id == req.body.bsonId);
 
-                    // console.log(filesFilter)
-                    docs.files.splice(index, 1);
+        if (fileIndex === -1) {
+            return res.status(404).send({ success: false, message: "File not found in document." });
+        }
 
-                    docs.save()
-                        .then((docs) => {
-                            return res.status(200).send("OK");
-                        })
-                        .catch((e) => {
-                            console.log("Unable to save document.", e);
-                            return res
-                                .status(400)
-                                .send("Unable to save document.");
-                        });
-                }
-            }
-        })
-        .catch((e) => {
-            console.log("Unexpected error", e);
-            return res.status(400).send("Unexpected error.");
-        });
+        // Remove the file
+        docs.files.splice(fileIndex, 1);
+
+        await docs.save();
+
+        return res.status(200).send({ success: true, message: "Document deleted." });
+
+    } catch (e) {
+        // console.log("Unexpected error", e);
+        return res.status(500).send({ success: false, message : e.message });
+    }
 });
 
 /*
@@ -276,21 +317,27 @@ router.post("/del-doc", async (req, res) => {
 
 */
 router.post("/del-docs", async (req, res) => {
+
     if (!Object.keys(req.body).length) {
-        return res.status(400).send("Empty request");
+
+        return res.status(200).send({success: false, message: "Empty request"});
     }
 
     let doc = await Docs.findOne({ "files._id": { $in: req.body.bsonIds } })
         .then((docs) => {
+
             if (!docs) {
-                return res.status(404).send("Document not found.");
+
+                return res.status(200).send({ success: false, message: "Document not found." });
             }
 
             if (docs.length > 1) {
-                return res.status(500).send("Only 1 user at a time");
+
+                return res.status(200).send({ success: false, message: "Provide BSON IDs from a single user at the time." });
             }
 
             let filesFilter = docs.files.filter((file) => {
+
                 return req.body.bsonIds.indexOf(file._id.toString()) == -1;
             });
 
@@ -298,16 +345,19 @@ router.post("/del-docs", async (req, res) => {
 
             docs.save()
                 .then((docs) => {
-                    return res.status(200).send("OK");
+
+                    return res.status(200).send({ success: true, message: "Documents deleted." });
                 })
                 .catch((e) => {
+
                     console.log("Unable to save document.", e);
-                    return res.status(400).send("Unable to save document.");
+                    return res.status(200).send({ success: false, message: "Unable to save document." });
                 });
         })
         .catch((e) => {
+
             console.log("Unexpected error", e);
-            return res.status(400).send("Unexpected error.");
+            return res.status(200).send({ success: false, message: e.message });
         });
 });
 

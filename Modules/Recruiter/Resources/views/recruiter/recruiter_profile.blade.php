@@ -189,7 +189,7 @@
                                             {{-- About Me Information --}}
                                             <div class="ss-form-group col-11">
                                                 <label>About Me</label>
-                                                <textarea type="text" name="about_me">{{ isset($user->about_me) ? $user->about_me : '' }}</textarea>
+                                                <textarea type="text" name="about_me">{{ isset($user->about_me) && !empty($user->about_me) ? $user->about_me : '' }}</textarea>
                                             </div>
                                             <span class="help-block-about_me"></span>
                                             {{-- Skip && Save --}}
@@ -215,63 +215,38 @@
                                     Setting</p>
                             </div>
                             <div class="form-outer">
-                                <form method="post" action="{{ route('update-recruiter-profile') }}">
-                                    @csrf
-                                    <!-- slide Account Setting -->
-                                    <div class="page slide-page">
-                                        <div class="row justify-content-center">
-                                            {{-- Change User Name --}}
-                                            {{-- <div class="ss-form-group col-11">
-                                                <label>New User Name</label>
-                                                <input type="text" name="user_name"
-                                                    placeholder="Please enter your new user name">
-                                            </div>
-                                            <span class="help-block-user_name"></span> --}}
-                                            {{-- Change Password --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>New Password</label>
-                                                <input type="text" name="password"
-                                                    placeholder="Please enter your new password">
-                                            </div>
-                                            {{-- Change 2FA --}}
-                                            {{-- <div class="ss-form-group row col-11">
-                                                <label>Two-factor authentication (2FA)</label>
-                                                <div class="col-lg-6 col-sm-2 col-xs-2 col-md-2">
-                                                    <label>Enable</label>
-                                                    <input style="box-shadow:none; width: auto;" type="radio"
-                                                        id="option1" name="twoFa" value="1">
-                                                </div>
-                                                <div class="col-lg-6 col-sm-2 col-xs-2 col-md-2">
-                                                    <label>Disable</label>
-                                                    <input style="box-shadow:none; width: auto;" type="radio"
-                                                        id="option2" name="twoFa" value="0">
-                                                </div>
-                                            </div> --}}
-                                            {{-- Change Phone Number --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>New Phone Number</label>
-                                                <input id="new_contact_number" type="text" name="new_mobile"
-                                                    placeholder="Please enter your new phone number">
-                                            </div>
-                                            <span class="help-block-new_mobile"></span>
-                                            {{-- Email Information --}}
-                                            {{-- <div class="ss-form-group col-11">
-                                                <label>New Email</label>
-                                                <input type="text" name="email"
-                                                    placeholder="Please enter your new Email">
-                                            </div>
-                                            <span class="help-block-email"></span>
-                                            <span class="help-block-validation"></span> --}}
-                                            {{-- Skip && Save --}}
-                                            <div
-                                                class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                                <button type="text" class=" col-12 ss-prsnl-save-btn"
-                                                    id="SaveAccountInformation"> Save
-                                                </button>
-                                            </div>
+                                <!-- slide Account Setting -->
+                                <div class="page slide-page">
+                                    <div class="row justify-content-center">
+                                        {{-- Email Information --}}
+                                        <div class="ss-form-group col-11">
+                                            <label>New Email</label>
+                                            <input type="text" name="email" id="email" placeholder="Please enter your new Email">
+                                        </div>
+                                        <button type="button" class="mt-3 col-11 w-50 ss-prsnl-save-btn rounded-5" id="sendOTPforVerifyEmail">
+                                            Send OTP
+                                        </button>
+                                        <span class="help-block-email"></span>
+
+                                        {{-- OTP for new email --}}
+                                        <div class="ss-form-group col-7 d-flex align-items-center">
+                                            <label class="me-3">OTP:</label>
+                                            {{-- <input type="text" name="otp" id="otp" placeholder="Please check your email for OTP"> --}}
+                                            <ul class="ss-otp-v-ul">
+                                                <li><input class="otp-input" type="text" name="otp1" oninput="digitValidate(this)" onkeyup="tabChange(1)" maxlength="1"></li>
+                                                <li><input class="otp-input" type="text" name="otp2" oninput="digitValidate(this)" onkeyup="tabChange(2)" maxlength="1"></li>
+                                                <li><input class="otp-input" type="text" name="otp3" oninput="digitValidate(this)" onkeyup="tabChange(3)" maxlength="1"></li>
+                                                <li><input class="otp-input" type="text" name="otp4" oninput="digitValidate(this)" onkeyup="tabChange(4)" maxlength="1"></li>
+                                            </ul>
+
+                                        </div>
+                                        <span class="help-block-otp"></span>
+
+                                        <div class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+                                            <button type="button" class="col-12 ss-prsnl-save-btn" id="SaveAccountInformation" style="display:none;">Save</button>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
 
                         </div>
@@ -409,6 +384,26 @@
 @stop
 
 @section('js')
+<script type="text/javascript">
+    let tabChange = function (val) {
+     let inputs = document.querySelectorAll('.otp-input'); // Select all OTP input fields
+     let saveButton = document.getElementById('SaveAccountInformation'); // Save button element
+     if (inputs[val - 1].value !== "") {
+         if (val < inputs.length) {
+             inputs[val].focus(); // Move to the next input
+         }
+     } else if (inputs[val - 1].value === "" && val > 1) {
+         inputs[val - 2].focus(); // Move to the previous input
+     }
+     // Check if all inputs are filled
+     let allFilled = Array.from(inputs).every(input => input.value !== "");
+     saveButton.style.display = allFilled ? "block" : "none"; // Show or hide the Save button
+ };
+ let digitValidate = function (ele) {
+     ele.value = ele.value.replace(/[^0-9]/g, ""); // Allow only digits
+ };
+ </script>
+
     <script type="text/javascript">
         // loding states cities docs on page load
 
@@ -482,11 +477,11 @@
 
             }
 
-            if (about_me.value === '') {
-                $('.help-block-about_me').text('Please enter a description');
-                $('.help-block-about_me').addClass('text-danger');
-                isValid = false;
-            }
+            // if (about_me.value === '') {
+            //     $('.help-block-about_me').text('Please enter a description');
+            //     $('.help-block-about_me').addClass('text-danger');
+            //     isValid = false;
+            // }
 
             return isValid;
         }
@@ -623,6 +618,11 @@
                             text: '<i class="fa fa-check"></i> Account Information saved successfully',
                             time: 5
                         });
+
+                        // refresh page 
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2500);
 
                     }
                 },
@@ -792,23 +792,23 @@
 
         // inputs account settings
 
-        const user_name = document.querySelector('input[name="user_name"]');
-        const password = document.querySelector('input[name="password"]');
-        const new_mobile = document.querySelector('input[name="new_mobile"]');
-        const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
-        //const email = document.querySelector('input[name="email"]');
+        //const user_name = document.querySelector('input[name="user_name"]');
+        //const password = document.querySelector('input[name="password"]');
+        //const new_mobile = document.querySelector('input[name="new_mobile"]');
+        //const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
+        const email = document.querySelector('input[name="email"]');
         var inputs = [];
 
         // account setting validation here
 
         function validateAccountSettingInformation() {
-            $('.help-block-new_mobile').text('');
-            $('.help-block-validation').text('');
+           //$('.help-block-new_mobile').text('');
+           $('.help-block-validation').text('');
             $('.help-block-email').text('');
             $('.help-block-user_name').text('');
             let isValid = true;
             // Create an array of all inputs
-            inputs = [password, new_mobile /*, email, user_name*/];
+            inputs = [email ];
 
             // Add the value of the selected radio button to the inputs array, if a radio button is selected
             const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
@@ -827,29 +827,13 @@
             }
 
             // Email validation
-            // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            // if (!emailRegex.test(email.value)) {
-            //     $('.help-block-email').text('Please enter a valid email');
-            //     $('.help-block-email').addClass('text-danger');
-            //     isValid = false;
-            // }
-
-            // User name validation
-            // const userNameRegex = /^[a-zA-Z\s]{1,255}$/;
-            // if (!userNameRegex.test(user_name.value)) {
-            //     $('.help-block-user_name').text(
-            //         'User name can only contain letters and spaces, and cannot be longer than 255 characters');
-            //     $('.help-block-user_name').addClass('text-danger');
-            //     isValid = false;
-            // }
-
-            // New mobile number validation
-            const regexNewPhone = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
-            if (!regexNewPhone.test(new_mobile.value)) {
-                $('.help-block-new_mobile').text('Please enter a valid mobile number');
-                $('.help-block-new_mobile').addClass('text-danger');
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email.value)) {
+                $('.help-block-email').text('Please enter a valid email');
+                $('.help-block-email').addClass('text-danger');
                 isValid = false;
             }
+
 
             return isValid;
         }
@@ -857,32 +841,80 @@
 
 
         // send request to update here
-        const SaveAccountInformation = document.getElementById('SaveAccountInformation');
-        SaveAccountInformation.addEventListener("click", function(event) {
-            event.preventDefault();
+        // const SaveAccountInformation = document.getElementById('SaveAccountInformation');
+        // SaveAccountInformation.addEventListener("click", function(event) {
+        //     event.preventDefault();
+        //     if (!validateAccountSettingInformation()) {
+        //         return;
+        //     }
+
+        //     // clear form data from empty values
+        //     const formData = new FormData();
+        //     inputs.forEach(input => {
+        //         if (input.value.trim() !== '') {
+        //             formData.append(input.name, input.value);
+        //         }
+        //     });
+
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
+        //     $.ajax({
+        //         url: '/recruiter/update-recruiter-account-setting',
+        //         type: 'POST',
+        //         processData: false,
+        //         contentType: false,
+        //         data: formData,
+        //         success: function(resp) {
+        //             console.log(resp);
+        //             if (resp.status) {
+        //                 notie.alert({
+        //                     type: 'success',
+        //                     text: '<i class="fa fa-check"></i> ' + resp.message,
+        //                     time: 5
+        //                 });
+
+        //             } else {
+        //                 notie.alert({
+        //                     type: 'error',
+        //                     text: '<i class="fa fa-check"></i> ' + resp.message,
+        //                     time: 5
+        //                 });
+        //             }
+        //         },
+        //         error: function(resp) {
+        //             notie.alert({
+        //                 type: 'error',
+        //                 text: '<i class="fa fa-check"></i> Please try again later !',
+        //                 time: 5
+        //             });
+        //         }
+        //     });
+
+
+        // });
+
+
+        // send otp button
+        const sendOTPButton = document.getElementById('sendOTPforVerifyEmail');
+        sendOTPButton.addEventListener('click', function(e) {
+            e.preventDefault();
             if (!validateAccountSettingInformation()) {
+                console.log();
+                
                 return;
             }
+            let email = document.getElementById('email').value;
 
-            // clear form data from empty values
-            const formData = new FormData();
-            inputs.forEach(input => {
-                if (input.value.trim() !== '') {
-                    formData.append(input.name, input.value);
-                }
-            });
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+            let data = {
+                email: email
+            };
             $.ajax({
-                url: '/recruiter/update-recruiter-account-setting',
+                url: '/recruiter/send-otp-recruiter',
                 type: 'POST',
-                processData: false,
-                contentType: false,
-                data: formData,
+                data: data,
                 success: function(resp) {
                     console.log(resp);
                     if (resp.status) {
@@ -891,7 +923,6 @@
                             text: '<i class="fa fa-check"></i> ' + resp.message,
                             time: 5
                         });
-
                     } else {
                         notie.alert({
                             type: 'error',
@@ -909,8 +940,75 @@
                 }
             });
 
-
+        })
+        
+        function ValidateOTP() {
+            let inputs = document.querySelectorAll('.otp-input');
+            let otp = Array.from(inputs).map(input => input.value).join('');
+            let isValid = true;
+            if (otp === '') {
+                $('.help-block-otp').text('Please enter the OTP');
+                $('.help-block-otp').addClass('text-danger');
+                isValid = false;
+            } else if (otp.length < inputs.length) {
+                $('.help-block-otp').text('Please complete the OTP');
+                $('.help-block-otp').addClass('text-danger');
+                isValid = false;
+            } else {
+                $('.help-block-otp').text('');
+                $('.help-block-otp').removeClass('text-danger');
+            }
+        
+            return isValid;
+        }
+        // Verify the OTP and update the email
+        const saveButtonForVerifyEmail = document.getElementById('SaveAccountInformation');
+        saveButtonForVerifyEmail.addEventListener("click", function (event) {
+            event.preventDefault();
+        
+            if (!ValidateOTP()) {
+                return;
+            }
+        
+            let inputs = document.querySelectorAll('.otp-input');
+            let otp = Array.from(inputs).map(input => input.value).join('');
+            let email = document.getElementById('email').value;
+        
+            let data = {
+                otp: otp,
+                email: email
+            };
+        
+            $.ajax({
+                url: '/recruiter/update-email-recruiter',
+                type: 'POST',
+                data: data,
+                success: function (resp) {
+                    console.log(resp);
+                    if (resp.status) {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> ' + resp.message,
+                            time: 5
+                        });
+                    } else {
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-times"></i> ' + resp.message,
+                            time: 5
+                        });
+                    }
+                },
+                error: function () {
+                    notie.alert({
+                        type: 'error',
+                        text: '<i class="fa fa-times"></i> Please try again later!',
+                        time: 5
+                    });
+                }
+            });
         });
+
 
         // this functions to display profile setting / account setting forms
         function AccountSettingDisplay() {
@@ -1417,7 +1515,23 @@
   height: 2em;
 }
 
-
+/* OTP page css  */
+ul.ss-otp-v-ul {
+    list-style: none;
+    width: 100%;
+}
+ul.ss-otp-v-ul li {
+    width: 19%;
+    margin: 0 7px;
+    display: inline-block;
+}
+ul.ss-otp-v-ul input {
+    border: 2px solid #111011;
+    box-shadow: 8px 8px 0px 0px #403B4BE5;
+    padding: 12px 15px;
+    border-radius: 10px;
+    width: 100%;
+}
 
 
 </style>

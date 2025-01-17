@@ -75,9 +75,8 @@
                     <option value="Screening"
                         {{ $offerdetails['status'] === 'Screening' ? 'selected hidden disabled' : '' }}>Screening
                     </option>
-                    <option value="Submitted">Submitted
-                    </option>
-                    <option value="Offered">Offered</option>
+                    <option value="Submitted">Submitted</option>
+                    <option value="Offered">Make an Offer</option>
                     <option value="Done">Done</option>
                 </select>
             @else
@@ -93,12 +92,15 @@
                         {{ $offerdetails['status'] === 'Submitted' ? 'selected hidden disabled' : '' }}>Submitted
                     </option>
                     <option value="Offered"
-                        {{ $offerdetails['status'] === 'Offered' ? 'selected hidden disabled' : '' }}>Offered</option>
+                        {{ $offerdetails['status'] === 'Offered' ? 'selected hidden disabled' : '' }}>Make an Offer</option>
                     <option value="Done" {{ $offerdetails['status'] === 'Done' ? 'selected hidden disabled' : '' }}>
                         Done</option>
                     <option value="Onboarding"
                         {{ $offerdetails['status'] === 'Onboarding hidden disabled' ? 'selected' : '' }}>
                         Onboarding</option>
+                    <option value="Cleared"
+                        {{ $offerdetails['status'] === 'Cleared to Start hidden disabled' ? 'selected' : '' }}>
+                        Cleared to Start</option>
                     {{-- <option value="Working" {{ $offerdetails['status'] === 'Working' ? 'selected' : '' }}>Working
                 </option> --}}
                     <option value="Rejected"
@@ -303,7 +305,7 @@
             <div class="col-md-6 ">
                 <p>
                     {!! isset($userdetails->nurse->worker_hours_per_week)
-                        ? number_format($userdetails->nurse->worker_hours_per_week)
+                        ? ($userdetails->nurse->worker_hours_per_week)
                         : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_hours_per_week\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
@@ -361,6 +363,23 @@
             </div>
         </div>
 
+        @if (in_array($offerdetails->status, array('Screening','Submitted')))
+            {{-- Resume --}}
+            <div class="col-md-12">
+                <span class="mt-3">Resume</span>
+            </div>
+
+            <div id="resume" class="row d-flex align-items-center" style="margin:auto;">
+                <div class="col-md-6">
+                    <h6>{{ $offerdetails->is_resume ? 'Required' : 'Not Required' }}</h6>
+                </div>
+                <div class="col-md-6 ">
+                    <p id="resume-placeholder">
+                    </p>
+                </div>
+            </div>
+        @endif
+
     </div>
     {{-- End  Summary --}}
     {{-- Shift --}}
@@ -408,7 +427,7 @@
             <div class="col-md-6 ">
                 <p>
                     {!! isset($userdetails->nurse->worker_guaranteed_hours)
-                        ? number_format($userdetails->nurse->worker_guaranteed_hours)
+                        ? ($userdetails->nurse->worker_guaranteed_hours)
                         : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_guaranteed_hours\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
@@ -436,7 +455,7 @@
             <div class="col-md-6 ">
                 <p>
                     {!! isset($userdetails->nurse->worker_hours_shift)
-                        ? number_format($userdetails->nurse->worker_hours_shift)
+                        ? ($userdetails->nurse->worker_hours_shift)
                         : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_hours_shift\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
@@ -464,7 +483,7 @@
             <div class="col-md-6 ">
                 <p>
                     {!! isset($userdetails->nurse->worker_shifts_week)
-                        ? number_format($userdetails->nurse->worker_shifts_week)
+                        ? ($userdetails->nurse->worker_shifts_week)
                         : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_shifts_week\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
@@ -492,7 +511,7 @@
             <div class="col-md-6 ">
                 <p>
                     {!! isset($userdetails->nurse->worker_weeks_assignment)
-                        ? number_format($userdetails->nurse->worker_weeks_assignment)
+                        ? ($userdetails->nurse->worker_weeks_assignment)
                         : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_weeks_assignment\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
@@ -1635,18 +1654,7 @@
 
 @if ($offerdetails->status == 'Screening')
     <div class="ss-counter-buttons-div">
-        <button class="ss-acpect-offer-btn" onclick="applicationStatus('Offered', '{{ $offerdetails->id }}')">Send
-            1st
-            Offer</button>
-    </div>
-    <div class="ss-counter-buttons-div">
-        <button class="ss-counter-button" onclick="ChangeOfferInfo('{{ $offerdetails->id }}')">Change
-            Offer</button>
-    </div>
-    <div class="ss-counter-buttons-div">
-        <button class="ss-reject-offer-btn"
-            onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'rejectcounter')">Reject
-            Offer</button>
+        <button class="ss-acpect-offer-btn" onclick="applicationStatus('Offered', '{{ $offerdetails->id }}')">Make an Offer</button>
     </div>
 @endif
 
@@ -1705,16 +1713,16 @@
         return item.trim();
 
     });
-    console.log('skills : ', job_skills_displayname);
 
     $(document).ready(async function() {
 
         worker_files = await get_all_files();
-        console.log('Worker files:', worker_files);
+
         checkFileMatch('certification');
         checkFileMatch('vaccination');
         checkFileMatch('references');
         checkFileMatch('skills');
+        checkFileMatch('resume');
         // checkFileMatch('driving_license');
         // checkFileMatch('diploma');
 
@@ -1725,8 +1733,6 @@
         var worker_id = @json($offerdetails['worker_user_id']);
         var offer_id = @json($offerdetails['id']);
         var placeholder = document.getElementById(fileType + '-placeholder');
-        console.log('file type:', fileType);
-        console.log('Placeholder:', placeholder);
 
         if (file.length > 0 && no_files == false) {
             placeholder.innerHTML = file.join(', ');
@@ -1754,9 +1760,8 @@
                     WorkerId: worker_id
                 }),
                 success: function(resp) {
-                    console.log('Success:', resp);
 
-                    let jsonResp = JSON.parse(resp);
+                    let jsonResp = resp.data;
                     files = jsonResp;
                     resolve(
                         files
@@ -1768,7 +1773,7 @@
                     updateWorkerFilesList([], 'vaccination');
                     updateWorkerFilesList([], 'references');
                     updateWorkerFilesList([], 'skills');
-                    console.log('Error:', resp);
+                    updateWorkerFilesList([], 'resume');
                     reject(resp);
                 }
             });
@@ -1793,13 +1798,11 @@
 
     async function checkFileMatch(inputName) {
 
-        console.log('Checking files for:', inputName);
         let worker_files_displayname_by_type = [];
 
         try {
 
             worker_files_displayname_by_type = await get_all_files_displayName_by_type(inputName);
-            console.log('Files:', worker_files_displayname_by_type);
 
         } catch (error) {
 
@@ -1812,12 +1815,8 @@
 
         if (inputName == 'certification') {
 
-            const is_job_certif_exist_in_worker_files = job_certification_displayname.every(element =>
-                worker_files_displayname_by_type.includes(element));
+            const is_job_certif_exist_in_worker_files = job_certification_displayname.every(element => worker_files_displayname_by_type.includes(element));
             updateWorkerFilesList(worker_files_displayname_by_type, 'certification');
-            // console.log('job certification job name :', job_certification_displayname);
-            // console.log('worker_files_displayname_by_type', worker_files_displayname_by_type);
-            // console.log('is_job_certif_exist_in_worker_files', is_job_certif_exist_in_worker_files);
 
             if (is_job_certif_exist_in_worker_files) {
                 check = true;
@@ -1825,12 +1824,8 @@
 
         } else if (inputName == 'vaccination') {
 
-            const is_job_vaccin_exist_in_worker_files = job_vaccination_displayname.every(element =>
-                worker_files_displayname_by_type.includes(element));
+            const is_job_vaccin_exist_in_worker_files = job_vaccination_displayname.every(element => worker_files_displayname_by_type.includes(element));
             updateWorkerFilesList(worker_files_displayname_by_type, 'vaccination');
-            // console.log('job vaccination job name :', job_vaccination_displayname);
-            // console.log('worker_files_displayname_by_type', worker_files_displayname_by_type);
-            // console.log('is_job_vaccin_exist_in_worker_files', is_job_vaccin_exist_in_worker_files);
 
             if (is_job_vaccin_exist_in_worker_files) {
                 check = true;
@@ -1845,12 +1840,8 @@
 
         } else if (inputName == 'skills') {
 
-            const is_job_skill_exist_in_worker_files = job_skills_displayname.every(element =>
-                worker_files_displayname_by_type.includes(element));
+            const is_job_skill_exist_in_worker_files = job_skills_displayname.every(element => worker_files_displayname_by_type.includes(element));
             updateWorkerFilesList(worker_files_displayname_by_type, 'skills');
-            // console.log('job skills job name :', job_skills_displayname)
-            // console.log('worker_files_displayname_by_type', worker_files_displayname_by_type);
-            // console.log('is_job_skill_exist_in_worker_files', is_job_skill_exist_in_worker_files);
 
             if (is_job_skill_exist_in_worker_files) {
                 check = true;
@@ -1868,6 +1859,21 @@
                 check = true;
             }
 
+        } else if (inputName == "resume"){
+
+            updateWorkerFilesList(worker_files_displayname_by_type, 'resume');
+
+            let is_resume = @json($offerdetails["is_resume"]);
+
+            if (worker_files_displayname_by_type.length > 0 && is_resume) {
+
+                check = true;
+
+            }else if (worker_files_displayname_by_type.length > 0 && !is_resume){
+                check = true;
+            }else{
+                check = false;
+            }
         }
 
         if (check) {
@@ -1883,15 +1889,11 @@
     document.addEventListener('DOMContentLoaded', function() {
 
         var workerId = @json($offerdetails['worker_user_id']);
-        console.log(workerId);
-        console.log('worker id', workerId);
 
         function activeWorkerClass(workerUserId) {
 
             var element = document.getElementById(workerUserId);
-            console.log('element', element);
             element.classList.add('active');
-
         }
     });
 

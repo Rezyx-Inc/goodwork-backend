@@ -158,7 +158,7 @@
                     }),
                     success: function(resp) {
 
-                        let jsonResp = JSON.parse(resp);
+                        let jsonResp = resp.data;
                         all_files = jsonResp;
                         files = jsonResp;
                         resolve(
@@ -532,7 +532,7 @@
                         match = true;
                     }
                     break;
-                case 'worker_facility_city':
+                case 'city':
                     if (job['job_city'] == InsertedValue) {
                         match = true;
                     }
@@ -934,7 +934,7 @@
             let text = element.data('title');
             // console.log("*****************************element", element, "type", type, " =>text : ", text);
             if (worker_files.length > 0) {
-                text = worker_files.length + ' Files Uploaded';
+                text = worker_files.length + ' File(s) Uploaded';
             }
             element.html(text);
         }
@@ -953,24 +953,24 @@
             let check = false;
             if (inputName == 'certification') {
                 const is_job_certif_exist_in_worker_files = job_certification_displayname.every(element =>
-                    worker_files_displayname_by_type.includes(element));
+                    worker_files_displayname_by_type?.includes(element));
                 if (is_job_certif_exist_in_worker_files) {
                     check = true;
                 }
             } else if (inputName == 'vaccination') {
                 const is_job_vaccin_exist_in_worker_files = job_vaccination_displayname.every(element =>
-                    worker_files_displayname_by_type.includes(element));
+                    worker_files_displayname_by_type?.includes(element));
 
                 if (is_job_vaccin_exist_in_worker_files) {
                     check = true;
                 }
             } else if (inputName == 'references') {
-                if (number_of_references <= worker_files_displayname_by_type.length) {
+                if (number_of_references <= worker_files_displayname_by_type?.length) {
                     check = true;
                 }
             } else if (inputName == 'skills') {
                 const is_job_skill_exist_in_worker_files = job_skills_displayname.every(element =>
-                    worker_files_displayname_by_type.includes(element));
+                    worker_files_displayname_by_type?.includes(element));
                 // console.log('job skills job name :', job_skills_displayname)
                 // console.log('worker_files_displayname_by_type', worker_files_displayname_by_type)
                 // console.log('is_job_skill_exist_in_worker_files', is_job_skill_exist_in_worker_files);
@@ -978,22 +978,39 @@
                     check = true;
                 }
             } else if (inputName == 'driving_license') {
-                if (worker_files_displayname_by_type.length > 0) {
+                if (worker_files_displayname_by_type?.length > 0) {
                     check = true;
                 }
-            } else if (inputName == 'diploma') {
-                if (worker_files_displayname_by_type.length > 0) {
-                    check = true;
-                }
-            }
-            if (check) {
-                areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
-                areaDiv.classList.add('ss-s-jb-apl-bg-blue');
-            } else {
-                areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
-                areaDiv.classList.add('ss-s-jb-apl-bg-pink');
-            }
+            
+            } else if (inputName == "resume"){
+            
+                let is_resume = @json($model["is_resume"]);
 
+                if (worker_files_displayname_by_type?.length > 0 && is_resume) {
+
+                    check = true;
+                
+                }else if (worker_files_displayname_by_type?.length > 0 && !is_resume){
+                    check = true;
+                }else{
+                    check = false;
+                }
+
+            } else if (inputName == 'diploma') {
+                if (worker_files_displayname_by_type?.length > 0) {
+                    check = true;
+                }
+            }
+            if(areaDiv) {
+                if (check) {
+                    areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
+                    areaDiv.classList.add('ss-s-jb-apl-bg-blue');
+                } else {
+                    areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
+                    areaDiv.classList.add('ss-s-jb-apl-bg-pink');
+                }
+            }
+            
 
         }
 
@@ -1005,14 +1022,17 @@
         }
 
         async function get_all_files_displayName_by_type(type) {
-            let files = worker_files.filter(file => file.type == type);
-            let displayNames = files.map(file => file.displayName);
+            let files = worker_files?.filter(file => file.type == type);
+            let displayNames = files?.map(file => file.displayName);
             worker_files_displayname_by_type = displayNames;
             return displayNames;
         }
 
 
         async function check_required_files_before_sent(obj) {
+
+            update_nurse_information(dataToSend, true);
+
             let access = true;
             for (const requiredField of requiredFieldsToApply) {
                 if (requiredField == 'certification') {
@@ -1079,6 +1099,7 @@
             }
             let diploma = [];
             let driving_license = [];
+            let resume = [];
 
             let worked_bfore = dataToSend['worked_at_facility_before'];
 
@@ -1091,6 +1112,12 @@
             }
             try {
                 driving_license = await get_all_files_displayName_by_type('driving_license');
+
+            } catch (error) {
+                console.error('Failed to get files:', error);
+            }
+            try {
+                resume = await get_all_files_displayName_by_type('resume');
 
             } catch (error) {
                 console.error('Failed to get files:', error);
@@ -1136,20 +1163,21 @@
             checkFileMatch('skills');
             checkFileMatch('driving_license');
             checkFileMatch('diploma');
+            checkFileMatch('resume');
 
             $('input[name="phone[]"]').mask('(999) 999-9999');
         });
 
-        function init_profile_info_text() {
-            // map on matches
-            for (const key of Object.keys(matches)) {
+        // function init_profile_info_text() {
+        //     // map on matches
+        //     for (const key of Object.keys(matches)) {
 
-                if (matches[key].profile_info_text) {
-                    // console.log(">>>>>>>>>>>>>>>>", key, matches[key].profile_info_text);
-                    $(`.${key}_item .profile_info_text`).text(matches[key].profile_info_text);
-                }
-            }
-        }
+        //         if (matches[key].profile_info_text) {
+        //             // console.log(">>>>>>>>>>>>>>>>", key, matches[key].profile_info_text);
+        //             $(`.${key}_item .profile_info_text`).text(matches[key].profile_info_text);
+        //         }
+        //     }
+        // }
 
         function open_file(obj) {
             $(obj).parent().find('input[type="file"]').click();
@@ -1195,9 +1223,104 @@
             $(modal).modal('show');
         }
 
+        function open_multiselect_modal(obj) {
+            let target = $(obj).data('target');
+            let target_modal = '#' + target + '_modal';
+            
+            $(target_modal).modal('show');
+        }
+
         function close_modal(obj) {
             let target = $(obj).data('target');
             $(target).modal('hide');
         }
+        
+        // for job modal attr if not like nurse attr
+        const job_attr_mapping = {
+            'worker_job_type': 'job_type',
+            'specialty': 'preferred_specialty',
+            'state': 'job_state',
+            'city': 'job_city',
+            'worker_shift_time_of_day': 'preferred_shift_duration'
+        } 
+
+        function multi_select_match_with_worker(workerField, InsertedValue) {
+            let match = false;
+            let matchCount = 0;
+            var job = @json($model);
+
+            if (job_attr_mapping[workerField]) {
+                workerField = job_attr_mapping[workerField];
+            }
+
+            let job_vals = job[workerField]?.split(', ');
+            let nurse_vals = InsertedValue ? InsertedValue.split(', ') : [];
+
+            
+            // Find matches
+            let matches = job_vals?.filter(val => nurse_vals.includes(val));
+
+            // Check if there is at least one match
+            if (!!matches && matches.length > 0) {
+                match = true;
+                matchCount = matches.length;
+            }
+            
+            return match;
+        }
+
+
+        function multi_select_change({id, name, value}) {
+
+            if (!id || !name) {
+                console.error("Missing 'id' or 'name' in function call");
+                return;
+            }
+
+            const parentSelector = '#' + CSS.escape(id);
+            const childSelector = `p[data-name="${name}"]`;
+
+            // Find the element
+            let element = $(parentSelector).find(childSelector);
+            
+            // if value is null put the element title else put the value
+            if(value == null) {
+                element.text(element.data('title'));
+            } else {
+                element.text(truncateText(value));
+            }
+
+            // check the match for item color 
+            if (multi_select_match_with_worker(id, value)) {
+                    let areaDiv = document.getElementById(id);
+                    if (areaDiv) {
+                        areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
+                        areaDiv.classList.add('ss-s-jb-apl-bg-blue');
+                    }
+                } else {
+                    let areaDiv = document.getElementById(id);
+                    if (areaDiv) {
+                        areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
+                        areaDiv.classList.add('ss-s-jb-apl-bg-pink');
+                    }
+                }
+
+        }
+
+        // Helper function
+        function truncateText(text, limit = 35) {
+            return text.length > limit ? text.substring(0, limit) + '...' : text;
+        }
+
+        // update nurse information change every 50 seconds
+        setInterval(() => {
+            update_nurse_information(dataToSend);
+        }, 5000);
+
+        // Save on page exit
+        window.addEventListener('beforeunload', function() {
+            // update nurse information change before exit
+            update_nurse_information(dataToSend);
+        });
     </script>
 @stop

@@ -40,6 +40,13 @@
                         <span>{{ $statusCounts['Onboarding'] }} {{ $statusCounts['Onboarding'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
+                {{-- Cleared Applicants --}}
+                <div style="flex: 1 1 0px;">
+                    <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Cleared')" id="Cleared">
+                        <p>Cleared</p>
+                        <span>{{ $statusCounts['Cleared'] }} {{ $statusCounts['Cleared'] == 1 ? 'Application' : 'Applications' }}</span>
+                    </div>
+                </div>
                 {{-- Working Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Working')" id="Working">
@@ -339,6 +346,7 @@
             var submittedElement = document.getElementById('Submitted');
             var offeredElement = document.getElementById('Offered');
             var onboardingElement = document.getElementById('Onboarding');
+            var clearedElement = document.getElementById('Cleared');
             var workingElement = document.getElementById('Working');
             var doneElement = document.getElementById('Done');
             var holdElement = document.getElementById('Hold');
@@ -360,6 +368,9 @@
             }
             if (onboardingElement.classList.contains("active")) {
                 onboardingElement.classList.remove("active");
+            }
+            if (clearedElement.classList.contains("active")) {
+                clearedElement.classList.remove("active");
             }
             if (workingElement.classList.contains("active")) {
                 workingElement.classList.remove("active");
@@ -451,12 +462,12 @@
                                 const downloadLink = document.createElement('a');
                                 downloadLink.href = blobUrl;
                                 const extension = mimeType.split('/')[1];
-                                downloadLink.setAttribute('download', `document.${extension}`);
+                                downloadLink.setAttribute('download', file.name);
 
                                 var row = $('<tr></tr>');
                                 row.append('<td>' + file.name + '</td>');
                                 row.append('<td>' + file.type + '</td>');
-                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
+                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="' + file.name + '"></a></td>');
                                 tbody.append(row);
                         }
                     }
@@ -1190,6 +1201,8 @@
         }
 
         function selectOfferCycleState(type){
+            console.log("type=================", type);
+            
             applicationStatusToggle(type);
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             if (csrfToken) {
@@ -1273,6 +1286,7 @@
             var submittedElement = document.getElementById('Submitted');
             var offeredElement = document.getElementById('Offered');
             var onboardingElement = document.getElementById('Onboarding');
+            var clearedElement = document.getElementById('Cleared');
             var workingElement = document.getElementById('Working');
             var doneElement = document.getElementById('Done');
             var holdElement = document.getElementById('Hold');
@@ -1293,6 +1307,9 @@
             }
             if (onboardingElement.classList.contains("active")) {
                 onboardingElement.classList.remove("active");
+            }
+            if (clearedElement.classList.contains("active")) {
+                clearedElement.classList.remove("active");
             }
             if (workingElement.classList.contains("active")) {
                 workingElement.classList.remove("active");
@@ -1321,7 +1338,12 @@
             if(type == 'Apply'){
                 document.getElementById('listingname').innerHTML = 'New Applications';
             }else if (type != null){
-                document.getElementById('listingname').innerHTML = type + ' Applications';
+                if (type == 'Cleared') {
+                    document.getElementById('listingname').innerHTML = 'Cleared to Start Applications';
+
+                }else{
+                    document.getElementById('listingname').innerHTML = type + ' Applications';
+                }
             }
             if (type == 'Done' || type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
 
@@ -1378,11 +1400,11 @@
                                 const downloadLink = document.createElement('a');
                                 downloadLink.href = blobUrl;
                                 const extension = mimeType.split('/')[1];
-                                downloadLink.setAttribute('download', `document.${extension}`);
+                                downloadLink.setAttribute('download', file.name);
                                 var row = $('<tr></tr>');
                                 row.append('<td>' + file.name + '</td>');
                                 row.append('<td>' + file.type + '</td>');
-                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
+                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="' + file.name + '"></a></td>');
                                 tbody.append(row);
                             }
                         }
@@ -1446,7 +1468,7 @@
                             text: result.message,
                             time: 5
                         });
-                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
 
                         statusKeys.forEach(key => {
                             $(`#${key} span`).text(`${result.statusCounts[key]} Applicants`);
@@ -1543,7 +1565,7 @@
                             text: result.message,
                             time: 5
                         });
-                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
 
                         statusKeys.forEach(key => {
                             $(`#${key} span`).text(`${result.statusCounts[key]} Applicants`);

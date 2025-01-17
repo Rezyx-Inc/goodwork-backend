@@ -23,7 +23,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\register;
-use App\Mail\Register_recruiter;
+use App\Mail\RegisterRecruiter;
+use App\Mail\VerifyNewEmail;
 
 
 class OrganizationController extends Controller
@@ -744,18 +745,23 @@ class OrganizationController extends Controller
                 $job->total_goodwork_amount = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
                 $job->total_contract_amount = $job->total_goodwork_amount + $job->total_organization_amount;
                 
+                if (!isset($job->recruiter_id)){
+                    $job->recruiter_id = $job->organization_id;
+                }
+
                 // Save the job data to the database
                 $job->save();
 
-                $AssignmentResponse = Http::post('http://localhost:4545/organizations/assignUpNextRecruiter', [
+                $AssignmentResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/assignUpNextRecruiter', [
                     'id' => $job->organization_id,
                 ]);
 
-                if ($AssignmentResponse->status() == 200) {
-                    $recruiterId = $AssignmentResponse->body();
+                $api_response = json_decode($AssignmentResponse->body());
+                if ($api_response->success) {
+                    $recruiterId = $api_response->data->id;
                     $job->recruiter_id = $recruiterId;
                     $job->save();
-                } 
+                }
 
             } else {
 
@@ -1192,16 +1198,15 @@ public function recruiters_management()
 {
     $orgId = Auth::guard('organization')->user()->id;
 
-    $scriptResponse = Http::get('http://localhost:4545/organizations/getRecruiters/' . $orgId);
-
-   
-
-    $responseData = $scriptResponse->json();
-    if(isset($responseData)) {
+    $scriptResponse = Http::get('http://localhost:'. config('app.file_api_port') .'/organizations/getRecruiters/' . $orgId);
     
-    $ids = array_map(function($recruiter) {
-        return $recruiter['id'];
-    }, $responseData);
+    $responseData = json_decode($scriptResponse->body());
+    
+    if($responseData->success) {
+    
+        $ids = array_map(function($recruiter) {
+            return $recruiter->id;
+        }, $responseData->data->recruiters);
 
     $recruiters = User::whereIn('id', $ids)->where('role', 'RECRUITER')->get();
     } else {
@@ -1222,13 +1227,13 @@ public function recruiters_management()
 
         $orgId = Auth::guard('organization')->user()->id;
 
-        $scriptResponse = Http::post('http://localhost:4545/organizations/deleteRecruiter/' . $orgId, [
+        $scriptResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/deleteRecruiter/' . $orgId, [
             'id' => $recruiter_id,
         ]);
 
-        //return $scriptResponse;
+        $api_response = json_decode($scriptResponse->body());
 
-        if ($scriptResponse->failed()) {
+        if (!$api_response->success) {
             $data = [];
             $data['msg'] = "error 99";
             $data['success'] = false;
@@ -1394,7 +1399,7 @@ public function recruiters_management()
                         'role' => 'RECRUITER',
                     ]);
 
-                    $scriptResponse = Http::post('http://localhost:4545/organizations/addRecruiter/' . $orgId->id, [
+                    $scriptResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/addRecruiter/' . $orgId->id, [
                         'id' => $model->id,
                         'worksAssigned' => 0,
                         'upNext' => true,
@@ -1402,7 +1407,9 @@ public function recruiters_management()
 
                     //return $scriptResponse;
 
-                    if ($scriptResponse->failed()) {
+                    $api_response = json_decode($scriptResponse->body());
+
+                    if (!$api_response->success) {
                         $data = [];
                         $data['msg'] = "Unexpected error, please contact support@goodwork.world";
                         $data['success'] = false;
@@ -1412,9 +1419,25 @@ public function recruiters_management()
                     $response['msg'] = 'Registered successfully!';
                     $response['success'] = true;
 
-                    // sending mail infromation
-                    $email_data = ['name' => $model->first_name . ' ' . $model->last_name, 'organization' => $orgId->organization_name,'subject' => 'Registration'];
-                    Mail::to($model->email)->send(new Register_recruiter($email_data));
+                    try {
+                        // Sending mail information
+                        $email_data = [
+                            'url' => config('app.url'),
+                            'name' => $model->first_name . ' ' . $model->last_name,
+                            'organization' => $orgId->organization_name,
+                            'subject' => 'Registration'
+                        ];
+                        
+                        Mail::to($model->email)->send(new RegisterRecruiter($email_data));
+                        
+                    } catch (\Exception $e) {
+                        $data = [];
+                        $data['ERmsg'] ='Error sending email to recruiter: ' . $e->getMessage();
+                        $data['msg'] ='Failed to send registration email. Please try again later.';
+                        $data['success'] = false;
+                        return response()->json($data);
+                    }
+                    
                     
                     return response()->json($response);
                 }
@@ -1520,17 +1543,29 @@ public function recruiters_management()
     public function get_preferences(Request $request){
         try{    
 
-            // $columns = Schema::getColumnListing('jobs');
-            // $columns = array_diff($columns, ['id','import_id','facility_id','created_at','updated_at','created_by','deleted_at','recruiter_id','organization_id']);
             $orgId = Auth::guard('organization')->user()->id;
-            $columns = Http::get('http://localhost:4545/organizations/getFieldsRules');
-            $requiredFields = Http::post('http://localhost:4545/organizations/get-preferences', [
+            $columns = Http::get('http://localhost:'. config('app.file_api_port') .'/organizations/getFieldsRules');
+            $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/get-preferences', [
                 'id' => $orgId,
             ]);
-            $requiredFields = $requiredFields->json();
-            $columns = $columns->json();
+            $requiredFields = json_decode($requiredFields->body());
+            $columns = json_decode($columns->body());
 
-            $columns = $columns[0]["ruleFields"];
+            if($columns->success == false){
+                return response()->json([
+                    'msg' => $columns->message,
+                    'success' => false
+                ]);
+            }else{
+                $columns = $columns->data[0]->ruleFields;
+            }
+
+            if($requiredFields->success == false){
+                $requiredFields = [];
+            }else{
+                $requiredFields = $requiredFields->data->preferences;
+            }
+
             //return response()->json(['columns'=>$columns]);
             //return $columns;
             return view('organization::organization.organization_rules_management', compact('columns','requiredFields'));
@@ -1548,13 +1583,22 @@ public function recruiters_management()
 
     public function add_preferences(Request $request){
         try{
-
             $orgId = Auth::guard('organization')->user()->id;
-            $response = Http::post('http://localhost:4545/organizations/add-preferences', [
+            $preferences = $request->preferences;
+            
+            $response = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/add-preferences', [
                 'id' => $orgId,
-                'preferences' => $request->preferences,
+                'preferences' => $preferences,
             ]);
-            return $response;
+            $api_response = json_decode($response->body());
+
+            if($api_response->success == false){
+                return response()->json([
+                    'msg' => $api_response->message,
+                    'success' => false
+                ]);
+            }
+            return response()->json($api_response);
 
         }catch(\Exeption $ex ){
 
@@ -1575,11 +1619,13 @@ public function recruiters_management()
             $job = Job::where('id', $jobId)->first();
             $orgId = Auth::guard('organization')->user()->id;
 
-            $AssignmentResponse = Http::post('http://localhost:4545/organizations/manuelRecruiterAssignment/' . $orgId, [
+            $AssignmentResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/manualRecruiterAssignment/' . $orgId, [
                 'id' => $recruiterId,
             ]);
 
-            if ($AssignmentResponse->status() == 200) {
+            $api_response = json_decode($AssignmentResponse->body());
+            
+            if ($api_response->success == true) {
                 $offers = Offer::where('job_id', $jobId)->get();
 
                 foreach ($offers as $offer) {
@@ -1592,7 +1638,7 @@ public function recruiters_management()
 
             } else {
 
-                return response()->json(['error' => "An error occurred: " . $AssignmentResponse->body()], 500);
+                return response()->json(['error' => "An error occurred: " . $api_response->message], 500);
 
             }
 
@@ -1603,6 +1649,99 @@ public function recruiters_management()
             return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
 
         }
+    }
+
+
+
+    // Send OTP to the user's new email
+    public function sendOtp(Request $request)
+    {
+        try {
+        
+            $user = Auth::guard('organization')->user();
+        
+            // Validate the email
+            $request->validate([
+                'email' => 'required|email'
+            ]);
+        
+            // Generate a verification code
+            $code = rand(1000, 9999);
+        
+            // Update the user's email verification status
+            $user->email_verified_at = null;
+            $user->otp = $code;
+            $user->save();
+        
+            // Prepare email data
+            $email_data = [
+                'name' => $user->first_name . ' ' . $user->last_name,
+                'subject' => 'Verify Your New Email',
+                'code' => $code,
+                'new_email' => $request->email,
+            ];
+        
+            // Send the email
+            Mail::to($request->email)->send(new VerifyNewEmail($email_data));
+        
+            return response()->json(['status' => true ,'message' => 'Verification email sent successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => "An error occurred while sending the verification email. Please try again later."], 500);
+        }
+    }
+
+
+    
+
+    // public function verifyOtp(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'otp' => 'required|numeric',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['message' => $validator->errors()->first()], 400);
+    //     }
+
+    //     $otp = session('otp');
+
+    //     if ($request->otp == $otp) {
+    //         session(['otp_verified' => true]);
+    //         return response()->json(['message' => 'OTP verified successfully.']);
+    //     }
+
+    //     return response()->json(['message' => 'Invalid OTP.'], 400);
+    // }
+
+    // verify the OTP and Update the email
+    public function updateEmail(Request $request)
+    {
+       try {
+            $user = Auth::guard('organization')->user();
+        
+            // Validate the email
+            $request->validate([
+                'otp' => 'required|numeric',
+            ]);
+        
+            // Check if the OTP is correct
+            if ($request->otp == $user->otp) {
+
+                $user->email = $request->email;
+                $user->otp = null;
+                $user->save();
+
+                // Send a success response
+                return response()->json(['status' => true ,'message' => 'Email updated successfully.'], 200);
+            } else {
+                // Send an error response
+                return response()->json(['status' => false , 'message' => 'Invalid OTP.'], 400);
+            }
+        
+                   
+       } catch (\Throwable $th) {
+        return response()->json(['error' => "An error occurred while updating the email."],);
+       }
     }
 
 }

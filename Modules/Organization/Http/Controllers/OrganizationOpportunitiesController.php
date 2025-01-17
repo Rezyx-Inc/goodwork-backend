@@ -32,14 +32,14 @@ class OrganizationOpportunitiesController extends Controller
     public function index()
     {
         $organization_id = Auth::guard('organization')->user()->id;
-        $scriptResponse = Http::get('http://localhost:4545/organizations/getRecruiters/' . $organization_id);
-        $responseData = $scriptResponse->json();
+        $scriptResponse = Http::get('http://localhost:'. config('app.file_api_port') .'/organizations/getRecruiters/' . $organization_id);
+        $api_response = json_decode($scriptResponse->body());
         $allRecruiters = [];
         $ids = [];
-        if(isset($responseData)) {
+        if($api_response->success) {
             $ids = array_map(function($recruiter) {
-            return $recruiter['id'];
-            }, $responseData);
+            return $recruiter->id;
+            }, $api_response->data->recruiters);
         }
         $allRecruiters = User::whereIn('id', $ids)->where('role', 'RECRUITER')->get();
 
@@ -74,11 +74,16 @@ class OrganizationOpportunitiesController extends Controller
         }
 
         $orgId = Auth::guard('organization')->user()->id;
-        $requiredFields = Http::post('http://localhost:4545/organizations/get-preferences', [
+        $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/get-preferences', [
             'id' => $orgId,
         ]);
-        $requiredFields = $requiredFields->json();
-        $requiredFieldsToSubmit = $requiredFields['requiredToSubmit'];
+
+        $requiredFieldsToSubmit = [];
+        $requiredFields = json_decode($requiredFields->body());
+        
+        if($requiredFields->success) {
+            $requiredFieldsToSubmit = $requiredFields->data->preferences->requiredToSubmit;
+        }
         
         return view('organization::organization/opportunitiesmanager', compact('draftJobs', 'specialities', 'professions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount', 'requiredFieldsToSubmit'));
         //return response()->json(['success' => false, 'message' =>  $states]);
@@ -1782,14 +1787,14 @@ class OrganizationOpportunitiesController extends Controller
         } elseif ($request->type == 'drafts') {
         } else{
             $orgId = Auth::guard('organization')->user()->id;
-            $scriptResponse = Http::get('http://localhost:4545/organizations/getRecruiters/' . $orgId);
-            $responseData = $scriptResponse->json();
+            $scriptResponse = Http::get('http://localhost:'. config('app.file_api_port') .'/organizations/getRecruiters/' . $orgId);
+            $api_response = json_decode($scriptResponse->body());
             $allRecruiters = [];
             $ids = [];
-            if(isset($responseData)) {
+            if($api_response->success == true) {
                 $ids = array_map(function($recruiter) {
-                return $recruiter['id'];
-                }, $responseData);
+                return $recruiter->id;
+                }, $api_response->data->recruiters);
             }
             $allRecruiters = User::whereIn('id', $ids)->where('role', 'RECRUITER')->get();
 

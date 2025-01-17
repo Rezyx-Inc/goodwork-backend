@@ -47,6 +47,8 @@ Route::prefix('worker')->group(function () {
             Route::get('/getMessages', ['uses' => 'WorkerController@get_private_messages', 'as' => 'WorkergetPrivateMessages']);
             Route::get('my-work-journey', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'worker.my-work-journey']);
 
+            Route::post('/send-otp-worker', ['uses' => 'WorkerAuthController@sendOtp_worker', 'as' => 'sendOtp-worker']) ;
+            Route::post('/update-email-worker', ['uses' => 'WorkerAuthController@updateEmail_worker', 'as' => 'updateEmail-worker']);
 
             //Route::get('my-work-journey', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'my-work-journey']);
             Route::post('fetch-job-content', ['uses' => 'WorkerController@fetch_job_content', 'as' => 'worker-fetch-job-content']);
@@ -159,6 +161,10 @@ Route::prefix('worker')->group(function () {
             Route::post('worker-update-application-status', ['uses' => 'WorkerController@updateApplicationStatus', 'as' => 'worker-update-application-status']);
 
             Route::post('worker-accept-reject-job-offer', ['uses' => 'WorkerController@AcceptOrRejectJobOffer', 'as' => 'worker-accept-reject-job-offer']);
+
+            // update worker information
+
+            Route::post('worker-update-information', ['uses' => 'WorkerController@worker_update_information', 'as' => 'worker-update-information']);
 
 
         }

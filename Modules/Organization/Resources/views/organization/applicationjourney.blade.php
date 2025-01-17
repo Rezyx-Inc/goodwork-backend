@@ -40,6 +40,13 @@
                         <span>{{ $statusCounts['Onboarding'] }} Applications</span>
                     </div>
                 </div>
+                {{-- Clearad to start Applicants --}}
+                <div style="flex: 1 1 0px;">
+                    <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Cleared')" id="Cleared">
+                        <p>Cleared</p>
+                        <span>{{ $statusCounts['Cleared'] }} Applications</span>
+                    </div>
+                </div>
                 {{-- Working Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Working')" id="Working">
@@ -299,7 +306,7 @@
                 var formData = new FormData($form[0]);
                 // Append the new attribute
                 formData.append('funcionalityType', formtype);
-                console.log(formData);
+
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -339,6 +346,7 @@
             var submittedElement = document.getElementById('Submitted');
             var offeredElement = document.getElementById('Offered');
             var onboardingElement = document.getElementById('Onboarding');
+            var clearedToStartElement = document.getElementById('Cleared');
             var workingElement = document.getElementById('Working');
             var doneElement = document.getElementById('Done');
             var holdElement = document.getElementById('Hold');
@@ -360,6 +368,9 @@
             }
             if (onboardingElement.classList.contains("active")) {
                 onboardingElement.classList.remove("active");
+            }
+            if (clearedToStartElement.classList.contains("active")) {
+                clearedToStartElement.classList.remove("active");
             }
             if (workingElement.classList.contains("active")) {
                 workingElement.classList.remove("active");
@@ -387,6 +398,7 @@
                     doneElement.classList.add("active");
                 }
             }
+
             if(type == 'Apply'){
                 document.getElementById('listingname').innerHTML = 'New Applications';
             }else if (type != null){
@@ -399,10 +411,11 @@
             } else {
                 document.getElementById("ss-appli-done-hed-btn-dv").classList.add("d-none");
             }
+
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
             if (csrfToken) {
-                console.log(formtype);
-                console.log(type);
+
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
@@ -434,7 +447,8 @@
                         tbody.empty(); // Clear the table body
                         // Add a row for each file
                         if (files) {
-                        for (var i = 0; i < files.length; i++) {
+
+                            for (var i = 0; i < files.length; i++) {
                                 var file = files[i];
                                 var base64String = file.content;
 
@@ -451,15 +465,15 @@
                                 const downloadLink = document.createElement('a');
                                 downloadLink.href = blobUrl;
                                 const extension = mimeType.split('/')[1];
-                                downloadLink.setAttribute('download', `document.${extension}`);
+                                downloadLink.setAttribute('download', file.name);
 
                                 var row = $('<tr></tr>');
                                 row.append('<td>' + file.name + '</td>');
                                 row.append('<td>' + file.type + '</td>');
-                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
+                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="' + file.name + '"></a></td>');
                                 tbody.append(row);
+                            }
                         }
-                    }
                     },
                     error: function(error) {
                         console.log(error);
@@ -946,8 +960,10 @@
             }
         }
     </script>
+
+    
     <script>
-       function askWorker(e, type, workerid,recruiter_id , organization_id, name) {
+        function askWorker(e, type, workerid,recruiter_id , organization_id, name) {
             // when we have the notification system inmplemented we will use this :
 
             // var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -990,7 +1006,7 @@
             localStorage.setItem('nurse_id', id);
         }
         const numberOfReferencesField = document.getElementById('number_of_references');
-        if (numberOfReferencesField) {
+            if (numberOfReferencesField) {
             numberOfReferencesField.addEventListener('input', function() {
                 if (numberOfReferencesField.value.length > 9) {
                     numberOfReferencesField.value = numberOfReferencesField.value.substring(0, 9);
@@ -1179,6 +1195,7 @@
         }
 
         function selectOfferCycleState(type){
+            
             applicationStatusToggle(type);
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             if (csrfToken) {
@@ -1257,6 +1274,7 @@
             var submittedElement = document.getElementById('Submitted');
             var offeredElement = document.getElementById('Offered');
             var onboardingElement = document.getElementById('Onboarding');
+            var clearedToStartElement = document.getElementById('Cleared');
             var workingElement = document.getElementById('Working');
             var doneElement = document.getElementById('Done');
             var holdElement = document.getElementById('Hold');
@@ -1277,6 +1295,9 @@
             }
             if (onboardingElement.classList.contains("active")) {
                 onboardingElement.classList.remove("active");
+            }
+            if (clearedToStartElement.classList.contains("active")) {
+                clearedToStartElement.classList.remove("active");
             }
             if (workingElement.classList.contains("active")) {
                 workingElement.classList.remove("active");
@@ -1305,7 +1326,13 @@
             if(type == 'Apply'){
                 document.getElementById('listingname').innerHTML = 'New Applications';
             }else if (type != null){
-                document.getElementById('listingname').innerHTML = type + ' Applications';
+                if (type == 'Cleared') {
+                    document.getElementById('listingname').innerHTML = 'Cleared to Start Applications';
+
+                }else{
+                    document.getElementById('listingname').innerHTML = type + ' Applications';
+                }
+                
             }
             if (type == 'Done' || type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
 
@@ -1354,14 +1381,15 @@
                                 const byteArray = new Uint8Array(byteNumbers);
                                 const blob = new Blob([byteArray], { type: mimeType });
                                 const blobUrl = URL.createObjectURL(blob);
+
                                 const downloadLink = document.createElement('a');
                                 downloadLink.href = blobUrl;
                                 const extension = mimeType.split('/')[1];
-                                downloadLink.setAttribute('download', `document.${extension}`);
+                                downloadLink.setAttribute('download', file.name);
                                 var row = $('<tr></tr>');
                                 row.append('<td>' + file.name + '</td>');
                                 row.append('<td>' + file.type + '</td>');
-                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
+                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="'+ file.name + '"></a></td>');
                                 tbody.append(row);
                         }
                     }
@@ -1425,7 +1453,7 @@
                             text: result.message,
                             time: 5
                         });
-                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
 
                         statusKeys.forEach(key => {
                             $(`#${key} span`).text(`${result.statusCounts[key]} Applicants`);
@@ -1526,7 +1554,7 @@
                             text: result.message,
                             time: 5
                         });
-                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
 
                         statusKeys.forEach(key => {
                             $(`#${key} span`).text(`${result.statusCounts[key]} Applicants`);

@@ -18,7 +18,7 @@
         <link href="{{URL::asset('landing/css/style.css')}}" rel="stylesheet" >
         <link href="{{URL::asset('landing/css/style.css')}}" rel="stylesheet" >
         <link rel='stylesheet' href='{{URL::asset('landing/css/owl.carousel.css')}}'>
-        <script src="https://kit.fontawesome.com/69b12198c3.js" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/3d90fa36a2.js" crossorigin="anonymous"></script>
         {{-- jquery confirm --}}
         <link href="{{ URL::asset('backend/vendors/confirm/jquery-confirm.min.css') }}" rel="stylesheet">
         {{-- <link href="{{ URL::asset('backend/vendors/datatables/jquery.dataTables.min.css') }}" rel="stylesheet"> --}}
@@ -32,19 +32,21 @@
     $route_name = request()->route()->getName();
     @endphp
     <body>
-        <script>$(document).ready(function() {
-            $.ajaxSetup({
-                xhrFields: {
-                    withCredentials: true
-                },
-                beforeSend: function(xhr) {
-                    var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                    if (csrfToken) {
-                        xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+        <script type="module">
+            $(document).ready(function() {
+                $.ajaxSetup({
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    beforeSend: function(xhr) {
+                        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                        if (csrfToken) {
+                            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+                        }
                     }
-                }
+                });
             });
-        });</script>
+        </script>
         <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
         @if(!in_array($route_name, $no_header_pages))
         @include('partials.header')

@@ -68,6 +68,9 @@
                     <option value="Onboarding"
                         {{ $offerdetails['status'] === 'Onboarding' ? 'selected hidden disabled' : '' }}>
                         Onboarding</option>
+                    <option value="Cleared"
+                        {{ $offerdetails['status'] === 'Cleared' ? 'selected hidden disabled' : '' }}>
+                        Cleared to Start</option>
                     {{-- <option value="Working" {{ $offerdetails['status'] === 'Working' ? 'selected' : '' }}>Working
                 </option> --}}
                     <option value="Rejected"
@@ -272,7 +275,7 @@
             <div class="col-md-6 ">
                 <p>
                     {!! isset($userdetails->nurse->worker_hours_per_week)
-                        ? number_format($userdetails->nurse->worker_hours_per_week)
+                        ? ($userdetails->nurse->worker_hours_per_week)
                         : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_hours_per_week\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
@@ -329,20 +332,22 @@
                 </p>
             </div>
         </div>
-        {{-- Resume --}}
-        <div class="col-md-12">
-            <span class="mt-3">Resume</span>
-        </div>
+        @if (in_array($offerdetails->status, array('Screening','Submitted')))
+            {{-- Resume --}}
+            <div class="col-md-12">
+                <span class="mt-3">Resume</span>
+            </div>
 
-        <div id="resume" class="row d-flex align-items-center" style="margin:auto;">
-            <div class="col-md-6">
-                <h6>{{ $offerdetails->is_resume ? 'Required' : 'Not Required' }}</h6>
+            <div id="resume" class="row d-flex align-items-center" style="margin:auto;">
+                <div class="col-md-6">
+                    <h6>{{ $offerdetails->is_resume ? 'Required' : 'Not Required' }}</h6>
+                </div>
+                <div class="col-md-6 ">
+                    <p id="resume-placeholder">
+                    </p>
+                </div>
             </div>
-            <div class="col-md-6 ">
-                <p id="resume-placeholder">
-                </p>
-            </div>
-        </div>
+        @endif
 
     </div>
     {{-- End  Summary --}}
@@ -391,7 +396,7 @@
             <div class="col-md-6 ">
                 <p>
                     {!! isset($userdetails->nurse->worker_guaranteed_hours)
-                        ? number_format($userdetails->nurse->worker_guaranteed_hours)
+                        ? $userdetails->nurse->worker_guaranteed_hours
                         : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_guaranteed_hours\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
@@ -419,7 +424,7 @@
             <div class="col-md-6 ">
                 <p>
                     {!! isset($userdetails->nurse->worker_hours_shift)
-                        ? number_format($userdetails->nurse->worker_hours_shift)
+                        ? ($userdetails->nurse->worker_hours_shift)
                         : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_hours_shift\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
@@ -447,7 +452,7 @@
             <div class="col-md-6 ">
                 <p>
                     {!! isset($userdetails->nurse->worker_shifts_week)
-                        ? number_format($userdetails->nurse->worker_shifts_week)
+                        ? ($userdetails->nurse->worker_shifts_week)
                         : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_shifts_week\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
@@ -475,7 +480,7 @@
             <div class="col-md-6 ">
                 <p>
                     {!! isset($userdetails->nurse->worker_weeks_assignment)
-                        ? number_format($userdetails->nurse->worker_weeks_assignment)
+                        ? ($userdetails->nurse->worker_weeks_assignment)
                         : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_weeks_assignment\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
@@ -1719,7 +1724,7 @@
                     WorkerId: worker_id
                 }),
                 success: function(resp) {
-                    let jsonResp = JSON.parse(resp);
+                    let jsonResp = resp.data;
                     files = jsonResp;
                     resolve(
                         files

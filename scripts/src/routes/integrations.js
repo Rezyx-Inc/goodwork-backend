@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Laboredge = require('../models/Laboredge');
 
-router.get('/', (req, res) => {
-    res.send('Integrations page');
+router.get("/", (req, res) => {
+    res.redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 });
 
 // To be clear, this is only about laboredge integration, hence it is named jobs for convenience and to avoid naming issues with Laboredge.

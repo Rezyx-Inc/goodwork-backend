@@ -6,8 +6,9 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
-window.$ = window.jQuery = require('jquery');
+//window.Vue = require('vue');
+import * as Vue from 'vue';
+//window.$ = window.jQuery = require('jquery');
 
 /**
  * The following block of code may be used to automatically register your
@@ -17,8 +18,8 @@ window.$ = window.jQuery = require('jquery');
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-const files = require.context('./', true, /\.vue$/i)
-files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+// const files = require.context('./', true, /\.vue$/i)
+// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 //import ExampleComponent from './components/ExampleComponent.vue';
 //import VMakeOffer from './components/VMakeOffer.vue';
@@ -28,10 +29,12 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-const app = new Vue({
-  el: '#wrapper',
-});
+// const app = new Vue({
+//   el: '#wrapper',
+// });
+
+//Vue.createApp().mount('#wrapper');
 
 // Searchable select
-import 'select2/dist/css/select2.min.css';
-import 'select2/dist/js/select2.min.js';
+//import 'select2/dist/css/select2.min.css';
+//import 'select2/dist/js/select2.min.js';

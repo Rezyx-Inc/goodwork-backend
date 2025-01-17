@@ -155,12 +155,12 @@ class WorkerController extends Controller
 
             if (isset($recruiter_id)) {
 
-                $requiredFields = Http::post('http://localhost:4545/organizations/checkRecruiter', [
+                $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/checkRecruiter', [
                     'id' => $recruiter_id,
                 ]);
                 $requiredFields = $requiredFields->json();
 
-                if (isset($requiredFields[0]) && isset($requiredFields[0]['preferences']['requiredToApply'])) {
+                if ($requiredFields['success'] && isset($requiredFields[0]) && isset($requiredFields[0]['preferences']['requiredToApply'])) {
 
                     $requiredFieldsToApply = $requiredFields[0]['preferences']['requiredToApply'];
                     $data['requiredFieldsToApply'] = $requiredFieldsToApply;
@@ -168,11 +168,11 @@ class WorkerController extends Controller
             } else {
 
                 $organization_id = $data['model']->organization_id;
-                $requiredFields = Http::post('http://localhost:4545/organizations/get-preferences', [
+                $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/get-preferences', [
                     'id' => $organization_id,
                 ]);
                 $requiredFields = $requiredFields->json();
-                if (isset($requiredFields['requiredToApply'])) {
+                if ($requiredFields['success'] && isset($requiredFields['requiredToApply'])) {
                     $requiredFieldsToApply = $requiredFields['requiredToApply'];
                     $data['requiredFieldsToApply'] = $requiredFieldsToApply;
                 }
@@ -185,6 +185,7 @@ class WorkerController extends Controller
                 $allKeywords[$filter] = $keywords;
             }
             $data['allKeywords'] = $allKeywords;
+            $data['states'] = State::select('id', 'name')->get();
             // $user = auth()->guard('frontend')->user();
             // dd($data["model"]->matchWithWorker()['diploma']['match']);
             $data['jobSaved'] = new JobSaved();
@@ -781,14 +782,19 @@ class WorkerController extends Controller
         } 
 
         
-        $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+        $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
         $statusCounts = [];
         $offerLists = [];
 
         foreach ($statusList as $status) {
             $statusCounts[$status] = 0;
         }
-        
+        $distinctFilters = Keyword::distinct()->pluck('filter');
+        $allKeywords = [];
+        foreach ($distinctFilters as $filter) {
+            $keywords = Keyword::where('filter', $filter)->get();
+            $allKeywords[$filter] = $keywords;
+        }
         // Count unique workers applying
         //$statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(distinct worker_user_id ) as count'))->groupBy('status')->get();
 
@@ -805,7 +811,8 @@ class WorkerController extends Controller
             }
         }
         $status_count_draft = Offer::where('is_draft', true)->count();
-        return view('worker::offers/applicationjourney', compact('statusCounts', 'status_count_draft'));
+        $nurse = $worker;
+        return view('worker::offers/applicationjourney', compact('statusCounts', 'status_count_draft', 'allKeywords', 'nurse'));
     }
 
     public function explore(Request $request)
@@ -1354,22 +1361,27 @@ class WorkerController extends Controller
 
         try {
             $body = $request->getContent();
-            $bodyArray = json_decode($body, true);
 
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
-            ])->withBody($body, 'application/json')->post('http://localhost:4545/documents/add-docs');
-            return $response;
-            if ($response->successful()) {
+            ])->withBody($body, 'application/json')->post('http://localhost:' . config('app.file_api_port') . '/documents/add-docs');
+            
+            $body = json_decode($response->body());
+
+            if ($response->successful() && $body->success) {
+                
                 return response()->json([
                     'ok' => true,
                     'message' => 'Files uploaded successfully',
                 ]);
+
             } else {
+
                 return response()->json([
                     'ok' => false,
-                    'message' => $response->body(),
+                    'message' => $body->message,
                 ], $response->status());
+                
             }
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
@@ -1379,28 +1391,59 @@ class WorkerController extends Controller
     public function listDocs(Request $request)
     {
         try {
-            $workerId = $request->WorkerId;
-            //return response()->json(['workerId' => $workerId]);
+            // validate WorkerId
+            $validator = Validator::make($request->all(), [
+                'WorkerId' => 'required|exists:nurses,id'
+            ]);
 
-            $response = Http::get('http://localhost:4545/documents/list-docs', ['workerId' => $workerId]);
-            if ($response->successful()) {
-                return $response->body();
-            } else {
-                return response()->json(['success' => false], $response->status());
+            if ($validator->fails()) {
+                return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
             }
-        } catch (\Exception $e) {
+
+            $workerId = $request->input('WorkerId');
+
+            $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/list-docs', ['workerId' => $workerId]);
+
+            $body = json_decode($response->body());
+
+            if( $body->success)
+            {
+                return json_encode($body->data->list);
+                // return response()->json(['success' => true, 'data' => $body->data->list]);
+            }else{
+                return response()->json(['success' => false, 'message' => $body->message], $response->status());
+            }
+           
+        }catch(\Exception $e){
+
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
+           
         }
     }
 
     public function getDoc(Request $request)
     {
         try {
-            $bsonId = $request->input('bsonId');
-            $response = Http::get('http://localhost:4545/documents/get-doc', ['bsonId' => $bsonId]);
+             $validator = Validator::make($request->all(), [
+                'bsonId' => 'required'
+            ]);
 
-            // Pass through the response from Node.js API
-            return $response->body();
+            if ($validator->fails()) {
+                return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
+            }
+
+            $bsonId = $request->input('bsonId');
+            $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/get-doc', ['bsonId' => $bsonId]);
+
+            $body = json_decode($response->body());
+
+            if( $body->success)
+            {
+                return json_encode($body->data);
+            }else{
+                return response()->json(['success' => false, 'message' => $body->message], $response->status());
+            }
+           
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
@@ -1411,7 +1454,7 @@ class WorkerController extends Controller
     {
         $bsonId = $request->input('bsonId');
 
-        $response = Http::post('http://localhost:4545/documents/del-doc', ['bsonId' => $bsonId]);
+        $response = Http::post('http://localhost:'. config('app.file_api_port') .'/documents/del-doc', ['bsonId' => $bsonId]);
         if ($response->successful()) {
             return response()->json(['success' => true]);
         } else {
@@ -1540,15 +1583,18 @@ class WorkerController extends Controller
         $user = auth()->guard('frontend')->user();
 
         $id = $user->id;
-        $model = Nurse::where('user_id', $id)->first();
+        $nurse = Nurse::where('user_id', $id)->first();
         $inputFields = collect($request->all())->filter(function ($value) {
             return $value !== null;
         });
 
         $inputFields->put('updated_at', Carbon::now());
-        // dd($inputFields);
-        $model->fill($inputFields->all());
-        $model->save();
+
+        // Filter request data to only include valid attributes
+        $inputFields = $inputFields->only($nurse->getFillable());
+
+        $nurse->fill($inputFields->all());
+        $nurse->save();
         return new JsonResponse(['success' => true, 'msg' => 'Updated successfully.'], 200);
     }
 
@@ -1732,7 +1778,14 @@ class WorkerController extends Controller
                 return response()->json($response);
             }
 
-            $response['content'] = view('worker::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs, 'organization' => $organization, 'recruiter' => $recruiter])->render();
+            $distinctFilters = Keyword::distinct()->pluck('filter');
+            $allKeywords = [];
+            foreach ($distinctFilters as $filter) {
+                $keywords = Keyword::where('filter', $filter)->get();
+                $allKeywords[$filter] = $keywords;
+            }
+
+            $response['content'] = view('worker::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs, 'organization' => $organization, 'recruiter' => $recruiter , 'allKeywords' => $allKeywords])->render();
             
             return response()->json($response);
         
@@ -1775,7 +1828,7 @@ class WorkerController extends Controller
 
     public function worker_counter_offer(Request $request)
     {
-        
+
         try {
             $worker = Auth::guard('frontend')->user();
             $worker_id = $worker->nurse->id;
@@ -1783,12 +1836,19 @@ class WorkerController extends Controller
             $offer_id = $request->id;
             $data = $request->data;
             $diff = $request->diff;
+            
             $offer = Offer::where('id', $offer_id)->first();
+
+            $action  = '' ;
+
             if(OffersLogs::where('original_offer_id', $offer_id)->exists()){
+                
                 $offerLog = OffersLogs::where('original_offer_id', $offer_id)->first();
                 $offerLog->update([
                     'details' => json_encode($diff),
                 ]);
+
+                $action = 'has sent you a counter offer' ;
                 
             }else{
                 OffersLogs::create([
@@ -1799,18 +1859,32 @@ class WorkerController extends Controller
                     'details' => json_encode($diff),
                     'status' => 'Counter Offer'
                 ]);
+
+                $action = 'has sent you an offer' ;
             }
 
-            
+
             // update it
             if ($offer) {
+                
                 $data['status'] = 'Offered';
+      
                 $offer->update($data);
                 $jobid = $offer->job_id;
                 $time = now()->toDateTimeString();
                 $receiver = $offer->recruiter_id;
                 $job_name = Job::where('id', $jobid)->first()->job_name;
                 event(new NotificationOffer('Offered', false, $time, $receiver, $worker_id, $full_name, $jobid, $job_name, $offer_id));
+
+                $message = $full_name . ' ' . $action;
+                $idOrganization = $offer->organization_id;
+                $idWorker = $worker->id;
+                $recruiter_id = $offer->recruiter_id;
+                $role = 'ADMIN';
+                $type = 'text';
+                $fileName = null;
+                $time = now()->toDateTimeString();
+                event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
 
                 return response()->json([
                     'status' => 'success',
@@ -1850,7 +1924,7 @@ class WorkerController extends Controller
                 $receiver = $offer->recruiter_id;
                 $job_name = Job::where('id', $jobid)->first()->job_name;
                 event(new NotificationOffer($status, false, $time, $receiver, $worker_id, $full_name, $jobid, $job_name, $offer_id));
-                $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+                $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
                 $statusCounts = [];
                 $offerLists = [];
                 foreach ($statusList as $status) {
@@ -1875,6 +1949,7 @@ class WorkerController extends Controller
 
     public function AcceptOrRejectJobOffer(Request $request)
     {
+       
         try {
             $user = Auth::guard('frontend')->user();
             $worker_id = $user->nurse->id;
@@ -1889,6 +1964,18 @@ class WorkerController extends Controller
                     'message' => $validator->errors()->first(),
                 ];
             } else {
+
+                $offer = Offer::where('id', $request->id)->first();
+                $time = now()->toDateTimeString();
+                $action = $request->type == 'rejectcounter' ? 'Rejected' : 'Accepted';
+                $message = $full_name . ' has ' . $action . ' the job offer';
+                $idOrganization = $offer->organization_id;
+                $idWorker = $user->id;
+                $recruiter_id = $offer->recruiter_id;
+                $role = 'ADMIN';
+                $type = 'text';
+                $fileName = null;
+
                 if ($request->type == 'rejectcounter') {
                     $update_array['is_counter'] = '0';
                     $update_array['is_draft'] = '0';
@@ -1908,18 +1995,17 @@ class WorkerController extends Controller
                         $receiver = $offer->worker_user_id;
                         $job_name = Job::where('id', $jobid)->first()->job_name;
 
+                        event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
 
-                        event(new NotificationOffer('Rejected', false, $time, $receiver, $worker_id, $full_name, $jobid, $job_name, $id));
+                        //event(new NotificationOffer('Rejected', false, $time, $receiver, $worker_id, $full_name, $jobid, $job_name, $id));
                     }
-                } elseif ($request->type == 'offersend') {
+                } else if ($request->type == 'offersend') {
                     $update_array['is_counter'] = '0';
                     $update_array['is_draft'] = '0';
                     $update_array['status'] = 'Onboarding';
-                    $job = Offer::find($request->id);
-                    if ($job) {
-                        $job->update($update_array);
-                    }
-
+                  
+                    $offer_updated = $offer->update($update_array);
+                    
                     $data = [
                         'offerId' => $request->id,
                         'amount' => '1',
@@ -1927,14 +2013,12 @@ class WorkerController extends Controller
                         'fullName' => $user->first_name . ' ' . $user->last_name,
                     ];
 
-                    ;
-
                     $responseData = [];
-                    if ($job) {
-                        $responseData = [
-                            'status' => 'success',
-                            'message' => $responseInvoice->json()['message'],
-                        ];
+                    if ($offer_updated) {
+                        // $responseData = [
+                        //     'status' => 'success',
+                        //     'message' => $responseInvoice->json()['message'],
+                        // ];
                         $offer = Offer::where('id', $request->id)->first();
                         $id = $request->id;
                         $jobid = $offer->job_id;
@@ -1942,8 +2026,8 @@ class WorkerController extends Controller
                         $receiver = $offer->worker_user_id;
                         $job_name = Job::where('id', $jobid)->first()->job_name;
 
-
-                        event(new NotificationOffer('Offered', false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $id));
+                        event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
+                        //event(new NotificationOffer('Offered', false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $id));
 
                     }
                 }
@@ -1956,5 +2040,47 @@ class WorkerController extends Controller
 
     }
 
+    
+    public function worker_update_information(Request $request)
+    {
+        try {
+            $worker = Auth::guard('frontend')->user();
+            $worker_id = $worker->nurse->id;
+
+            $worker = Nurse::find($worker_id);
+            if (!$worker) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Worker not found',
+                ], 404);
+            }
+        
+            $update_array = $request->all();
+
+            $fillableFields = (new Nurse)->getFillable();
+            $filteredData = array_filter(
+                $update_array,
+                function ($key) use ($fillableFields) {
+                    return in_array($key, $fillableFields);
+                },
+                ARRAY_FILTER_USE_KEY
+            );
+
+            $worker->update($filteredData);
+
+            return response()->json([
+                'success' => true,
+                'msg' => 'Information updated successfully',
+            ], 200);
+        } catch (\Exception $e) {
+            // Log the exception for debugging
+            \Log::error('Error updating worker information: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'msg' => 'An error occurred while updating information',
+            ], 500);
+        }
+    }
 
 }

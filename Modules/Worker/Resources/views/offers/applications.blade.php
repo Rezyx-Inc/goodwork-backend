@@ -4,8 +4,8 @@
     <div class="row" style="display: flex ; justify-content: space-between;">
         @foreach ($offerData as $data)
             <div id="{{ $data['workerUserId'] }}-{{ $data['offerId']
-             }}" class="ss-job-prfle-sec cards col-lg-6 row"
-                onclick="toggleActiveClass('{{ $data['workerUserId'] }}-{{ $data['offerId']}}');">
+             }}" class="ss-job-prfle-sec cards col-lg-12 row"
+                onclick="getOneOfferInformation('{{ $data['offerId']}}');toggleActiveClass('{{ $data['workerUserId'] }}-{{ $data['offerId']}}');">
                 <div style="col-10">
                 <div class="ss-job-id-no-name">
                     <ul>

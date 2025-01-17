@@ -2,6 +2,8 @@
 
 @section('content')
 
+@include('worker::offers.modals')
+@include('worker::offers.multiselect_dynamic_modal')
     <link rel="stylesheet" href="{{URL::asset('recruiter/custom/css/style.css')}}" />
     <link rel="stylesheet" href="{{URL::asset('recruiter/custom/css/custom.css')}}" />
     <main style="padding-top: 170px" class="ss-main-body-sec">
@@ -41,6 +43,13 @@
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Onboarding')" id="Onboarding">
                         <p>Onboarding</p>
                         <span>{{ $statusCounts['Onboarding'] }} {{ $statusCounts['Onboarding'] == 1 ? 'Application' : 'Applications' }}</span>
+                    </div>
+                </div>
+                {{-- Cleared Applicants --}}
+                <div style="flex: 1 1 0px;">
+                    <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Cleared')" id="Cleared">
+                        <p>Cleared</p>
+                        <span>{{ $statusCounts['Cleared'] }} {{ $statusCounts['Cleared'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Working Applicants --}}
@@ -172,6 +181,17 @@
         </div>
 
     </main>
+    
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var selectBtn = document.querySelectorAll(".select-btn");
+        selectBtn.forEach(btnElement => {
+            btnElement.addEventListener("click", () => {
+                btnElement.classList.toggle("open");
+            });
+        });
+    });
+</script>
     <script>
 
         const AddStripe = document.getElementById("AddStripe");
@@ -342,6 +362,7 @@
             var submittedElement = document.getElementById('Submitted');
             var offeredElement = document.getElementById('Offered');
             var onboardingElement = document.getElementById('Onboarding');
+            var clearedElement = document.getElementById('Cleared');
             var workingElement = document.getElementById('Working');
             var doneElement = document.getElementById('Done');
             var holdElement = document.getElementById('Hold');
@@ -363,6 +384,9 @@
             }
             if (onboardingElement.classList.contains("active")) {
                 onboardingElement.classList.remove("active");
+            }
+            if (clearedElement.classList.contains("active")) {
+                clearedElement.classList.remove("active");
             }
             if (workingElement.classList.contains("active")) {
                 workingElement.classList.remove("active");
@@ -454,12 +478,12 @@
                                 const downloadLink = document.createElement('a');
                                 downloadLink.href = blobUrl;
                                 const extension = mimeType.split('/')[1];
-                                downloadLink.setAttribute('download', `document.${extension}`);
+                                downloadLink.setAttribute('download', file.name);
 
                                 var row = $('<tr></tr>');
                                 row.append('<td>' + file.name + '</td>');
                                 row.append('<td>' + file.type + '</td>');
-                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
+                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="' + file.name + '"></a></td>');
                                 tbody.append(row);
                         }
                     }
@@ -532,16 +556,10 @@
             const viewParam = urlParams.get('view');
             selectOfferCycleState(viewParam);
 
-            if (viewParam == 'Apply') {
-                            // chnage his coloset from col-lg-5 to col-lg-12    
-                            $("#application-details").closest('.col-lg-7').addClass("d-none");
-                            $("#application-list").closest('.col-lg-5').removeClass('col-lg-5 d-none').addClass('col-lg-12');
-                            
-                            // hide to col of  #application-details
-            } else {
+            
                 $("#application-list").closest('.col-lg-5').removeClass('d-none').addClass('col-lg-5');
                 $("#application-details").closest('.col-lg-7').removeClass("d-none");
-            }
+            
             
             $('#send-job-offer').on('submit', function(event) {
                 event.preventDefault();
@@ -1099,6 +1117,7 @@
 
         function close_modal(obj) {
             let target = $(obj).data('target');
+            $(target).find('form').trigger('reset');
             $(target).modal('hide');
         }
 
@@ -1175,20 +1194,12 @@
                     type: 'GET',
                     dataType: 'json',
                     success: function(result) {
-                        if (type == 'Apply') {
-                            // chnage his coloset from col-lg-5 to col-lg-12
-                            
-                            $("#application-details").closest('.col-lg-7').addClass("d-none");
-                            $("#application-list").closest('.col-lg-5').removeClass('col-lg-5').addClass('col-lg-12');
-                            $("#application-list").html(result.content);
-                            // hide to col of  #application-details
-                            
+                       
 
-                        } else {
                             $("#application-list").html(result.content);
                             $("#application-list").closest('.col-lg-12').removeClass('col-lg-12').addClass('col-lg-5');
                             $("#application-details").closest('.col-lg-7').removeClass("d-none");
-                        }
+                        
                         
                     },
                     error: function(error) {
@@ -1232,10 +1243,10 @@
 
         function applicationStatusToggle(type){
             
-            if (type != 'Apply') {
+            
                 noApplicationDetailsContent();
                 noApplicationWorkerListContent();
-            }
+            
             
             $("#listingname").removeClass("d-none");
             var applyElement = document.getElementById('Apply');
@@ -1243,6 +1254,7 @@
             var submittedElement = document.getElementById('Submitted');
             var offeredElement = document.getElementById('Offered');
             var onboardingElement = document.getElementById('Onboarding');
+            var clearedElement = document.getElementById('Cleared');
             var workingElement = document.getElementById('Working');
             var doneElement = document.getElementById('Done');
             var holdElement = document.getElementById('Hold');
@@ -1263,6 +1275,9 @@
             }
             if (onboardingElement.classList.contains("active")) {
                 onboardingElement.classList.remove("active");
+            }
+            if (clearedElement.classList.contains("active")) {
+                clearedElement.classList.remove("active");
             }
             if (workingElement.classList.contains("active")) {
                 workingElement.classList.remove("active");
@@ -1291,7 +1306,12 @@
             if(type == 'Apply'){
                 document.getElementById('listingname').innerHTML = 'New Applications';
             }else if (type != null){
-                document.getElementById('listingname').innerHTML = type + ' Applications';
+                if (type == 'Cleared') {
+                    document.getElementById('listingname').innerHTML = 'Cleared to Start Applications';
+
+                }else{
+                    document.getElementById('listingname').innerHTML = type + ' Applications';
+                }
             }
             if (type == 'Done' || type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
 
@@ -1348,11 +1368,11 @@
                                 const downloadLink = document.createElement('a');
                                 downloadLink.href = blobUrl;
                                 const extension = mimeType.split('/')[1];
-                                downloadLink.setAttribute('download', `document.${extension}`);
+                                downloadLink.setAttribute('download', file.name);
                                 var row = $('<tr></tr>');
                                 row.append('<td>' + file.name + '</td>');
                                 row.append('<td>' + file.type + '</td>');
-                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
+                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="' + file.name + '"></a></td>');
                                 tbody.append(row);
                             }
                         }
@@ -1416,7 +1436,7 @@
                             text: result.message,
                             time: 5
                         });
-                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
 
                         statusKeys.forEach(key => {
                             $(`#${key} span`).text(`${result.statusCounts[key]} Applicants`);
@@ -1513,7 +1533,7 @@
                             text: result.message,
                             time: 5
                         });
-                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
 
                         statusKeys.forEach(key => {
                             $(`#${key} span`).text(`${result.statusCounts[key]} Applicants`);

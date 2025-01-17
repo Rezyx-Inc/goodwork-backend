@@ -57,7 +57,7 @@ class WorkerDashboardController extends Controller
     $user_id = Auth::guard('frontend')->user()->id;
     $id = Nurse::where('user_id', $user_id)->first()->id;
 
-    $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboard', 'Working'];
+    $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared', 'Working'];
     $statusCounts = array_fill_keys($statusList, 0);
 
     $statusCountsQuery = Offer::whereIn('status', $statusList)
@@ -97,7 +97,7 @@ class WorkerDashboardController extends Controller
 
   // new update function ( new file management )
 
-  public function update_worker_profile(Request $request)
+  public function old_update_worker_profile(Request $request)
   {
     // return $request->all();
     try {
@@ -235,6 +235,40 @@ class WorkerDashboardController extends Controller
     }
   }
 
+
+  public function update_worker_profile(Request $request)
+  {
+
+    try {
+
+      $user = Auth::guard('frontend')->user();
+      $nurse = $user->nurse;
+
+      // dd($request->all());
+
+      // Filter request data to only include valid attributes
+      $userAttributes = $request->only($user->getFillable());
+      // Update the user model with the user attributes
+      $user->fill($userAttributes);
+      // Save the updated user model
+      $user->save();
+      $user = $user->fresh();
+
+      // Filter request data to only include valid attributes
+      $nurseAttributes = $request->only($nurse->getFillable());
+      // Update the nurse model with the valid attributes
+      $nurse->fill($nurseAttributes);
+      // // Save the updated nurse model
+      $nurse->save();
+
+      // dd( $nurseAttributes);
+      return response()->json(['msg' => $request->all(), 'user' => $user, 'nurse' => $nurse, 'status' => true]);
+    } catch (\Exception $e) {
+
+      return response()->json(['msg' => $e->getMessage(), 'status' => false], 500);
+    }
+  }
+
   // function to update the account setting
 
   public function update_worker_account_setting(Request $request)
@@ -322,7 +356,9 @@ class WorkerDashboardController extends Controller
     $worker_id = ['workerId' => $nurse['id']];
     $response = Http::get($url, $worker_id);
 
-    if ($response->json() !== null) {
+    $body = json_decode($response->body());
+
+    if ($body->success) {
       $progress += 1;
     }
 
@@ -334,6 +370,7 @@ class WorkerDashboardController extends Controller
     $data['progress_percentage'] = $progress * 33 + 1;
     $data['type'] = $type;
 
+    // dd($data['worker']->toArray());
     return view('worker::dashboard.worker_profile', $data);
   }
 
@@ -503,16 +540,16 @@ class WorkerDashboardController extends Controller
     //dd($request->all());
     // GW Number
     $gwNumber = $request->input('gw', '');
-    
+
     // Build the query
     $ret = Job::where('active', '1');
-    
-    
+
+
     // Initialize data array
     $data = [];
     $data['user'] = auth()->guard('frontend')->user();
     $data['jobSaved'] = new JobSaved();
-    
+
     // Fetch related data
     $data['specialities'] = Speciality::select('full_name')->get();
     $data['professions'] = Profession::select('full_name')->get();
@@ -537,7 +574,7 @@ class WorkerDashboardController extends Controller
     $data['shifts'] = $request->has('shifts') ? explode('-', $request->shifts) : [];
     $data['job_type'] = $request->input('job_type', null);
     $data['as_soon_as'] = $request->input('as_soon_as', null);
-    
+
     // Pay and hour filters
     $data['weekly_pay_from'] = $request->input('weekly_pay_from');
     $data['weekly_pay_to'] = $request->input('weekly_pay_to');
@@ -703,6 +740,8 @@ class WorkerDashboardController extends Controller
 
     try {
 
+      DB::beginTransaction();
+
       $request->validate([
         'jid' => 'required',
       ]);
@@ -815,10 +854,13 @@ class WorkerDashboardController extends Controller
       $time = now()->toDateTimeString();
       event(new NotificationJob('Apply', false, $time, $job->created_by, $user->id, $user->full_name, $request->jid, $job->job_name));
 
+      DB::commit();
+
       return new JsonResponse(['success' => true, 'msg' => 'Applied to job successfully'], 200);
     } catch (\Exception $e) {
-      //return redirect()->route('worker.dashboard')->with('error', $e->getmessage());
-      return response()->json(["message" => $e->getmessage()]);
+      DB::rollBack();
+      // return err
+      return response()->json(["success" => false,"message" => "Something went wrong." ] , 500);
     }
   }
 
@@ -1025,65 +1067,6 @@ class WorkerDashboardController extends Controller
     }
   }
 
-
-  // adding add stripe function
-
-
-  public function add_stripe_account(Request $request)
-  {
-    try {
-      $user = Auth::guard('frontend')->user();
-      $user_email = $user->email;
-      $user_id = $user->id;
-
-      // Define the data for the request
-      $data = [
-        'userId' => $user_id,
-        'email' => $user_email
-      ];
-
-      // Define the URL<
-      $url = 'http://localhost:' . config('app.file_api_port') . '/payments/create';
-
-      // return response()->json(['data'=>$data , 'url' => $url]);
-
-      // Make the request
-      $response = Http::post($url, $data);
-
-      $stripeId = $response->json()['message'];
-
-
-      $user_data['stripeAccountId'] = $stripeId;
-      // if(!isset($user_data)){
-      //     return response()->json(['stripeidnot'=>$stripeId]);
-      // }
-
-      $user->update($user_data);
-
-
-      // Check the response
-      if ($response->successful()) {
-        $get_account_url = 'http://localhost:' . config('app.file_api_port') . '/payments/account-link';
-        $data_account_url = [
-          'stripeId' => $user_data['stripeAccountId'],
-          'userId' => $user_id
-        ];
-
-
-        $get_account_link_response = Http::get($get_account_url, $data_account_url);
-
-
-
-        return response()->json(['status' => true, 'account_link' => $get_account_link_response->json()['message']]);
-      } else {
-        return response()->json(['status' => false, 'message' => 'Error']);
-      }
-    } catch (\Exception $e) {
-      // Log the exception or return a response
-      return response()->json(['status' => false, 'message' => $e->getMessage()]);
-    }
-  }
-
   public function check_onboarding_status(Request $request)
   {
     $user = Auth::guard('frontend')->user();
@@ -1102,34 +1085,6 @@ class WorkerDashboardController extends Controller
       return response()->json(['status' => true, 'message' => $get_onboarding_status_response->json()['message']]);
     } else {
       return response()->json(['status' => false, 'message' => 'Error checking onboarding status']);
-    }
-  }
-
-  public function login_to_stripe_account(Request $request)
-  {
-
-    $user = Auth::guard('frontend')->user();
-
-    $stripeId = $user->stripeAccountId;
-
-    if (!$stripeId) {
-      return response()->json(['status' => false, 'message' => 'Missing stripeId']);
-    }
-    $data = ['stripeId' => $stripeId];
-    // Get login link
-    $get_login_url = 'http://localhost:' . config('app.file_api_port') . '/payments/login-link';
-    $get_login_link_response = Http::get($get_login_url, $data);
-    //return response()->json(['login_link',$get_login_link_response->json()['message'] ]);
-
-    if ($get_login_link_response->successful()) {
-      return response()->json([
-        'status' => true,
-        'message' => 'You have successfully created a Stripe account.',
-
-        'login_link' => $get_login_link_response->json()['message']
-      ]);
-    } else {
-      return response()->json(['status' => false, 'message' => 'Error getting login link']);
     }
   }
 

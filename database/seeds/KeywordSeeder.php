@@ -15,7 +15,7 @@ class KeywordSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('keywords')->delete();
+        // DB::table('keywords')->delete();
         $mainSuperUserId = User::where([
             'email' => 'fulladmin@nurseify.io'
         ])->get()->first()->id;
@@ -28,11 +28,13 @@ class KeywordSeeder extends Seeder
         $keywords = $this->keywordData();
         foreach ($keywords as $key => $value) {
             foreach($value as $item){
-                factory(Keyword::class)->create([
-                    'created_by' => $mainSuperUserId,
-                    'filter' => $key,
-                    'title' => $item,
-                ]);
+                if (!Keyword::where(['filter' => $key, 'title' => $item])->exists()) {
+                    factory(Keyword::class)->create([
+                        'created_by' => $mainSuperUserId,
+                        'filter' => $key,
+                        'title' => $item,
+                    ]);
+                }
             }
         }
     }
@@ -333,6 +335,9 @@ class KeywordSeeder extends Seeder
                 'Women\'s Services',
                 'Wound Care',
                 'X-Ray Technician',
+                'In-Patient',
+                'Outpatient Surgery',
+                'Crisis Stabilization Unit',
             ],
             'GeographicPreference' => [
                 'Local Traveler (within 25 miles)',
@@ -518,6 +523,8 @@ class KeywordSeeder extends Seeder
                 'Medical Laboratory',
                 'Mid-Revenue Cycle Solutions',
                 'Security',
+                'Supervisor',
+                'Unit Manager',
             ],
             'Profession' => [
                 'Academic',
@@ -606,7 +613,8 @@ class KeywordSeeder extends Seeder
                 'Hospice Center',
                 'Dialysis Center',
                 'Remote/Virtual',
-                'Home Care'
+                'Home Care',
+                'Skilled Nursing'
             ],
             'Vaccinations'=>[
                 'Flu',
@@ -653,6 +661,13 @@ class KeywordSeeder extends Seeder
                 '2 weeks notice',
                 '30 days notice',
                 'same terms as facility',
+                'no preference'
+            ],
+            'FacilityShiftCancellationPolicy' => [
+                '1 shift/wk',
+                '1 shift/2wks',
+                '3 shifts/13wks',
+                'no shift cancelations',
                 'no preference'
             ],
             'State'=>State::all()->pluck('name')->toArray(),

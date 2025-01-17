@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class Register_recruiter extends Mailable
+class VerifyNewEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -27,8 +27,9 @@ class Register_recruiter extends Mailable
      *
      * @return $this
      */
-    public function build()
+     public function build()
     {
-        return $this->view('mail-templates.register_recruiter',$this->data);
+        return $this->view('mail-templates.verifyNewEmail',$this->data);
+
     }
 }

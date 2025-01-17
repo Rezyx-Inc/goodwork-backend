@@ -428,14 +428,7 @@
                     <span class="help-block-sign_on_bonus"></span>
                 </div>
                 </div>
-            <div class="ss-form-group col-md-12">
-                <label>Completion Bonus</label>
-                <input type="number" name="completion_bonus" id="completion_bonus"
-                    placeholder="Enter completion bonus">
-                <div> 
-                    <span class="help-block-completion_bonus"></span>
-                </div>
-                </div>
+            
             <div class="ss-form-group col-md-12">
                 <label>Extension Bonus</label>
 
@@ -445,15 +438,7 @@
                     <span class="help-block-extension_bonus"></span>
                 </div>
                 </div>
-            <div class="ss-form-group col-md-12">
-                <label>Other bonus</label>
-                <input type="number" name="other_bonus" id="other_bonus"
-                    placeholder="Enter other bonus">
-                <div> 
-                    <span class="help-block-other_bonus"></span>
-                </div>
-                </div>
-
+            
             {{-- Pay Frequency --}}
             <div class="ss-form-group col-md-12">
                 <label>Pay Frequency</label>

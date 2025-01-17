@@ -4,40 +4,32 @@ const { google } = require('googleapis');
 const { authorize } = require('../gSheet/services/authService.js');
 var { report } = require("../set.js");
 
-const checkIfSpreadsheetExists = async (auth, organizationId) => {
-  
-  const drive = google.drive({ version: 'v3', headers: { Authorization: `Bearer ${auth}` } });
+// Needs to be tested
+const { checkIfSpreadsheetExists } = require('../helpers/sheetHelper.js');
 
-  const response = await drive.files.list({
-    q: `mimeType='application/vnd.google-apps.spreadsheet' and name contains '${organizationId}'`,
-    fields: 'files(id, name)'
-  });
-
-  return response.data.files.length > 0 ? response.data.files[0] : null;
-};
+router.get("/", (req, res) => {
+    res.redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+});
 
 router.post('/createSheet', async (req, res) => {
-  const { organizationId, organizationName } = req.body;
 
-  if (!organizationId || !organizationName) {
-    return res.status(400).json({
-      success: false,
-      message: 'organizationId and organizationName are required'
-    });
+  if (!Object.keys(req.body).length) {
+
+    return res.status(200).send({success: false, message: "Empty request"});
   }
 
+  const { organizationId, organizationName } = req.body;
+
   try {
+
     const auth = await authorize();
 
     // Check if a spreadsheet with the organizationId already exists
-    const existingSpreadsheet = await checkIfSpreadsheetExists(auth.credentials.access_token, organizationId);
+    const existingSpreadsheet = await checkIfSpreadsheetExists(auth.credentials.access_token, organizationId, google);
     
     if (existingSpreadsheet) {
-      return res.status(400).json({
-        success: false,
-        message: `Spreadsheet already exists for organization ID: ${organizationId}`,
-        spreadsheetId: existingSpreadsheet.id
-      });
+
+      return res.status(200).json({ success: false, message: 'Spreadsheet already exists.', data : { spreadsheetId: existingSpreadsheet.id } });
     }
 
     const sheets = google.sheets({ version: 'v4', headers: { Authorization: `Bearer ${auth.credentials.access_token}` } });
@@ -50,11 +42,13 @@ router.post('/createSheet', async (req, res) => {
     });
 
     const response = await drive.files.create({
+
       requestBody: {
         name: `${organizationName}[${organizationId}]`,
         mimeType: 'application/vnd.google-apps.spreadsheet',
         parents: ['1xSMyMZyc32joi2NnMTmoIzwmW2VpZfhS']
       }
+
     });
 
     const spreadsheetId = response.data.id;
@@ -121,55 +115,25 @@ router.post('/createSheet', async (req, res) => {
 
     // Write the fields as headers in the first row of the sheet
     await sheets.spreadsheets.values.update({
+
       spreadsheetId,
       range: 'Sheet1!A1',
       valueInputOption: 'RAW',
       resource: {
         values: [fields],
       },
+
     });
 
-    // await sheets.spreadsheets.batchUpdate({
-    //   spreadsheetId,
-    //   resource: {
-    //     requests: [
-    //       {
-    //         setDataValidation: {
-    //           range: {
-    //             sheetId: 0, // Assumes Sheet1 is the first sheet
-    //             startRowIndex: 1, // Skip the header row
-    //             endRowIndex: 1000, // Adjust the row limit as needed
-    //             startColumnIndex: 1, // Column B
-    //             endColumnIndex: 2,
-    //           },
-    //           rule: {
-    //             condition: {
-    //               type: 'ONE_OF_LIST',
-    //               values: [{ userEnteredValue: 'Clinical' }, { userEnteredValue: 'Non-Clinical' }],
-    //             },
-    //             strict: true,
-    //             showCustomUi: true,
-    //           },
-    //         },
-    //       },
-    //     ],
-    //   },
-    // });
-
-    return res.status(200).json({
-      success: true,
-      link: `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit?gid=0#gid=0`,
-      spreadsheetId,
-      message: 'Spreadsheet created and initialized successfully'
-    });
+    return res.status(200).json({ success: true, message: 'Spreadsheet created and initialized successfully' , data : { link: `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit?gid=0#gid=0`, spreadsheetId: spreadsheetId } });
 
   } catch (error) {
+
     console.error('Error creating spreadsheet:', error);
-    report(`Error creating spreadsheet for ${organizationName}-${organizationId} : ${error.message}`);
-    return res.status(500).json({
-      success: false,
-      message: 'Internal server error'
-    });
+    await report('error', 'sheetRoute.js',`Unable to create a spreadsheet for ${organizationName}-${organizationId} : ${error.message}`);
+
+    return res.status(200).json({ success: false, message: 'Internal server error' });
+
   }
 });
 

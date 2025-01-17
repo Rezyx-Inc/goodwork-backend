@@ -16,6 +16,7 @@ use App\Mail\support;
 use Illuminate\Support\Facades\Http;
 /** Models */
 use App\Models\{Profession, Speciality, Notification, User, Nurse, Follows, NurseReference, Job, Offer, NurseAsset, Keyword, Facility, Availability, Countries, States, Cities, JobSaved, State};
+use App\Mail\VerifyNewEmail;
 
 define('USER_IMG_RECRUITER', asset('public/frontend/img/profile-pic-big.png'));
 
@@ -31,7 +32,7 @@ public function index()
     $id = Auth::guard('recruiter')->user()->id;
     $alljobs = Job::where('recruiter_id', $id)->get(); 
 
-    $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboard', 'Working'];
+    $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared', 'Working'];
     $statusCounts = array_fill_keys($statusList, 0);
 
     foreach ($alljobs as $key => $value) {
@@ -325,7 +326,6 @@ public function index()
                 'first_name' => 'required|string',
                 'last_name' => 'required|string',
                 'mobile' => 'nullable|string',
-                'about_me' => 'required|string',
             ]);
             $user_data = [];
 
@@ -339,7 +339,7 @@ public function index()
             isset($request->first_name) ? ($user_data['first_name'] = $request->first_name) : '';
             isset($request->last_name) ? ($user_data['last_name'] = $request->last_name) : '';
             isset($request->mobile) ? ($user_data['mobile'] = $request->mobile) : '';
-            isset($request->about_me) ? ($user_data['about_me'] = $request->about_me) : '';
+            isset($request->about_me) ? ($user_data['about_me'] = $request->about_me) : ($user_data['about_me'] = null);
 
             $user->update($user_data);
 
@@ -460,5 +460,77 @@ public function index()
         } catch (\Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
+    }
+
+
+
+    // Send OTP to the user's new email
+    public function sendOtp_recruiter(Request $request)
+    {
+        try {
+
+            $user = Auth::guard('recruiter')->user();
+
+            // Validate the email
+            $request->validate([
+                'email' => 'required|email'
+            ]);
+
+            // Generate a verification code
+            $code = rand(1000, 9999);
+
+            // Update the user's email verification status
+            $user->email_verified_at = null;
+            $user->otp = $code;
+            $user->save();
+
+            // Prepare email data
+            $email_data = [
+                'name' => $user->first_name . ' ' . $user->last_name,
+                'subject' => 'Verify Your New Email',
+                'code' => $code,
+                'new_email' => $request->email,
+            ];
+
+            // Send the email
+            Mail::to($request->email)->send(new VerifyNewEmail($email_data));
+
+            return response()->json(['status' => true ,'message' => 'Verification email sent successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => "An error occurred while sending the verification email. Please try again later."], 500);
+        }
+    }
+
+
+
+    // verify the OTP and Update the email
+    public function updateEmail_recruiter(Request $request)
+    {
+       try {
+            $user = Auth::guard('recruiter')->user();
+
+            // Validate the email
+            $request->validate([
+                'otp' => 'required|numeric',
+            ]);
+
+            // Check if the OTP is correct
+            if ($request->otp == $user->otp) {
+
+                $user->email = $request->email;
+                $user->otp = null;
+                $user->save();
+
+                // Send a success response
+                return response()->json(['status' => true ,'message' => 'Email updated successfully.'], 200);
+            } else {
+                // Send an error response
+                return response()->json(['status' => false , 'message' => 'Invalid OTP.'], 400);
+            }
+
+
+       } catch (\Throwable $th) {
+        return response()->json(['error' => "An error occurred while updating the email."],);
+       }
     }
 }

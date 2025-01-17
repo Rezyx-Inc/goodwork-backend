@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\{Request, jsonResponse};
 use Illuminate\Contracts\Support\Renderable;
+use App\Events\NewPrivateMessage;
 use URL;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
@@ -121,7 +122,7 @@ class ApplicationController extends Controller
         } 
 
         
-        $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+        $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
         $statusCounts = [];
         $offerLists = [];
 
@@ -548,19 +549,18 @@ class ApplicationController extends Controller
             $urlDocs = 'http://localhost:' . config('app.file_api_port') . '/documents/get-docs';
             $fileresponse = Http::post($urlDocs, ['workerId' => $worker_id]);
             $files = [];
+            $api_response = json_decode($fileresponse->body());
+            if ($api_response->success) {
+                if (!empty($api_response->data->docs->files)) {
+                    $hasFile = true;
 
-	        // return response()->json($fileresponse->json());	
-            if (!empty($fileresponse->json()['files'])) {
-                $hasFile = true;
-		
-                foreach ($fileresponse->json()['files'] as $file) {
-		            if(isset($file['content']) && isset($file['name']) && isset($file['type'])){	
+                    foreach ($api_response->data->docs->files as $file) {
                         $files[] = [
-                            'name' => $file['name'],
-                            'content' => $file['content'],
-                            'type' => $file['type']
+                            'name' => $file->name,
+                            'content' => $file->content,
+                            'type' => $file->type
                         ];
-		            }      
+                    }
                 }
             }
 
@@ -607,43 +607,61 @@ class ApplicationController extends Controller
 
     public function updateApplicationStatus(Request $request)
     {
+         
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'status' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first()]);
+        }
+
         $recruiter = Auth::guard('recruiter')->user();
         $recruiter_id = $recruiter->id;
         $full_name = $recruiter->first_name . ' ' . $recruiter->last_name;
         $offer_id = $request->id;
         $offer = Offer::where('id', $offer_id)->first();
-        $status = $request->status;
-        $jobid = $offer->job_id;
 
-        if (isset($jobid)) {
-            $job = Offer::where(['id' => $offer_id])->update(['status' => $status]);
-            if ($job) {
-                // send notification to the worker
-                $time = now()->toDateTimeString();
-                $receiver = $offer->worker_user_id;
-                $job_name = Job::where('id', $jobid)->first()->job_name;
-                event(new NotificationOffer($status, false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $offer_id));
-                $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
-                $statusCounts = [];
-                $offerLists = [];
-                foreach ($statusList as $status) {
-                    $statusCounts[$status] = 0;
-                }
-                $statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
-                foreach ($statusCountsQuery as $statusCount) {
-                    if ($statusCount) {
-                        $statusCounts[$statusCount->status] = $statusCount->count;
-                    } else {
-                        $statusCounts[$statusCount->status] = 0;
-                    }
-                }
-                return response()->json(['message' => 'Update Successfully', 'type' => $status, 'statusCounts' => $statusCounts]);
-            } else {
-                return response()->json(['message' => 'Something went wrong! Please check']);
+        if (!$offer) {
+            return response()->json(['message' => 'Offer not found']);
+        }
+
+        $status = $request->status;
+        $offer_updated = Offer::where(['id' => $offer_id])->update(['status' => $status]);
+        
+        if ($offer_updated) {
+            // send notification to the worker
+            $time = now()->toDateTimeString();
+            $message = $full_name . ' has changed the status of your application to ' . $status;
+            $idOrganization = $offer->organization_id;
+            $idWorker = $offer->worker_user_id;
+            $idWorker = Nurse::where('id', $idWorker)->first()->user_id;
+            $role = 'ADMIN';
+            $type = 'text';
+            $fileName = null;
+            $time = now()->toDateTimeString();
+            event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
+            //event(new NotificationOffer($status, false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $offer_id));
+            $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
+            $statusCounts = [];
+            $offerLists = [];
+            foreach ($statusList as $status) {
+                $statusCounts[$status] = 0;
             }
+            $statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
+            foreach ($statusCountsQuery as $statusCount) {
+                if ($statusCount) {
+                    $statusCounts[$statusCount->status] = $statusCount->count;
+                } else {
+                    $statusCounts[$statusCount->status] = 0;
+                }
+            }
+            return response()->json(['message' => 'Update Successfully', 'type' => $status, 'statusCounts' => $statusCounts]);
         } else {
             return response()->json(['message' => 'Something went wrong! Please check']);
         }
+        
     }
 
     public function recruiter_counter_offer(Request $request)
@@ -680,12 +698,16 @@ class ApplicationController extends Controller
             if ($offer) {
                 $data['status'] = 'Offered';
                 $offer->update($data);
-                $jobid = $offer->job_id;
-                $time = now()->toDateTimeString();
                 $receiver = $offer->worker_user_id;
-                $job_name = Job::where('id', $jobid)->first()->job_name;
-                event(new NotificationOffer('Offered', false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $offer_id));
-
+                $message = $full_name . ' has sent you a counter offer';
+                $idOrganization = $offer->organization_id;
+                $idWorker = $offer->worker_user_id;
+                $idWorker = Nurse::where('id', $idWorker)->first()->user_id;
+                $role = 'ADMIN';
+                $type = 'text';
+                $fileName = null;
+                $time = now()->toDateTimeString();
+                event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Offer updated successfully',
@@ -723,6 +745,17 @@ class ApplicationController extends Controller
                     'message' => $validator->errors()->first(),
                 ];
             } else {
+                $offer = Offer::where('id', $request->id)->first();
+                $time = now()->toDateTimeString();
+                $action = $request->type == 'rejectcounter' ? 'Rejected' : 'Accepted';
+                $message = $full_name . ' has ' . $action . ' the job offer';
+                $idOrganization = $offer->organization_id;
+                $idWorker = $offer->worker_user_id;
+                $idWorker = Nurse::where('id', $idWorker)->first()->user_id;
+                $role = 'ADMIN';
+                $type = 'text';
+                $fileName = null;
+                        
                 if ($request->type == 'rejectcounter') {
                     $update_array['is_counter'] = '0';
                     $update_array['is_draft'] = '0';
@@ -742,6 +775,7 @@ class ApplicationController extends Controller
                         $receiver = $offer->worker_user_id;
                         $job_name = Job::where('id', $jobid)->first()->job_name;
 
+                        event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
 
                         event(new NotificationOffer('Rejected', false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $id));
                     }
@@ -777,7 +811,7 @@ class ApplicationController extends Controller
                         $receiver = $offer->worker_user_id;
                         $job_name = Job::where('id', $jobid)->first()->job_name;
 
-
+                        event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
                         event(new NotificationOffer('Offered', false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $id));
 
                     }
@@ -797,14 +831,16 @@ class ApplicationController extends Controller
             $workerId = $request->WorkerId;
             //return response()->json(['workerId' => $workerId]);
 
-            $response = Http::get('http://localhost:4545/documents/list-docs', ['workerId' => $workerId]);
+            $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/list-docs', ['workerId' => $workerId]);
             
-            if ($response->successful()) {
-                
-                return $response->body();
+            $body = json_decode($response->body());
 
-            } else {
-                return response()->json(['success' => false], $response->status());
+            if( $body->success)
+            {
+                //return json_encode($body->data->list);
+                return response()->json(['success' => true, 'data' => $body->data->list]);
+            }else{
+                return response()->json(['success' => false, 'message' => $body->message], $response->status());
             }
 
 
@@ -817,10 +853,17 @@ class ApplicationController extends Controller
     {
         try {
             $bsonId = $request->input('bsonId');
-            $response = Http::get('http://localhost:4545/documents/get-doc', ['bsonId' => $bsonId]);
+            $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/get-doc', ['bsonId' => $bsonId]);
 
-            // Pass through the response from Node.js API
-            return $response->body();
+            $body = json_decode($response->body());
+
+            if( $body->success)
+            {
+                return json_encode($body->data);
+            }else{
+                return response()->json(['success' => false, 'message' => $body->message], $response->status());
+            }
+            
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
