@@ -563,10 +563,9 @@ class WorkerDashboardController extends Controller
     $data['us_states'] = State::select('id', 'name')->get();
     
     // Set filter values from the request, use null as the default if not provided
-    $data['organization'] = $request->input('organization', null);
-    $data['organization_full_name'] = $request->input('organization_full_name', null);
-    $data['recruiter'] = $request->input('recruiter', null);
-    $data['recruiter_full_name'] = $request->input('recruiter_full_name', null);
+    $data['organization_name'] = $request->input('organization_name', null);
+    $data['recruiter_first_name'] = $request->input('recruiter_first_name', null);
+    $data['recruiter_last_name'] = $request->input('recruiter_last_name', null);
     $data['facilityName'] = $request->input('facility_name', null);
     $data['job_id'] = $request->input('gw', null);
     $data['profession'] = $request->input('profession');
@@ -615,22 +614,14 @@ class WorkerDashboardController extends Controller
     }
 
     $data['organizations_id'] = [];
-    if (!empty($data['organization']) || !empty($data['organization_full_name'])) {
-        foreach ($data['organizations'] as $org) {
-            // Check if both are provided and match
-            if (!empty($data['organization']) && !empty($data['organization_full_name'])) {
-                if ($org->organization_name == $data['organization'] && $org->first_name == $data['organization_full_name']) {
-                    $data['organizations_id'][] = $org->id;
-                }
-            } 
-            // Check only organization name
-            elseif (!empty($data['organization']) && $org->organization_name == $data['organization']) {
-                $data['organizations_id'][] = $org->id;
-            } 
-            // Check only organization full name
-            elseif (!empty($data['organization_full_name']) && $org->first_name == $data['organization_full_name']) {
-                $data['organizations_id'][] = $org->id;
-            }
+    if (!empty($data['organization_name'])) {
+        
+      foreach ($data['organizations'] as $org) {
+
+          // if only organization name is provided
+          if ($org->organization_name == $data['organization_name']) {
+            $data['organizations_id'][] = $org->id;
+          }                
         }
         // Apply query filter if organizations_id is not empty
         if (!empty($data['organizations_id'])) {
@@ -642,31 +633,32 @@ class WorkerDashboardController extends Controller
     }
 
     $data['recruiters_id'] = [];
-    if (!empty($data['recruiter']) || !empty($data['recruiter_full_name'])) {
-        foreach ($data['recruiters'] as $recr) {
-            // Check if both are provided and match
-            if (!empty($data['recruiter']) && !empty($data['recruiter_full_name'])) {
-                if ($recr->recruiter_name == $data['recruiter'] && $recr->first_name == $data['recruiter_full_name']) {
-                    $data['recruiters_id'][] = $recr->id;
-                }
-            } 
-            // Check only recruiter name
-            elseif (!empty($data['recruiter']) && $recr->recruiter_name == $data['recruiter']) {
-                $data['recruiters_id'][] = $recr->id;
-            } 
-            // Check only recruiter full name
-            elseif (!empty($data['recruiter_full_name']) && $recr->first_name == $data['recruiter_full_name']) {
-                $data['recruiters_id'][] = $recr->id;
+    if (!empty($data['recruiter_first_name']) || !empty($data['recruiter_last_name'])) {
+        foreach ($data['recruiters'] as $recruiter) {
+            // If both first and last name are provided
+            if ($recruiter->first_name == $data['recruiter_first_name'] && $recruiter->last_name == $data['recruiter_last_name']) {
+                $data['recruiters_id'][] = $recruiter->id;
+            }
+            // If only recruiter first name is provided
+            elseif ($recruiter->first_name == $data['recruiter_first_name'] && empty($data['recruiter_last_name'])) {
+                $data['recruiters_id'][] = $recruiter->id;
+            }
+            // If only recruiter last name is provided
+            elseif ($recruiter->last_name == $data['recruiter_last_name'] && empty($data['recruiter_first_name'])) {
+                $data['recruiters_id'][] = $recruiter->id;
             }
         }
-        // Apply query filter if recruiters_id is not empty
+
+        // Apply filter if recruiters_id is not empty
         if (!empty($data['recruiters_id'])) {
             $ret->whereIn('recruiter_id', $data['recruiters_id']);
         } else {
-            // no matching recruiter is found
+            // No matching recruiter is found
             $ret->whereRaw('1 = 0'); // No results will be returned
         }
     }
+
+        
 
     if (!empty($data['facilityName'])) {
       $ret->where('facility_name', 'like', $data['facilityName']);

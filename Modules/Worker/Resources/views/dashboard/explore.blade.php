@@ -27,82 +27,86 @@
                                 </div>
                                
                                
-
-                                {{-- Organization Filters --}}
-                                <button type="button" class="btn first-collapse mt-3" data-toggle="collapse" data-target="#org_infos">
-                                   Organization Filters
-                                </button>
-                                
-                                <div id="org_infos" class="collapse">
-                                    {{-- Full Name Organization --}}
-                                    <div class="ss-input-slct-grp">
-                                        <label for="cars">Full Name Organization</label>
-                                        <select name="organization_full_name">
-                                            <option value="">Select</option>
-                                            @foreach ($organizations as $v)
-                                                <option value="{{ $v->first_name }}" data-id="{{ $v->first_name }}"
-                                                    {{ $organization_full_name == $v->first_name ? 'selected' : '' }}>{{ $v->first_name }} {{ $v->last_name }}</option>
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    {{-- Organization Name --}}
-                                    <div class="ss-input-slct-grp">
-                                        <label for="cars">Organization Name</label>
-                                        <select name="organization">
-                                            <option value="">Select</option>
-                                            @foreach ($organizations as $v)
-                                                <option value="{{ $v->organization_name }}" data-id="{{ $v->organization_name }}"
-                                                    {{ $organization == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <br>
+                                {{-- Organization Name --}}
+                                <div class="ss-input-slct-grp">
+                                    <label for="cars">Organization Name</label>
+                                    <select name="organization_name">
+                                        <option value="">Select</option>
+                                        @foreach ($organizations as $v)
+                                            <option value="{{ $v->organization_name }}" data-id="{{ $v->organization_name }}"
+                                                {{ $organization_name == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
-                                <button type="button" class="btn first-collapse mt-3" data-toggle="collapse" data-target="#recruiter_infos">
-                                   Recruiter Filters
-                                </button>
-                                
-                                <div id="recruiter_infos" class="collapse">
-                                    {{-- Recruiter Full Name --}}
-                                    <div class="ss-input-slct-grp">
-                                        <label for="cars">Full Name Recruiter</label>
-                                        <select name="recruiter_full_name">
-                                            <option value="">Select</option>
-                                            @foreach ($recruiters as $v)
-                                                <option value="{{ $v->first_name }}" data-id="{{ $v->first_name }}"
-                                                    {{ $recruiter_full_name == $v->first_name ? 'selected' : '' }}>{{ $v->first_name }} {{ $v->last_name }}</option>
+                                {{-- Recruiter First Name --}}
+                                <div class="ss-input-slct-grp">
+                                    <label for="cars">Recruiter First Name</label>
+                                    <select name="recruiter_first_name">
+                                        <option value="">Select</option>
+                                        @php
+                                            $uniqueRecruiters = [];
+                                        @endphp
+                                        @foreach ($recruiters as $v)
+                                            @if (!in_array($v->first_name, $uniqueRecruiters))
+                                                <option value="{{ $v->first_name }}" 
+                                                        data-id="{{ $v->first_name }}"
+                                                        {{ $recruiter_first_name == $v->first_name ? 'selected' : '' }}>
+                                                    {{ $v->first_name }}
                                                 </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    {{-- Organization Name for Recruiter --}}
-                                    <div class="ss-input-slct-grp">
-                                        <label for="cars">Recruiter Name</label>
-                                        <select name="recruiter">
-                                            <option value="">Select</option>
-                                            @php
-                                                $uniqueRecruiters = [];
-                                            @endphp
-                                            @foreach ($recruiters as $v)
-                                                @if (!in_array($v->organization_name, $uniqueRecruiters))
-                                                    <option value="{{ $v->organization_name }}" 
-                                                            data-id="{{ $v->organization_name }}"
-                                                            {{ $recruiter == $v->organization_name ? 'selected' : '' }}>
-                                                        {{ $v->organization_name }}
-                                                    </option>
-                                                    @php
-                                                        $uniqueRecruiters[] = $v->organization_name;
-                                                    @endphp
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                        
-                                    </div>
-                                    <br>
+                                                @php
+                                                    $uniqueRecruiters[] = $v->first_name;
+                                                @endphp
+                                            @endif
+                                        @endforeach
+                                    </select>
                                 </div>
+                                {{-- Recruiter Last Name --}}
+                                <div class="ss-input-slct-grp">
+                                    <label for="cars">Recruiter Last Name</label>
+                                    <select name="recruiter_last_name">
+                                        <option value="">Select</option>
+                                        @php
+                                            $uniqueRecruiters = [];
+                                        @endphp
+                                        @foreach ($recruiters as $v)
+                                            @if (!in_array($v->last_name, $uniqueRecruiters))
+                                                <option value="{{ $v->last_name }}" 
+                                                        data-id="{{ $v->last_name }}"
+                                                        {{ $recruiter_last_name == $v->last_name ? 'selected' : '' }}>
+                                                    {{ $v->last_name }}
+                                                </option>
+                                                @php
+                                                    $uniqueRecruiters[] = $v->last_name;
+                                                @endphp
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
+{{--                                 
+                                <div class="ss-input-slct-grp">
+                                    <label for="cars">Recruiter Last Name</label>
+                                    <select name="recruiter_last_name">
+                                        <option value="">Select</option>
+                                        @php
+                                            $uniqueRecruiters = [];
+                                        @endphp
+                                        @foreach ($recruiters as $v)
+                                            @if (!in_array($v->organization_name, $uniqueRecruiters))
+                                                <option value="{{ $v->organization_name }}" 
+                                                        data-id="{{ $v->organization_name }}"
+                                                        {{ $recruiter == $v->organization_name ? 'selected' : '' }}>
+                                                    {{ $v->organization_name }}
+                                                </option>
+                                                @php
+                                                    $uniqueRecruiters[] = $v->organization_name;
+                                                @endphp
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div> --}}
 
                                 <div class="ss-input-slct-grp">
                                     <label for="cars">Job Type</label>
