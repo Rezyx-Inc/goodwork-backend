@@ -44,14 +44,6 @@
                 'selected' => old('state', $nurse->state),
             ],
             [
-                'id' => 'city',
-                'label' => 'Cities you\'d like to work?',
-                'placeholder' => 'Select cities',
-                'name' => 'city',
-                'options' => $allKeywords['City'],
-                'selected' => old('city', $nurse->city),
-            ],
-            [
                 'id' => 'worker_shift_time_of_day',
                 'label' => 'Fav shift?',
                 'placeholder' => 'Select shifts',
