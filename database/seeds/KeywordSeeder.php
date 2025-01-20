@@ -672,7 +672,6 @@ class KeywordSeeder extends Seeder
             ],
             'State'=>State::all()->pluck('name')->toArray(),
             'StateCode'=>State::all()->pluck('iso2')->toArray(),
-            'City'=> Cities::all()->pluck('name')->toArray(),
             'Urgency'=> [
                 'Auto Offer',
                 'no Auto Offer'

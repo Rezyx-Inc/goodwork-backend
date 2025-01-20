@@ -795,6 +795,7 @@ class WorkerController extends Controller
             $keywords = Keyword::where('filter', $filter)->get();
             $allKeywords[$filter] = $keywords;
         }
+        $Cities = Cities::all()->pluck('name', 'id', 'state_id');
         // Count unique workers applying
         //$statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(distinct worker_user_id ) as count'))->groupBy('status')->get();
 
@@ -812,7 +813,7 @@ class WorkerController extends Controller
         }
         $status_count_draft = Offer::where('is_draft', true)->count();
         $nurse = $worker;
-        return view('worker::offers/applicationjourney', compact('statusCounts', 'status_count_draft', 'allKeywords', 'nurse'));
+        return view('worker::offers/applicationjourney', compact('statusCounts', 'status_count_draft', 'allKeywords', 'nurse', 'Cities'));
     }
 
     public function explore(Request $request)
