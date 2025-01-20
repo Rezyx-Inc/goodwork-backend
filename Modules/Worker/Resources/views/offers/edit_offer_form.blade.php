@@ -674,7 +674,7 @@
                 <ul>
                     <li class="row w-100 p-0 m-0">
                         <div class="ps-0">
-                            <select class="m-0" id="certificate">
+                            <select class="m-0" id="OfferCertificate">
                                 <option value="" disabled selected hidden>Select
                                     Certification</option>
                                 @if (isset($allKeywords['Certification']))
@@ -832,7 +832,7 @@
                 <ul>
                     <li class="row w-100 p-0 m-0">
                         <div class="ps-0">
-                            <select class="m-0" id="Emr">
+                            <select class="m-0" id="OfferEmr">
                                 <option value="" disabled selected hidden>Select an
                                     emr</option>
                                 @if (isset($allKeywords['EMR']))
@@ -928,7 +928,7 @@
                     <ul>
                         <li class="row w-100 p-0 m-0">
                             <div class="ps-0">
-                                <select class="m-0" id="vaccinations">
+                                <select class="m-0" id="OfferVaccinations">
                                     <option value="" disabled selected hidden>Enter
                                         Vaccinations & Immunizations name</option>
                                     @if (isset($allKeywords['Vaccinations']))
@@ -1033,8 +1033,63 @@
 
 <script>
 
-    $(document).ready(function() {
+    $(document).ready(async function() {
         getOfferDataToEdit();
+
+        
+
+        const jobState = document.getElementById('state');
+        const jobCity = document.getElementById('city');
+        let citiesData = [];
+        const selectedJobState = jobState.value;
+        const selectedState = $(jobState).find(':selected').attr('id');
+
+        jobState.addEventListener('change', async function() {
+
+            const selectedJobState = this.value;
+            const selectedState = $(this).find(':selected').attr('id');
+
+            await $.get(`/api/cities/${selectedState}`, function(cities) {
+                citiesData = cities;
+            });
+
+            jobCity.innerHTML = '<option value="">Cities</option>';
+
+            citiesData.forEach(function(City) {
+
+                const option = document.createElement('option');
+                option.value = City.name;
+                option.textContent = City.name;
+                jobCity.appendChild(option);
+
+            });
+
+        });
+
+        // get cities according to already selected state :
+
+        if (selectedJobState) {
+            console.log('selectedJobState :', selectedJobState);
+            await $.get(`/api/cities/${selectedState}`, function(cities) {
+                citiesData = cities;
+            });
+
+            if(jobCity.value == ''){
+                jobCity.innerHTML = '<option value="" disabled selected hidden>Cities</option>';
+            }else{
+                jobCity.innerHTML = '<option value="' + jobCity.value + '" selected>' + jobCity.value + '</option>';
+            }
+
+            citiesData.forEach(function(City) {
+
+                const option = document.createElement('option');
+                option.value = City.name;
+                option.textContent = City.name;
+                jobCity.appendChild(option);
+
+            });
+        }
+        
     });
 
 

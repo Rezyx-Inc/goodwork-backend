@@ -69,8 +69,11 @@ class OpportunitiesController extends Controller
             return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
         }
 
-
-        $requiredFieldsToSubmit = $requiredFields->data->org[0]->preferences->requiredToSubmit;
+        if($requiredFields->success) {
+            $requiredFieldsToSubmit = $requiredFields->data->org[0]->preferences->requiredToSubmit;
+        } else {
+            $requiredFieldsToSubmit = [];
+        }
 
         return view('recruiter::recruiter/opportunitiesmanager/main', compact('draftJobs', 'specialities', 'professions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount', 'requiredFieldsToSubmit'));
     }

@@ -97,6 +97,10 @@ class RecruiterController extends Controller
     {
         $idOrganization = $request->query('organizationId');
         $idWorker = $request->query('workerId');
+        $nurse = Nurse::where('id', $idWorker)->first();
+        if(isset($nurse)){
+            $idWorker = $nurse->user_id;
+        }
         $page = $request->query('page', 1);
 
         $idRecruiter = Auth::guard('recruiter')->user()->id;
@@ -321,11 +325,12 @@ class RecruiterController extends Controller
 
                 // Call the get_private_messages function
                 $request->query->set('workerId', $nurse_user_id);
-                $request->query->set('organizationId', $recruiter_id); // Replace this with the actual organizationId
+                $request->query->set('organizationId', $organization_id); // Replace this with the actual organizationId
+
                 return $this->get_direct_private_messages($request);
             }else{
                 $request->query->set('workerId', $nurse_user_id);
-                $request->query->set('organizationId', $recruiter_id);
+                $request->query->set('organizationId', $organization_id);
                 return $this->get_direct_private_messages($request);
             }
         }
@@ -1138,7 +1143,7 @@ class RecruiterController extends Controller
                 'is_resume' => 'nullable|string',
 
                 'preferred_shift_duration' => 'nullable|string',
-                'hours_per_week' => 'nullable|numeric',
+                'hours_per_week' => 'nullable|integer',
                 'guaranteed_hours' => 'nullable|string',
                 'hours_shift' => 'nullable|integer',
                 'weeks_shift' => 'nullable|string',
