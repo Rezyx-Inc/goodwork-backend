@@ -22,3 +22,4 @@ package-lock.json
 .rnd
 stripe.exe
 composer.lock
+/storage/Goodwork/*
