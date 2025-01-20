@@ -118,9 +118,11 @@ router.get("/onboarding-status", async (req, res) => {
   let account;
 
   try {
+
     account = await stripe.accounts.retrieve(req.query.stripeId);
+
   } catch (e) {
-    console.log(e);
+
     return res.status(400).send({ status: false, message: e.message });
   }
 
@@ -256,7 +258,7 @@ router.post("/customer/subscription", async (req, res) => {
       message: subscriptionSchedule.id,
     });
   } catch (e) {
-    console.log(e);
+
     return res.status(400).send({ status: false, message: e.message });
   }
 });
