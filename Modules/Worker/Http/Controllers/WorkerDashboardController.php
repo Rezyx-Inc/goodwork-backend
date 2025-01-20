@@ -30,6 +30,7 @@ use App\Mail\support;
 use Illuminate\Support\Facades\Http;
 use App\Events\NotificationJob;
 use App\Events\NotificationOffer;
+use App\Events\NewPrivateMessage;
 
 /* *********** Requests *********** */
 use App\Http\Requests\{UserEditProfile, ChangePasswordRequest, ShippingRequest, BillingRequest};
@@ -854,12 +855,23 @@ class WorkerDashboardController extends Controller
       $time = now()->toDateTimeString();
       event(new NotificationJob('Apply', false, $time, $job->created_by, $user->id, $user->full_name, $request->jid, $job->job_name));
 
+      $message = $user->full_name . ' has applied to job ' . $job->id;
+      $idOrganization = $job->organization_id;
+      $recruiter_id = $job->recruiter_id;
+      $idWorker = $user->id;
+      $role = 'ADMIN';
+      $type = 'text';
+      $fileName = null;
+      event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
+      //event(new NotificationOffer($status, false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $offer_id));
+
       DB::commit();
 
       return new JsonResponse(['success' => true, 'msg' => 'Applied to job successfully'], 200);
     } catch (\Exception $e) {
       DB::rollBack();
-      // return err
+      // return err :
+      // return new JsonResponse(['success' => false, 'msg' => $e->getMessage()], 500);
       return response()->json(["success" => false,"message" => "Something went wrong." ] , 500);
     }
   }

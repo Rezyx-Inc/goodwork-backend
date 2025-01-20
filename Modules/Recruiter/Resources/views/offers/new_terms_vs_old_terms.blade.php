@@ -383,7 +383,7 @@
         rowDiv.appendChild(newValueDiv);
         rowDiv.appendChild(oldValueDiv);
 
-        if (diff[field] != undefined) {
+        if (diff[field] !== undefined) {
             rowDiv.classList.add('ss-s-jb-apl-bg-bl');
         }
 
@@ -394,11 +394,11 @@
         fields[section].forEach(function(field) {
             var fieldId = field.id;
             var displayName = field['display-name'];
-            var oldValue = diff[fieldId] != undefined ? diff[fieldId] : offerdetails[fieldId];
+            var oldValue = diff[fieldId] !== undefined ? diff[fieldId] : offerdetails[fieldId];
             var newValue = offerdetails[fieldId];
             var elements = createFieldElement(fieldId, displayName, newValue, oldValue);
             var rowDivResult = elements[1];
-            if (diff[fieldId] != undefined) {
+            if (diff[fieldId] !== undefined && diff[fieldId] != offerdetails[fieldId]) {
                 document.getElementById(section + '-section').querySelector('.collapse').classList.add('show');
             }
             console.log('element:', section);

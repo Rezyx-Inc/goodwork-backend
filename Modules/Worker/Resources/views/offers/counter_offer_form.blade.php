@@ -659,7 +659,7 @@
                 <ul>
                     <li class="row w-100 p-0 m-0">
                         <div class="ps-0">
-                            <select class="m-0" id="certificate">
+                            <select class="m-0" id="OfferCertificate">
                                 <option value="" disabled selected hidden>Select
                                     Certification</option>
                                 @if (isset($allKeywords['Certification']))
@@ -817,7 +817,7 @@
                 <ul>
                     <li class="row w-100 p-0 m-0">
                         <div class="ps-0">
-                            <select class="m-0" id="Emr">
+                            <select class="m-0" id="OfferEmr">
                                 <option value="" disabled selected hidden>Select an
                                     emr</option>
                                 @if (isset($allKeywords['EMR']))
@@ -913,7 +913,7 @@
                     <ul>
                         <li class="row w-100 p-0 m-0">
                             <div class="ps-0">
-                                <select class="m-0" id="vaccinations">
+                                <select class="m-0" id="OfferVaccinations">
                                     <option value="" disabled selected hidden>Enter
                                         Vaccinations & Immunizations name</option>
                                     @if (isset($allKeywords['Vaccinations']))

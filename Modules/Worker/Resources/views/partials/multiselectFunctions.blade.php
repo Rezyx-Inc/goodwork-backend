@@ -40,8 +40,10 @@ function addcertifications(type) {
         var id;
         var idtitle;
         if (type == 'from_add') {
-            id = $('#certificate');
-            idtitle = "certificate";
+            id = $('#OfferCertificate');
+            idtitle = "OfferCertificate";
+            
+        console.log('id',id);
         } else if (type == 'from_draft') {
             id = $('#certificateDraft');
             idtitle = "certificateDraft";
@@ -49,7 +51,6 @@ function addcertifications(type) {
             id = $('#certificateEdit');
             idtitle = "certificateEdit";
         }
-
         if (!id.val()) {
             notie.alert({
                 type: 'error',
@@ -143,8 +144,8 @@ function addcertifications(type) {
         let id;
         let idtitle;
         if (type == 'from_add') {
-            id = $('#vaccinations');
-            idtitle = "vaccinations";
+            id = $('#OfferVaccinations');
+            idtitle = "OfferVaccinations";
         } else if (type == 'from_draft') {
             id = $('#vaccinationsDraft');
             idtitle = "vaccinationsDraft";
@@ -609,8 +610,8 @@ function addcertifications(type) {
         let id;
         let idtitle;
         if (type == 'from_add') {
-            id = $('#Emr');
-            idtitle = "Emr";
+            id = $('#OfferEmr');
+            idtitle = "OfferEmr";
         } else if (type == 'from_draft') {
             id = $('#EmrDraft');
             idtitle = "EmrDraft";
@@ -801,6 +802,7 @@ function addcertifications(type) {
                 'hours_per_week': { id: 'hours_per_week', type: 'number' },
                 'state': { id: 'state', type: 'select' },
                 'city': { id: 'city', type: 'select' },
+
                 'guaranteed_hours': { id: 'guaranteed_hours', type: 'number' },
                 'hours_shift': { id: 'hours_shift', type: 'number' },
                 'weeks_shift': { id: 'weeks_shift', type: 'number' },
@@ -820,9 +822,8 @@ function addcertifications(type) {
                 'goodwork_weekly_amount': { id: 'goodwork_weekly_amount', type: 'number' },
                 'referral_bonus': { id: 'referral_bonus', type: 'number' },
                 'sign_on_bonus': { id: 'sign_on_bonus', type: 'number' },
-                'completion_bonus': { id: 'completion_bonus', type: 'number' },
                 'extension_bonus': { id: 'extension_bonus', type: 'number' },
-                'other_bonus': { id: 'other_bonus', type: 'number' },
+                
                 'pay_frequency': { id: 'pay_frequency', type: 'select' },
 
                 
@@ -852,7 +853,7 @@ function addcertifications(type) {
                 'job_name': { id: 'job_name', type: 'text' },
                 'holiday': { id: 'holiday', type: 'date' },
                 'professional_state_licensure': { id: 'professional_state_licensure_pending', type: 'radio' },
-                'is_resume': { id: 'is_resume', type: 'checkbox'},
+                
 
             };
 
@@ -873,7 +874,7 @@ function addcertifications(type) {
             if (professional_licensure_all_values) {
                 professional_licensureStr = Object.values(professional_licensure).join(', ');
                 professional_licensure_all_values.value = professional_licensureStr;
-                data['professional_licensure'] = professional_licensureStr;
+                data['job_location'] = professional_licensureStr;
             }
 
             let Emr_all_values = document.getElementById("EmrAllValues");
@@ -912,7 +913,7 @@ function addcertifications(type) {
             if (shifttimeofday_all_values) {
                 shifttimeofdayStr = Object.values(shifttimeofday).join(', ');
                 shifttimeofday_all_values.value = shifttimeofdayStr;
-                data['shifttimeofday'] = shifttimeofdayStr;
+                data['preferred_shift_duration'] = shifttimeofdayStr;
             }
         } catch (error) {
             // console.log(error);
@@ -946,10 +947,6 @@ function addcertifications(type) {
                             continue;
                         }
 
-                        if(element.id == 'is_resume' && !document.getElementById(element.id) ){
-                            data[fieldKey] = 0;
-                            continue;
-                        }
 
                         data[fieldKey] = document.getElementById(element.id).checked ? 1 : 0;
                         
@@ -976,8 +973,8 @@ function addcertifications(type) {
         for (const key in result) {
             if (result.hasOwnProperty(key)) {
                 const element = result[key];
-                
-                if(data[key] != element && data[key] != null){
+
+                if(data[key] != element && data[key] != undefined){
                     diff[key] = element;
                     // console.log('key',key);
                     // console.log('element',element);
@@ -1034,7 +1031,7 @@ function addcertifications(type) {
                             time: 2
                         });
                         setTimeout(() => {
-                             location.reload();
+                            location.reload();
                         }, 2000);
                     },
                     error: function(error) {
@@ -1060,7 +1057,7 @@ function addcertifications(type) {
             getMultiSelectValues();
             console.log(data);
             let id = document.getElementById('offer_id').value;
-            console.log(data.is_resume);
+            
 
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             if (csrfToken) {
@@ -1096,7 +1093,7 @@ function addcertifications(type) {
                         applicationStatus('Offered', id);
                         
                         setTimeout(() => {
-                            //location.reload();
+                            location.reload();
                         }, 2000);
                     },
                     error: function(error) {
@@ -1132,7 +1129,7 @@ function addcertifications(type) {
                 'hours_per_week': { id: 'hours_per_week', type: 'number' },
                 'state': { id: 'state', type: 'select' },
                 'city': { id: 'city', type: 'select' },
-                'is_resume': { id: 'is_resume', type: 'checkbox'},
+                
 
                 'guaranteed_hours': { id: 'guaranteed_hours', type: 'number' },
                 'hours_shift': { id: 'hours_shift', type: 'number' },
@@ -1153,9 +1150,8 @@ function addcertifications(type) {
                 'goodwork_weekly_amount': { id: 'goodwork_weekly_amount', type: 'number' },
                 'referral_bonus': { id: 'referral_bonus', type: 'number' },
                 'sign_on_bonus': { id: 'sign_on_bonus', type: 'number' },
-                'completion_bonus': { id: 'completion_bonus', type: 'number' },
                 'extension_bonus': { id: 'extension_bonus', type: 'number' },
-                'other_bonus': { id: 'other_bonus', type: 'number' },
+                
                 'pay_frequency': { id: 'pay_frequency', type: 'select' },
 
                 
