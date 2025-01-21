@@ -334,8 +334,8 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
 
             importData.startdate = moment(importData.startdate[0]).format("YYYY-MM-DD");
             importData.enddate = moment(importData.enddate[0]).format("YYYY-MM-DD");
-            var created_at = moment.format("YYYY-MM-DD");
-            var updated_at = moment.format("YYYY-MM-DD");
+            var created_at = moment().format("YYYY-MM-DD");
+            var updated_at = moment().format("YYYY-MM-DD");
 
             let id = await getNewJobId(pool);
 
@@ -344,7 +344,7 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
             }
 
             const query = await pool.query(
-                "INSERT INTO jobs (created_at, updated_at, professional_licensure, facility_state, facility_city, terms, tax_status, id, organization_id, created_by, job_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, job_type, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,??,?);",
+                "INSERT INTO jobs (created_at, updated_at, professional_licensure, facility_state, facility_city, terms, tax_status, id, organization_id, created_by, job_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, job_type, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate, recruiter_id ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
                 [
                     created_at,
                     updated_at,
@@ -375,6 +375,7 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
                     importData.license[0],
                     importData.Specialty,
                     hourlyPay,
+                    ardorOrgId
                 ]
             );
 
@@ -493,10 +494,10 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
                 }
 
                 // Add the end of the query
-                queryBuild+= " updated_at=? WHERE id = ? AND organization_id = ?;";
+                queryBuild+= " ,updated_at=? WHERE id = ? AND organization_id = ?;";
 
                 // Add the values for the WHERE clause
-                theArray.push(moment.format("YYYY-MM-DD"));
+                theArray.push(moment().format("YYYY-MM-DD"));
                 theArray.push(existingJob.id);
                 theArray.push(existingJob.organization_id);
 
@@ -537,7 +538,7 @@ module.exports.cleanArdorHealthJobs = async function (ardorOrgId, importData) {
 
     for(let i of tbd){
 
-        const updateQuery = await pool.query( `UPDATE jobs SET active=0, is_open=0, is_hidden=0, is_closed=1, updated_at='${ moment().format("YYYY-MM-DD") }' where id='${i.id}'`);
+        const updateQuery = await pool.query( `UPDATE jobs SET active=0, is_open=0, is_hidden=1, is_closed=0, updated_at='${ moment().format("YYYY-MM-DD") }' where id='${i.id}'`);
     }
 
     return true
