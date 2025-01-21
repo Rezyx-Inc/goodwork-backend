@@ -1312,15 +1312,6 @@
             return text.length > limit ? text.substring(0, limit) + '...' : text;
         }
 
-
-        function askRecruiter(e, type, workerid, recruiter_id , organization_id, name) {
-
-            let url = "{{ url('worker/messages') }}";
-            window.location = url + '?worker_id=' + workerid + '&organization_id=' + organization_id + '&recruiter_id=' + recruiter_id + '&name=' + name;
-
-        }
-
-
         // update nurse information change every 50 seconds
         setInterval(() => {
             update_nurse_information(dataToSend);
