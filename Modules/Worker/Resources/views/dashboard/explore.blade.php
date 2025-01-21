@@ -28,20 +28,38 @@
                                
                                
                                 {{-- Organization Name --}}
-                                <div class="ss-input-slct-grp">
-                                    <label for="cars">Organization Name</label>
-                                    <select name="organization_name">
-                                        <option value="">Select</option>
-                                        @foreach ($organizations as $v)
-                                            <option value="{{ $v->organization_name }}" data-id="{{ $v->organization_name }}"
-                                                {{ $organization_name == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+<div class="ss-input-slct-grp">
+    <label for="organization_name">Organization Name</label>
+    <select id="organization_name" name="organization_name">
+        <option value="">Select</option>
+        @foreach ($organizations as $v)
+            <option value="{{ $v->organization_name }}"
+                {{ $organization_name == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
+{{-- Recruiter Name --}}
+<div class="ss-input-slct-grp">
+    <label for="recruiter_name">Recruiter Name</label>
+    <select id="recruiter_name" name="recruiter_name">
+        <option value="">Select</option>
+        @foreach ($recruiters as $v)
+            <option value="{{ $v->first_name }} {{ $v->last_name }}"
+                data-org="{{ $v->organization_name }}"
+                {{ $recruiter_name == $v->first_name . ' ' . $v->last_name ? 'selected' : '' }}>
+                {{ $v->first_name }} {{ $v->last_name }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
+                                
+
 
                                 {{-- Recruiter First Name --}}
-                                <div class="ss-input-slct-grp">
+                                {{-- <div class="ss-input-slct-grp">
                                     <label for="cars">Recruiter First Name</label>
                                     <select name="recruiter_first_name">
                                         <option value="">Select</option>
@@ -61,9 +79,10 @@
                                             @endif
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
+                                
                                 {{-- Recruiter Last Name --}}
-                                <div class="ss-input-slct-grp">
+                                {{-- <div class="ss-input-slct-grp">
                                     <label for="cars">Recruiter Last Name</label>
                                     <select name="recruiter_last_name">
                                         <option value="">Select</option>
@@ -83,31 +102,8 @@
                                             @endif
                                         @endforeach
                                     </select>
-                                </div>
-                                
-{{--                                 
-                                <div class="ss-input-slct-grp">
-                                    <label for="cars">Recruiter Last Name</label>
-                                    <select name="recruiter_last_name">
-                                        <option value="">Select</option>
-                                        @php
-                                            $uniqueRecruiters = [];
-                                        @endphp
-                                        @foreach ($recruiters as $v)
-                                            @if (!in_array($v->organization_name, $uniqueRecruiters))
-                                                <option value="{{ $v->organization_name }}" 
-                                                        data-id="{{ $v->organization_name }}"
-                                                        {{ $recruiter == $v->organization_name ? 'selected' : '' }}>
-                                                    {{ $v->organization_name }}
-                                                </option>
-                                                @php
-                                                    $uniqueRecruiters[] = $v->organization_name;
-                                                @endphp
-                                            @endif
-                                        @endforeach
-                                    </select>
                                 </div> --}}
-
+                                
                                 <div class="ss-input-slct-grp">
                                     <label for="cars">Job Type</label>
                                     <select name="job_type">
@@ -506,7 +502,48 @@
 
 @section('js')
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+    <script>
+        const recruitersName = @json($recruiters); // Recruiters data from the backend
+        const orgSelect = document.getElementById('organization_name');
+        const recruiterSelect = document.getElementById('recruiter_name');
+    
+        // Function to populate recruiters based on the selected organization
+        function populateRecruiters(selectedOrg, selectedRecruiter) {
+            // Clear recruiter dropdown
+            recruiterSelect.innerHTML = '<option value="">Select</option>';
+    
+            // Filter and add recruiters based on the organization
+            recruitersName.forEach(recruiter => {
+                const recruiterOrg = recruiter.organization_name;
+                if (recruiterOrg === selectedOrg || !selectedOrg) {
+                    // Create and append option
+                    const option = document.createElement('option');
+                    option.value = `${recruiter.first_name} ${recruiter.last_name}`;
+                    option.textContent = `${recruiter.first_name} ${recruiter.last_name}`;
+                    if (option.value === selectedRecruiter) {
+                        option.selected = true; // Persist selected recruiter
+                    }
+                    recruiterSelect.appendChild(option);
+                }
+            });
+        }
+    
+        // Event listener for organization dropdown change
+        orgSelect.addEventListener('change', function () {
+            const selectedOrg = this.value;
+            populateRecruiters(selectedOrg, recruiterSelect.value);
+        });
+    
+        // Populate recruiters on page load (for persistence after form submission)
+        document.addEventListener('DOMContentLoaded', function () {
+            const selectedOrg = orgSelect.value; // Get currently selected organization
+            const selectedRecruiter = recruiterSelect.value; // Get currently selected recruiter
+            populateRecruiters(selectedOrg, selectedRecruiter);
+        });
+    </script>
+    
+    
+    
     <script>
         // get cities according to state :
 
