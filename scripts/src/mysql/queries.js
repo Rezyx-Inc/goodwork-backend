@@ -163,3 +163,12 @@ module.exports.addImportedJob = async function (importData) {
 
     return result;
 };
+
+
+module.exports.fetchSpecialities = async function () {
+    const [rows] = await pool.execute(
+        'SELECT title FROM keywords WHERE filter = "Speciality";'
+    );
+
+    return rows.map(row => row.title);
+};
