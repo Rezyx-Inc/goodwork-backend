@@ -25,12 +25,13 @@
                             <div class="ss-my-profil-img-div">
                                 <div class="profile-pic">
                                     <label class="-label" for="file">
-                                      <span class="glyphicon glyphicon-camera"></span>
-                                      <span>Change Image</span>
+                                        <span class="glyphicon glyphicon-camera"></span>
+                                        <span>Change Image</span>
                                     </label>
-                                    <input id="file" type="file" onchange="loadFile(event)"/>
-                                    <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200" onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';"/>
-                                  </div>
+                                    <input id="file" type="file" onchange="loadFile(event)" />
+                                    <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200"
+                                        onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';" />
+                                </div>
                                 <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
                                 <p><b>{{ $user->organization_name }}</b></p>
                                 <p>{{ $user->id }}</p>
@@ -156,8 +157,8 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Organization Name</label>
                                                 <input type="text" name="organization_name"
-                                                placeholder="Please enter your organization name"
-                                                value="{{ isset($user->organization_name) ? $user->organization_name : '' }}">
+                                                    placeholder="Please enter your organization name"
+                                                    value="{{ isset($user->organization_name) ? $user->organization_name : '' }}">
                                             </div>
                                             <span class="help-block-org_name"></span>
                                             {{-- First Name --}}
@@ -222,29 +223,41 @@
                                         {{-- Email Information --}}
                                         <div class="ss-form-group col-11">
                                             <label>New Email</label>
-                                            <input type="text" name="email" id="email" placeholder="Please enter your new Email">
+                                            <input type="text" name="email" id="email"
+                                                placeholder="Please enter your new Email">
                                         </div>
-                                        <button type="button" class="mt-3 col-11 w-50 ss-prsnl-save-btn rounded-5" id="sendOTPforVerifyEmail">
+                                        <button type="button" class="mt-3 col-11 w-50 ss-prsnl-save-btn rounded-5"
+                                            id="sendOTPforVerifyEmail">
                                             Send OTP
                                         </button>
                                         <span class="help-block-email"></span>
-                                    
+
                                         {{-- OTP for new email --}}
                                         <div class="ss-form-group col-7 d-flex align-items-center">
                                             <label class="me-3">OTP:</label>
                                             {{-- <input type="text" name="otp" id="otp" placeholder="Please check your email for OTP"> --}}
                                             <ul class="ss-otp-v-ul">
-                                                <li><input class="otp-input" type="text" name="otp1" oninput="digitValidate(this)" onkeyup="tabChange(1)" maxlength="1"></li>
-                                                <li><input class="otp-input" type="text" name="otp2" oninput="digitValidate(this)" onkeyup="tabChange(2)" maxlength="1"></li>
-                                                <li><input class="otp-input" type="text" name="otp3" oninput="digitValidate(this)" onkeyup="tabChange(3)" maxlength="1"></li>
-                                                <li><input class="otp-input" type="text" name="otp4" oninput="digitValidate(this)" onkeyup="tabChange(4)" maxlength="1"></li>
+                                                <li><input class="otp-input" type="text" name="otp1"
+                                                        oninput="digitValidate(this)" onkeyup="tabChange(1)"
+                                                        maxlength="1"></li>
+                                                <li><input class="otp-input" type="text" name="otp2"
+                                                        oninput="digitValidate(this)" onkeyup="tabChange(2)"
+                                                        maxlength="1"></li>
+                                                <li><input class="otp-input" type="text" name="otp3"
+                                                        oninput="digitValidate(this)" onkeyup="tabChange(3)"
+                                                        maxlength="1"></li>
+                                                <li><input class="otp-input" type="text" name="otp4"
+                                                        oninput="digitValidate(this)" onkeyup="tabChange(4)"
+                                                        maxlength="1"></li>
                                             </ul>
-                                            
+
                                         </div>
                                         <span class="help-block-otp"></span>
-                                    
-                                        <div class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                            <button type="button" class="col-12 ss-prsnl-save-btn" id="SaveAccountInformation" style="display:none;">Save</button>
+
+                                        <div
+                                            class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+                                            <button type="button" class="col-12 ss-prsnl-save-btn"
+                                                id="SaveAccountInformation" style="display:none;">Save</button>
 
                                         </div>
                                     </div>
@@ -264,7 +277,6 @@
                             <div class="form-outer">
 
                                 @if ($user->stripeAccountId)
-                                
                                     <form method="post">
                                         @csrf
                                         <!-- slide Bonus Transfer -->
@@ -273,28 +285,27 @@
                                                 {{-- Skip && Save --}}
                                                 <div
                                                     class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                                    <button type="text" class=" col-12 ss-prsnl-save-btn" id="AddStripe">
+                                                    <button type="text" class=" col-12 ss-prsnl-save-btn"
+                                                        id="AddStripe">
                                                         Add Stripe
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
-
-                                @else 
-
+                                @else
                                     <div class="page slide-page">
                                         <div class="row justify-content-center">
                                             {{-- Skip && Save --}}
                                             <div
                                                 class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                                <a type="text" class="btn col-12 ss-prsnl-save-btn" id="connectStripe" target="_blank" href="{{ Config::get('app.portal_link') }}">
-                                                    Connect to Stripe 
+                                                <a type="text" class="btn col-12 ss-prsnl-save-btn" id="connectStripe"
+                                                    target="_blank" href="{{ Config::get('app.portal_link') }}">
+                                                    Connect to Stripe
                                                 </a>
                                             </div>
                                         </div>
                                     </div>
-
                                 @endif
                             </div>
 
@@ -353,7 +364,8 @@
                                 </form> --}}
                                 <p style="
                                 margin-top: 20px;
-                            ">Please contact us at <span style="font-weight: 500">support@goodwork.com</span></p>
+                            ">
+                                    Please contact us at <span style="font-weight: 500">support@goodwork.com</span></p>
                             </div>
 
                         </div>
@@ -404,34 +416,28 @@
 @stop
 
 @section('js')
-<script type="text/javascript">
-   let tabChange = function (val) {
-    let inputs = document.querySelectorAll('.otp-input'); // Select all OTP input fields
-    let saveButton = document.getElementById('SaveAccountInformation'); // Save button element
+    <script type="text/javascript">
+        let tabChange = function(val) {
+            let inputs = document.querySelectorAll('.otp-input'); // Select all OTP input fields
+            let saveButton = document.getElementById('SaveAccountInformation'); // Save button element
 
-    if (inputs[val - 1].value !== "") {
-        if (val < inputs.length) {
-            inputs[val].focus(); // Move to the next input
-        }
-    } else if (inputs[val - 1].value === "" && val > 1) {
-        inputs[val - 2].focus(); // Move to the previous input
-    }
+            if (inputs[val - 1].value !== "") {
+                if (val < inputs.length) {
+                    inputs[val].focus(); // Move to the next input
+                }
+            } else if (inputs[val - 1].value === "" && val > 1) {
+                inputs[val - 2].focus(); // Move to the previous input
+            }
 
-    // Check if all inputs are filled
-    let allFilled = Array.from(inputs).every(input => input.value !== "");
-    saveButton.style.display = allFilled ? "block" : "none"; // Show or hide the Save button
-};
+            // Check if all inputs are filled
+            let allFilled = Array.from(inputs).every(input => input.value !== "");
+            saveButton.style.display = allFilled ? "block" : "none"; // Show or hide the Save button
+        };
 
-let digitValidate = function (ele) {
-    ele.value = ele.value.replace(/[^0-9]/g, ""); // Allow only digits
-};
-
-
-
-
-
-
-</script>
+        let digitValidate = function(ele) {
+            ele.value = ele.value.replace(/[^0-9]/g, ""); // Allow only digits
+        };
+    </script>
 
 
     <script type="text/javascript">
@@ -646,7 +652,7 @@ let digitValidate = function (ele) {
                 data: formData,
                 contentType: false,
                 cache: false,
-                processData:false,
+                processData: false,
                 success: function(resp) {
                     console.log(resp);
                     if (resp.status) {
@@ -658,7 +664,7 @@ let digitValidate = function (ele) {
                         setTimeout(() => {
                             window.location.reload();
                         }, 1500);
-                    }else{
+                    } else {
                         notie.alert({
                             type: 'error',
                             text: '<i class="fa-solid fa-xmark"></i>' + resp.message,
@@ -724,7 +730,7 @@ let digitValidate = function (ele) {
             });
         });
 
-        
+
 
 
 
@@ -839,7 +845,7 @@ let digitValidate = function (ele) {
         // const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
         const email = document.querySelector('input[name="email"]');
         var inputs = [];
-        
+
         // account setting validation here
 
         function validateAccountSettingInformation() {
@@ -849,7 +855,7 @@ let digitValidate = function (ele) {
             $('.help-block-user_name').text('');
             let isValid = true;
             // Create an array of all inputs
-            inputs = [email ];
+            inputs = [email];
 
             // Add the value of the selected radio button to the inputs array, if a radio button is selected
             const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
@@ -884,7 +890,7 @@ let digitValidate = function (ele) {
             //     isValid = false;
             // }
 
-           
+
 
             return isValid;
         }
@@ -954,7 +960,7 @@ let digitValidate = function (ele) {
             if (!validateAccountSettingInformation()) {
 
                 console.log();
-                
+
                 return;
             }
             let email = document.getElementById('email').value;
@@ -1012,33 +1018,33 @@ let digitValidate = function (ele) {
                 $('.help-block-otp').text('');
                 $('.help-block-otp').removeClass('text-danger');
             }
-        
+
             return isValid;
         }
 
         // Verify the OTP and update the email
         const saveButtonForVerifyEmail = document.getElementById('SaveAccountInformation');
-        saveButtonForVerifyEmail.addEventListener("click", function (event) {
+        saveButtonForVerifyEmail.addEventListener("click", function(event) {
             event.preventDefault();
-        
+
             if (!ValidateOTP()) {
                 return;
             }
-        
+
             let inputs = document.querySelectorAll('.otp-input');
             let otp = Array.from(inputs).map(input => input.value).join('');
             let email = document.getElementById('email').value;
-        
+
             let data = {
                 otp: otp,
                 email: email
             };
-        
+
             $.ajax({
                 url: '/organization/update-email',
                 type: 'POST',
                 data: data,
-                success: function (resp) {
+                success: function(resp) {
                     console.log(resp);
                     if (resp.status) {
                         notie.alert({
@@ -1054,7 +1060,7 @@ let digitValidate = function (ele) {
                         });
                     }
                 },
-                error: function () {
+                error: function() {
                     notie.alert({
                         type: 'error',
                         text: '<i class="fa fa-times"></i> Please try again later!',
@@ -1107,47 +1113,46 @@ let digitValidate = function (ele) {
             $('.disable_account').removeClass('d-none');
         }
 
-        var loadFile = function (event) {
-  var image = document.getElementById("output");
-  image.src = URL.createObjectURL(event.target.files[0]);
+        var loadFile = function(event) {
+            var image = document.getElementById("output");
+            image.src = URL.createObjectURL(event.target.files[0]);
 
-  // sending image to server
+            // sending image to server
 
-    var formData = new FormData();
-    formData.append('profile_pic', $('#file')[0].files[0]);
+            var formData = new FormData();
+            formData.append('profile_pic', $('#file')[0].files[0]);
 
-    $.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        url: '/organization/update-organization-profile-image',
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        cache: false,
-        processData: false,
-        success: function (resp) {
-            console.log(resp);
-            if (resp.status) {
-                notie.alert({
-                    type: 'success',
-                    text: '<i class="fa fa-check"></i> Account Information saved successfully',
-                    time: 5
-                });
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/organization/update-organization-profile-image',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> Account Information saved successfully',
+                            time: 5
+                        });
 
-            }
-        },
-        error: function (resp) {
-            notie.alert({
-                type: 'error',
-                text: '<i class="fa fa-check"></i>' + resp.message,
-                time: 5
+                    }
+                },
+                error: function(resp) {
+                    notie.alert({
+                        type: 'error',
+                        text: '<i class="fa fa-check"></i>' + resp.message,
+                        time: 5
+                    });
+                }
             });
-        }
-    });
 
-};
-
+        };
     </script>
 
 @stop
@@ -1526,73 +1531,71 @@ let digitValidate = function (ele) {
     /* for the image  */
 
     .profile-pic {
-  color: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  transition: all .3s ease;
-}
+        color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        transition: all .3s ease;
+    }
 
-.profile-pic input {
-  display: none;
-}
+    .profile-pic input {
+        display: none;
+    }
 
-.profile-pic img {
-  position: absolute;
-  object-fit: cover;
-  width: 165px;
-  height: 165px;
-  box-shadow: 0 0 10px 0 rgba(255,255,255,.35);
-  border-radius: 100px;
-  z-index: 0;
-}
+    .profile-pic img {
+        position: absolute;
+        object-fit: cover;
+        width: 165px;
+        height: 165px;
+        box-shadow: 0 0 10px 0 rgba(255, 255, 255, .35);
+        border-radius: 100px;
+        z-index: 0;
+    }
 
-.profile-pic .-label {
-  cursor: pointer;
-  height: 165px;
-  width: 165px;
-}
+    .profile-pic .-label {
+        cursor: pointer;
+        height: 165px;
+        width: 165px;
+    }
 
-.profile-pic:hover .-label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0,0,0,.8);
-  z-index: 10000;
-  color: rgb(250,250,250);
-  transition: background-color .2s ease-in-out;
-  border-radius: 100px;
-  margin-bottom: 0;
-}
+    .profile-pic:hover .-label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, .8);
+        z-index: 10000;
+        color: rgb(250, 250, 250);
+        transition: background-color .2s ease-in-out;
+        border-radius: 100px;
+        margin-bottom: 0;
+    }
 
-.profile-pic span {
-  display: inline-flex;
-  padding: .2em;
-  height: 2em;
-}
+    .profile-pic span {
+        display: inline-flex;
+        padding: .2em;
+        height: 2em;
+    }
 
 
-/* OTP page css  */
+    /* OTP page css  */
 
-ul.ss-otp-v-ul {
-    list-style: none;
-    width: 100%;
-}
+    ul.ss-otp-v-ul {
+        list-style: none;
+        width: 100%;
+    }
 
-ul.ss-otp-v-ul li {
-    width: 19%;
-    margin: 0 7px;
-    display: inline-block;
-}
+    ul.ss-otp-v-ul li {
+        width: 19%;
+        margin: 0 7px;
+        display: inline-block;
+    }
 
-ul.ss-otp-v-ul input {
-    border: 2px solid #111011;
-    box-shadow: 8px 8px 0px 0px #403B4BE5;
-    padding: 12px 15px;
-    border-radius: 10px;
-    width: 100%;
-}
-
+    ul.ss-otp-v-ul input {
+        border: 2px solid #111011;
+        box-shadow: 8px 8px 0px 0px #403B4BE5;
+        padding: 12px 15px;
+        border-radius: 10px;
+        width: 100%;
+    }
 </style>
-

@@ -3,12 +3,10 @@
 @section('content')
     @php
         $user = auth()->guard('frontend')->user();
-        
+
         // formatAmount :: helper function to remove .00 from amount
         $formatAmount = function ($value) {
-            return !empty($value) && $value != 0
-                ? (fmod($value, 1) == 0 ? intval($value) : $value)
-                : null;
+            return !empty($value) && $value != 0 ? (fmod($value, 1) == 0 ? intval($value) : $value) : null;
         };
     @endphp
     <!--Main layout-->
@@ -137,9 +135,11 @@
                                         {{-- Email Information --}}
                                         <div class="ss-form-group col-11">
                                             <label>New Email</label>
-                                            <input type="text" name="newEmail" id="newEmail" placeholder="Please enter your new Email">
+                                            <input type="text" name="newEmail" id="newEmail"
+                                                placeholder="Please enter your new Email">
                                         </div>
-                                        <button type="button" class="mt-3 col-11 w-50 ss-prsnl-save-btn rounded-5" id="sendOTPforVerifyEmail">
+                                        <button type="button" class="mt-3 col-11 w-50 ss-prsnl-save-btn rounded-5"
+                                            id="sendOTPforVerifyEmail">
                                             Send OTP
                                         </button>
                                         <span class="help-block-email"></span>
@@ -148,17 +148,27 @@
                                         <div class="ss-form-group col-7 d-flex align-items-center">
                                             <label class="me-3">OTP:</label>
                                             <ul class="ss-otp-v-ul">
-                                                <li><input class="otp-input" type="text" name="otp1" oninput="digitValidate(this)" onkeyup="tabChange(1)" maxlength="1"></li>
-                                                <li><input class="otp-input" type="text" name="otp2" oninput="digitValidate(this)" onkeyup="tabChange(2)" maxlength="1"></li>
-                                                <li><input class="otp-input" type="text" name="otp3" oninput="digitValidate(this)" onkeyup="tabChange(3)" maxlength="1"></li>
-                                                <li><input class="otp-input" type="text" name="otp4" oninput="digitValidate(this)" onkeyup="tabChange(4)" maxlength="1"></li>
+                                                <li><input class="otp-input" type="text" name="otp1"
+                                                        oninput="digitValidate(this)" onkeyup="tabChange(1)"
+                                                        maxlength="1"></li>
+                                                <li><input class="otp-input" type="text" name="otp2"
+                                                        oninput="digitValidate(this)" onkeyup="tabChange(2)"
+                                                        maxlength="1"></li>
+                                                <li><input class="otp-input" type="text" name="otp3"
+                                                        oninput="digitValidate(this)" onkeyup="tabChange(3)"
+                                                        maxlength="1"></li>
+                                                <li><input class="otp-input" type="text" name="otp4"
+                                                        oninput="digitValidate(this)" onkeyup="tabChange(4)"
+                                                        maxlength="1"></li>
                                             </ul>
 
                                         </div>
                                         <span class="help-block-otp"></span>
 
-                                        <div class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                            <button type="button" class="col-12 ss-prsnl-save-btn" id="SaveAccountInformation" style="display:none;">Save</button>
+                                        <div
+                                            class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+                                            <button type="button" class="col-12 ss-prsnl-save-btn"
+                                                id="SaveAccountInformation" style="display:none;">Save</button>
                                         </div>
                                     </div>
                                 </div>
@@ -237,7 +247,8 @@
                                             {{-- Skip && Save --}}
                                             <div
                                                 class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                                <button type="text" class=" col-12 ss-prsnl-save-btn" id="SaveBonusInformation"> Save
+                                                <button type="text" class=" col-12 ss-prsnl-save-btn"
+                                                    id="SaveBonusInformation"> Save
                                                 </button>
                                             </div>
                                         </div>
@@ -314,25 +325,25 @@
 
 @section('js')
 
-<script type="text/javascript">
-    let tabChange = function (val) {
-     let inputs = document.querySelectorAll('.otp-input'); // Select all OTP input fields
-     let saveButton = document.getElementById('SaveAccountInformation'); // Save button element
-     if (inputs[val - 1].value !== "") {
-         if (val < inputs.length) {
-             inputs[val].focus(); // Move to the next input
-         }
-     } else if (inputs[val - 1].value === "" && val > 1) {
-         inputs[val - 2].focus(); // Move to the previous input
-     }
-     // Check if all inputs are filled
-     let allFilled = Array.from(inputs).every(input => input.value !== "");
-     saveButton.style.display = allFilled ? "block" : "none"; // Show or hide the Save button
- };
- let digitValidate = function (ele) {
-     ele.value = ele.value.replace(/[^0-9]/g, ""); // Allow only digits
- };
- </script>
+    <script type="text/javascript">
+        let tabChange = function(val) {
+            let inputs = document.querySelectorAll('.otp-input'); // Select all OTP input fields
+            let saveButton = document.getElementById('SaveAccountInformation'); // Save button element
+            if (inputs[val - 1].value !== "") {
+                if (val < inputs.length) {
+                    inputs[val].focus(); // Move to the next input
+                }
+            } else if (inputs[val - 1].value === "" && val > 1) {
+                inputs[val - 2].focus(); // Move to the previous input
+            }
+            // Check if all inputs are filled
+            let allFilled = Array.from(inputs).every(input => input.value !== "");
+            saveButton.style.display = allFilled ? "block" : "none"; // Show or hide the Save button
+        };
+        let digitValidate = function(ele) {
+            ele.value = ele.value.replace(/[^0-9]/g, ""); // Allow only digits
+        };
+    </script>
 
     {{-- get elements - prevent defaults behaviors  --}}
     <script>
@@ -846,7 +857,8 @@
                                     resp = JSON.parse(resp);
 
                                     const base64String = resp.content.data;
-                                    const mimeType = base64String.match(/^data:(.+);base64,/)[1];
+                                    const mimeType = base64String.match(
+                                        /^data:(.+);base64,/)[1];
                                     const base64Data = base64String.split(
                                         ',')[1];
 
@@ -878,7 +890,8 @@
                                     const extension = mimeType.split('/')[
                                         1
                                     ];
-                                    downloadLink.setAttribute('download',file.name);
+                                    downloadLink.setAttribute('download', file
+                                    .name);
 
                                     document.body.appendChild(downloadLink);
                                     downloadLink.click();
@@ -1538,8 +1551,8 @@
             let isValid = true;
             // Create an array of all inputs
             inputs = [email];
-          
-           
+
+
 
             // Check if all inputs are empty
             const allEmpty = inputs.every(input => input.value.trim() === '');
@@ -1624,12 +1637,12 @@
         const sendOTPButton = document.getElementById('sendOTPforVerifyEmail');
         sendOTPButton.addEventListener('click', function(e) {
             e.preventDefault();
-            if (!validateAccountSettingInformation()) { 
+            if (!validateAccountSettingInformation()) {
                 return;
             }
-            
+
             let email = document.getElementById('newEmail').value;
-            
+
             let data = {
                 email: email
             };
@@ -1663,7 +1676,7 @@
             });
 
         })
-        
+
         function ValidateOTP() {
             let inputs = document.querySelectorAll('.otp-input');
             let otp = Array.from(inputs).map(input => input.value).join('');
@@ -1680,32 +1693,32 @@
                 $('.help-block-otp').text('');
                 $('.help-block-otp').removeClass('text-danger');
             }
-        
+
             return isValid;
         }
         // Verify the OTP and update the email
         const saveButtonForVerifyEmail = document.getElementById('SaveAccountInformation');
-        saveButtonForVerifyEmail.addEventListener("click", function (event) {
+        saveButtonForVerifyEmail.addEventListener("click", function(event) {
             event.preventDefault();
-        
+
             if (!ValidateOTP()) {
                 return;
             }
-        
+
             let inputs = document.querySelectorAll('.otp-input');
             let otp = Array.from(inputs).map(input => input.value).join('');
             let email = document.getElementById('newEmail').value;
-        
+
             let data = {
                 otp: otp,
                 email: email
             };
-        
+
             $.ajax({
                 url: '/worker/update-email-worker',
                 type: 'POST',
                 data: data,
-                success: function (resp) {
+                success: function(resp) {
                     console.log(resp);
                     if (resp.status) {
                         notie.alert({
@@ -1721,7 +1734,7 @@
                         });
                     }
                 },
-                error: function () {
+                error: function() {
                     notie.alert({
                         type: 'error',
                         text: '<i class="fa fa-times"></i> Please try again later!',
@@ -2534,11 +2547,13 @@
         list-style: none;
         width: 100%;
     }
+
     ul.ss-otp-v-ul li {
         width: 19%;
         margin: 0 7px;
         display: inline-block;
     }
+
     ul.ss-otp-v-ul input {
         border: 2px solid #111011;
         box-shadow: 8px 8px 0px 0px #403B4BE5;
