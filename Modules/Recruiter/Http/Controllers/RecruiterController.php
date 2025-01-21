@@ -516,12 +516,12 @@ class RecruiterController extends Controller
             $created_by = Auth::guard('recruiter')->user()->id;
             // Validate the form data
 
-            $active = $request->input('active');
+            $is_open = $request->input('is_open');
 
             // $active = $activeRequest['active'];
             $validatedData = [];
 
-            if ($active == 'false') {
+            if ($is_open == 'false') {
 
                 $validatedData = $request->validate([
                     'job_id' => 'nullable|string',
@@ -678,7 +678,7 @@ class RecruiterController extends Controller
                 
                     $job->recruiter_id = $created_by;
                     $job->created_by = $created_by;
-                    $job->active = false;
+                    $job->active = true;
                     $job->is_open = false;
 
                     // example
@@ -733,7 +733,7 @@ class RecruiterController extends Controller
                     return response()->json(['success' => false, 'message' => $e->getMessage()]);
                 }
 
-            } elseif ($active == "true") {
+            } elseif ($is_open == "true") {
                 //return request()->all();
 
                 $validatedData = $request->validate([
@@ -1030,7 +1030,6 @@ class RecruiterController extends Controller
                     'benefits' => 'nullable|string',
                     'feels_like_per_hour' => 'nullable|string',
                     'as_soon_as' => 'nullable|integer',
-                    'active' => '0',
                     'professional_state_licensure' => 'nullable|string',
                     'total_goodwork_amount' => 'nullable|string',
                     'total_contract_amount' => 'nullable|string',
@@ -1063,7 +1062,7 @@ class RecruiterController extends Controller
             
             $job->recruiter_id = Auth::guard('recruiter')->user()->id;
             $job->created_by = Auth::guard('recruiter')->user()->id;
-            $job->active = false;
+            $job->active = true;
             $job->is_open = false;
 
             // Check if the is_resume bool is set
