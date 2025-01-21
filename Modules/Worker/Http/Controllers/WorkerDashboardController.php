@@ -543,7 +543,7 @@ class WorkerDashboardController extends Controller
     $gwNumber = $request->input('gw', '');
 
     // Build the query
-    $ret = Job::where('active', '1');
+    $ret = Job::where('is_open', '1');
 
 
     // Initialize data array

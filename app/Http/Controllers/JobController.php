@@ -64,6 +64,7 @@ class JobController extends Controller
                 'jobs.is_open' => '1',
                 'jobs.is_hidden' => '0',
                 'jobs.is_closed' => '0',
+                'job.active' => '1',
                 // 'job_saved.is_delete'=>'0',
                 // 'job_saved.nurse_id'=>$user->id,
             ];

@@ -6,6 +6,8 @@ var { report } = require("../set.js");
 var gsheet = require("../gSheet/index.js").main;
 var gSheetAuth = require("../gSheet/services/authService.js").authorize;
 
+var ardorHealth = require("./ardorHealth.js");
+
 // Uncomment to seed accounts
 //laboredge.seed(999);
 
@@ -22,6 +24,7 @@ if (process.env.ENABLE_CRONS) {
     // Check newly added integrations every 10 minutes
     cron.schedule("*/10 * * * *", () => {
         console.log("Checking new integrations");
+        ardorHealth.init();
         // laboredge.init();
     });
 

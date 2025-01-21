@@ -47,9 +47,12 @@ class OrganizationOpportunitiesController extends Controller
         
         
         // jobs created by orgs or the recuiters id is in $allRecruiters array
-        $draftJobs = Job::where(function($query) use ($organization_id, $ids) { $query->where('organization_id', $organization_id)->where('active', 0)->orWhereIn('recruiter_id', $ids)->where('active', 0);})->get();
-        $publishedJobs = Job::where(function($query) use ($organization_id, $ids) { $query->where('organization_id', $organization_id)->where('active', 1)->orWhereIn('recruiter_id', $ids)->where('active', 1);})->get();
-        $onholdJobs = Job::where(function($query) use ($organization_id, $ids) { $query->where('organization_id', $organization_id)->where('is_open', 0)->orWhereIn('recruiter_id', $ids)->where('is_open', 0);})->get();
+        $draftJobs = Job::where(function($query) use ($organization_id, $ids) { $query->where('organization_id', $organization_id)->where('active', 1)->where('is_open', 0)->where('is_closed', 0)->where('is_hidden', 0)->orWhereIn('recruiter_id', $ids);})->get();
+
+        $publishedJobs = Job::where(function($query) use ($organization_id, $ids) { $query->where('organization_id', $organization_id)->where('active', 1)->where('is_open', 1)->orWhereIn('recruiter_id', $ids);})->get();
+
+        $onholdJobs = Job::where(function($query) use ($organization_id, $ids) { $query->where('organization_id', $organization_id)->where('is_hidden', 1)->where('is_open', 0)->where('active', 0)->orWhere('is_closed', 1)->orWhereIn('recruiter_id', $ids);})->get();
+
         $specialities = Speciality::select('full_name')->get();
         $professions = Profession::select('full_name')->get();
         $applyCount = array();
