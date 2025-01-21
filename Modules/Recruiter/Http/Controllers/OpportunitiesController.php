@@ -32,9 +32,9 @@ class OpportunitiesController extends Controller
     public function index()
     {
         $recruiter_id = Auth::guard('recruiter')->user()->id;
-        $draftJobs = Job::where(function($query) use ($recruiter_id, $ids) { $query->where('recruiter_id', $recruiter_id)->where('active', 1)->where('is_open', 0)->where('is_closed', 0)->where('is_hidden', 0)->orWhereIn('recruiter_id', $ids);})->get();
-        $publishedJobs = Job::where(function($query) use ($recruiter_id, $ids) { $query->where('recruiter_id', $recruiter_id)->where('active', 1)->where('is_open', 1)->orWhereIn('recruiter_id', $ids);})->get();
-        $onholdJobs = Job::where(function($query) use ($recruiter_id, $ids) { $query->where('recruiter_id', $recruiter_id)->where('is_hidden', 1)->where('is_open', 0)->where('active', 0)->orWhere('is_closed', 1)->orWhereIn('recruiter_id', $ids);})->get();
+        $draftJobs = Job::where('recruiter_id', $recruiter_id)->where('active', 1)->where('is_open', 0)->where('is_closed', 0)->where('is_hidden', 0)->get();
+        $publishedJobs = Job::where('recruiter_id', $recruiter_id)->where('active', 1)->where('is_open', 1)->get();
+        $onholdJobs = Job::where('recruiter_id', $recruiter_id)->where('is_hidden', 1)->where('is_open', 0)->where('active', 0)->get();
         $specialities = Speciality::select('full_name')->get();
         $professions = Profession::select('full_name')->get();
         $applyCount = array();
