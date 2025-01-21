@@ -1113,7 +1113,7 @@
             $('.disable_account').removeClass('d-none');
         }
 
-        var loadFile = function(event) {
+        function loadFile(event) {
             var image = document.getElementById("output");
             image.src = URL.createObjectURL(event.target.files[0]);
 
