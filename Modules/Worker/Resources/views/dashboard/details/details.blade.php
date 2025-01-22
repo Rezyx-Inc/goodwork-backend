@@ -1644,15 +1644,19 @@
 
                                                         if ($count > 0) {
                                                             echo $count . ' Files Uploaded';
-                                                        } else {
+                                                        } elseif (isset($stateCode)) {
                                                             foreach ($stateCode as $key => $v) {
                                                                 echo "No $v ?";
                                                             }
+                                                        } else {
+                                                            echo "Where are you licensed?";
                                                         }
-                                                    } else {
+                                                    } elseif (isset($stateCode)) {
                                                         foreach ($stateCode as $key => $v) {
                                                             echo "No $v ?";
                                                         }
+                                                    } else {
+                                                        echo "Where are you licensed?";
                                                     }
                                                 @endphp
                                             </p>
@@ -1696,16 +1700,20 @@
 
                                                         if ($count > 0) {
                                                             echo $count . ' Files Uploaded';
-                                                        } else {
+                                                        } elseif (isset($certificates)) {
                                                             foreach ($certificates as $key => $v) {
                                                                 echo "No $v ?";
                                                             }
-                                                        }
-                                                    } else {
+                                                        } else {
+                                                            echo "No certification ?";
+                                                        } 
+                                                    } elseif (isset($certificates)) {
                                                         foreach ($certificates as $key => $v) {
                                                             echo "No $v ?";
                                                         }
-                                                    }
+                                                    } else {
+                                                        echo "No certification ?";
+                                                    } 
                                                 @endphp
                                             </p>
                                         </li>
@@ -2115,15 +2123,6 @@
                                                 <span>Your Vaccinations & Immunizations</span>
                                                 <p class="profile_info_text" data-target="vaccination_file"
                                                     data-title="No vaccination ?" onclick="open_modal(this)">
-                                                    @isset($nurse->vaccination_file)
-                                                        {{-- TODO :: need to show files name --}}
-                                                        {{ $nurse->vaccination_file }}
-                                                    @else
-                                                        @foreach ($vaccines as $v)
-                                                            No {{ $v }}?
-                                                        @endforeach
-                                                    @endisset
-
                                                     @php
                                                         if (
                                                             isset($docsList) &&
@@ -2139,15 +2138,19 @@
 
                                                             if ($count > 0) {
                                                                 echo $count . ' Files Uploaded';
-                                                            } else {
+                                                            } elseif (isset($vaccines)) {
                                                                 foreach ($vaccines as $key => $v) {
                                                                     echo "No $v ?";
                                                                 }
+                                                            } else {
+                                                                echo "No vaccination ?";
                                                             }
-                                                        } else {
+                                                        } elseif (isset($vaccines)) {
                                                             foreach ($vaccines as $key => $v) {
                                                                 echo "No $v ?";
                                                             }
+                                                        } else {
+                                                            echo "No vaccination ?";
                                                         }
                                                     @endphp
                                                 </p>
