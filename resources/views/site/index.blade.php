@@ -14,7 +14,7 @@
                 @guest('frontend')
                 <li><a href="{{ route('worker.login') }}">Create a profile</a></li>
                 @endguest
-              <li><p>128+ Nurses successfully registered across the world</p></li>
+              {{-- <li><p>128+ Nurses successfully registered across the world</p></li> --}}
             </ul>
           </div>
         </div>
@@ -156,7 +156,7 @@
 
   <!---------Join Us----------->
 
-  <section class="ss-hmjoin-sec">
+  {{-- <section class="ss-hmjoin-sec">
     <div class="container">
       <div class="row">
         <div class="col-lg-6">
@@ -209,7 +209,7 @@
       </div>
 
     </div>
-  </section>
+  </section> --}}
 
 
 
@@ -221,7 +221,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="ss-hm-popu-jb-hed">
-            <h6>Our Popular Jobs</h6>
+            {{-- <h6>Our Popular Jobs</h6> --}}
             <h2><span class="ss-clr-pink">Jobs For </span>Every
   Healthcare Professional</h2>
           </div>
@@ -229,7 +229,7 @@
         </div>
       </div>
 
-      <div class="ss-hm-populr-jorow-2">
+      {{-- <div class="ss-hm-populr-jorow-2">
       <div class="row">
         <div class="col-lg-4">
           <div class="ss-job-prfle-sec">
@@ -318,7 +318,7 @@
       <div class="ss-hm-job-prfile-red-sec">
         <a href="{{route('explore-jobs')}}">View All Jobs</a>
       </div>
-    </div>
+      </div> --}}
 
     </div>
   </section>
@@ -332,12 +332,12 @@
       <div class="row">
         <div class="col-lg-4">
           <div class="ss-hm-hed-sec">
-           <h4>About <span class="ss-fnt-nrml">What We Are Offering</span></h4>
+           {{-- <h4>About <span class="ss-fnt-nrml">What We Are Offering</span></h4> --}}
            <h2><span class="ss-whtol-sec">Job Types</span> We Can Offer You!    </h2>
   <p>
     Lorem ipsum dolor sit amet consectetur. Adipiscing nisl id at arcu enim id gravida pulvinar. Tristique consectetur mi curabitur congue enim dignissim amet justo. Porta morbi nulla aliquet adipiscing.</p>
 
-  <a href="{{route('explore-jobs')}}">Explore Jobs</a>
+  {{-- <a href="{{route('explore-jobs')}}">Explore Jobs</a> --}}
          </div>
         </div>
 
@@ -411,7 +411,7 @@
   </p>
   <p>sed neque scelerisque quam pulvinar. Risus dictum elementum lacus urna. Neque eget sagittis vulputate nam id morbi id. Aliquam molestie posuere pulvinar arcu</p>
 
-  <a href="{{route('explore-jobs')}}">Explore Jobs</a>
+  {{-- <a href="{{route('explore-jobs')}}">Explore Jobs</a> --}}
          </div>
         </div>
       </div>
@@ -424,14 +424,13 @@
 
   <!-------Valuable Feedback------->
 
-  <section class="ss-mn-value-sec">
+  {{-- <section class="ss-mn-value-sec">
    <div class="container">
      <div class="row">
        <div class="col-lg-12">
          <div class="ss-hm-hed-sec">
            <h4>Valuable Feedback</h4>
-           <h2>What the <span class="ss-clr-pink">professionals</span> are
-  saying about us  </h2>
+           <h2>What the <span class="ss-clr-pink">professionals</span> are saying about us  </h2>
          </div>
 
          <!-----slider---->
@@ -505,14 +504,14 @@
        </div>
      </div>
    </div>
-  </section>
+  </section> --}}
 
 
 
 
   <!----- Download Goodwork------>
 
-<section class="ss-hm-dwnld-app-sec">
+{{-- <section class="ss-hm-dwnld-app-sec">
     <div class="container">
         <div class="row">
             <div class="col-lg-7">
@@ -553,7 +552,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 
 <section class="ss-foot-btm-sign-sec">
     <div class="container">
