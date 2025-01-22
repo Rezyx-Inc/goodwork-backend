@@ -546,6 +546,24 @@ module.exports.cleanArdorHealthJobs = async function (ardorOrgId, importData) {
     return true
 }
 
-module.exports.updateRecruiterId = async function (){
+module.exports.updateRecruiterId = async function (orgId){
 
+    var existingJobs = await pool.query(
+        `SELECT * from jobs where job_id <> '' AND organization_id='${orgId}';`)
+    .then (results => {return results})
+    .catch(e => {console.log(e); return false});
+
+    if(existingJobs[0].length == 0){
+        return 0
+    }
+
+    existingJobs = existingJobs[0];
+
+    for (let i of existingJobs) {
+        console.log("Parsing job", i.id);
+        let recruiterId = await getNextUpRecruiter(orgId);
+        const updateQuery = await pool.query( `UPDATE jobs SET recruiter_id='${recruiterId}', updated_at='${ moment().format("YYYY-MM-DD") }' where id='${i.id}'`);
+    }
+
+    return existingJobs.length;
 }

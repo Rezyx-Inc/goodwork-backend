@@ -49,7 +49,7 @@ module.exports.init = async function (){
 
   }else{
     // send a notification
-    report('error', 'ardorHealth.js', `CLEANUP : ${cleanup} | PROCESS JOBS : ${processJobsResult}` );
+    await report('error', 'ardorHealth.js', `CLEANUP : ${cleanup} | PROCESS JOBS : ${processJobsResult}` );
     console.log("Something went wrong", cleanup, processJobsResult);
   }
 
