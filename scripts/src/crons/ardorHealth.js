@@ -3,6 +3,7 @@ var fs = require('fs'); // To read files (json, in our case)
 var xml2js = require('xml2js'); // To parse XML into JS objects
 const axios = require('axios').default; // To fetch data from a url
 const { getSpecialties, getNcSpecialties ,importArdorHealthJobs, cleanArdorHealthJobs} = require('../mysql/queries.js');
+var { report } = require("../set.js");
 
 const ardorOrgId= "GWU000002";
 
@@ -48,6 +49,7 @@ module.exports.init = async function (){
 
   }else{
     // send a notification
+    report('error', 'ardorHealth.js', `CLEANUP : ${cleanup} | PROCESS JOBS : ${processJobsResult}` );
     console.log("Something went wrong", cleanup, processJobsResult);
   }
 

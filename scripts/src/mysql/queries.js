@@ -2,6 +2,7 @@ const { pool } = require("./mysql.js");
 var _ = require('lodash');
 var moment = require('moment');
 const { validateFields, getNewJobId } = require('../helpers/sheetHelper.js');
+const { getNextUpRecruiter } = require('../helpers/integrationHelper.js');
 
 module.exports.getStripeId = async function (userId) {
 
@@ -343,15 +344,16 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
                 importData.shift.hrsShift = 0;
             }
 
+            let recruiterId = await getNextUpRecruiter(ardorOrgId);
+
             const query = await pool.query(
-                "INSERT INTO jobs (created_at, updated_at, professional_licensure, facility_state, facility_city, terms, tax_status, id, organization_id, created_by, job_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, job_type, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate, recruiter_id ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+                "INSERT INTO jobs (created_at, updated_at, professional_licensure, facility_state, facility_city, tax_status, id, organization_id, created_by, job_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, job_type, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate, recruiter_id ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
                 [
                     created_at,
                     updated_at,
                     importData.state[0],
                     importData.state[0],
                     importData.city[0],
-                    "",
                     "",
                     id,
                     ardorOrgId,
@@ -375,7 +377,7 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
                     importData.license[0],
                     importData.Specialty,
                     hourlyPay,
-                    ardorOrgId
+                    recruiterId
                 ]
             );
 
@@ -542,4 +544,8 @@ module.exports.cleanArdorHealthJobs = async function (ardorOrgId, importData) {
     }
 
     return true
+}
+
+module.exports.updateRecruiterId = async function (){
+
 }
