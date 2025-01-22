@@ -1316,8 +1316,10 @@
         function askRecruiter(e, type, workerid, recruiter_id , organization_id, name) {
 
             let url = "{{ url('worker/messages') }}";
-            window.location = url + '?worker_id=' + workerid + '&organization_id=' + organization_id + '&recruiter_id=' + recruiter_id + '&name=' + name;
-
+            window.open(
+                url + '?worker_id=' + workerid + '&organization_id=' + organization_id + '&recruiter_id=' + recruiter_id + '&name=' + name ,
+                '_blank' 
+            );
         }
 
 
