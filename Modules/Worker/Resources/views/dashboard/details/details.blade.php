@@ -739,8 +739,6 @@
                                         <ul id="worker_end_date" class="ss-s-jb-apl-on-inf-txt-ul">
                                             <li>
                                                 <span>End Date</span>
-                                            </li>
-                                            <li>
                                                 <h6>
                                                     @if (checkValue($model->end_date) && !!$model->end_date)
                                                         {{ $model->end_date }}
@@ -914,22 +912,6 @@
                                                     What rate is fair?
                                                 @endif
                                             </p>
-                                        </li>
-                                    </ul>
-
-                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-                                        <li>
-                                            <span>Est. Weekly Taxable Amount</span>
-                                            <h6>
-                                                @if (checkValue($model->weekly_taxable_amount))
-                                                    ${{ number_format($model->weekly_taxable_amount) }}
-                                                @else
-                                                    <a style="cursor: pointer;"
-                                                        onclick="askRecruiter(this, 'type', '{{ $nurse->id }}', '{{ $model->recruiter_id }}','{{ $model->organization_id }}', '{{ $worker->first_name }} {{ $worker->last_name }}')">
-                                                        Ask
-                                                        Recruiter</a>
-                                                @endif
-                                            </h6>
                                         </li>
                                     </ul>
 
@@ -1203,55 +1185,6 @@
                                         </li>
                                     </ul>
 
-                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-                                        <li>
-                                            <span>Est. Total Organization Amount</span>
-                                            <h6>
-                                                @if (checkValue($model->total_organization_amount))
-                                                    ${{ number_format($model->total_organization_amount) }}
-                                                @else
-                                                    <a style="cursor: pointer;"
-                                                        onclick="askRecruiter(this, 'type', '{{ $nurse->id }}', '{{ $model->recruiter_id }}','{{ $model->organization_id }}', '{{ $worker->first_name }} {{ $worker->last_name }}')">
-                                                        Ask
-                                                        Recruiter</a>
-                                                @endif
-                                            </h6>
-                                        </li>
-
-                                    </ul>
-
-                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-                                        <li>
-                                            <span>Est. Total Goodwork Amount</span>
-                                            <h6>
-                                                @if (checkValue($model->total_goodwork_amount))
-                                                    ${{ number_format($model->total_goodwork_amount) }}
-                                                @else
-                                                    <a style="cursor: pointer;"
-                                                        onclick="askRecruiter(this, 'type', '{{ $nurse->id }}', '{{ $model->recruiter_id }}','{{ $model->organization_id }}', '{{ $worker->first_name }} {{ $worker->last_name }}')">
-                                                        Ask
-                                                        Recruiter</a>
-                                                @endif
-                                            </h6>
-                                        </li>
-
-                                    </ul>
-
-                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-                                        <li>
-                                            <span>Est. Total Contract Amount</span>
-                                            <h6>
-                                                @if (checkValue($model->total_contract_amount))
-                                                    ${{ number_format($model->total_contract_amount) }}
-                                                @else
-                                                    <a style="cursor: pointer;"
-                                                        onclick="askRecruiter(this, 'type', '{{ $nurse->id }}', '{{ $model->recruiter_id }}','{{ $model->organization_id }}', '{{ $worker->first_name }} {{ $worker->last_name }}')">
-                                                        Ask
-                                                        Recruiter</a>
-                                                @endif
-                                            </h6>
-                                        </li>
-                                    </ul>
 
                                     <ul class="ss-s-jb-apl-on-inf-txt-ul">
                                         <li>
