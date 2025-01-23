@@ -495,7 +495,7 @@
                                         </li>
                                     </ul>
 
-                                    <ul id="resume" class="ss-s-jb-apl-on-inf-txt-ul resume_item {{ $model->is_resume ? ( $matches['resume']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
+                                    <ul id="resume" class="ss-s-jb-apl-on-inf-txt-ul resume_item ">
                                         <li>
                                             <span>Resume</span>
                                             <h6>{{ $model->is_resume ? 'Required' : 'Not Required' }}</h6>
