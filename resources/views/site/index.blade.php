@@ -8,8 +8,10 @@
       <div class="row">
         <div class="col-lg-6">
           <div class="ss-hm-banner-txt-bx">
-            <h2>Navigate your next nursing career with us</h2>
-            <p>Goodwork has come up with some of the most recognized healthcare jobs. Our portal will help you find your dream nursing job.</p>
+            <h2>Are you ready to be a person, not just an application?</h2>
+            <p>Goodwork is designed to facilitate positive, honest interactions between employers and candidates.</p>
+            <p>Looking for work is a lot better when we work together.</p>
+            <p>Oh, and we also give applicants HALF the fee we charge employers (what?!)</p>
             <ul>
                 @guest('frontend')
                 <li><a href="{{ route('worker.login') }}">Create a profile</a></li>
@@ -222,8 +224,9 @@
         <div class="col-lg-12">
           <div class="ss-hm-popu-jb-hed">
             {{-- <h6>Our Popular Jobs</h6> --}}
-            <h2><span class="ss-clr-pink">Jobs For </span>Every
-  Healthcare Professional</h2>
+            <h2 style="cursor: pointer" onclick="window.location.href = '{{ url('/explore-jobs') }}'">
+              Start browsing <span class="ss-clr-pink">jobs now</span> - no login required
+            </h2>            
           </div>
 
         </div>
@@ -333,9 +336,10 @@
         <div class="col-lg-4">
           <div class="ss-hm-hed-sec">
            {{-- <h4>About <span class="ss-fnt-nrml">What We Are Offering</span></h4> --}}
-           <h2><span class="ss-whtol-sec">Job Types</span> We Can Offer You!    </h2>
+           <h2>How is <span class="ss-whtol-sec">Goodwork</span> different from other job boards?</h2>
   <p>
-    Lorem ipsum dolor sit amet consectetur. Adipiscing nisl id at arcu enim id gravida pulvinar. Tristique consectetur mi curabitur congue enim dignissim amet justo. Porta morbi nulla aliquet adipiscing.</p>
+    We are obsessed with aligning incentives. Employers, Candidates, and Goodwork are set up to be allies, not adversaries.</p>
+    <p>Other job boards maximize volume, but Goodwork maximizes value.</p>
 
   {{-- <a href="{{route('explore-jobs')}}">Explore Jobs</a> --}}
          </div>
@@ -347,35 +351,36 @@
 
             <div class="ss-hm-what-icn-bx">
               <div></div>
-              <h6>Permanent</h6>
-              <p>Lorem ipsum dolor sit amet consectetur. Adipiscing nisl id at arcu enim id gravida pulvinar. Tristique</p>
+              <h6>Get Paid To Use Goodwork!</h6>
+              <p>Goodwork gives HALF the fee to workers who find their jobs on Goodwork. When you get a job on Goodwork, we charge the recruiter a fee and split it with you. Wow!</p>
             </div>
 
 
             <div class="ss-hm-what-icn-bx">
               <div></div>
-              <h6>Permanent</h6>
-              <p>Lorem ipsum dolor sit amet consectetur. Adipiscing nisl id at arcu enim id gravida pulvinar. Tristique</p>
+              <h6>Limited Applications</h6>
+              <p>Candidates can only apply to a limited number of applications each day
+                Recruiters must respond to applications before getting new ones</p>
             </div>
 
             <div class="ss-hm-what-icn-bx">
               <div></div>
-              <h6>Permanent</h6>
-              <p>Lorem ipsum dolor sit amet consectetur. Adipiscing nisl id at arcu enim id gravida pulvinar. Tristique</p>
+              <h6>No more spam</h6>
+              <p>Recruiters cannot reach out to candidates. They can only message after a candidate applies</p>
             </div>
           </div>
 
   <div class="ss-what-offer-div2">
      <div class="ss-hm-what-icn-bx">
               <div></div>
-              <h6>Permanent</h6>
-              <p>Lorem ipsum dolor sit amet consectetur. Adipiscing nisl id at arcu enim id gravida pulvinar. Tristique</p>
+              <h6>Finally, some accountability!</h6>
+              <p>Goodwork tracks objective stats about recruiters and workers, which be part of their profiles. Want to avoid recruiters who bait-and-switch? Goodwork will tell you who does it the most</p>
             </div>
 
              <div class="ss-hm-what-icn-bx">
               <div></div>
-              <h6>Permanent</h6>
-              <p>Lorem ipsum dolor sit amet consectetur. Adipiscing nisl id at arcu enim id gravida pulvinar. Tristique</p>
+              <h6>Qualification Guardrails</h6>
+              <p>Employers can set application requirements, so they don't waste your time or yours</p>
             </div>
   </div>
 
@@ -404,12 +409,12 @@
          <div class="col-lg-6">
           <div class="ss-hm-hed-sec">
            <h4>About <span class="ss-fnt-nrml">Goodwork</span></h4>
-           <h2>Introduction To Best
-  <span class="ss-clr-pink">Nursing Portal</span>   </h2>
   <p>
-    Lorem ipsum dolor sit amet consectetur. Adipiscing nisl id at arcu enim id gravida pulvinar. Tristique consectetur mi curabitur congue enim dignissim amet justo. Porta morbi nulla aliquet adipiscing. Sed diam mauris erat faucibus eu posuere ultricies quisque amet. Quam pellentesque in tristique
+    Goodwork isn't just another job board trying to pump as many applications into as many inboxes as possible. We are truly trying to change the way people find work. We believe that by aligning incentives we can create an environment where applicant and employer work as partners rather than adversaries.
   </p>
-  <p>sed neque scelerisque quam pulvinar. Risus dictum elementum lacus urna. Neque eget sagittis vulputate nam id morbi id. Aliquam molestie posuere pulvinar arcu</p>
+  <p>Changing the world can be messy. It takes more than posting stock photos of doctors with smoldering looks on their face. That's why you may run into a few bugs here and there or a feature or two that we haven't finished yet. We promise we are working on it and really appreciate your patients.</p>
+  <p>Thank you for helping us on this mission.</p>
+  <p>-The Goodwork Team</p>
 
   {{-- <a href="{{route('explore-jobs')}}">Explore Jobs</a> --}}
          </div>

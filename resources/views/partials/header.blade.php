@@ -25,10 +25,10 @@
                                     <!-- <a class="nav-link" href="{{ route('recruiter.login') }}">For Recruiters</a> -->
                                     <a class="nav-link" href="{{ route('for-recruiters') }}">For Recruiters</a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
 
                                     <a class="nav-link" href="{{ route('about-us') }}">About Us</a>
-                                </li>
+                                </li> --}}
                             </ul>
                             <span class="navbar-text">
                                 <div class="ss-log-div-sec">
