@@ -974,6 +974,9 @@
                     check = true;
                 }
             } else if (inputName == 'references') {
+                if(number_of_references == 0){
+                    return undefined;
+                }
                 if (number_of_references <= worker_files_displayname_by_type?.length) {
                     check = true;
                 }
@@ -997,6 +1000,10 @@
             } else if (inputName == "resume"){
             
                 let is_resume = @json($model["is_resume"]);
+
+                if (!is_resume) {
+                    return undefined;
+                }
 
                 if (worker_files_displayname_by_type?.length > 0 && is_resume) {
 
