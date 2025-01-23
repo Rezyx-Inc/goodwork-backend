@@ -4,8 +4,6 @@
             <div class="col-lg-5">
                 <div class="ss-foot-log-div">
                     <a href="#"><img src="{{ URL::asset('landing/img/footer-logo.png') }}" /></a>
-                    <p>Lorem ipsum dolor sit amet consectetur. Scelerisque vitae et vitae suspendisse vulputate
-                        vestibulum tortor nisl cursus. Egestas nulla in </p>
                 </div>
             </div>
 
@@ -16,20 +14,6 @@
                         <li><a href="{{ route('explore-jobs') }}">Explore Jobs</a></li>
                         <li><a href="{{ route('for-organizations') }}">For Organizations</a></li>
                         <li><a href="{{ route('for-recruiters') }}">For Recruiters</a></li>
-                        <li><a href="{{ route('about-us') }}">About Us</a></li>
-
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-lg-2">
-                <div class="ss-foot-link-sec">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="{{ route('explore-jobs') }}">Explore Jobs</a></li>
-                        <li><a href="{{ route('for-organizations') }}">For Organizations</a></li>
-                        <li><a href="{{ route('for-recruiters') }}">For Recruiters</a></li>
-                        <li><a href="{{ route('about-us') }}">About Us</a></li>
 
                     </ul>
                 </div>
