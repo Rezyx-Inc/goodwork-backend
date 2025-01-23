@@ -1,16 +1,18 @@
+//To configure environment variables from a .env file
 require("dotenv").config();
 
-const url = require('url');
-const axios = require("axios");
+//import all required libraries and/or modules
+const url = require('url'); //  Contains url related functions
+const axios = require("axios"); // Used to make http requests
 
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'); //  To connect to mongoDB
 const queries = require("../mysql/queries.js")
 
 const Laboredge = require('../models/Laboredge');
 const Logs = require('../models/Logs');
-var moment = require("moment");
+var moment = require("moment"); // Used for date-time changes
 
-var _ = require('lodash');
+var _ = require('lodash'); // Used for data manipulation
 var { report } = require('../set.js')
 
 //Connect to DB
@@ -28,8 +30,8 @@ mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_
 // Process laboredge integrations for the first time
 module.exports.init = async () => {
 
-	var limit = 100;
-	var totalIntegrations = await Laboredge.countDocuments({});
+	var limit = 100; // No. of documents per batch
+	var totalIntegrations = await Laboredge.countDocuments({}); //Fetch total no. of documents
 	var totalPages = Math.ceil(totalIntegrations/limit);
 
 	for( i = 0; i < totalPages; i++ ){
@@ -62,26 +64,26 @@ module.exports.init = async () => {
 				// Get the accessToken
 				var accessToken = await connectNexus(mysqlResp);
 
-				// Get professions
+				// Get and update professions
 				const professions = await getProfession(accessToken, mysqlResp.user_id)
 				user.professions = professions;
 				
-				// Get specialties
+				// Get and update specialties
 				const specialties = await getSpecialties(accessToken, mysqlResp.user_id)
 				user.specialties = specialties;
 
-				// Get States
+				// Get and update States
 				const states = await getStates(accessToken, mysqlResp.user_id)
 				user.states = states;
 
-				// Get Countries
+				// Get and update Countries
 				const countries = await getCountries(accessToken, mysqlResp.user_id)
 				user.countries = countries;
 
 				// update updated with new Date().toLocaleString()
 				user.updated = moment().format("YYYY-MM-DD[T]HH:mm:ss");
 
-				// Get Jobs
+				// Get and update Jobs
 				const jobs = await getJobs(accessToken, mysqlResp.user_id, false, false)
 				user.importedJobs = jobs;
 
@@ -89,7 +91,7 @@ module.exports.init = async () => {
 				// for job in jobs | insert into jobs (...) values (...)
 				// import_id is job.id not job._id
 
-				// Save
+				// Save the updated user in the db
 				await user.save().then(resp => {}).catch(e=>{console.log(e)})
 			}
 		})			
@@ -99,8 +101,8 @@ module.exports.init = async () => {
 // Update the existing integrations
 module.exports.update = async () => {
 
-	var limit = 100;
-	var totalIntegrations = await Laboredge.countDocuments();
+	var limit = 100; // No. of documents per batch
+	var totalIntegrations = await Laboredge.countDocuments();//Fetch total no. of documents
 	var totalPages = Math.ceil(totalIntegrations/limit);
 
 	for( i = 0; i < totalPages; i++ ){
@@ -122,7 +124,7 @@ module.exports.update = async () => {
 				
 				console.log( "INDEX : ", index,"User ID : ", user.userId, "_id:", user._id)
 				
-				var mysqlResp = await queries.getLaboredgeLogin(user.userId)
+				var mysqlResp = await queries.getLaboredgeLogin(user.userId) // Get login details from the db
 				
 				// Not required, but better be safe
 				if(mysqlResp.length == 0){
@@ -139,7 +141,7 @@ module.exports.update = async () => {
 					// Get the accessToken
 					var accessToken = await connectNexus(mysqlResp);
 					
-					// Get Jobs
+					// Get Jobs from the laboredge API
 					const jobs = await getJobs(accessToken, mysqlResp.user_id, true, user.updated)
 
 					// Check which job has changed
@@ -150,8 +152,8 @@ module.exports.update = async () => {
 
 						if ( _.includes(updatedJobs.toClose,item.id) ){
 
-							user.importedJobs[ind].jobStatus = "Closed";
-							let closingJob = await queries.closeImportedJobs(user.importedJobs[ind].id);
+							user.importedJobs[ind].jobStatus = "Closed"; // Mark job status as closed
+							let closingJob = await queries.closeImportedJobs(user.importedJobs[ind].id); // Update in the db
 							continue
 						}
 
@@ -161,7 +163,7 @@ module.exports.update = async () => {
 							if(updateItem.id == item.id){
 
 								user.importedJobs[ind] = updateItem;
-								await queries.addImportedJob(updateItem);
+								await queries.addImportedJob(updateItem); //update in the bd
 							}
 						}
 
@@ -176,7 +178,7 @@ module.exports.update = async () => {
 					console.log("ACTUAL JOB",user.importedJobs.length, "UPDATE JOBS",jobs.length)
 					console.log("TO CLOSE", updatedJobs.toClose.length, "TO ADD", updatedJobs.toAdd.length, "UNCHANGED", updatedJobs.unchanged.length, "TO UPDATE", updatedJobs.toUpdate.length)
 
-					// update updated
+					// update updated (timestamp)
 					user.updated = moment().format("YYYY-MM-DD[T]HH:mm:ss");
 
 					/*
@@ -199,7 +201,10 @@ module.exports.update = async () => {
 // get professions
 async function getProfession (accessToken, userId){
 
+	// Array to hold active professions
 	var activeProfession = [];
+
+	//Headers required for the api call
 	var headers = {
 		'Authorization' : 'Bearer '+accessToken,
 		'Content-Type': 'application/json'
@@ -208,6 +213,7 @@ async function getProfession (accessToken, userId){
 	// Get the total amount of records
 	try{
 		
+		//API call to fetch professions
 		var { data } = await axios.get("https://api-nexus.laboredge.com:9000/api/api-integration/v1/master/professions", {headers});
 		
 		for( profession of data){
@@ -219,6 +225,7 @@ async function getProfession (accessToken, userId){
 
 	}catch(e){
 	
+		//log in case of API call failure
 		log("Unable to fetch for total records from Nexus.", e.message, userId)
 	
 	}
@@ -229,8 +236,10 @@ async function getProfession (accessToken, userId){
 // get specialties
 async function getSpecialties (accessToken, userId){
 
+	//Array to hold active specialties
 	var activeSpecialty = [];
 
+	//Headers required for the API call
 	var headers = {
 		'Authorization' : 'Bearer '+accessToken,
 		'Content-Type': 'application/json'
@@ -243,6 +252,7 @@ async function getSpecialties (accessToken, userId){
 
 	}catch(e){
 	
+		//log in case of API call failure
 		log("Unable to fetch for total records from Nexus.", e.message, userId)
 	
 	}
@@ -259,8 +269,10 @@ async function getSpecialties (accessToken, userId){
 // get states
 async function getStates (accessToken, userId){
 
+	//Array to hold active states
 	var activeState = [];
 
+	//Headers required for the API call
 	var headers = {
 		'Authorization' : 'Bearer '+accessToken,
 		'Content-Type': 'application/json'
@@ -273,6 +285,7 @@ async function getStates (accessToken, userId){
 
 	}catch(e){
 	
+		//log in case of API call failure
 		log("Unable to fetch for total records from Nexus.", e.message, userId)
 	
 	}
@@ -287,8 +300,10 @@ async function getStates (accessToken, userId){
 // get countries
 async function getCountries (accessToken, userId){
 
+	// Array to hold active countries
 	var activeCountry = [];
 
+	//Headers required for the API call
 	var headers = {
 		'Authorization' : 'Bearer '+accessToken,
 		'Content-Type': 'application/json'
@@ -301,6 +316,7 @@ async function getCountries (accessToken, userId){
 
 	}catch(e){
 	
+		//log in case of API call failure
 		log("Unable to fetch for total records from Nexus.", e.message, userId)
 	
 	}
@@ -349,19 +365,19 @@ module.exports.updateOthers = async () => {
 				// Get the accessToken
 				var accessToken = await connectNexus(mysqlResp);
 
-				// Get professions
+				// Get and update professions
 				const professions = await getProfession(accessToken, mysqlResp.user_id)
 				user.professions = professions;
 				
-				// Get specialties
+				// Get and update specialties
 				const specialties = await getSpecialties(accessToken, mysqlResp.user_id)
 				user.specialties = specialties;
 
-				// Get States
+				// Get and update States
 				const states = await getStates(accessToken, mysqlResp.user_id)
 				user.states = states;
 
-				// Get Countries
+				// Get and update Countries
 				const countries = await getCountries(accessToken, mysqlResp.user_id)
 				user.countries = countries;
 
@@ -379,8 +395,10 @@ module.exports.updateOthers = async () => {
 // get jobs
 async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 
+	// Array to hold the imported jobs
 	var importedJobs = [];
 
+	// Headers required for the API call
 	var headers = {
 		'Authorization' : 'Bearer '+accessToken,
 		'Content-Type': 'application/json'
@@ -416,6 +434,7 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 
 				}catch(e){
 
+					//log in case of API call failure
 					log("Unable to fetch records from nexus. count > 100.", e.message, userId)
 				}
 
@@ -428,7 +447,7 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 				params.pagingDetails.start+=100;
 			}
 		
-		}else if (data.count == 0){
+		}else if (data.count == 0){ // No job data found in the API
 			
 			console.log("No jobs to load", "data.count is empty", userId);
 		
@@ -445,6 +464,7 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 
 	}catch(e){
 	
+		//log in case of API call failure
 		console.log("Unable to fetch for total records from Nexus.", e.message, userId)
 	}
 }
@@ -498,6 +518,7 @@ async function getUpdatedJobs(newJobs, oldJobs, userId){
 
 async function formatJobs(jobs){
 
+	// Array to hold the formatted jobs
 	var formatedJobs = [];
 
 	for(job of jobs){
@@ -546,7 +567,8 @@ module.exports.seed = async ( amount ) =>{
 	for(var i = 0; i <= amount; i++){
 
 		try{
-		
+
+			//Creating a Recruiter user profile (manually)
 			var laboredge = {
 				userId: "UWU"+Math.random().toString().slice(2,8),
 			    userType: "RECRUITER",
@@ -691,12 +713,13 @@ async function log( message, error, userId ){
 // Helper function to connect to nexus using JWtoken
 async function connectNexus(credentials){
 	
-	// Get the JWT
+	// Headers required to get the JWT
 	var headers = {
 		'Content-Type' : 'application/x-www-form-urlencoded',
 		'Authorization' : 'Basic bmV4dXM6NXM6Nn5EcEhaelcmVFoj'
 	};
 
+	// Request parameters required for the API call
 	const params = new url.URLSearchParams({ 
 		username: credentials.le_username,
 		password: credentials.le_password,
@@ -712,6 +735,7 @@ async function connectNexus(credentials){
 
 	}catch(e){
 
+		// log in case of API call failure
 		log("UNABLE TO GET THE JWT TOKEN, REFRESHING", e, credentials.user_id );
 		console.log("UNABLE TO GET THE JWT TOKEN, REFRESHING", e, credentials.user_id );
 

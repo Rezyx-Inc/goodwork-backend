@@ -1,8 +1,10 @@
+//Import all required libraries and/or modules
 const { pool } = require("./mysql.js");
 var _ = require('lodash');
 var moment = require('moment');
 const { validateFields, getNewJobId } = require('../helpers/sheetHelper.js');
 
+//Function to get the Stripe Account Id using the user id
 module.exports.getStripeId = async function (userId) {
 
     const [result, fields] = await pool.query(
@@ -13,6 +15,7 @@ module.exports.getStripeId = async function (userId) {
     return result[0];
 };
 
+//Function to update the Stripe Account Id using the stripe id and user id
 module.exports.insertStripeId = async function (stripeId, userId) {
 
     const [result, fields] = await pool.query(
@@ -23,6 +26,7 @@ module.exports.insertStripeId = async function (stripeId, userId) {
     return result;
 };
 
+//Function to check if a particular Stripe Account Id exists in the users
 module.exports.checkStripeId = async function (stripeId) {
 
     const [result, fields] = await pool.query(
@@ -34,6 +38,7 @@ module.exports.checkStripeId = async function (stripeId) {
 };
 
 // Customers
+//Function to update the Stripe Account Id using the stripe id and email
 module.exports.insertCustomerStripeId = async function (stripeId, email) {
 
     const [result, fields] = await pool.query(
@@ -44,6 +49,7 @@ module.exports.insertCustomerStripeId = async function (stripeId, email) {
     return result;
 };
 
+//Function to update the offer status based on offerId
 module.exports.setOfferStatus = async function ( offerId, status, is_payment_done, is_payment_required) {
 
     let query = "UPDATE offers SET status=?";
@@ -62,7 +68,6 @@ module.exports.setOfferStatus = async function ( offerId, status, is_payment_don
 };
 
 //  queries for worker payment
-
 module.exports.getWorkerDetails = async function (workerId) {
 
     const [result, fields] = await pool.query(
@@ -73,6 +78,7 @@ module.exports.getWorkerDetails = async function (workerId) {
     return result;
 };
 
+//Function to get offer details of a worker
 module.exports.getOfferDetails = async function (offerId) {
 
     const [result, fields] = await pool.query(
@@ -83,6 +89,7 @@ module.exports.getOfferDetails = async function (offerId) {
     return result;
 };
 
+//Function to update the Payment status as done (paid)
 module.exports.setWorkerPaymentStatus = async function (offerId) {
 
     const [result, fields] = await pool.query(
@@ -104,6 +111,7 @@ module.exports.getLaboredgeLogin = async function (userId) {
     return result;
 };
 
+//(Get Info)
 module.exports.closeImportedJobs = async function (imported_id) {
 
     const [result, fields] = await pool.query(
@@ -114,6 +122,7 @@ module.exports.closeImportedJobs = async function (imported_id) {
     return result;
 };
 
+//Function to insert imported jobs into our db
 module.exports.addImportedJob = async function (importData) {
 
     if (importData.durationType != "WEEKS") {
@@ -131,6 +140,7 @@ module.exports.addImportedJob = async function (importData) {
         floatReq = 1;
     }
 
+    //Job description
     let description =
         importData.postingId +
         " " +
@@ -187,6 +197,7 @@ module.exports.getNcSpecialties = async function () {
     return result;
 };
 
+//(Get info)
 module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, draft, update) {
 
     // We keep update == false case for the sake of future integrations

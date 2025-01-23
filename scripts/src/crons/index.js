@@ -1,8 +1,11 @@
+//To configure environment variables from a .env file
 require("dotenv").config();
 
-var cron = require("node-cron");
+//import all required libraries and/or modules
+var cron = require("node-cron"); // Used to schedule cron jobs
 var laboredge = require("./laboredge.js");
 var { report } = require("../set.js");
+
 //var gsheet = require("../gSheet/index.js").main;
 //var gSheetAuth = require("../gSheet/services/authService.js").authorize;
 
@@ -18,6 +21,7 @@ var ardorHealth = require("./ardorHealth.js");
 //     await gSheetAuth(true);
 // })();
 
+//Checking if cron jobs are enabled
 if (process.env.ENABLE_CRONS) {
     console.log("Starting integrations cron jobs.");
 
@@ -47,6 +51,7 @@ if (process.env.ENABLE_CRONS) {
         //laboredge.updateOthers();
     });
 
+    //Handling unexpected termination on SIGTERM signal
     process.on("SIGTERM", function () {
         report("Unexpected Crons exit");
     });

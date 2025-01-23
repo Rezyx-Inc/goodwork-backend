@@ -1,12 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'); //Required for MongoDB connection
 
+//Create a schema for organizations
 const OrganizationsSchema = mongoose.Schema({
 
-    orgId: {
+    orgId: { //(Could be unique and number)
         type: String,
         required: true
     },
-    recruiters: [
+    recruiters: [ // List of recruiters, for an organization
         {
             id : {type: String, required: true},
             worksAssigned: {type: Number, required: false},
@@ -20,11 +21,11 @@ const OrganizationsSchema = mongoose.Schema({
     
 });
 
-
+//Create a schema for Global rules
 const globalRuleFieldsSchema = mongoose.Schema({
 
     ruleFields: [{
-                    fieldID: {
+                    fieldID: { //(Could be unique and number)
                         type: String,
                         required: true
                     },
@@ -48,6 +49,7 @@ const globalRuleFieldsSchema = mongoose.Schema({
 
 });
 
+//Connections to organization and global rules db
 const organizationsDB = mongoose.connection.useDb(process.env.MONGODB_ORGANIZATIONS_DATABASE_NAME);
 const globalRulesDb = mongoose.connection.useDb(process.env.MONGODB_ORGANIZATIONS_DATABASE_NAME);
 

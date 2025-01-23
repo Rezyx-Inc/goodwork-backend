@@ -58,6 +58,7 @@ module.exports.validateFields = async function (jobData) {
       'preferred_shift_duration': value => typeof value === 'string' || value === null,
     };
 
+    //Iterate through all fields and verify if the are valid
     for (let field in formatValidations) {
       if (!formatValidations[field](jobData[field] || null)) {
         console.log(`Invalid format for field: ${field}`);
@@ -67,6 +68,8 @@ module.exports.validateFields = async function (jobData) {
 
     return true;
   } catch (err) {
+
+    //Log and throw error message
     console.error('Error validating fields:', err);
     throw err;
   }
@@ -76,10 +79,12 @@ module.exports.getNewJobId = async function (pool) {
 
   try {
 
+    //Get job IDs from the db
     const [rows] = await pool.query(
       `SELECT id FROM jobs ORDER BY id DESC LIMIT 1`
     );
 
+    //Check if data is fetched and process
     if (rows.length > 0) {
       const lastId = rows[0].id;
 
@@ -100,6 +105,7 @@ module.exports.getNewJobId = async function (pool) {
 
   } catch (err) {
 
+    //Log and throw error message
     console.error('Error getting new job ID:', err);
     throw err;
   }
@@ -107,8 +113,10 @@ module.exports.getNewJobId = async function (pool) {
 
 module.exports.checkIfSpreadsheetExists = async (auth, organizationId, google) => {
 
+  //Connect to google drive API
   const drive = google.drive({ version: 'v3', headers: { Authorization: `Bearer ${auth}` } });
 
+  //Fetch list of files
   const response = await drive.files.list({
     q: `mimeType='application/vnd.google-apps.spreadsheet' and name contains '${organizationId}'`,
     fields: 'files(id, name)'

@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'); //Required for MongoDB connection
 
+//Creating a schema for Docs
 const DocsSchema = mongoose.Schema({
 
     workerId: {
@@ -28,5 +29,6 @@ const DocsSchema = mongoose.Schema({
     ]
 });
 
+//Connect to 'files' db for the files
 const filesDB = mongoose.connection.useDb(process.env.MONGODB_FILES_DATABASE_NAME);
 module.exports = filesDB.model('Docs', DocsSchema);

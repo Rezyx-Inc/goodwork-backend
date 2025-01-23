@@ -1,8 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose");  //Required for MongoDB connection
 
+//Creating a schema for LaborEdge
 const laboredgeSchema = mongoose.Schema({
     userId: {
-        type: String,
+        type: String, //Id for each user (Could be unique and number)
         required: true,
     },
     userType: {
@@ -13,15 +14,15 @@ const laboredgeSchema = mongoose.Schema({
         type: Array,
         required: false,
     },
-    created: {
-        type: Date,
+    created: { //Date of creation
+        type: Date, 
         default: Date.now,
     },
-    updated: {
+    updated: { // Date of update
         type: String,
         required: false,
     },
-    professions: [
+    professions: [ //Profession details of the user
         {
             professionId: {
                 type: Number,
@@ -33,7 +34,7 @@ const laboredgeSchema = mongoose.Schema({
             },
         },
     ],
-    specialties: [
+    specialties: [ //Specialisations of the user
         {
             specialtyId: {
                 type: Number,
@@ -45,7 +46,7 @@ const laboredgeSchema = mongoose.Schema({
             },
         },
     ],
-    states: [
+    states: [ //State details of work
         {
             stateId: {
                 type: Number,
@@ -61,7 +62,7 @@ const laboredgeSchema = mongoose.Schema({
             },
         },
     ],
-    countries: [
+    countries: [ //Country details of work
         {
             countryId: {
                 type: Number,
@@ -77,7 +78,7 @@ const laboredgeSchema = mongoose.Schema({
             },
         },
     ],
-    importedJobs: [
+    importedJobs: [ //Posted job details(Get info)
         {
             id: {
                 type: Number,
@@ -91,7 +92,7 @@ const laboredgeSchema = mongoose.Schema({
                 type: mongoose.Mixed,
                 required: false,
             },
-            description: {
+            description: { //Job description
                 type: String,
                 required: false,
             },
@@ -119,7 +120,7 @@ const laboredgeSchema = mongoose.Schema({
                 type: String,
                 required: false,
             },
-            jobStatus: {
+            jobStatus: { //Status of the job (Applied till Onboarded)
                 type: String,
                 required: false,
             },
@@ -213,6 +214,7 @@ const laboredgeSchema = mongoose.Schema({
     ],
 });
 
+//Connect to integrations db
 const integrationsDB = mongoose.connection.useDb(
     process.env.MONGODB_INTEGRATIONS_DATABASE_NAME
 );
