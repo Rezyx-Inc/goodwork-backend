@@ -235,7 +235,7 @@
 
 
                                     <ul id="worker_job_type"
-                                        class="ss-s-jb-apl-on-inf-txt-ul type_item {{ $matches['job_type']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul type_item {{ checkValue($model->job_type) ? ( $matches['job_type']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') : '' }}">
                                         <li>
                                             <span>Type</span>
                                             <h6>
@@ -267,7 +267,7 @@
 
 
                                     <ul id="terms"
-                                        class="ss-s-jb-apl-on-inf-txt-ul terms_item {{ $matches['terms']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul terms_item {{ checkValue($model->terms) ? ( $matches['terms']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Terms</span>
 
@@ -299,7 +299,7 @@
                                     </ul>
 
                                     <ul id="profession"
-                                        class="ss-s-jb-apl-on-inf-txt-ul profession_item {{ $matches['profession']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul profession_item {{ checkValue($model->profession) ? ( $matches['profession']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Profession</span>
                                             <h6>
@@ -330,7 +330,7 @@
                                     </ul>
 
                                     <ul id="specialty"
-                                        class="ss-s-jb-apl-on-inf-txt-ul preferred_specialty_item {{ $matches['preferred_specialty']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul preferred_specialty_item {{ checkValue($model->preferred_specialty) ? ( $matches['preferred_specialty']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Specialty</span>
                                             <h6>
@@ -360,7 +360,7 @@
                                     </ul>
 
                                     <ul id="worker_actual_hourly_rate"
-                                        class="ss-s-jb-apl-on-inf-txt-ul actual_hourly_rate_item {{ $matches['actual_hourly_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul actual_hourly_rate_item {{ checkValue($model->actual_hourly_rate) ? ( $matches['actual_hourly_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Est. Taxable Hourly Rate</span>
                                             <h6>
@@ -406,7 +406,7 @@
                                     </ul>
 
                                     <ul id="worker_hours_per_week"
-                                        class="ss-s-jb-apl-on-inf-txt-ul hours_per_week_item {{ $matches['hours_per_week']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul hours_per_week_item {{ checkValue($model->hours_per_week) ? ( $matches['hours_per_week']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Hours/Week</span>
                                             <h6>
@@ -436,7 +436,7 @@
                                     </ul>
 
                                     <ul id="state"
-                                        class="ss-s-jb-apl-on-inf-txt-ul job_state_item {{ $matches['job_state']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul job_state_item {{ checkValue($model->job_state) ? ( $matches['job_state']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Facility State</span>
                                             <h6>
@@ -465,7 +465,7 @@
                                     </ul>
 
                                     <ul id="city"
-                                        class="ss-s-jb-apl-on-inf-txt-ul job_city_item {{ $matches['job_city']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul job_city_item {{ checkValue($model->job_city) ? ( $matches['job_city']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Facility City</span>
                                             <h6>
@@ -495,7 +495,7 @@
                                         </li>
                                     </ul>
 
-                                    <ul id="resume" class="ss-s-jb-apl-on-inf-txt-ul resume_item ss-s-jb-apl-bg-pink">
+                                    <ul id="resume" class="ss-s-jb-apl-on-inf-txt-ul resume_item">
                                         <li>
                                             <span>Resume</span>
                                             <h6>{{ $model->is_resume ? 'Required' : 'Not Required' }}</h6>
@@ -556,7 +556,7 @@
                                     </ul>
 
                                     <ul id="worker_guaranteed_hours"
-                                        class="ss-s-jb-apl-on-inf-txt-ul guaranteed_hours_item {{ $matches['guaranteed_hours']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul guaranteed_hours_item {{ checkValue($model->guaranteed_hours) ? ( $matches['guaranteed_hours']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Guaranteed Hours</span>
                                             <h6>
@@ -587,7 +587,7 @@
                                     </ul>
 
                                     <ul id="worker_hours_shift"
-                                        class="ss-s-jb-apl-on-inf-txt-ul hours_shift_item {{ $matches['hours_shift']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul hours_shift_item {{ checkValue($model->hours_shift) ? ( $matches['hours_shift']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Hours/Shift</span>
                                             <h6>
@@ -617,7 +617,7 @@
                                     </ul>
 
                                     <ul id="worker_shifts_week"
-                                        class="ss-s-jb-apl-on-inf-txt-ul weeks_shift_item {{ $matches['weeks_shift']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul weeks_shift_item {{ checkValue($model->weeks_shift) ? ( $matches['weeks_shift']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Shifts/Week</span>
                                             <h6>
@@ -647,7 +647,7 @@
                                     </ul>
 
                                     <ul id="worker_weeks_assignment"
-                                        class="ss-s-jb-apl-on-inf-txt-ul preferred_assignment_duration_item {{ $matches['preferred_assignment_duration']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul preferred_assignment_duration_item {{ checkValue($model->preferred_assignment_duration) ? ( $matches['preferred_assignment_duration']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Weeks/Assignment</span>
                                             <h6>
@@ -708,7 +708,7 @@
                                         </ul>
                                     @else
                                         <ul id="worker_start_date"
-                                            class="ss-s-jb-apl-on-inf-txt-ul start_date_item {{ $matches['start_date']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            class="ss-s-jb-apl-on-inf-txt-ul start_date_item {{ checkValue($model->start_date) ? ( $matches['start_date']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                             <li>
                                                 <span>Start date</span>
                                                 <h6>
@@ -739,8 +739,6 @@
                                         <ul id="worker_end_date" class="ss-s-jb-apl-on-inf-txt-ul">
                                             <li>
                                                 <span>End Date</span>
-                                            </li>
-                                            <li>
                                                 <h6>
                                                     @if (checkValue($model->end_date) && !!$model->end_date)
                                                         {{ $model->end_date }}
@@ -756,7 +754,7 @@
                                     @endif
 
                                     <ul id="rto"
-                                        class="ss-s-jb-apl-on-inf-txt-ul rto_item {{ $matches['rto']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul rto_item {{ checkValue($model->rto) ? ( $matches['rto']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>RTO</span>
                                             <h6>
@@ -799,7 +797,7 @@
                                     </ul>
 
                                     <ul id="worker_overtime_rate"
-                                        class="ss-s-jb-apl-on-inf-txt-ul overtime_item {{ $matches['overtime']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul overtime_item {{ checkValue($model->overtime) ? ( $matches['overtime']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Overtime</span>
                                             <h6>
@@ -830,7 +828,7 @@
                                     </ul>
 
                                     <ul id="worker_on_call"
-                                        class="ss-s-jb-apl-on-inf-txt-ul on_call_rate_item {{ $matches['on_call_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul on_call_rate_item {{ checkValue($model->on_call_rate) ? ( $matches['on_call_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>On Call Rate</span>
                                             <h6>
@@ -859,7 +857,7 @@
                                     </ul>
 
                                     <ul id="worker_call_back_check"
-                                        class="ss-s-jb-apl-on-inf-txt-ul call_back_rate_item {{ $matches['call_back_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul call_back_rate_item {{ checkValue($model->call_back_rate) ? ( $matches['call_back_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Call Back Rate</span>
                                             <h6>
@@ -888,7 +886,7 @@
                                     </ul>
 
                                     <ul id="worker_orientation_rate"
-                                        class="ss-s-jb-apl-on-inf-txt-ul orientation_rate_item {{ $matches['orientation_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul orientation_rate_item {{ checkValue($model->orientation_rate) ? ( $matches['orientation_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Orientation Rate</span>
                                             <h6>
@@ -917,24 +915,8 @@
                                         </li>
                                     </ul>
 
-                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-                                        <li>
-                                            <span>Est. Weekly Taxable Amount</span>
-                                            <h6>
-                                                @if (checkValue($model->weekly_taxable_amount))
-                                                    ${{ number_format($model->weekly_taxable_amount) }}
-                                                @else
-                                                    <a style="cursor: pointer;"
-                                                        onclick="askRecruiter(this, 'type', '{{ $nurse->id }}', '{{ $model->recruiter_id }}','{{ $model->organization_id }}', '{{ $worker->first_name }} {{ $worker->last_name }}')">
-                                                        Ask
-                                                        Recruiter</a>
-                                                @endif
-                                            </h6>
-                                        </li>
-                                    </ul>
-
                                     <ul id="worker_weekly_non_taxable_amount_check"
-                                        class="ss-s-jb-apl-on-inf-txt-ul weekly_non_taxable_amount_item {{ $matches['weekly_non_taxable_amount']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul weekly_non_taxable_amount_item {{ checkValue($model->weekly_non_taxable_amount) ? ( $matches['weekly_non_taxable_amount']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Est. Weekly Non-Taxable Amount</span>
                                             <h6>
@@ -965,7 +947,7 @@
                                     </ul>
 
                                     <ul id="worker_feels_like_per_hour_check"
-                                        class="ss-s-jb-apl-on-inf-txt-ul feels_like_per_hour_item {{ $matches['feels_like_per_hour']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul feels_like_per_hour_item {{ checkValue($model->feels_like_per_hour) ? ( $matches['feels_like_per_hour']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Feels Like $/Hr</span>
                                             <h6>
@@ -1018,7 +1000,7 @@
                                     </ul>
 
                                     <ul id="worker_referral_bonus"
-                                        class="ss-s-jb-apl-on-inf-txt-ul referral_bonus_item {{ $matches['referral_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul referral_bonus_item {{ checkValue($model->referral_bonus) ? ( $matches['referral_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Referral Bonus</span>
                                             <h6>
@@ -1049,7 +1031,7 @@
                                     </ul>
 
                                     <ul id="worker_sign_on_bonus"
-                                        class="ss-s-jb-apl-on-inf-txt-ul sign_on_bonus_item {{ $matches['sign_on_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul sign_on_bonus_item {{ checkValue($model->sign_on_bonus) ? ( $matches['sign_on_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Sign-On Bonus</span>
                                             <h6>
@@ -1080,7 +1062,7 @@
                                     </ul>
 
                                     <ul id="worker_extension_bonus"
-                                        class="ss-s-jb-apl-on-inf-txt-ul extension_bonus_item {{ $matches['extension_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul extension_bonus_item {{ checkValue($model->extension_bonus) ? ( $matches['extension_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Extension Bonus</span>
                                             <h6>
@@ -1111,7 +1093,7 @@
                                     </ul>
 
                                     <ul id="worker_completion_bonus"
-                                        class="ss-s-jb-apl-on-inf-txt-ul completion_bonus_item {{ $matches['completion_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul completion_bonus_item {{ checkValue($model->completion_bonus) ? ( $matches['completion_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Completion Bonus</span>
                                             <h6>
@@ -1142,7 +1124,7 @@
                                     </ul>
 
                                     <ul id="worker_other_bonus"
-                                        class="ss-s-jb-apl-on-inf-txt-ul other_bonus_item {{ $matches['other_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul other_bonus_item {{ checkValue($model->other_bonus) ? ( $matches['other_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Other Bonus</span>
                                             <h6>
@@ -1172,7 +1154,7 @@
                                     </ul>
 
                                     <ul id="worker_health_insurance"
-                                        class="ss-s-jb-apl-on-inf-txt-ul health_insaurance_item {{ $matches['health_insaurance']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul health_insaurance_item {{ checkValue($model->health_insaurance) ? ( $matches['health_insaurance']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Health Insurance</span>
 
@@ -1203,55 +1185,6 @@
                                         </li>
                                     </ul>
 
-                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-                                        <li>
-                                            <span>Est. Total Organization Amount</span>
-                                            <h6>
-                                                @if (checkValue($model->total_organization_amount))
-                                                    ${{ number_format($model->total_organization_amount) }}
-                                                @else
-                                                    <a style="cursor: pointer;"
-                                                        onclick="askRecruiter(this, 'type', '{{ $nurse->id }}', '{{ $model->recruiter_id }}','{{ $model->organization_id }}', '{{ $worker->first_name }} {{ $worker->last_name }}')">
-                                                        Ask
-                                                        Recruiter</a>
-                                                @endif
-                                            </h6>
-                                        </li>
-
-                                    </ul>
-
-                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-                                        <li>
-                                            <span>Est. Total Goodwork Amount</span>
-                                            <h6>
-                                                @if (checkValue($model->total_goodwork_amount))
-                                                    ${{ number_format($model->total_goodwork_amount) }}
-                                                @else
-                                                    <a style="cursor: pointer;"
-                                                        onclick="askRecruiter(this, 'type', '{{ $nurse->id }}', '{{ $model->recruiter_id }}','{{ $model->organization_id }}', '{{ $worker->first_name }} {{ $worker->last_name }}')">
-                                                        Ask
-                                                        Recruiter</a>
-                                                @endif
-                                            </h6>
-                                        </li>
-
-                                    </ul>
-
-                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-                                        <li>
-                                            <span>Est. Total Contract Amount</span>
-                                            <h6>
-                                                @if (checkValue($model->total_contract_amount))
-                                                    ${{ number_format($model->total_contract_amount) }}
-                                                @else
-                                                    <a style="cursor: pointer;"
-                                                        onclick="askRecruiter(this, 'type', '{{ $nurse->id }}', '{{ $model->recruiter_id }}','{{ $model->organization_id }}', '{{ $worker->first_name }} {{ $worker->last_name }}')">
-                                                        Ask
-                                                        Recruiter</a>
-                                                @endif
-                                            </h6>
-                                        </li>
-                                    </ul>
 
                                     <ul class="ss-s-jb-apl-on-inf-txt-ul">
                                         <li>
@@ -1270,7 +1203,7 @@
                                     </ul>
 
                                     <ul id="worker_benefits"
-                                        class="ss-s-jb-apl-on-inf-txt-ul benefits_item {{ $matches['benefits']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul benefits_item {{ checkValue($model->benefits) ? ( $matches['benefits']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Benefits</span>
                                             <h6>
@@ -1301,7 +1234,7 @@
                                     </ul>
 
                                     <ul id="worker_dental"
-                                        class="ss-s-jb-apl-on-inf-txt-ul dental_item {{ $matches['dental']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul dental_item {{ checkValue($model->dental) ? ( $matches['dental']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Dental</span>
                                             <h6>
@@ -1330,7 +1263,7 @@
                                     </ul>
 
                                     <ul id="worker_vision"
-                                        class="ss-s-jb-apl-on-inf-txt-ul vision_item {{ $matches['vision']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul vision_item {{ checkValue($model->dental) ? ( $matches['vision']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Vision</span>
                                             <h6>
@@ -1362,7 +1295,7 @@
                                     </ul>
 
                                     <ul id="worker_four_zero_one_k"
-                                        class="ss-s-jb-apl-on-inf-txt-ul four_zero_one_k_item {{ $matches['four_zero_one_k']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul four_zero_one_k_item {{ checkValue($model->four_zero_one_k) ? ( $matches['four_zero_one_k']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>401K</span>
 
@@ -1409,7 +1342,7 @@
                                     </ul>
 
                                     <ul id="clinical_setting_you_prefer"
-                                        class="ss-s-jb-apl-on-inf-txt-ul clinical_setting_item {{ $matches['clinical_setting']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul clinical_setting_item {{ checkValue($model->clinical_setting) ? ( $matches['clinical_setting']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Clinical Setting</span>
                                             <h6>
@@ -1500,7 +1433,7 @@
                                     </ul>
 
                                     <ul id="facility_shift_cancelation_policy"
-                                        class="ss-s-jb-apl-on-inf-txt-ul facility_shift_cancelation_policy_item {{ $matches['facility_shift_cancelation_policy']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul facility_shift_cancelation_policy_item {{ checkValue($model->facility_shift_cancelation_policy) ? ( $matches['facility_shift_cancelation_policy']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Facility Shift Cancellation Policy</span>
                                             <h6>
@@ -1529,7 +1462,7 @@
                                     </ul>
 
                                     <ul id="contract_termination_policy"
-                                        class="ss-s-jb-apl-on-inf-txt-ul contract_termination_policy_item {{ $matches['contract_termination_policy']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul contract_termination_policy_item {{ checkValue($model->contract_termination_policy) ? ( $matches['contract_termination_policy']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Contract Termination Policy</span>
                                             <h6>
@@ -1560,7 +1493,7 @@
                                     </ul>
 
                                     <ul id="distance_from_your_home"
-                                        class="ss-s-jb-apl-on-inf-txt-ul traveler_distance_from_facility_item {{ $matches['traveler_distance_from_facility']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul traveler_distance_from_facility_item {{ checkValue($model->traveler_distance_from_facility) ? ( $matches['traveler_distance_from_facility']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Min Miles Must Live From Facility</span>
                                             <h6>
@@ -1609,7 +1542,7 @@
 
 
                                     <ul id="nursing_license_state"
-                                        class="ss-s-jb-apl-on-inf-txt-ul job_location_item {{ $matches['job_location']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul job_location_item {{ checkValue($model->job_location) ? ( $matches['job_location']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Professional Licensure</span>
                                             @if (checkValue($model->job_location))
@@ -1665,7 +1598,7 @@
                                     </ul>
 
                                     <ul id="certification"
-                                        class="ss-s-jb-apl-on-inf-txt-ul certificate_item {{ $matches['certificate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul certificate_item {{ checkValue($model->certificate) ? ( $matches['certificate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Certifications</span>
 
@@ -1735,7 +1668,7 @@
                                     </ul>
 
                                     <ul id="worker_urgency"
-                                        class="ss-s-jb-apl-on-inf-txt-ul urgency_item {{ $matches['urgency']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul urgency_item {{ checkValue($model->urgency) ? ( $matches['urgency']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Urgency</span>
                                             <h6>
@@ -1769,7 +1702,7 @@
                                     </ul>
 
                                     <ul id="worker_experience"
-                                        class="ss-s-jb-apl-on-inf-txt-ul preferred_experience_item {{ $matches['preferred_experience']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul preferred_experience_item {{ checkValue($model->preferred_experience) ? ( $matches['preferred_experience']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Experience</span>
                                             <h6>
@@ -1801,7 +1734,7 @@
                                     </ul>
 
                                     <ul id="references"
-                                        class="ss-s-jb-apl-on-inf-txt-ul number_of_references_item {{ $matches['number_of_references']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul number_of_references_item {{ checkValue($model->number_of_references) ? ( $matches['number_of_references']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Number of references</span>
                                             <h6>
@@ -1842,7 +1775,7 @@
                                         </li>
                                     </ul>
 
-                                    <ul id="skills" class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
+                                    <ul id="skills" class="ss-s-jb-apl-on-inf-txt-ul {{ checkValue($model->skills) ? ( $matches['skills']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Skills checklist</span>
                                             <h6>
@@ -1886,7 +1819,7 @@
                                     </ul>
 
                                     <ul id="worker_on_call_check"
-                                        class="ss-s-jb-apl-on-inf-txt-ul on_call_item {{ $matches['on_call']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul on_call_item {{ checkValue($model->on_call) ? ( $matches['on_call']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>On call</span>
                                             <h6>
@@ -1916,7 +1849,7 @@
                                     </ul>
 
                                     <ul id="block_scheduling"
-                                        class="ss-s-jb-apl-on-inf-txt-ul block_scheduling_item {{ $matches['block_scheduling']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul block_scheduling_item {{ checkValue($model->block_scheduling) ? ( $matches['block_scheduling']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Block Scheduling</span>
                                             <h6>
@@ -1948,7 +1881,7 @@
                                     </ul>
 
                                     <ul id="float_requirement"
-                                        class="ss-s-jb-apl-on-inf-txt-ul float_requirement_item {{ $matches['float_requirement']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul float_requirement_item {{ checkValue($model->float_requirement) ? ( $matches['float_requirement']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Float Requirements</span>
                                             <h6>
@@ -1978,7 +1911,7 @@
                                     </ul>
 
                                     <ul id="worker_patient_ratio"
-                                        class="ss-s-jb-apl-on-inf-txt-ul Patient_ratio_item {{ $matches['Patient_ratio']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul Patient_ratio_item {{ checkValue($model->Patient_ratio) ? ( $matches['Patient_ratio']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>Patient Ratio</span>
                                             <h6>
@@ -2009,7 +1942,7 @@
                                     </ul>
 
                                     <ul id="worker_emr"
-                                        class="ss-s-jb-apl-on-inf-txt-ul emr_item {{ $matches['emr']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        class="ss-s-jb-apl-on-inf-txt-ul emr_item {{ checkValue($model->Emr) ? ( $matches['emr']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                         <li>
                                             <span>EMR</span>
                                             <h6>
@@ -2054,7 +1987,7 @@
                                     </ul>
 
                                         <ul id="nurse_classification"
-                                            class="ss-s-jb-apl-on-inf-txt-ul nurse_classification_item {{ $matches['nurse_classification']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            class="ss-s-jb-apl-on-inf-txt-ul nurse_classification_item {{ checkValue($model->nurse_classification) ? ( $matches['nurse_classification']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                             <li>
                                                 <span>Classification</span>
                                                 <h6>
@@ -2099,7 +2032,7 @@
                                     </ul>
 
                                         <ul id="vaccination"
-                                            class="ss-s-jb-apl-on-inf-txt-ul vaccinations_item {{ $matches['vaccinations']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            class="ss-s-jb-apl-on-inf-txt-ul vaccinations_item {{ checkValue($model->vaccinations) ? ( $matches['vaccinations']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' ) : '' }}">
                                             <li>
                                                 <span>Vaccinations & Immunizations</span>
                                                 

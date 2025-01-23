@@ -811,11 +811,12 @@
                     areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
                     areaDiv.classList.add('ss-s-jb-apl-bg-pink');
                 }
-            } else if (dataToSend[inputName] == '1') {
-                let areaDiv = document.getElementById(inputName);
-                areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
-                areaDiv.classList.add('ss-s-jb-apl-bg-blue');
             }
+            //  else if (dataToSend[inputName] == '1') {
+            //     let areaDiv = document.getElementById(inputName);
+            //     areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
+            //     areaDiv.classList.add('ss-s-jb-apl-bg-blue');
+            // }
             if (type == 'file') {
                 try {
                     let resp = await sendMultipleFiles(inputName);
@@ -952,12 +953,20 @@
             let areaDiv = document.getElementById(inputName);
             let check = false;
             if (inputName == 'certification') {
+                // if job_certification_displayname does not have any element then return undefined to avoid colorizing the area
+                if ( job_certification_displayname?.length == null || job_certification_displayname?.length == 0 || ( job_certification_displayname?.length == 1 && job_certification_displayname[0] == '')) {
+                    console.log('job_certification_displayname', job_certification_displayname);
+                    return undefined;
+                }
                 const is_job_certif_exist_in_worker_files = job_certification_displayname.every(element =>
                     worker_files_displayname_by_type?.includes(element));
                 if (is_job_certif_exist_in_worker_files) {
                     check = true;
                 }
             } else if (inputName == 'vaccination') {
+                if ( job_vaccination_displayname?.length == null || job_vaccination_displayname?.length == 0 || ( job_vaccination_displayname?.length == 1 && job_vaccination_displayname[0] == '')) {
+                    return undefined;
+                }
                 const is_job_vaccin_exist_in_worker_files = job_vaccination_displayname.every(element =>
                     worker_files_displayname_by_type?.includes(element));
 
@@ -969,6 +978,9 @@
                     check = true;
                 }
             } else if (inputName == 'skills') {
+                if (job_skills_displayname?.length == null || job_skills_displayname?.length == 0 || ( job_skills_displayname?.length == 1 && job_skills_displayname[0] == '')) {
+                    return undefined;
+                }
                 const is_job_skill_exist_in_worker_files = job_skills_displayname.every(element =>
                     worker_files_displayname_by_type?.includes(element));
                 // console.log('job skills job name :', job_skills_displayname)
@@ -1123,26 +1135,6 @@
                 console.error('Failed to get files:', error);
             }
 
-
-            // check for profession match with job
-            // if (matchWithWorker('profession', dataToSend['profession']) != true) {
-            //     notie.alert({
-            //         type: 'error',
-            //         text: '<i class="fa fa-exclamation-triangle"></i> Profession not matched with job requirements',
-            //         time: 3
-            //     });
-            //     return false;
-            // }
-
-            // if (diploma.length == 0 || driving_license.length == 0 || worked_bfore == null) {
-            //     notie.alert({
-            //         type: 'error',
-            //         text: '<i class="fa fa-exclamation-triangle"></i> Please upload all required files',
-            //         time: 3
-            //     });
-            //     return false;
-            // }
-
             apply_on_jobs(obj, worked_bfore);
 
         }
@@ -1253,6 +1245,10 @@
                 workerField = job_attr_mapping[workerField];
             }
 
+            if ( !job[workerField] || job[workerField] == null || job[workerField] == '' ) {
+                return undefined;
+            }
+
             let job_vals = job[workerField]?.split(', ');
             let nurse_vals = InsertedValue ? InsertedValue.split(', ') : [];
 
@@ -1291,7 +1287,8 @@
             }
 
             // check the match for item color 
-            if (multi_select_match_with_worker(id, value)) {
+            if (multi_select_match_with_worker(id, value) != undefined ) {
+                if (multi_select_match_with_worker(id, value)) {
                     let areaDiv = document.getElementById(id);
                     if (areaDiv) {
                         areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
@@ -1304,6 +1301,7 @@
                         areaDiv.classList.add('ss-s-jb-apl-bg-pink');
                     }
                 }
+            }
 
         }
 
