@@ -534,12 +534,12 @@ class OrganizationController extends Controller
             $created_by = Auth::guard('organization')->user()->id;
             // Validate the form data
 
-            $active = $request->input('active');
+            $is_open = $request->input('is_open');
 
             // $active = $activeRequest['active'];
             $validatedData = [];
 
-            if ($active == 'false') {
+            if ($is_open == 'false') {
 
                 $validatedData = $request->validate([
                     'job_type' => 'nullable|string',
@@ -632,7 +632,7 @@ class OrganizationController extends Controller
                 
                     $job->organization_id = $created_by;
                     $job->created_by = $created_by;
-                    $job->active = false;
+                    $job->active = true;
                     $job->is_open = false;
 
                     // Check if the is_resume bool is set
@@ -644,7 +644,7 @@ class OrganizationController extends Controller
                 } catch (Exception $e) {
                     return response()->json(['success' => false, 'message' => $e->getMessage()]);
                 }
-            } elseif ($active == "true") {
+            } elseif ($is_open == "true") {
                 //return request()->all();
 
                 $validatedData = $request->validate([
@@ -881,7 +881,6 @@ class OrganizationController extends Controller
                     'benefits' => 'nullable|string',
                     'feels_like_per_hour' => 'nullable|string',
                     'as_soon_as' => 'nullable|integer',
-                    'active' => '0',
                     'professional_state_licensure' => 'nullable|string',
 
             ]);
@@ -911,7 +910,7 @@ class OrganizationController extends Controller
             
             $job->organization_id = Auth::guard('organization')->user()->id;
             $job->created_by = Auth::guard('organization')->user()->id;
-            $job->active = false;
+            $job->active = true;
             $job->is_open = false;
             
             // Check if the is_resume bool is set

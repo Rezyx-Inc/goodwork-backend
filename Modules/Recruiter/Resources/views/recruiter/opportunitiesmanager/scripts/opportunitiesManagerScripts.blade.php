@@ -3466,7 +3466,7 @@
                 holidays_all_values.value = holidayStr;
             }
 
-            document.getElementById("active").value = false;
+            document.getElementById("active").value = true;
             document.getElementById("is_open").value = false;
             let act = document.getElementById("active").value;
 
@@ -3873,7 +3873,7 @@
             if (holidays_all_values) {
                 holidays_all_values.value = holidayStr;
             }
-            document.getElementById("activeDraft").value = false;
+            document.getElementById("activeDraft").value = true;
             document.getElementById("is_openDraft").value = false;
             // var jobName = document.getElementById("job_nameDraft").value;
             // if (jobName.trim() === '') {
@@ -4289,7 +4289,7 @@
             if (holidays_all_values) {
                 holidays_all_values.value = holidayStr;
             }
-            document.getElementById("activeEdit").value = false;
+            document.getElementById("activeEdit").value = true;
             document.getElementById("is_openEdit").value = false;
             // var jobName = document.getElementById("job_nameEdit").value;
             // if (jobName.trim() === '') {
