@@ -14,7 +14,7 @@
             <p>Oh, and we also give applicants HALF the fee we charge employers (what?!)</p>
             <ul>
                 @guest('frontend')
-                <li><a href="{{ route('worker.login') }}">Create a profile</a></li>
+                <li><a href="{{ route('worker-signup') }}">Create a profile</a></li>
                 @endguest
               {{-- <li><p>128+ Nurses successfully registered across the world</p></li> --}}
             </ul>
