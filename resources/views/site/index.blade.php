@@ -370,19 +370,19 @@
             </div>
           </div>
 
-  <div class="ss-what-offer-div2">
-     <div class="ss-hm-what-icn-bx">
+          <div class="ss-what-offer-div2">
+            <div class="ss-hm-what-icn-bx">
               <div></div>
               <h6>Finally, some accountability!</h6>
-              <p>Goodwork tracks objective stats about recruiters and workers, which be part of their profiles. Want to avoid recruiters who bait-and-switch? Goodwork will tell you who does it the most</p>
+              <p>Goodwork tracks objective stats about recruiters and workers, which will be part of their profiles. Want to avoid recruiters who bait-and-switch? Goodwork will tell you who does it the most</p>
             </div>
 
              <div class="ss-hm-what-icn-bx">
               <div></div>
               <h6>Qualification Guardrails</h6>
-              <p>Employers can set application requirements, so they don't waste your time or yours</p>
+              <p>Employers can set application requirements, so they don't waste your time or theirs</p>
             </div>
-  </div>
+          </div>
 
 
         </div>

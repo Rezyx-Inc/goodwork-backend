@@ -618,8 +618,10 @@ section.ss-what-we-ofr-sec h4:after {
 
 .ss-what-offer-div2 {
     text-align: center;
+    justify-content: center;
     gap: 18px;
     margin-top: 55px;
+    display: flex;
 }
 
 .ss-what-offer-div2 .ss-hm-what-icn-bx {
