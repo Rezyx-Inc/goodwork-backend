@@ -86,47 +86,53 @@
         <span class="help-block-zip_code"></span>
 
         {{-- Email --}}
-        {{-- <div class="ss-form-group">
-            <label>Email</label>
-            <input id="email" type="text" name="email" placeholder="Please enter your Email"
-                value="{{ isset($user->email) ? $user->email : '' }}">
-        </div> --}}
-        <div class="ss-form-group">
-            <label>New Email</label>
-            <input type="text" name="newEmail" id="newEmail"
-                placeholder="Please enter your new Email">
+        <div class="row w-100 d-flex align-items-center ">
+            <div class="col-11">
+                <div class="ss-form-group">
+                    <label>New Email</label>
+                    <input type="text" name="newEmail" id="newEmail"
+                        placeholder="Please enter your new Email">
+                </div>
+            </div>
+            <div class="col-1 h-100 d-flex align-items-end justify-content-center">
+                <div class="ss-form-group">
+                    <button type="button" class="col-11 w-100 ss-prsnl-save-btn rounded-5"
+                    id="sendOTPforVerifyEmail">
+                    Send OTP
+                </button>
+                </div>
+            </div>
         </div>
-        <button type="button" class="mt-3 col-11 w-50 ss-prsnl-save-btn rounded-5"
-            id="sendOTPforVerifyEmail">
-            Send OTP
-        </button>
         <span class="help-block-email"></span>
-{{-- OTP for new email --}}
-<div class="ss-form-group col-7 d-flex align-items-center">
-    <label class="me-3">OTP:</label>
-    <ul class="ss-otp-v-ul">
-        <li><input class="otp-input" type="text" name="otp1"
-                oninput="digitValidate(this)" onkeyup="tabChange(1)"
-                maxlength="1"></li>
-        <li><input class="otp-input" type="text" name="otp2"
-                oninput="digitValidate(this)" onkeyup="tabChange(2)"
-                maxlength="1"></li>
-        <li><input class="otp-input" type="text" name="otp3"
-                oninput="digitValidate(this)" onkeyup="tabChange(3)"
-                maxlength="1"></li>
-        <li><input class="otp-input" type="text" name="otp4"
-                oninput="digitValidate(this)" onkeyup="tabChange(4)"
-                maxlength="1"></li>
-    </ul>
+        {{-- OTP for new email --}}
+        <div id="otpDiv" style="display:none;">
+            <center>
+                <div class="ss-form-group col-7 d-flex align-items-center justify-content-center" >
+                    <label class="me-3">OTP:</label>
+                    <ul class="ss-otp-v-ul">
+                        <li><input class="otp-input" type="text" name="otp1"
+                                oninput="digitValidate(this)" onkeyup="tabChange(1)"
+                                maxlength="1"></li>
+                        <li><input class="otp-input" type="text" name="otp2"
+                                oninput="digitValidate(this)" onkeyup="tabChange(2)"
+                                maxlength="1"></li>
+                        <li><input class="otp-input" type="text" name="otp3"
+                                oninput="digitValidate(this)" onkeyup="tabChange(3)"
+                                maxlength="1"></li>
+                        <li><input class="otp-input" type="text" name="otp4"
+                                oninput="digitValidate(this)" onkeyup="tabChange(4)"
+                                maxlength="1"></li>
+                    </ul>
+                </div>
+            </center>
+        </div>
+        <span class="help-block-otp"></span>
+        {{-- confirm new email button --}}
+        <div class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+            <button type="button" class="col-12 ss-prsnl-save-btn"
+                id="SaveAccountInformation" style="display:none;">Confirm</button>
+        </div>
 
-</div>
-<span class="help-block-otp"></span>
-
-<div
-    class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-    <button type="button" class="col-12 ss-prsnl-save-btn"
-        id="SaveAccountInformation" >Save</button>
-</div>
         {{-- Phone Number --}}
         <div class="ss-form-group">
             <label>Phone Number</label>
@@ -160,7 +166,7 @@
             }
             // Check if all inputs are filled
             let allFilled = Array.from(inputs).every(input => input.value !== "");
-            //saveButton.style.display = allFilled ? "block" : "none"; // Show or hide the Save button
+            saveButton.style.display = allFilled ? "block" : "none"; // Show or hide the Save button
         };
         let digitValidate = function(ele) {
             ele.value = ele.value.replace(/[^0-9]/g, ""); // Allow only digits
@@ -213,6 +219,10 @@
             if (!validateAccountSettingInformation()) {
                 return;
             }
+
+            // undide the otp input fields
+            let OtpDiv = document.getElementById('otpDiv');
+            OtpDiv.style.display = OtpDiv.style.display === "none" ? "block" : "none";
 
             let email = document.getElementById('newEmail').value;
 
@@ -302,6 +312,9 @@
                             text: '<i class="fa fa-check"></i> ' + resp.message,
                             time: 5
                         });
+                        setTimeout(() => {
+                            location.reload();
+                        }, 3000);
                     } else {
                         notie.alert({
                             type: 'error',
@@ -321,225 +334,6 @@
         });
 
 
-        // this functions to display profile setting / account setting forms
-        function AccountSettingDisplay() {
-            $('.profile_setting').addClass('d-none');
-            $('.account_setting').removeClass('d-none');
-            $('.bonus_transfers').addClass('d-none');
-            $('.disable_account').addClass('d-none');
-        }
-
-        function ProfileIinformationDisplay() {
-            $('.account_setting').addClass('d-none');
-            $('.profile_setting').removeClass('d-none');
-            $('.bonus_transfers').addClass('d-none');
-            $('.support_info').addClass('d-none');
-            $('.disable_account').addClass('d-none');
-
-        }
-
-        function BonusTransfersDisplay() {
-            $('.account_setting').addClass('d-none');
-            $('.profile_setting').addClass('d-none');
-            $('.bonus_transfers').removeClass('d-none');
-            $('.support_info').addClass('d-none');
-            $('.disable_account').addClass('d-none');
-        }
-
-        function SupportDisplay() {
-            $('.account_setting').addClass('d-none');
-            $('.profile_setting').addClass('d-none');
-            $('.bonus_transfers').addClass('d-none');
-            $('.support_info').removeClass('d-none');
-            $('.disable_account').addClass('d-none');
-        }
-
-        function DisactivateAccountDisplay() {
-            $('.account_setting').addClass('d-none');
-            $('.profile_setting').addClass('d-none');
-            $('.bonus_transfers').addClass('d-none');
-            $('.support_info').addClass('d-none');
-            $('.disable_account').removeClass('d-none');
-        }
-
-        function loadFile(event) {
-            var image = document.getElementById("output");
-            image.src = URL.createObjectURL(event.target.files[0]);
-
-            // seding the image to server
-            var formData = new FormData();
-            formData.append('profile_pic', $('#file')[0].files[0]);
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: '/worker/update-worker-profile-picture',
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(resp) {
-                    //console.log(resp);
-                    if (resp.status) {
-                        notie.alert({
-                            type: 'success',
-                            text: '<i class="fa fa-check"></i> Profile picture updated successfully.',
-                            time: 5
-                        });
-
-                        setTimeout(function() {
-                            location.reload();
-                        }, 2000);
-
-                    }
-
-                },
-                error: function(resp) {
-                    notie.alert({
-                        type: 'error',
-                        text: '<i class="fa fa-check"></i>' + resp.message,
-                        time: 5
-                    });
-                }
-            });
-        };
-
-        function refreshDocList(worker_id) {
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: '{{ route('list-docs') }}',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    WorkerId: worker_id
-                }),
-                success: function(resp) {
-                    var data;
-                    try {
-                        // Try to manually parse the response as JSON
-                        data = JSON.parse(resp);
-                        //console.log(data);
-                    } catch (e) {
-                        // If parsing fails, assume resp is already a JavaScript object
-                        data = resp;
-                    }
-
-                    var tbody = $('.table tbody');
-                    tbody.empty();
-                    data.forEach(function(file) {
-                        var row = $('<tr>');
-                        row.attr('class', 'row');
-                        //row.append($('<td class="col-3 td-table" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">').text(file.name.substring(0,20)));
-                        row.append($('<td class="col-3 td-table">').text(file.displayName));
-                        row.append($('<td class="col-3 td-table">').text(file.type));
-                        //console.log(file.id);
-                        var deleteButton = $('<button>').text('Delete Document').addClass(
-                            'delete').attr('data-id', file.id);
-                        deleteButton.click(function(event) {
-                            event.preventDefault();
-                            $.ajax({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                                        .attr('content')
-                                },
-                                url: '{{ route('del-doc') }}',
-                                method: 'POST',
-                                contentType: 'application/json',
-                                data: JSON.stringify({
-                                    bsonId: file.id
-                                }),
-                                success: function() {
-                                    row.remove();
-                                },
-                                error: function(resp) {
-                                    console.log('Error:', resp);
-                                }
-                            });
-                        });
-                        var viewFile = $('<button>').text('View Document').addClass('delete')
-                            .attr('data-id', file.id);
-                        viewFile.click(function(event) {
-                            event.preventDefault();
-                            $.ajax({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                                        .attr('content')
-                                },
-                                url: '{{ route('get-doc') }}',
-                                method: 'POST',
-                                contentType: 'application/json',
-                                data: JSON.stringify({
-                                    bsonId: file.id
-                                }),
-                                success: function(resp) {
-                                    resp = JSON.parse(resp);
-                                    const base64String = resp.content.data;
-                                    //console.log("the resp base64",resp);
-
-                                    const mimeType = base64String.match(
-                                        /^data:(.+);base64,/)[1];
-
-
-                                    const base64Data = base64String.split(
-                                        ',')[1];
-
-
-                                    const byteCharacters = atob(base64Data);
-                                    const byteNumbers = new Array(
-                                        byteCharacters.length);
-                                    for (let i = 0; i < byteCharacters
-                                        .length; i++) {
-                                        byteNumbers[i] = byteCharacters
-                                            .charCodeAt(i);
-                                    }
-                                    const byteArray = new Uint8Array(
-                                        byteNumbers);
-
-
-                                    const blob = new Blob([byteArray], {
-                                        type: mimeType
-                                    });
-
-
-                                    const blobUrl = URL.createObjectURL(
-                                        blob);
-                                    const downloadLink = document
-                                        .createElement('a');
-                                    downloadLink.href = blobUrl;
-
-
-                                    const extension = mimeType.split('/')[
-                                        1
-                                    ];
-                                    downloadLink.setAttribute('download',
-                                        file.name
-                                    );
-
-                                    document.body.appendChild(downloadLink);
-                                    downloadLink.click();
-                                    document.body.removeChild(
-                                        downloadLink);
-                                },
-                                error: function(resp) {
-                                    console.log('Error:', resp);
-                                }
-                            });
-                        });
-
-
-                        row.append($('<td class="col-3 td-table">').append(viewFile));
-                        row.append($('<td class="col-3 td-table">').append(deleteButton));
-
-                        tbody.append(row);
-                    });
-                },
-                error: function(resp) {
-                    console.log('Error:', resp);
-                }
-            });
-        }
+       
     </script>
 @stop
