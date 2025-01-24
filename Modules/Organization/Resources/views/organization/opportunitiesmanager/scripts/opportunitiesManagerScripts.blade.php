@@ -1885,7 +1885,7 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                url: "{{ url('recruiter/get-job-listing') }}",
+                url: "{{ url('organization/get-job-listing') }}",
                 beforeSend: function(xhr) {
 
                     xhr.withCredentials = true;
@@ -1999,7 +1999,7 @@
                     },
 
                     type: 'POST',
-                    url: "{{ url('recruiter/recruiter-create-opportunity') }}/" + check_type,
+                    url: "{{ url('organization/organization-create-opportunity') }}/" + check_type,
 
                     data: formData,
                     dataType: 'json',
@@ -2034,10 +2034,10 @@
 </script>
 
 <script>
-// for redirecting the recruiter the corresponding room chat 
-    function askWorker(e, type, workerid, recruiter_id, name) {
-        let url = "{{ url('recruiter/recruiter-messages') }}";
-        window.location = url + '?worker_id=' + workerid + '&recruiter_id=' + recruiter_id + '&name=' + name;
+// for redirecting the organization the corresponding room chat 
+    function askWorker(e, type, workerid, organization_id, name) {
+        let url = "{{ url('organization/organization-messages') }}";
+        window.location = url + '?worker_id=' + workerid + '&organization_id=' + organization_id + '&name=' + name;
     }
 </script>
 
@@ -2565,7 +2565,7 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                url: "{{ url('recruiter/get-job-to-edit') }}",
+                url: "{{ url('organization/get-job-to-edit') }}",
                 data: {
                     'id': id
                 },
