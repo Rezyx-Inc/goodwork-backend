@@ -552,6 +552,9 @@ class WorkerDashboardController extends Controller
     $data['jobSaved'] = new JobSaved();
 
     // Fetch related data
+    $data['organizations'] = User::where('role', 'ORGANIZATION')->get();
+    $data['recruiters'] = User::where('role', 'RECRUITER')->get();
+    $data['facilities'] = Job::where('active', '1')->get();
     $data['specialities'] = Speciality::select('full_name')->get();
     $data['professions'] = Profession::select('full_name')->get();
     $data['terms_key'] = Keyword::where(['filter' => 'terms'])->get();
@@ -561,6 +564,11 @@ class WorkerDashboardController extends Controller
     $data['us_states'] = State::select('id', 'name')->get();
     
     // Set filter values from the request, use null as the default if not provided
+    $data['organization_name'] = $request->input('organization_name', null);
+    $data['recruiter_name'] = $request->input('recruiter_name', null);
+    // $data['recruiter_first_name'] = $request->input('recruiter_first_name', null);
+    // $data['recruiter_last_name'] = $request->input('recruiter_last_name', null);
+    $data['facilityName'] = $request->input('facility_name', null);
     $data['job_id'] = $request->input('gw', null);
     $data['profession'] = $request->input('profession');
     $data['speciality'] = $request->input('speciality');
@@ -605,6 +613,81 @@ class WorkerDashboardController extends Controller
 
       $data['jobs'] = $ret->get();
       return view('worker::dashboard.explore', $data);
+    }
+
+    $data['organizations_id'] = [];
+    if (!empty($data['organization_name'])) {
+        
+      foreach ($data['organizations'] as $org) {
+
+          // if only organization name is provided
+          if ($org->organization_name == $data['organization_name']) {
+            $data['organizations_id'][] = $org->id;
+          }                
+        }
+        // Apply query filter if organizations_id is not empty
+        if (!empty($data['organizations_id'])) {
+            $ret->whereIn('organization_id', $data['organizations_id']);
+        } else {
+            // no matching organization is found
+            $ret->whereRaw('1 = 0'); // No results will be returned
+        }
+    }
+
+    $data['recruiters_id'] = [];
+    if (!empty($data['recruiter_name'])) {
+        foreach ($data['recruiters'] as $recruiter) {
+            // Combine first and last name for matching
+            $fullName = $recruiter->first_name . ' ' . $recruiter->last_name;
+        
+            // Check if the selected name matches the full name
+            if ($fullName === $data['recruiter_name']) {
+                $data['recruiters_id'][] = $recruiter->id;
+            }
+        }
+      
+        // Apply query filter if recruiters_id is not empty
+        if (!empty($data['recruiters_id'])) {
+            $ret->whereIn('recruiter_id', $data['recruiters_id']);
+        } else {
+            // No matching recruiter found
+            $ret->whereRaw('1 = 0'); // No results will be returned
+        }
+    }
+
+
+
+    // for first and last name
+    // $data['recruiters_id'] = [];
+    // if (!empty($data['recruiter_first_name']) || !empty($data['recruiter_last_name'])) {
+    //     foreach ($data['recruiters'] as $recruiter) {
+    //         // If both first and last name are provided
+    //         if ($recruiter->first_name == $data['recruiter_first_name'] && $recruiter->last_name == $data['recruiter_last_name']) {
+    //             $data['recruiters_id'][] = $recruiter->id;
+    //         }
+    //         // If only recruiter first name is provided
+    //         elseif ($recruiter->first_name == $data['recruiter_first_name'] && empty($data['recruiter_last_name'])) {
+    //             $data['recruiters_id'][] = $recruiter->id;
+    //         }
+    //         // If only recruiter last name is provided
+    //         elseif ($recruiter->last_name == $data['recruiter_last_name'] && empty($data['recruiter_first_name'])) {
+    //             $data['recruiters_id'][] = $recruiter->id;
+    //         }
+    //     }
+
+    //     // Apply filter if recruiters_id is not empty
+    //     if (!empty($data['recruiters_id'])) {
+    //         $ret->whereIn('recruiter_id', $data['recruiters_id']);
+    //     } else {
+    //         // No matching recruiter is found
+    //         $ret->whereRaw('1 = 0'); // No results will be returned
+    //     }
+    // }
+
+        
+
+    if (!empty($data['facilityName'])) {
+      $ret->where('facility_name', 'like', $data['facilityName']);
     }
 
 
