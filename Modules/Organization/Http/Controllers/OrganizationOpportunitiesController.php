@@ -88,7 +88,7 @@ class OrganizationOpportunitiesController extends Controller
             $requiredFieldsToSubmit = $requiredFields->data->preferences->requiredToSubmit;
         }
         
-        return view('organization::organization/opportunitiesmanager', compact('draftJobs', 'specialities', 'professions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount', 'requiredFieldsToSubmit'));
+        return view('organization::organization/opportunitiesmanager/main', compact('draftJobs', 'specialities', 'professions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount', 'requiredFieldsToSubmit'));
         //return response()->json(['success' => false, 'message' =>  $states]);
         //return view('organization::organization/opportunitiesmanager');
     }
