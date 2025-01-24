@@ -16,7 +16,6 @@
                 @guest('frontend')
                 <li><a href="{{ route('worker-signup') }}">Create a profile</a></li>
                 @endguest
-              {{-- <li><p>128+ Nurses successfully registered across the world</p></li> --}}
             </ul>
           </div>
         </div>
@@ -156,63 +155,6 @@
 
 
 
-  <!---------Join Us----------->
-
-  {{-- <section class="ss-hmjoin-sec">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="ss-hm-join-hed-tx-sec">
-            <h6>Join Us</h6>
-            <h2><span class="ss-clr-pink">Join</span> Our Nursing Community and Find Your Ideal Shift!</h2>
-            <h5>Connecting Nurses with Opportunities, One Shift at a Time</h5>
-          </div>
-        </div>
-
-        <div class="col-lg-6">
-          <div class="ss-hm-join-rit-p-sc">
-            <p>Are you a skilled and dedicated nurse seeking the perfect shift? Look no further. Our platform is designed to make your job hunt simpler, smarter, and more rewarding. Whether you're a seasoned pro or just starting your nursing journey, we have opportunities that match your skills and preferences.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-lg-3">
-          <div class="ss-join-icon-div-sec">
-            <img src="{{URL::asset('landing/img/join-icon-1.png')}}" />
-            <h5>Tailored Opportunities</h5>
-            <p>Discover a wide range of nursing shifts that align with your expertise and desired schedule. From early morning to overnight, we've got you covered.</p>
-          </div>
-        </div>
-
-        <div class="col-lg-3">
-          <div class="ss-join-icon-div-sec">
-            <img src="{{URL::asset('landing/img/join-icon-2.png')}}" />
-            <h5>Effortless Application</h5>
-            <p>Say goodbye to complicated application processes. With just a few clicks, you can express your interest in shifts that pique your interest.</p>
-          </div>
-        </div>
-
-        <div class="col-lg-3">
-          <div class="ss-join-icon-div-sec">
-            <img src="{{URL::asset('landing/img/join-icon-3.png')}}" />
-            <h5>Streamlined Communication</h5>
-            <p> Receive updates, notifications, and interview requests directly on our platform. No more phone tag – stay informed every step of the way.</p>
-          </div>
-        </div>
-
-        <div class="col-lg-3">
-          <div class="ss-join-icon-div-sec">
-            <img src="{{URL::asset('landing/img/join-icon-4.png')}}" />
-            <h5>Career Growth</h5>
-            <p> Our platform is more than just shifts; it's a nurturing ground for your career. Engage and forge a pathway to a thriving nursing future."</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section> --}}
-
 
 
 
@@ -223,106 +165,13 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="ss-hm-popu-jb-hed">
-            {{-- <h6>Our Popular Jobs</h6> --}}
             <h2 style="cursor: pointer" onclick="window.location.href = '{{ url('/explore-jobs') }}'">
               Start browsing <span class="ss-clr-pink">jobs now</span> - no login required
-            </h2>            
+            </h2>
           </div>
 
         </div>
       </div>
-
-      {{-- <div class="ss-hm-populr-jorow-2">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="ss-job-prfle-sec">
-            <p>Travel <span>+50 Applied</span></p>
-            <h4>Manager CRNA - Anesthesia</h4>
-            <h6>Medical Solutions Recruiter</h6>
-            <ul>
-              <li><a href="#"><img src="{{URL::asset('landing/img/location.png')}}" /> Los Angeles, CA</a></li>
-              <li><a href="#"><img src="{{URL::asset('landing/img/calendar.png')}}" /> 10 wks</a></li>
-              <li><a href="#"><img src="{{URL::asset('landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
-            </ul>
-            <h5>Recently Added</h5>
-          </div>
-        </div>
-        <div class="col-lg-4">
-           <div class="ss-job-prfle-sec">
-            <p>Travel <span>+50 Applied</span></p>
-            <h4>Manager CRNA - Anesthesia</h4>
-            <h6>Medical Solutions Recruiter</h6>
-            <ul>
-              <li><a href="#"><img src="{{URL::asset('landing/img/location.png')}}" /> Los Angeles, CA</a></li>
-              <li><a href="#"><img src="{{URL::asset('landing/img/calendar.png')}}" /> 10 wks</a></li>
-              <li><a href="#"><img src="{{URL::asset('landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
-            </ul>
-            <h5>Recently Added</h5>
-          </div>
-        </div>
-        <div class="col-lg-4">
-           <div class="ss-job-prfle-sec">
-            <p>Travel <span>+50 Applied</span></p>
-            <h4>Manager CRNA - Anesthesia</h4>
-            <h6>Medical Solutions Recruiter</h6>
-            <ul>
-              <li><a href="#"><img src="{{URL::asset('landing/img/location.png')}}" /> Los Angeles, CA</a></li>
-              <li><a href="#"><img src="{{URL::asset('landing/img/calendar.png')}}" /> 10 wks</a></li>
-              <li><a href="#"><img src="{{URL::asset('landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
-            </ul>
-            <h5>Recently Added</h5>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="ss-job-prfle-sec">
-            <p>Travel <span>+50 Applied</span></p>
-            <h4>Manager CRNA - Anesthesia</h4>
-            <h6>Medical Solutions Recruiter</h6>
-            <ul>
-              <li><a href="#"><img src="{{URL::asset('landing/img/location.png')}}" /> Los Angeles, CA</a></li>
-              <li><a href="#"><img src="{{URL::asset('landing/img/calendar.png')}}" /> 10 wks</a></li>
-              <li><a href="#"><img src="{{URL::asset('landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
-            </ul>
-            <h5>Recently Added</h5>
-          </div>
-        </div>
-        <div class="col-lg-4">
-           <div class="ss-job-prfle-sec">
-            <p>Travel <span>+50 Applied</span></p>
-            <h4>Manager CRNA - Anesthesia</h4>
-            <h6>Medical Solutions Recruiter</h6>
-            <ul>
-              <li><a href="#"><img src="{{URL::asset('landing/img/location.png')}}" /> Los Angeles, CA</a></li>
-              <li><a href="#"><img src="{{URL::asset('landing/img/calendar.png')}}" /> 10 wks</a></li>
-              <li><a href="#"><img src="{{URL::asset('landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
-            </ul>
-            <h5>Recently Added</h5>
-          </div>
-        </div>
-        <div class="col-lg-4">
-           <div class="ss-job-prfle-sec">
-            <p>Travel <span>+50 Applied</span></p>
-            <h4>Manager CRNA - Anesthesia</h4>
-            <h6>Medical Solutions Recruiter</h6>
-            <ul>
-              <li><a href="#"><img src="{{URL::asset('landing/img/location.png')}}" /> Los Angeles, CA</a></li>
-              <li><a href="#"><img src="{{URL::asset('landing/img/calendar.png')}}" /> 10 wks</a></li>
-              <li><a href="#"><img src="{{URL::asset('landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
-            </ul>
-            <h5>Recently Added</h5>
-          </div>
-        </div>
-
-      </div>
-      <div class="ss-hm-job-prfile-red-sec">
-        <a href="{{route('explore-jobs')}}">View All Jobs</a>
-      </div>
-      </div> --}}
-
     </div>
   </section>
 
@@ -335,14 +184,11 @@
       <div class="row">
         <div class="col-lg-4">
           <div class="ss-hm-hed-sec">
-           {{-- <h4>About <span class="ss-fnt-nrml">What We Are Offering</span></h4> --}}
-           <h2>How is <span class="ss-whtol-sec">Goodwork</span> different from other job boards?</h2>
-  <p>
-    We are obsessed with aligning incentives. Employers, Candidates, and Goodwork are set up to be allies, not adversaries.</p>
-    <p>Other job boards maximize volume, but Goodwork maximizes value.</p>
-
-  {{-- <a href="{{route('explore-jobs')}}">Explore Jobs</a> --}}
-         </div>
+            <h2>How is <span class="ss-whtol-sec">Goodwork</span> different from other job boards?</h2>
+            <p>
+              We are obsessed with aligning incentives. Employers, Candidates, and Goodwork are set up to be allies, not adversaries.</p>
+              <p>Other job boards maximize volume, but Goodwork maximizes value.</p>
+          </div>
         </div>
 
         <div class="col-lg-8">
@@ -383,8 +229,6 @@
               <p>Employers can set application requirements, so they don't waste your time or theirs</p>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
@@ -409,14 +253,12 @@
          <div class="col-lg-6">
           <div class="ss-hm-hed-sec">
            <h4>About <span class="ss-fnt-nrml">Goodwork</span></h4>
-  <p>
-    Goodwork isn't just another job board trying to pump as many applications into as many inboxes as possible. We are truly trying to change the way people find work. We believe that by aligning incentives we can create an environment where applicant and employer work as partners rather than adversaries.
-  </p>
-  <p>Changing the world can be messy. It takes more than posting stock photos of doctors with smoldering looks on their face. That's why you may run into a few bugs here and there or a feature or two that we haven't finished yet. We promise we are working on it and really appreciate your patients.</p>
-  <p>Thank you for helping us on this mission.</p>
-  <p>-The Goodwork Team</p>
-
-  {{-- <a href="{{route('explore-jobs')}}">Explore Jobs</a> --}}
+           <p>
+            Goodwork isn't just another job board trying to pump as many applications into as many inboxes as possible. We are truly trying to change the way people find work. We believe that by aligning incentives we can create an environment where applicant and employer work as partners rather than adversaries.
+          </p>
+          <p>Changing the world can be messy. It takes more than posting stock photos of doctors with smoldering looks on their face. That's why you may run into a few bugs here and there or a feature or two that we haven't finished yet. We promise we are working on it and really appreciate your patients.</p>
+          <p>Thank you for helping us on this mission.</p>
+          <p>-The Goodwork Team</p>
          </div>
         </div>
       </div>
@@ -424,140 +266,6 @@
   </section>
 
 
-
-
-
-  <!-------Valuable Feedback------->
-
-  {{-- <section class="ss-mn-value-sec">
-   <div class="container">
-     <div class="row">
-       <div class="col-lg-12">
-         <div class="ss-hm-hed-sec">
-           <h4>Valuable Feedback</h4>
-           <h2>What the <span class="ss-clr-pink">professionals</span> are saying about us  </h2>
-         </div>
-
-         <!-----slider---->
-           <div class="owl-carousel ss-feed-slid">
-
-            <!----slider-1--->
-            <div class="ss-feed-slid-bx">
-              <div><img src="{{URL::asset('landing/img/feed-img.svg')}}" /></div>
-              <h4>Name Here </h4>
-              <ul>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-              </ul>
-              <p>Lorem ipsum dolor sit amet consectetur. Nisi ullamcorper tincidunt odio arcu id praesent vitae. Facilisis vitae fringilla donec</p>
-            </div>
-
-
-
-            <!----slider-1--->
-            <div class="ss-feed-slid-bx">
-              <div><img src="{{URL::asset('landing/img/feed-img.svg')}}" /></div>
-              <h4>Name Here </h4>
-              <ul>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-              </ul>
-              <p>Lorem ipsum dolor sit amet consectetur. Nisi ullamcorper tincidunt odio arcu id praesent vitae. Facilisis vitae fringilla donec</p>
-            </div>
-
-            <!----slider-1--->
-            <div class="ss-feed-slid-bx">
-              <div><img src="{{URL::asset('landing/img/feed-img.svg')}}" /></div>
-              <h4>Name Here </h4>
-              <ul>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-              </ul>
-              <p>Lorem ipsum dolor sit amet consectetur. Nisi ullamcorper tincidunt odio arcu id praesent vitae. Facilisis vitae fringilla donec</p>
-            </div>
-
-
-
-
-            <!----slider-1--->
-            <div class="ss-feed-slid-bx">
-              <div><img src="{{URL::asset('landing/img/feed-img.svg')}}" /></div>
-              <h4>Name Here </h4>
-
-              <ul>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-              </ul>
-              <p>Lorem ipsum dolor sit amet consectetur. Nisi ullamcorper tincidunt odio arcu id praesent vitae. Facilisis vitae fringilla donec</p>
-            </div>
-
-           </div>
-
-
-       </div>
-     </div>
-   </div>
-  </section> --}}
-
-
-
-
-  <!----- Download Goodwork------>
-
-{{-- <section class="ss-hm-dwnld-app-sec">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-7">
-                <div class="ss-downld-app-txt-hed">
-                    <h4>Download <span class="ss-fnt-nrml">Goodwork</span></h4>
-                    <h2>Easy-to-apply <span class="ss-clr-pink">dream jobs</span>,all on one app</h2>
-                    <p>sed neque scelerisque quam pulvinar. Risus dictum elementum lacus urna. Neque eget sagittis vulputate nam id morbi id. Aliquam molestie posuere pulvinar arcu</p>
-
-                    <div class="ss-downld-ap-dv">
-                        <a href="#">
-                            <ul>
-                                <li><i class="fa fa-apple" aria-hidden="true"></i></li>
-                                <li>
-                                    <p>Download on the</p>
-                                    <h6>Apple Store</h6>
-                                </li>
-                            </ul>
-                        </a>
-
-                        <a href="#">
-                            <ul>
-                                <li><i class="fab fa-google-play"></i></li>
-                                <li>
-                                    <p>Get in on</p>
-                                    <h6>Google Play</h6>
-                                </li>
-                            </ul>
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="col-lg-5">
-            <div class="ss-app-img-dv">
-                <img src="{{URL::asset('landing/img/mobile-app-img.png')}}" />
-            </div>
-            </div>
-        </div>
-    </div>
-</section> --}}
 
 <section class="ss-foot-btm-sign-sec">
     <div class="container">

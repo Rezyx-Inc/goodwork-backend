@@ -14,7 +14,6 @@
                         <li><a href="{{ route('explore-jobs') }}">Explore Jobs</a></li>
                         <li><a href="{{ route('for-organizations') }}">For Organizations</a></li>
                         <li><a href="{{ route('for-recruiters') }}">For Recruiters</a></li>
-
                     </ul>
                 </div>
             </div>
