@@ -225,103 +225,145 @@
       <div class="ss-dash-profile-4-bx-dv">
         @forelse($jobs as $j)
         <div class="ss-job-prfle-sec" onclick="redirectToJobDetails(`{{ $j->id }}`)">
-          {{-- row 1 --}}
-          <div class="row">
-            <div class="col-10">
-              <ul>
-                <li><a href="#"><img class="icon_cards"
-                      src="{{ URL::asset('frontend/img/specialty.png') }}">
-                    {{ $j->specialty }}</a></li>
-                <li><a href="#"><img class="icon_cards"
-                      src="{{ URL::asset('frontend/img/specialty.png') }}">
-                    {{ $j->profession }}</a></li>
-              </ul>
+            {{-- row 1 --}}
+            <div class="row">
+                <div class="col-10">
+                    <ul>
+                        @if (isset($j->profession))
+                            <li><a href="#"><svg style="vertical-align: sub;"
+                                        xmlns="http://www.w3.org/2000/svg" width="16"
+                                        height="16" fill="currentColor"
+                                        class="bi bi-briefcase" viewBox="0 0 16 16">
+                                        <path
+                                            d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                                    </svg> {{ $j->profession }}</a></li>
+                        @endif
+                        @if (isset($j->preferred_specialty))
+                            <li><a href="#"> {{ $j->preferred_specialty }}</a></li>
+                        @endif
+                    </ul>
+                </div>
+                <p class="col-2 text-center" style="padding-right:20px;">
+                    <span>+{{ $j->getOfferCount() }} Applied</span>
+                </p>
             </div>
-            <p class="col-2 text-center"><span>+{{ $j->getOfferCount() }} Applied</span></p>
-          </div>
-          {{-- row 2 --}}
-          <div class="row">
-            <div class="col-3">
-              <ul>
-                <li><a href="{{ route('worker_job-details', ['id' => $j->id]) }}"><img
-                      class="icon_cards"
-                      src="{{ URL::asset('frontend/img/job.png') }}">
-                    {{ $j->job_name }}</a></li>
-              </ul>
+            {{-- row 2 --}}
+            <div class="row">
+                {{-- <div class="col-3"><ul><li><a href="{{route('worker_job-details',['id'=>$j->id])}}"><img class="icon_cards" src="{{URL::asset('frontend/img/job.png')}}"> {{$j->job_name}}</a></li>
+                  </ul>
+                </div> --}}
             </div>
-          </div>
-          {{-- row 3 --}}
-          <div class="row">
-            <div class="col-9">
-              <ul>
-                <li><a href="#"><img class="icon_cards"
-                      src="{{ URL::asset('frontend/img/facility.png') }}">
-                    {{ $j->facility_name ?? 'NA' }}</a></li>
-                <li><a href="#"><img class="icon_cards"
-                      src="{{ URL::asset('frontend/img/location.png') }}">
-                    {{ $j->job_city }}, {{ $j->job_state }}</a></li>
-              </ul>
+            {{-- row 3 --}}
+            <div class="row">
+                <div class="col-7">
+                    <ul>
+                        @if (isset($j->job_city) && isset($j->job_state))
+                            <li><a href="#"><img class="icon_cards"
+                                        src="{{ URL::asset('frontend/img/location.png') }}">
+                                    {{ $j->job_city }}, {{ $j->job_state }}</a></li>
+                        @endif
+                    </ul>
+                </div>
+                <div class="col-5 d-flex justify-content-end">
+                    <ul>
+                        @if (isset($j->preferred_assignment_duration) && isset($j->terms) && $j->terms == 'Contract')
+                            <li><a href="#"><img class="icon_cards"
+                                        src="{{ URL::asset('frontend/img/calendar.png') }}">
+                                    {{ $j->preferred_assignment_duration }} wks / assignment
+                                </a></li>
+                        @endif
+                        @if (isset($j->hours_per_week))
+                            <li><a href="#"><img class="icon_cards"
+                                        src="{{ URL::asset('frontend/img/calendar.png') }}">
+                                    {{ $j->hours_per_week }} hrs/wk</a></li>
+                        @endif
+                </div>
             </div>
-            <div class="col-3 d-flex justify-content-end">
-              <ul>
-                <li><a href="#"><img class="icon_cards"
-                      src="{{ URL::asset('frontend/img/calendar.png') }}">
-                    {{ $j->preferred_assignment_duration }} wks</a></li>
+            {{-- row 4 --}}
 
+            <div class="row">
+
+                <div class="col-4">
+                    <ul>
+                        @if (isset($j->preferred_shift_duration))
+                            <li>
+                                @if ($j->preferred_shift_duration == '5x8 Days' || $j->preferred_shift_duration == '4x10 Days')
+                                    <svg style="vertical-align: bottom;"
+                                        xmlns="http://www.w3.org/2000/svg" width="25"
+                                        height="25" fill="currentColor"
+                                        class="bi bi-brightness-alt-high-fill"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3m8 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5m-13.5.5a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1zm11.157-6.157a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.9 2.121a.5.5 0 0 0 .707-.707L3.05 5.343a.5.5 0 1 0-.707.707zM8 7a4 4 0 0 0-4 4 .5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5 4 4 0 0 0-4-4" />
+                                    </svg>
+                                @elseif ($j->preferred_shift_duration == '3x12 Nights or Days')
+                                    <svg style="vertical-align: text-bottom;"
+                                        xmlns="http://www.w3.org/2000/svg" width="20"
+                                        height="16" fill="currentColor"
+                                        class="bi bi-moon-stars" viewBox="0 0 16 16">
+                                        <path
+                                            d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286" />
+                                        <path
+                                            d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z" />
+                                    </svg>
+                                @endif
+                                {{ $j->preferred_shift_duration }}
+                            </li>
+                        @endif
+                    </ul>
+                </div>
+
+                <div class="col-8 d-flex justify-content-end">
+                    <ul>
+                        @if (isset($j->actual_hourly_rate))
+                            <li><img class="icon_cards"
+                                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
+                                {{ number_format($j->actual_hourly_rate) }}/hr
+                            </li>
+                        @endif
+                        @if (isset($j->weekly_pay))
+                            <li><img class="icon_cards"
+                                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
+                                {{ number_format($j->weekly_pay) }}/wk
+                            </li>
+                        @endif
+                        @if (isset($j->weekly_pay))
+                            <li style="font-weight: 600;"><img class="icon_cards"
+                                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
+                                {{ number_format($j->weekly_pay * 4 * 12) }}/yr
+                            </li>
+                        @endif
+                    </ul>
+                </div>
             </div>
-          </div>
-          {{-- row 4 --}}
-          <div class="row">
-            <div class="col-5">
-              <ul>
-                @if ($j->as_soon_as == false)
-                <li>
-                  <img class="icon_cards"
-                    src="{{ URL::asset('frontend/img/calendar.png') }}"> <a
-                    href="#" class="start-date"
-                    data-start-date="{{ $j->start_date }}"></a>
-                </li>
-                @endif
-              </ul>
-            </div>
-            <div class="col-7 d-flex justify-content-end">
-              <ul>
-                <li><img class="icon_cards"
-                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}"> Est.
-                  {{ $j->weekly_pay * 4 * 12 }}/year
-                </li>
-                <li><img class="icon_cards"
-                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}">Est.
-                  {{ $j->weekly_pay }}/wk
-                </li>
-                <li><img class="icon_cards"
-                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}"> Est.
-                  {{ $j->actual_hourly_rate }}/hour
-                </li>
-              </ul>
-            </div>
-          </div>
 
 
-          {{-- row 5 --}}
-          <div class="row">
-            <div class="col-6">
-              <h5>Recently Added</h5>
+            {{-- row 5 --}}
+            <div class="row">
+                {{-- <div class="col-6"><h5>Recently Added</h5></div> --}}
+
+                <div class="col-6 d-flex justify-content-start">
+                    @if ($j->as_soon_as == true)
+                        <p class="col-12" style="padding-bottom: 0px; padding-top: 8px;">
+                            As soon as possible</p>
+                    @endif
+                </div>
+                <div class="col-6 d-flex justify-content-end">
+                    @if ($j->urgency == 'Auto Offer' || $j->as_soon_as == true)
+                        <p class="col-2 text-center"
+                            style="padding-bottom: 0px; padding-top: 8px;">Urgent</p>
+                    @endif
+                </div>
             </div>
-            <div class="col-6 d-flex justify-content-end">
-              @if ($j->urgency == 'Auto Offer' || $j->as_soon_as == true)
-              <p class="col-2 text-center">Urgent</p>
-              @endif
-            </div>
-          </div>
 
 
+           
         </div>
-        @empty
+    @empty
         <div class="ss-job-prfle-sec">
-          <h4>No Data found</h4>
+            <h4>No Data found</h4>
         </div>
-        @endforelse
+    @endforelse
 
       </div>
     </div>
