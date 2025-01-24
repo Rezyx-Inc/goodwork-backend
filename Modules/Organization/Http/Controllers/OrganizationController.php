@@ -1650,8 +1650,22 @@ public function recruiters_management()
             $job = Job::where('id', $jobId)->first();
             $orgId = Auth::guard('organization')->user()->id;
 
+            $workers_id = [];
+            $offers = Offer::where('job_id', $jobId)->get();
+
+            if (sizeof($offers) > 0) {
+                foreach ($offers as $offer) {
+                    $user_id = Nurse::where('id', $offer->worker_user_id)->pluck('user_id')->first();
+                    $workers_id[] = $user_id;
+                }
+            }
+
+            //return response()->json(['success' => true, 'workers_ids' => $workers_id]);
+            //{"success":true,"workers_ids":["GWU000005"]}
+
             $AssignmentResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/manualRecruiterAssignment/' . $orgId, [
                 'id' => $recruiterId,
+                'workers_id' => $workers_id,
             ]);
 
             $api_response = json_decode($AssignmentResponse->body());
