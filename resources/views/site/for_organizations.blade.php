@@ -67,21 +67,11 @@
                             <span style="cursor: pointer;" onclick="window.location.href='{{ route('organization.signup') }}'">
                               create an <span class="ss-clr-pink">account</span>
                             </span>
-                          </h2>
-                           
+                        </h2>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-
-
-
-
-
-
-
-   
 
 @stop

@@ -13,45 +13,7 @@
     <div class="row">
       <div class="col-lg-6">
         <div class="ss-expl-srch-bxhed">
-          <h6>Explore Jobs</h6>
-          <h2>Search for Nursing Jobs</h2>
-          <p>Set your specialty and preferred locations to find the perfect match.</p>
-
-          <div class="input-group">
-            <form method="get" action="{{ route('explore-jobs') }}" id="filter_form"> @csrf
-
-              <div class="form-outline">
-                <input type="text" id="gw" class="gw" name="gw" placeholder="Search by Good Work number" value="{{ request('gw') }}">
-              </div>
-              <button type="submit" class="btn ">
-                <i class="fas fa-search"></i>
-                </button>
-              <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;"></div> <!-- Error message display -->
-
-            </form>
-
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="ss-expl-pg-bn-ul-sc">
-          <ul>
-            <li>
-              <h6>76+</h6>
-            </li>
-            <li>
-              <p>Nurse <br>Registered</p>
-            </li>
-          </ul>
-  
-          <ul>
-            <li>
-              <h6>125+</h6>
-            </li>
-            <li>
-              <p>jobs <br>Added</p>
-            </li>
-          </ul>
+          <h3 style="color: #b5649e;">Explore Jobs</h3>
         </div>
       </div>
     </div>  
