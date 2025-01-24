@@ -276,7 +276,7 @@
                             </div>
                             <div class="form-outer">
 
-                                @if ($user->stripeAccountId)
+                                @if (!$user->stripeAccountId)
                                     <form method="post">
                                         @csrf
                                         <!-- slide Bonus Transfer -->
