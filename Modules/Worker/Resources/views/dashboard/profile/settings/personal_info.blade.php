@@ -108,7 +108,7 @@
         <div id="otpDiv" style="display:none;">
             <center>
                 <div class="ss-form-group col-7 d-flex align-items-center justify-content-center" >
-                    <label class="me-3">OTP:</label>
+                    <label class="me-3">Code:</label>
                     <ul class="ss-otp-v-ul">
                         <li><input class="otp-input" type="text" name="otp1"
                                 oninput="digitValidate(this)" onkeyup="tabChange(1)"
