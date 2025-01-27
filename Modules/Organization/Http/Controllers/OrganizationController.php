@@ -1710,6 +1710,11 @@ public function recruiters_management()
                 'email' => 'required|email'
             ]);
         
+            //  Check if the email is already in use
+            if (User::where('email', $request->email)->exists()) {
+                return response()->json(['status' => false, 'message' => 'The email is already exist.'], 400);
+            }      
+            
             // Generate a verification code
             $code = rand(1000, 9999);
         
@@ -1735,28 +1740,6 @@ public function recruiters_management()
         }
     }
 
-
-    
-
-    // public function verifyOtp(Request $request)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'otp' => 'required|numeric',
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         return response()->json(['message' => $validator->errors()->first()], 400);
-    //     }
-
-    //     $otp = session('otp');
-
-    //     if ($request->otp == $otp) {
-    //         session(['otp_verified' => true]);
-    //         return response()->json(['message' => 'OTP verified successfully.']);
-    //     }
-
-    //     return response()->json(['message' => 'Invalid OTP.'], 400);
-    // }
 
     // verify the OTP and Update the email
     public function updateEmail(Request $request)
