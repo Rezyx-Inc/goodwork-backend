@@ -49,9 +49,9 @@
 
     function saveInfos() {
         // Perform basic validation if needed
-        if (!validateBasicInfo()) {
-            return; // Skip the save if validation fails
-        }
+        // if (!validateBasicInfo()) {
+        //     return; // Skip the save if validation fails
+        // }
 
         // Get the form element
         let form = document.getElementById('worker-profile-form');

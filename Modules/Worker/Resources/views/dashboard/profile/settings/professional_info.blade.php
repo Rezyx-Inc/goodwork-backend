@@ -422,7 +422,8 @@
     <div class="ss-form-group col-md-12">
         <label>Current Address</label>
         <input type="text" name="worker_preferred_work_location" id="worker_preferred_work_location"
-            placeholder="Where are you staying now?">
+            placeholder="Where are you staying now?"
+            value="{{ !empty($worker->worker_preferred_work_location) ? $worker->worker_preferred_work_location : '' }}">
     </div>
     <span class="helper help-block-worker_preferred_work_location"></span>
 
@@ -431,7 +432,8 @@
     <div class="ss-form-group col-md-12">
         <label>Facilities you've worked at?</label>
         <input type="text" name="worker_facility_name" id="worker_facility_name"
-            placeholder="What facilities have you worked at?">
+            placeholder="What facilities have you worked at?"
+            value="{{ !empty($worker->worker_facility_name) ? $worker->worker_facility_name : '' }}">
     </div>
     <span class="helper help-block-worker_facility_name"></span>
 
@@ -441,7 +443,8 @@
     <div class="ss-form-group col-md-12">
         <label>Fav Facility Parent Systems</label>
         <input type="text" name="worker_facilitys_parent_system" id="worker_facilitys_parent_system"
-            placeholder="What systems would you like to work at?">
+            placeholder="What systems would you like to work at?"
+            value="{{ !empty($worker->worker_facilitys_parent_system) ? $worker->worker_facilitys_parent_system : '' }}">
     </div>
     <span class="helper help-block-worker_facilitys_parent_system"></span>
 
