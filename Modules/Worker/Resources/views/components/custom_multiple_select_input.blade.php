@@ -58,6 +58,14 @@
         const dropdownBtn = container.querySelector('.select-btn');
         const dropdownList = container.querySelector('.list-items');
 
+        dropdownBtn.addEventListener('click', () => {
+            // if dropdownBtn does not have class open, add it
+
+            if (!dropdownBtn.classList.contains('open')) {
+                dropdownBtn.classList.add('open');
+            } 
+        });
+
         // Function to update hidden input value and placeholder
         function updateHiddenInput() {
             const selectedValues = [];
