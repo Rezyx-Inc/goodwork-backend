@@ -159,7 +159,7 @@
     </div> --}}
 
     <div class="ss-fliter-btn-dv" style="margin-top:50px;">
-      <button class="ss-fliter-btn" type="submit">Apply</button>
+      <button class="ss-fliter-btn" type="submit">Filter</button>
     </div>
     <input type="hidden" name="terms" value="" id="job_type">
     {{-- <input type="hidden" name="shifts" value="" id="shift"> --}}
