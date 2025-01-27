@@ -222,9 +222,11 @@
 
             // undide the otp input fields
             let OtpDiv = document.getElementById('otpDiv');
-            OtpDiv.style.display = OtpDiv.style.display === "none" ? "block" : "none";
+            
 
             let email = document.getElementById('newEmail').value;
+
+            $('.help-block-email').text('');
 
             let data = {
                 email: email
@@ -241,6 +243,7 @@
                             text: '<i class="fa fa-check"></i> ' + resp.message,
                             time: 5
                         });
+                        OtpDiv.style.display = OtpDiv.style.display === "none" ? "block" : "block";
                     } else {
                         notie.alert({
                             type: 'error',
@@ -250,11 +253,18 @@
                     }
                 },
                 error: function(resp) {
-                    notie.alert({
-                        type: 'error',
-                        text: '<i class="fa fa-check"></i> Please try again later !',
-                        time: 5
-                    });
+                    // Check if the server provided a custom error message
+                    if (resp.responseJSON && resp.responseJSON.message) {
+                        $('.help-block-email').text(resp.responseJSON.message);
+                        $('.help-block-email').addClass('text-danger');
+                    } else {
+                        // Generic error message for unexpected errors
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-check"></i> Please try again later!',
+                            time: 5
+                        });
+                    }
                 }
             });
 
@@ -269,9 +279,6 @@
                 $('.help-block-otp').addClass('text-danger');
                 isValid = false;
             } else if (otp.length < inputs.length) {
-                console.log(otp.length);
-                console.log(inputs.length);
-                
                 $('.help-block-otp').text('Please complete the OTP');
                 $('.help-block-otp').addClass('text-danger');
                 isValid = false;
