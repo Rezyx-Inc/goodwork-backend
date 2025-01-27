@@ -37,13 +37,6 @@
                         </ul>
                     </div>
 
-                    <!---mobile -show---->
-
-                    <div class="ss-mobile-show ss-ban-mob-txt">
-                        <h2>Empowering nurses to find their dream path</h2>
-                        <p>Register with us as our skilled nurse to unleash your passion for nursing.</p>
-                    </div>
-
                 </div>
             </div>
         </div>

@@ -32,9 +32,9 @@ class OpportunitiesController extends Controller
     public function index()
     {
         $recruiter_id = Auth::guard('recruiter')->user()->id;
-        $draftJobs = Job::where('recruiter_id', $recruiter_id)->where('active', 0)->get();
-        $publishedJobs = Job::where('recruiter_id', $recruiter_id)->where('active', 1)->where('is_hidden', '0')->where('is_closed', '0')->where('is_open', '1')->get();
-        $onholdJobs = Job::where('recruiter_id', $recruiter_id)->where('active', '1')->where('is_open', '0')->get();
+        $draftJobs = Job::where('recruiter_id', $recruiter_id)->where('active', 1)->where('is_open', 0)->where('is_closed', 0)->where('is_hidden', 0)->get();
+        $publishedJobs = Job::where('recruiter_id', $recruiter_id)->where('active', 1)->where('is_open', 1)->get();
+        $onholdJobs = Job::where('recruiter_id', $recruiter_id)->where('is_hidden', 1)->where('is_open', 0)->where('active', 0)->get();
         $specialities = Speciality::select('full_name')->get();
         $professions = Profession::select('full_name')->get();
         $applyCount = array();
@@ -480,10 +480,10 @@ class OpportunitiesController extends Controller
 
             $job_id = $request->job_id;
             if ($param == 'hidejob') {
-                $job = Job::where(['id' => $job_id])->update(['is_open' => '0']);
+                $job = Job::where(['id' => $job_id])->update(['is_open' => '0', 'active' => '0', 'is_hidden' => '1']);
                 return response()->json(['message' => 'Job is onhold', 'job_id' => $job_id]);
             } else {
-                $job = Job::where(['id' => $job_id])->update(['is_open' => '1']);
+                $job = Job::where(['id' => $job_id])->update(['is_open' => '1', 'active' => '1', 'is_hidden' => '0']);
                 return response()->json(['message' => 'Job is published', 'job_id' => $job_id]);
             }
 
@@ -549,7 +549,7 @@ class OpportunitiesController extends Controller
         // }
 
         if ($type == 'drafts') {
-            $jobLists = Job::where(['active' => '0', 'recruiter_id' => $recruiter_id])->get();
+            $jobLists = Job::where(['active' => '1', 'is_open' => '0', 'recruiter_id' => $recruiter_id])->get();
             if (0 >= count($jobLists)) {
                 $responseData = [
                     'joblisting' => '<div class="text-center"><span>No Job</span></div>',
@@ -558,7 +558,7 @@ class OpportunitiesController extends Controller
                 return response()->json($responseData);
             }
         } elseif ($type == 'hidden') {
-            $jobLists = Job::where(['is_hidden' => '1', 'recruiter_id' => $recruiter_id])->get();
+            $jobLists = Job::where(['active' => '0', 'is_open' => '0','is_hidden' => '1', 'recruiter_id' => $recruiter_id])->get();
             if (0 >= count($jobLists)) {
                 $responseData = [
                     'joblisting' => '<div class="text-center"><span>No Job</span></div>',
@@ -567,7 +567,7 @@ class OpportunitiesController extends Controller
                 return response()->json($responseData);
             }
         } elseif ($type == 'closed') {
-            $jobLists = Job::where(['is_closed' => '1', 'recruiter_id' => $recruiter_id])->get();
+            $jobLists = Job::where(['active' => '0', 'is_open' => '0','is_closed' => '1', 'recruiter_id' => $recruiter_id])->get();
             if (0 >= count($jobLists)) {
                 $responseData = [
                     'joblisting' => '<div class="text-center"><span>No Job</span></div>',
@@ -576,7 +576,7 @@ class OpportunitiesController extends Controller
                 return response()->json($responseData);
             }
         } elseif ($type == 'onhold') {
-            $jobLists = Job::where(['active' => '1', 'is_open' => '0', 'recruiter_id' => $recruiter_id])->get();
+            $jobLists = Job::where(['active' => '0', 'is_open' => '0', 'is_hidden' => '1' , 'recruiter_id' => $recruiter_id])->get();
             if (0 >= count($jobLists)) {
                 $responseData = [
                     'joblisting' => '<div class="text-center"><span>No Job</span></div>',
@@ -586,7 +586,7 @@ class OpportunitiesController extends Controller
             }
         } else {
 
-            $jobLists = Job::where(['active' => '1', 'is_hidden' => '0', 'is_closed' => '0', 'recruiter_id' => $recruiter_id, 'is_open' => '1'])->get();
+            $jobLists = Job::where(['active' => '1', 'is_open'=> '1', 'is_hidden' => '0', 'is_closed' => '0', 'recruiter_id' => $recruiter_id, 'is_open' => '1'])->get();
             //return $jobLists;
             if (0 >= count($jobLists)) {
                 $responseData = [
@@ -673,23 +673,24 @@ class OpportunitiesController extends Controller
         } else {
             if ($type == 'drafts') {
                 $jobdetails = Job::select('jobs.*')
-                    ->where(['jobs.active' => '0'])
+                    ->where(['jobs.active' => '1', 'jobs.is_open' => '0'])
                     ->where('recruiter_id', $recruiter_id)
                     ->first();
             } elseif ($type == 'hidden') {
                 $jobdetails = Job::select('jobs.*')
-                    ->where(['jobs.is_hidden' => '1'])
+                    ->where(['jobs.is_hidden' => '1', 'jobs.active' => '0', 'jobs.is_open' => '0'])
                     ->where('recruiter_id', $recruiter_id)
                     ->first();
             } elseif ($type == 'closed') {
                 $jobdetails = Job::select('jobs.*')
-                    ->where(['jobs.is_closed' => '1'])
+                    ->where(['jobs.is_closed' => '1', 'jobs.active' => '0', 'jobs.is_open' => '0'])
                     ->where('recruiter_id', $recruiter_id)
                     ->first();
             } elseif ($type == 'onhold') {
                 $jobdetails = Job::select('jobs.*')
                     ->where(['jobs.is_open' => '0'])
-                    ->where(['jobs.active' => '1'])
+                    ->where(['jobs.active' => '0'])
+                    ->where(['jobs.is_hidden' => '1'])
                     ->where('recruiter_id', $recruiter_id)
                     ->first();
             } else {
