@@ -934,7 +934,9 @@
             }
             let email = document.getElementById('email').value;
 
+            let OtpDiv = document.getElementById('otpDiv');
 
+            $('.help-block-email').text('');
 
             //let url = "{{ route('sendOtp') }}";
             let data = {
@@ -954,7 +956,6 @@
                             time: 5
                         });
                         // undide the otp input fields
-                        let OtpDiv = document.getElementById('otpDiv');
                         OtpDiv.style.display = OtpDiv.style.display === "none" ? "block" : "block";
                     } else {
                         notie.alert({
@@ -965,11 +966,18 @@
                     }
                 },
                 error: function(resp) {
-                    notie.alert({
-                        type: 'error',
-                        text: '<i class="fa fa-check"></i> Please try again later !',
-                        time: 5
-                    });
+                    // Check if the server provided a custom error message
+                    if (resp.responseJSON && resp.responseJSON.message) {
+                        $('.help-block-email').text(resp.responseJSON.message);
+                        $('.help-block-email').addClass('text-danger');
+                    } else {
+                        // Generic error message for unexpected errors
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-check"></i> Please try again later!',
+                            time: 5
+                        });
+                    }
                 }
             });
 
