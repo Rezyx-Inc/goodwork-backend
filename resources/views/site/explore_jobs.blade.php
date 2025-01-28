@@ -131,6 +131,36 @@
               </select>
           </div>
 
+          {{-- state --}}
+          <div class="ss-input-slct-grp mb-3">
+            <label> State </label>
+            <select name="state" id="state">
+                @if (!empty($state))
+                    <option value="" selected>{{$state}}</option>
+                @else
+                    <option value="" disabled selected hidden>Select a State</option>
+                @endif
+                @foreach ($us_states as $state)
+                    <option id="{{ $state->id }}" value="{{ $state->name }}">
+                        {{ $state->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        {{-- city --}}
+        <div class="ss-input-slct-grp mb-3">
+            <label>City</label>
+            <select name="city" id="city">
+                @if (!empty($city))
+                    <option value="">Select a city</option>
+                    <option value="{{ $city }}" selected>{{ $city }}</option>
+                @else
+                    <option value="">Select state first</option>
+                @endif
+            </select>
+        </div>
+
 
 
 
@@ -412,6 +442,39 @@
 
 @section('js')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+  // get cities according to state :
+
+  const jobState = document.getElementById('state');
+  const jobCity = document.getElementById('city');
+  let citiesData = [];
+  const selectedJobState = jobState.value;
+  const selectedState = $(jobState).find(':selected').attr('id');
+
+  jobState.addEventListener('change', async function() {
+
+      const selectedJobState = this.value;
+      const selectedState = $(this).find(':selected').attr('id');
+
+      await $.get(`/api/cities/${selectedState}`, function(cities) {
+          citiesData = cities;
+      });
+
+      jobCity.innerHTML = '<option value="">Cities</option>';
+
+      citiesData.forEach(function(City) {
+
+          const option = document.createElement('option');
+          option.value = City.name;
+          option.textContent = City.name;
+          jobCity.appendChild(option);
+
+      });
+
+  })
+
+</script>
 
 <script>
   function resetForm() {
