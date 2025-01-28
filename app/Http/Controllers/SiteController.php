@@ -140,12 +140,6 @@ class SiteController extends Controller
     $data['hours_per_week_to'] = $request->input('hours_per_week_to');
     
 
-    $user = auth()->guard('frontend')->user();
-
-    $nurse = NURSE::where('user_id', $user->id)->first();
-    $jobs_id = Offer::where('worker_user_id', $nurse->id)
-      ->select('job_id')
-      ->get();
 
     if (!empty($gwNumber)) {
 
