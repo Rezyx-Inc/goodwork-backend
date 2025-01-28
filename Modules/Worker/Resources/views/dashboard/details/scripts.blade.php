@@ -1326,12 +1326,34 @@
                 '_blank' 
             );
         }
+        
+        let intervalId;
 
+        // start the saving interval
+        function startSaving() {
+            intervalId = setInterval(() => {
+                update_nurse_information(dataToSend);
+            }, 5000);
+        }
 
-        // update nurse information change every 50 seconds
-        setInterval(() => {
-            update_nurse_information(dataToSend);
-        }, 5000);
+        // stop saving
+        function stopSaving() {
+            clearInterval(intervalId);
+        }
+
+        // Listen to visibility change events
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                // Tab is active, start the interval
+                startSaving();
+            } else {
+                // Tab is inactive, stop the interval
+                stopSaving();
+            }
+        });
+
+        // Start the interval when the page loads
+        startSaving();
 
         // Save on page exit
         window.addEventListener('beforeunload', function() {

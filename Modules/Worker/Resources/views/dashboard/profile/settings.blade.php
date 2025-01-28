@@ -42,10 +42,34 @@
         saveInfos();
     });
 
-    // Save change every 50 seconds
-    setInterval(() => {
-        saveInfos();
-    }, 5000);
+    let intervalId;
+    let respErrCount = 0;
+
+    // start the saving interval
+    function startSaving() {
+        intervalId = setInterval(() => {
+            saveInfos();
+        }, 5000);
+    }
+
+    // stop saving
+    function stopSaving() {
+        clearInterval(intervalId);
+    }
+
+    // Listen to visibility change events
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            // Tab is active, start the interval
+            startSaving();
+        } else {
+            // Tab is inactive, stop the interval
+            stopSaving();
+        }
+    });
+
+    // Start the interval when the page loads
+    startSaving();
 
     function saveInfos() {
         // Perform basic validation if needed
@@ -66,9 +90,20 @@
             },
             keepalive: true // Ensures the request completes even if the page unloads
         }).then(response => {
+            respErrCount = 0;
             // console.log("Silent save successful");
         }).catch(error => {
-            // console.error("Silent save failed", error);
+
+            if (respErrCount > 4) {
+                // show error message with message that data is not saving need to refresh the page
+                notie.alert({
+                    type: 3,
+                    text: 'Data is not saving, Please refresh the page',
+                    time: 5
+                })
+                respErrCount = 0;
+            }
+            respErrCount++;
         });
     }
 
