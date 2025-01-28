@@ -105,28 +105,32 @@
               </select>                                    
             </div>
 
-            <div class="ss-input-slct-grp">
+            {{-- profession --}}
+            <div class="ss-input-slct-grp mb-3">
               <label for="cars">Profession</label>
               <select name="profession">
-                <option value="">Select</option>
-                @foreach ($professions as $v)
-                <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
-                  {{ $profession == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
-                </option>
-                @endforeach
+                  <option value="">Select</option>
+                  @foreach ($professions as $v)
+                      <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
+                          {{ $profession == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
+                      </option>
+                  @endforeach
               </select>
-            </div>
+          </div>
 
-            <div class="ss-input-slct-grp">
+          {{-- specialty --}}
+          <div class="ss-input-slct-grp mb-3">
               <label>Specialty</label>
-              <select name="specialty" id="specialty">
-                <option value="">Select Specialty</option>
-                @foreach ($specialities as $speciality)
-                <option value="{{ $speciality->full_name }}">{{ $speciality->full_name }}</option>
-                @endforeach
-
+              <select name="speciality" id="speciality">
+                  <option value="">Select Specialty</option>
+                  @foreach ($specialities as $v)
+                      <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
+                          {{ $speciality == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
+                      </option>
+                  @endforeach
               </select>
-            </div>
+          </div>
+
 
 
 
