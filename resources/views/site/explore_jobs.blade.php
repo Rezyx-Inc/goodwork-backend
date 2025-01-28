@@ -37,6 +37,10 @@
           <h5>Filters</h5>
           <!---form--->
           <form method="get" action="{{ route('explore-jobs') }}" id="filter_form">
+            <div class="ss-fliter-btn-dv" style="display: flex; justify-content: space-between;">
+              <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
+              <button class="ss-fliter-btn" type="submit">Filter</button>
+          </div>
 
             <div class="ss-input-slct-grp">
               <label for="cars">Profession</label>
@@ -343,6 +347,12 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
+    function resetForm() {
+      window.location.href = "{{ route('explore-jobs') }}";
+    }
+</script>
+
+<script>
   function redirectToJobDetails(id) {
     window.location.href = `job/${id}/details`;
   }
@@ -575,6 +585,7 @@
 
           this.submit();
         });
+      });
 </script>
 
 
@@ -637,4 +648,17 @@
   });
 </script>
 
+<style>
+  span.ss-reset-btn {
+    border: 1px #3d2c39 solid;
+    cursor: pointer;
+    background: #3d2c3998;
+    padding: 10px ;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    width: 100%;
+    border-radius: 100px;
+  }
+</style>
 @stop
