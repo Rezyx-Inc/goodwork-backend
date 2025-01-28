@@ -40,7 +40,35 @@
             <div class="ss-fliter-btn-dv" style="display: flex; justify-content: space-between;">
               <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
               <button class="ss-fliter-btn" type="submit">Filter</button>
-          </div>
+            </div>
+
+            {{-- Organization Name --}}
+            <div class="ss-input-slct-grp">
+              <label for="organization_name">Organization Name</label>
+              <select id="organization_name" name="organization_name">
+                  <option value="">Select</option>
+                  @foreach ($organizations as $v)
+                      <option value="{{ $v->organization_name }}"
+                          {{ $organization_name == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
+                      </option>
+                  @endforeach
+              </select>
+            </div>
+
+            {{-- Recruiter Name --}}
+            <div class="ss-input-slct-grp">
+              <label for="recruiter_name">Recruiter Name</label>
+              <select id="recruiter_name" name="recruiter_name">
+                  <option value="">Select</option>
+                  @foreach ($recruiters as $v)
+                      <option value="{{ $v->first_name }} {{ $v->last_name }}"
+                          data-org="{{ $v->organization_name }}"
+                          {{ $recruiter_name == $v->first_name . ' ' . $v->last_name ? 'selected' : '' }}>
+                          {{ $v->first_name }} {{ $v->last_name }}
+                      </option>
+                  @endforeach
+              </select>
+            </div>
 
             <div class="ss-input-slct-grp">
               <label for="cars">Profession</label>
@@ -67,7 +95,7 @@
 
 
 
-            <div class="ss-input-slct-grp">
+            {{-- <div class="ss-input-slct-grp">
               <label>State</label>
               <select name="state" onchange="get_cities(this)">
                 <option value="">Select</option>
@@ -90,7 +118,7 @@
                 <option value="">Select City</option>
                 @endif
               </select>
-            </div>
+            </div> --}}
 
 
             <div class="ss-jobtype-dv">
@@ -347,9 +375,47 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
-    function resetForm() {
-      window.location.href = "{{ route('explore-jobs') }}";
-    }
+  function resetForm() {
+    window.location.href = "{{ route('explore-jobs') }}";
+  }
+    
+  const recruitersName = @json($recruiters); // Recruiters data from the backend
+  const orgSelect = document.getElementById('organization_name');
+  const recruiterSelect = document.getElementById('recruiter_name');
+
+  // Function to populate recruiters based on the selected organization
+  function populateRecruiters(selectedOrg, selectedRecruiter) {
+      // Clear recruiter dropdown
+      recruiterSelect.innerHTML = '<option value="">Select</option>';
+
+      // Filter and add recruiters based on the organization
+      recruitersName.forEach(recruiter => {
+          const recruiterOrg = recruiter.organization_name;
+          if (recruiterOrg === selectedOrg || !selectedOrg) {
+              // Create and append option
+              const option = document.createElement('option');
+              option.value = `${recruiter.first_name} ${recruiter.last_name}`;
+              option.textContent = `${recruiter.first_name} ${recruiter.last_name}`;
+              if (option.value === selectedRecruiter) {
+                  option.selected = true; // Persist selected recruiter
+              }
+              recruiterSelect.appendChild(option);
+          }
+      });
+  }
+
+  // Event listener for organization dropdown change
+  orgSelect.addEventListener('change', function () {
+      const selectedOrg = this.value;
+      populateRecruiters(selectedOrg, recruiterSelect.value);
+  });
+
+  // Populate recruiters on page load (for persistence after form submission)
+  document.addEventListener('DOMContentLoaded', function () {
+      const selectedOrg = orgSelect.value; // Get currently selected organization
+      const selectedRecruiter = recruiterSelect.value; // Get currently selected recruiter
+      populateRecruiters(selectedOrg, selectedRecruiter);
+  });
 </script>
 
 <script>
@@ -542,110 +608,32 @@
 
   });
 </script>
+
+
 <script>
-  $(document).ready(function() {
-        $("#filter_form").submit(function(e) {
-          e.preventDefault(); // Prevent the form from submitting initially
-
-          // Get all selected checkboxes with the name "categories[]"
-          const selectedCategories = $("input[name='terms[]']:checked");
-
-
-          // Extract the values (category names) and join them into a comma-separated string
+    $(document).ready(function() {
+      $("#filter_form").submit(function(e) {
+          //e.preventDefault();
+          // Clear previous error message
+          $('#gwError').hide().text('');
+          // Get the value of the gw input
+          var gwValue = $('#gw').val();
+          
           const categoriesString = selectedCategories.map(function() {
-            return $(this).val();
+              return $(this).val();
           }).get().join('-');
           // Set the categoriesString as the value of the hidden input field
           $("#job_type").val(categoriesString);
-
-          // const shiftTypes = $("input[name='shift[]']:checked");
-          // const shiftString = shiftTypes.map(function() {
-          // 	return $(this).val();
-          // }).get().join('-');
-          // Set the categoriesString as the value of the hidden input field
-          // $("#shift").val(shiftString);
-          $(this).find("input[name='terms[]']").remove();
-          // $(this).find("input[name='shift[]']").remove();
-
+          // $(this).find("input[name='terms[]']").remove();
           // Change the value of the profession select to the text of the selected option
           const professionSelect = $("select[name='profession']");
           const selectedOptionText = professionSelect.find("option:selected").text();
-
           // Add a hidden input to the form with the text of the selected option
           $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText +
-            '">');
-
-
-          // Now, you can submit the form programmatically
-          console.log('my form');
-          console.log($(this).serializeArray());
-          // setInterval(() => {
-          //   this.submit();
-          // }, 500000);
-
-          this.submit();
+              '">');
+          this.submit(); // Submit the form
         });
-      });
-</script>
-
-
-<script>
-  $(document).ready(function() {
-    $("#filter_form").submit(function(e) {
-      e.preventDefault();
-
-      // Clear previous error message
-      $('#gwError').hide().text('');
-
-      // Get the value of the gw input
-      var gwValue = $('#gw').val();
-
-      // Validation checks
-      // if (gwValue.length > 0 && gwValue[0].toLowerCase() !== 'g') {
-      //   // First character should be 'G' or 'g'
-      //   $('#gwError').text('The GoodWork Number must start with "G".').show();
-      // } else if (gwValue.length > 1 && gwValue[1].toLowerCase() !== 'w') {
-      //   // Second character should be 'W' or 'w'
-      //   $('#gwError').text('The GoodWork Number must start with "GW".').show();
-      // } else if (gwValue.length > 2 && gwValue[2].toLowerCase() !== 'j') {
-      //   // Third character should be 'J' or 'j'
-      //   $('#gwError').text('The GoodWork Number must start with "GWJ".').show();
-      // } else if (gwValue.length > 3 && !/^\d+$/.test(gwValue.slice(3))) {
-      //   // After the third character, it should only be numbers
-      //   $('#gwError').text('The GoodWork Number must be followed by numbers after "GWJ".').show();
-      // } else {
-      
-        // Check if terms input is empty and remove it
-        var termsInput = $('input[name="terms"]');
-        if (termsInput.length && termsInput.val() === '') {
-          termsInput.remove(); // Remove the empty terms input
-        }
-
-        // Get all selected checkboxes with the name "categories[]"
-        const selectedCategories = $("input[name='terms[]']:checked");
-
-        // Extract the values (category names) and join them into a comma-separated string
-        const categoriesString = selectedCategories.map(function() {
-          return $(this).val();
-        }).get().join('-');
-        // Set the categoriesString as the value of the hidden input field
-        $("#job_type").val(categoriesString);
-
-        // Change the value of the profession select to the text of the selected option
-        const professionSelect = $("select[name='profession']");
-        const selectedOptionText = professionSelect.find("option:selected").text();
-
-        // Add a hidden input to the form with the text of the selected option
-        $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText + '">');
-
-        // Now, you can submit the form programmatically
-        console.log('my form');
-        console.log($(this).serializeArray());
-
-        this.submit(); // Submit the form
-      // }
     });
-  });
 </script>
 
 <style>
@@ -660,5 +648,6 @@
     width: 100%;
     border-radius: 100px;
   }
+  
 </style>
 @stop
