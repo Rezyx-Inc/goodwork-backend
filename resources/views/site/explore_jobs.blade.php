@@ -43,7 +43,7 @@
             </div>
 
             {{-- Organization Name --}}
-            <div class="ss-input-slct-grp">
+            <div class="ss-input-slct-grp mb-3">
               <label for="organization_name">Organization Name</label>
               <select id="organization_name" name="organization_name">
                   <option value="">Select</option>
@@ -56,7 +56,7 @@
             </div>
 
             {{-- Recruiter Name --}}
-            <div class="ss-input-slct-grp">
+            <div class="ss-input-slct-grp mb-3">
               <label for="recruiter_name">Recruiter Name</label>
               <select id="recruiter_name" name="recruiter_name">
                   <option value="">Select</option>
@@ -68,6 +68,41 @@
                       </option>
                   @endforeach
               </select>
+            </div>
+
+            {{-- job type --}}
+            <div class="ss-input-slct-grp mb-3">
+              <label for="cars">Job Type</label>
+              <select name="job_type">
+                  <option value="">Select</option>
+                  <option value="Clinical" {{ $job_type == 'Clinical' ? 'selected' : '' }}>Clinical
+                  </option>
+                  <option value="Non-Clinical" {{ $job_type == 'Non-Clinical' ? 'selected' : '' }}>
+                      Non-Clinical</option>
+              </select>
+            </div>
+
+            {{-- facility --}}
+            <div class="ss-input-slct-grp mb-3">
+              <label for="cars">Facility</label>
+              <select name="facility_name">
+                  <option value="">Select</option>
+                  @php
+                      $uniqueFacilities = [];
+                  @endphp
+                  @foreach ($facilities as $v)
+                      @if (!in_array($v->facility_name, $uniqueFacilities))
+                          <option value="{{ $v->facility_name }}" 
+                                  data-id="{{ $v->facility_name }}"
+                                  {{ $facilityName == $v->facility_name ? 'selected' : '' }}>
+                              {{ $v->facility_name }}
+                          </option>
+                          @php
+                              $uniqueFacilities[] = $v->facility_name;
+                          @endphp
+                      @endif
+                  @endforeach
+              </select>                                    
             </div>
 
             <div class="ss-input-slct-grp">
