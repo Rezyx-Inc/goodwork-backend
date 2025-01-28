@@ -25,6 +25,85 @@
                                     <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
                                     <button class="ss-fliter-btn" type="submit">Filter</button>
                                 </div>
+                               
+                               
+                                {{-- Organization Name --}}
+<div class="ss-input-slct-grp">
+    <label for="organization_name">Organization Name</label>
+    <select id="organization_name" name="organization_name">
+        <option value="">Select</option>
+        @foreach ($organizations as $v)
+            <option value="{{ $v->organization_name }}"
+                {{ $organization_name == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
+{{-- Recruiter Name --}}
+<div class="ss-input-slct-grp">
+    <label for="recruiter_name">Recruiter Name</label>
+    <select id="recruiter_name" name="recruiter_name">
+        <option value="">Select</option>
+        @foreach ($recruiters as $v)
+            <option value="{{ $v->first_name }} {{ $v->last_name }}"
+                data-org="{{ $v->organization_name }}"
+                {{ $recruiter_name == $v->first_name . ' ' . $v->last_name ? 'selected' : '' }}>
+                {{ $v->first_name }} {{ $v->last_name }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
+                                
+
+
+                                {{-- Recruiter First Name --}}
+                                {{-- <div class="ss-input-slct-grp">
+                                    <label for="cars">Recruiter First Name</label>
+                                    <select name="recruiter_first_name">
+                                        <option value="">Select</option>
+                                        @php
+                                            $uniqueRecruiters = [];
+                                        @endphp
+                                        @foreach ($recruiters as $v)
+                                            @if (!in_array($v->first_name, $uniqueRecruiters))
+                                                <option value="{{ $v->first_name }}" 
+                                                        data-id="{{ $v->first_name }}"
+                                                        {{ $recruiter_first_name == $v->first_name ? 'selected' : '' }}>
+                                                    {{ $v->first_name }}
+                                                </option>
+                                                @php
+                                                    $uniqueRecruiters[] = $v->first_name;
+                                                @endphp
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div> --}}
+                                
+                                {{-- Recruiter Last Name --}}
+                                {{-- <div class="ss-input-slct-grp">
+                                    <label for="cars">Recruiter Last Name</label>
+                                    <select name="recruiter_last_name">
+                                        <option value="">Select</option>
+                                        @php
+                                            $uniqueRecruiters = [];
+                                        @endphp
+                                        @foreach ($recruiters as $v)
+                                            @if (!in_array($v->last_name, $uniqueRecruiters))
+                                                <option value="{{ $v->last_name }}" 
+                                                        data-id="{{ $v->last_name }}"
+                                                        {{ $recruiter_last_name == $v->last_name ? 'selected' : '' }}>
+                                                    {{ $v->last_name }}
+                                                </option>
+                                                @php
+                                                    $uniqueRecruiters[] = $v->last_name;
+                                                @endphp
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div> --}}
+                                
                                 <div class="ss-input-slct-grp">
                                     <label for="cars">Job Type</label>
                                     <select name="job_type">
@@ -34,6 +113,28 @@
                                         <option value="Non-Clinical" {{ $job_type == 'Non-Clinical' ? 'selected' : '' }}>
                                             Non-Clinical</option>
                                     </select>
+                                </div>
+
+                                <div class="ss-input-slct-grp">
+                                    <label for="cars">Facility</label>
+                                    <select name="facility_name">
+                                        <option value="">Select</option>
+                                        @php
+                                            $uniqueFacilities = [];
+                                        @endphp
+                                        @foreach ($facilities as $v)
+                                            @if (!in_array($v->facility_name, $uniqueFacilities))
+                                                <option value="{{ $v->facility_name }}" 
+                                                        data-id="{{ $v->facility_name }}"
+                                                        {{ $facilityName == $v->facility_name ? 'selected' : '' }}>
+                                                    {{ $v->facility_name }}
+                                                </option>
+                                                @php
+                                                    $uniqueFacilities[] = $v->facility_name;
+                                                @endphp
+                                            @endif
+                                        @endforeach
+                                    </select>                                    
                                 </div>
 
                                 <div class="ss-input-slct-grp">
@@ -401,7 +502,48 @@
 
 @section('js')
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+    <script>
+        const recruitersName = @json($recruiters); // Recruiters data from the backend
+        const orgSelect = document.getElementById('organization_name');
+        const recruiterSelect = document.getElementById('recruiter_name');
+    
+        // Function to populate recruiters based on the selected organization
+        function populateRecruiters(selectedOrg, selectedRecruiter) {
+            // Clear recruiter dropdown
+            recruiterSelect.innerHTML = '<option value="">Select</option>';
+    
+            // Filter and add recruiters based on the organization
+            recruitersName.forEach(recruiter => {
+                const recruiterOrg = recruiter.organization_name;
+                if (recruiterOrg === selectedOrg || !selectedOrg) {
+                    // Create and append option
+                    const option = document.createElement('option');
+                    option.value = `${recruiter.first_name} ${recruiter.last_name}`;
+                    option.textContent = `${recruiter.first_name} ${recruiter.last_name}`;
+                    if (option.value === selectedRecruiter) {
+                        option.selected = true; // Persist selected recruiter
+                    }
+                    recruiterSelect.appendChild(option);
+                }
+            });
+        }
+    
+        // Event listener for organization dropdown change
+        orgSelect.addEventListener('change', function () {
+            const selectedOrg = this.value;
+            populateRecruiters(selectedOrg, recruiterSelect.value);
+        });
+    
+        // Populate recruiters on page load (for persistence after form submission)
+        document.addEventListener('DOMContentLoaded', function () {
+            const selectedOrg = orgSelect.value; // Get currently selected organization
+            const selectedRecruiter = recruiterSelect.value; // Get currently selected recruiter
+            populateRecruiters(selectedOrg, selectedRecruiter);
+        });
+    </script>
+    
+    
+    
     <script>
         // get cities according to state :
 
@@ -822,6 +964,19 @@ $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value"
         .value {
             left: 0%;
         }
+
+        .btn.first-collapse,
+    .btn.first-collapse:hover,
+    .btn.first-collapse:focus,
+    .btn.first-collapse:active {
+        background-color: #fff8fd;
+        color: rgb(65, 41, 57);
+        font-size: 14px;
+        font-family: 'Neue Kabel';
+        font-style: normal;
+        width: 100%;
+        background: #FFEEEF;
+    }
     </style>
 
 @stop

@@ -25,27 +25,28 @@ const OrganizationsSchema = mongoose.Schema({
 const globalRuleFieldsSchema = mongoose.Schema({
 
     ruleFields: [{
-                    fieldID: { //(Could be unique and number)
-                        type: String,
-                        required: true
-                    },
-                    workerFieldIdMatch : {
-                        type: String,
-                        required: false
-                    },
-                    displayName: {
-                        type: String,
-                        required: true
-                    },
-                    publishDisabled: {
-                        type: Boolean,
-                        required: true
-                    },
-                    applyDisabled: {
-                        type: Boolean,
-                        required: true
-                    }
-                }]
+
+        fieldID: {
+            type: String,
+            required: true
+        },
+        workerFieldIdMatch : {
+            type: String,
+            required: false
+        },
+        displayName: {
+            type: String,
+            required: true
+        },
+        publishDisabled: {
+            type: Boolean,
+            required: true
+        },
+        applyDisabled: {
+            type: Boolean,
+            required: true
+        }
+    }]
 
 });
 

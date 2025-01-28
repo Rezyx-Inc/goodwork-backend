@@ -61,7 +61,7 @@
                                         </label>
                                     </div>
 
-                                    <div class="ss-my-prosnl-rdio-btn">
+                                    {{-- <div class="ss-my-prosnl-rdio-btn">
                                         <input type="radio" name="select" id="option-2"
                                             onclick="AccountSettingDisplay()">
                                         <label for="option-2" class="option option-2">
@@ -77,7 +77,7 @@
                                                 </li>
                                             </ul>
                                         </label>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="ss-my-prosnl-rdio-btn">
                                         <input type="radio" name="select" id="option-3"
@@ -187,6 +187,48 @@
                                             <span class="help-block-mobile"></span>
 
 
+                                            {{-- Email Information --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>New Email</label>
+                                                <input type="text" name="email" id="email"
+                                                    placeholder="Please enter your new Email">
+                                            </div>
+                                            <button type="button" class="mt-3 col-11 w-50 ss-prsnl-save-btn rounded-5"
+                                                id="sendOTPforVerifyEmail">
+                                                Send OTP
+                                            </button>
+                                            <span class="help-block-email"></span>
+                                            {{-- OTP for new email --}}
+                                            <div id="otpDiv" style="display: none;">
+                                                <center>
+                                                    <div class="ss-form-group col-7 d-flex align-items-center">
+                                                        <label class="me-3">Code:</label>
+                                                        <ul class="ss-otp-v-ul">
+                                                            <li><input class="otp-input" type="text" name="otp1"
+                                                                    oninput="digitValidate(this)" onkeyup="tabChange(1)"
+                                                                    maxlength="1"></li>
+                                                            <li><input class="otp-input" type="text" name="otp2"
+                                                                    oninput="digitValidate(this)" onkeyup="tabChange(2)"
+                                                                    maxlength="1"></li>
+                                                            <li><input class="otp-input" type="text" name="otp3"
+                                                                    oninput="digitValidate(this)" onkeyup="tabChange(3)"
+                                                                    maxlength="1"></li>
+                                                            <li><input class="otp-input" type="text" name="otp4"
+                                                                    oninput="digitValidate(this)" onkeyup="tabChange(4)"
+                                                                    maxlength="1"></li>
+                                                        </ul>
+                                                    </div>
+                                                </center>
+                                            </div>
+                                            <span class="help-block-otp"></span>
+
+                                            <div
+                                                class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+                                                <button type="button" class="col-12 ss-prsnl-save-btn"
+                                                    id="SaveAccountInformation" style="display:none;">Confirm</button>
+
+                                            </div>
+
 
                                             {{-- About Me Information --}}
                                             <div class="ss-form-group col-11">
@@ -210,7 +252,7 @@
                     {{-- ---------------------------------------------------------- End Profile settings Form ---------------------------------------------------------- --}}
                     {{-- ---------------------------------------------------------- Account settings Form ---------------------------------------------------------- --}}
 
-                    <div class="col-lg-7 bodyAll account_setting d-none">
+                    {{-- <div class="col-lg-7 bodyAll account_setting d-none">
                         <div class="ss-pers-info-form-mn-dv">
                             <div class="ss-persnl-frm-hed">
                                 <p><span><img src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Account
@@ -220,7 +262,6 @@
                                 <!-- slide Account Setting -->
                                 <div class="page slide-page">
                                     <div class="row justify-content-center">
-                                        {{-- Email Information --}}
                                         <div class="ss-form-group col-11">
                                             <label>New Email</label>
                                             <input type="text" name="email" id="email"
@@ -232,10 +273,8 @@
                                         </button>
                                         <span class="help-block-email"></span>
 
-                                        {{-- OTP for new email --}}
                                         <div class="ss-form-group col-7 d-flex align-items-center">
                                             <label class="me-3">OTP:</label>
-                                            {{-- <input type="text" name="otp" id="otp" placeholder="Please check your email for OTP"> --}}
                                             <ul class="ss-otp-v-ul">
                                                 <li><input class="otp-input" type="text" name="otp1"
                                                         oninput="digitValidate(this)" onkeyup="tabChange(1)"
@@ -265,7 +304,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- ---------------------------------------------------------- End Account settings  ---------------------------------------------------------- --}}
                     {{-- ----------------------------------------------------------  Bonus Area -------------------------------------------------------------------- --}}
                     <div class="col-lg-7 bodyAll bonus_transfers d-none">
@@ -276,7 +315,7 @@
                             </div>
                             <div class="form-outer">
 
-                                @if ($user->stripeAccountId)
+                                @if (!$user->stripeAccountId)
                                     <form method="post">
                                         @csrf
                                         <!-- slide Bonus Transfer -->
@@ -839,7 +878,6 @@
 
         // inputs account settings
 
-        // const user_name = document.querySelector('input[name="user_name"]');
         // const password = document.querySelector('input[name="password"]');
         // const new_mobile = document.querySelector('input[name="new_mobile"]');
         // const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
@@ -852,7 +890,6 @@
             //$('.help-block-new_mobile').text('');
             $('.help-block-validation').text('');
             $('.help-block-email').text('');
-            $('.help-block-user_name').text('');
             let isValid = true;
             // Create an array of all inputs
             inputs = [email];
@@ -881,15 +918,6 @@
                 isValid = false;
             }
 
-            // User name validation
-            // const userNameRegex = /^[a-zA-Z\s]{1,255}$/;
-            // if (!userNameRegex.test(user_name.value)) {
-            //     $('.help-block-user_name').text(
-            //         'User name can only contain letters and spaces, and cannot be longer than 255 characters');
-            //     $('.help-block-user_name').addClass('text-danger');
-            //     isValid = false;
-            // }
-
 
 
             return isValid;
@@ -897,73 +925,18 @@
         // end account setting validation
 
 
-        // send request to update here
-        // const SaveAccountInformation = document.getElementById('SaveAccountInformation');
-        // SaveAccountInformation.addEventListener("click", function(event) {
-        //     event.preventDefault();
-        //     if (!validateAccountSettingInformation()) {
-        //         return;
-        //     }
-
-        //     // clear form data from empty values
-        //     const formData = new FormData();
-        //     inputs.forEach(input => {
-        //         if (input.value.trim() !== '') {
-        //             formData.append(input.name, input.value);
-        //         }
-        //     });
-
-        //     $.ajaxSetup({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         }
-        //     });
-        //     $.ajax({
-        //         url: '/organization/update-organization-account-setting',
-        //         type: 'POST',
-        //         processData: false,
-        //         contentType: false,
-        //         data: formData,
-        //         success: function(resp) {
-        //             console.log(resp);
-        //             if (resp.status) {
-        //                 notie.alert({
-        //                     type: 'success',
-        //                     text: '<i class="fa fa-check"></i> ' + resp.message,
-        //                     time: 5
-        //                 });
-
-        //             } else {
-        //                 notie.alert({
-        //                     type: 'error',
-        //                     text: '<i class="fa fa-check"></i> ' + resp.message,
-        //                     time: 5
-        //                 });
-        //             }
-        //         },
-        //         error: function(resp) {
-        //             notie.alert({
-        //                 type: 'error',
-        //                 text: '<i class="fa fa-check"></i> Please try again later !',
-        //                 time: 5
-        //             });
-        //         }
-        //     });
-
-
-        // });
-
         // send otp button
         const sendOTPButton = document.getElementById('sendOTPforVerifyEmail');
         sendOTPButton.addEventListener('click', function(e) {
             e.preventDefault();
             if (!validateAccountSettingInformation()) {
-
-                console.log();
-
                 return;
             }
             let email = document.getElementById('email').value;
+
+            let OtpDiv = document.getElementById('otpDiv');
+
+            $('.help-block-email').text('');
 
             //let url = "{{ route('sendOtp') }}";
             let data = {
@@ -982,6 +955,8 @@
                             text: '<i class="fa fa-check"></i> ' + resp.message,
                             time: 5
                         });
+                        // undide the otp input fields
+                        OtpDiv.style.display = OtpDiv.style.display === "none" ? "block" : "block";
                     } else {
                         notie.alert({
                             type: 'error',
@@ -991,11 +966,18 @@
                     }
                 },
                 error: function(resp) {
-                    notie.alert({
-                        type: 'error',
-                        text: '<i class="fa fa-check"></i> Please try again later !',
-                        time: 5
-                    });
+                    // Check if the server provided a custom error message
+                    if (resp.responseJSON && resp.responseJSON.message) {
+                        $('.help-block-email').text(resp.responseJSON.message);
+                        $('.help-block-email').addClass('text-danger');
+                    } else {
+                        // Generic error message for unexpected errors
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-check"></i> Please try again later!',
+                            time: 5
+                        });
+                    }
                 }
             });
 
@@ -1052,6 +1034,9 @@
                             text: '<i class="fa fa-check"></i> ' + resp.message,
                             time: 5
                         });
+                        setTimeout(() => {
+                            location.reload();
+                        }, 3000);
                     } else {
                         notie.alert({
                             type: 'error',

@@ -618,8 +618,10 @@ section.ss-what-we-ofr-sec h4:after {
 
 .ss-what-offer-div2 {
     text-align: center;
+    justify-content: center;
     gap: 18px;
     margin-top: 55px;
+    display: flex;
 }
 
 .ss-what-offer-div2 .ss-hm-what-icn-bx {
@@ -836,16 +838,18 @@ ul.ss-ban-top-map-txt2 {
 }
 
 .ss-job-prfle-sec {
-    box-shadow: 10px 10px 0px 0px #403b4be5;
-    border: 2px solid #3d2c39;
+    box-shadow: 10px 10px 0px 0px #403B4BE5;
+    border: 2px solid #3D2C39;
     padding: 15px;
     border-bottom: 5px;
-    margin-top: 30px;
+    margin-bottom: 30px;
     border-radius: 10px;
     position: relative;
+    background: #fff;
     cursor: pointer;
+    margin-left: 30px;
 }
-.ss-job-prfle-sec:after {
+/*.ss-job-prfle-sec:after {
     content: "";
     position: absolute;
     width: 15px;
@@ -853,28 +857,33 @@ ul.ss-ban-top-map-txt2 {
     background-image: url(../img/job-icon-bx-Vector.png);
     top: 12px;
     right: 12px;
-}
+}*/
 
 .ss-job-prfle-sec ul {
     display: flex;
     list-style: none;
-    margin-top: 8px;
-    margin-bottom: 7px;
+    padding:0;
     gap: 9px;
 }
 
-.ss-job-prfle-sec ul li {
-    background: #ffeeef;
-    padding: 3px 11px;
+.ss-job-prfle-sec ul li{
+    background: #FFEEEF;
+    padding: 5px 11px;
     border-radius: 100px;
+    font-size: 16px;
+    display: inline-block;
+    font-weight: 500;
+    color: #3b71ca;
+    height: fit-content;
 }
 
 .ss-job-prfle-sec a {
-    background: #ffeeef;
-    padding: 3px 11px;
+    background: #FFEEEF;
+    color: #3b71ca;
     border-radius: 100px;
-    font-size: 13px;
+    font-size: 16px;
     display: inline-block;
+    font-weight: 500;
 }
 
 .ss-job-prfle-sec img {
@@ -885,7 +894,35 @@ ul.ss-ban-top-map-txt2 {
 
 .ss-job-prfle-sec h5 {
     font-style: italic;
+    font-size: 17px;
+    padding: 5px 0;
+}
+
+.ss-job-prfle-sec h4 {
+    font-size: 18px;
+    padding: 5px 0;
+}
+
+.ss-job-prfle-sec h6 {
     font-size: 15px;
+    padding: 5px 0;
+}
+
+.ss-job-prfle-sec p {
+    font-size: 17px;
+    color: #B5649E;
+    padding-bottom: 8px;
+    line-height: 18px;
+}
+
+.ss-job-prfle-sec p span {
+    color: #006BC9;
+    font-size: 14px;
+}
+
+.ss-job-prfle-sec .icon_cards {
+    width: 17px;
+    height: 17px;
 }
 
 .ss-job-prfle-sec h4 {

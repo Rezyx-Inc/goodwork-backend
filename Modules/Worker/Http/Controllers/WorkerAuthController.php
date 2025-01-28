@@ -277,6 +277,11 @@ class WorkerAuthController extends Controller
              $request->validate([
                  'email' => 'required|email'
              ]);
+
+            //  Check if the email is already in use
+            if (User::where('email', $request->email)->exists()) {
+                return response()->json(['status' => false, 'message' => 'The email is already exist.'], 400);
+            }            
  
              // Generate a verification code
              $code = rand(1000, 9999);

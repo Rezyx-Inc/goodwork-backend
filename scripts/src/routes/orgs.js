@@ -3,7 +3,7 @@ const express = require('express'); //To build REST APIs
 const router = express.Router(); //To redirect url routes
 const {Organizations} = require('../models/Orgs');
 const {GlobalRuleFields} = require('../models/Orgs');
-
+const chat = require('../models/Chats');
 router.get("/", (req, res) => {
     res.redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 });
@@ -191,6 +191,18 @@ router.post('/manualRecruiterAssignment/:orgId', async (req, res) => {
         recruiter.worksAssigned = recruiter.worksAssigned + 1;
         recruiter.upNext = false;
 
+        const workers_id = req.body.workers_id;
+        if (workers_id && Array.isArray(workers_id)) {
+            //console.log('Workers ID:', workers_id);
+    
+            for (let i = 0; i < workers_id.length; i++) {
+                await chat.updateOne(
+                    { workerId: workers_id[i], organizationId: req.params.orgId },
+                    { $set: { recruiterId: req.body.id } }
+                );
+            }
+
+        }
         await org.save();
 
         //Return success response

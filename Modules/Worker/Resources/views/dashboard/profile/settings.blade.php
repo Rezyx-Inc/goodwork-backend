@@ -45,13 +45,13 @@
     // Save change every 50 seconds
     setInterval(() => {
         saveInfos();
-    }, 50000);
+    }, 5000);
 
     function saveInfos() {
         // Perform basic validation if needed
-        if (!validateBasicInfo()) {
-            return; // Skip the save if validation fails
-        }
+        // if (!validateBasicInfo()) {
+        //     return; // Skip the save if validation fails
+        // }
 
         // Get the form element
         let form = document.getElementById('worker-profile-form');

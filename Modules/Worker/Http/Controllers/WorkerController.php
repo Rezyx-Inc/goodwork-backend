@@ -134,6 +134,7 @@ class WorkerController extends Controller
             $data = [];
 
             $worker = auth()->guard('frontend')->user();
+            $data['worker'] = $worker;
             $data['nurse'] = $worker->nurse;
             // get listDocs for this worker from the listDocs function with worker id in the request
 

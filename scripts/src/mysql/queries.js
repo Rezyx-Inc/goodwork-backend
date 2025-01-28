@@ -3,6 +3,7 @@ const { pool } = require("./mysql.js");
 var _ = require('lodash');
 var moment = require('moment');
 const { validateFields, getNewJobId } = require('../helpers/sheetHelper.js');
+const { getNextUpRecruiter } = require('../helpers/integrationHelper.js');
 
 //Function to get the Stripe Account Id using the user id
 module.exports.getStripeId = async function (userId) {
@@ -354,15 +355,16 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
                 importData.shift.hrsShift = 0;
             }
 
+            let recruiterId = await getNextUpRecruiter(ardorOrgId);
+
             const query = await pool.query(
-                "INSERT INTO jobs (created_at, updated_at, professional_licensure, facility_state, facility_city, terms, tax_status, id, organization_id, created_by, job_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, job_type, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate, recruiter_id ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+                "INSERT INTO jobs (created_at, updated_at, professional_licensure, facility_state, facility_city, tax_status, id, organization_id, created_by, job_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, job_type, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate, recruiter_id ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
                 [
                     created_at,
                     updated_at,
                     importData.state[0],
                     importData.state[0],
                     importData.city[0],
-                    "",
                     "",
                     id,
                     ardorOrgId,
@@ -386,7 +388,7 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
                     importData.license[0],
                     importData.Specialty,
                     hourlyPay,
-                    ardorOrgId
+                    recruiterId
                 ]
             );
 
@@ -553,4 +555,26 @@ module.exports.cleanArdorHealthJobs = async function (ardorOrgId, importData) {
     }
 
     return true
+}
+
+module.exports.updateRecruiterId = async function (orgId){
+
+    var existingJobs = await pool.query(
+        `SELECT * from jobs where job_id <> '' AND organization_id='${orgId}';`)
+    .then (results => {return results})
+    .catch(e => {console.log(e); return false});
+
+    if(existingJobs[0].length == 0){
+        return 0
+    }
+
+    existingJobs = existingJobs[0];
+
+    for (let i of existingJobs) {
+        console.log("Parsing job", i.id);
+        let recruiterId = await getNextUpRecruiter(orgId);
+        const updateQuery = await pool.query( `UPDATE jobs SET recruiter_id='${recruiterId}', updated_at='${ moment().format("YYYY-MM-DD") }' where id='${i.id}'`);
+    }
+
+    return existingJobs.length;
 }
