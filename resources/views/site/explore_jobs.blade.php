@@ -43,7 +43,7 @@
             </div>
 
             {{-- Organization Name --}}
-            <div class="ss-input-slct-grp mb-3">
+            {{-- <div class="ss-input-slct-grp mb-3">
               <label for="organization_name">Organization Name</label>
               <select id="organization_name" name="organization_name">
                   <option value="">Select</option>
@@ -53,10 +53,10 @@
                       </option>
                   @endforeach
               </select>
-            </div>
+            </div> --}}
 
             {{-- Recruiter Name --}}
-            <div class="ss-input-slct-grp mb-3">
+            {{-- <div class="ss-input-slct-grp mb-3">
               <label for="recruiter_name">Recruiter Name</label>
               <select id="recruiter_name" name="recruiter_name">
                   <option value="">Select</option>
@@ -68,7 +68,7 @@
                       </option>
                   @endforeach
               </select>
-            </div>
+            </div> --}}
 
             {{-- job type --}}
             <div class="ss-input-slct-grp mb-3">
