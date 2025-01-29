@@ -2245,11 +2245,16 @@
             @include('worker::dashboard.details.new_inputs_modals')
 
 
+            <!-- Auto-Save Notification -->
+            <div class="autoSaveBox">
+                <strong>Auto-Save</strong>
+                <div id="autoSaveMessage">Auto-saving in <span id="countdownTimer">20</span>s...</div>
+                <u class ="manualSave" onclick="manualSave()"><strong>Manualy save!</strong></u>
+            </div>
+
         </div>
 
     </main>
-
-
 
 
 @stop
@@ -2395,4 +2400,27 @@
         width: 100%;
         background: #FFEEEF;
     }
+</style>
+
+
+<style>
+    .autoSaveBox {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.527);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 14px;
+        z-index: 1000;
+        min-width: 200px;
+        text-align: center;
+    }
+    .manualSave{
+        color: #000000;
+        cursor: pointer;
+
+    }
+
 </style>

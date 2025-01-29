@@ -1326,17 +1326,69 @@
                 '_blank' 
             );
         }
+        
 
 
-        // update nurse information change every 50 seconds
-        setInterval(() => {
-            update_nurse_information(dataToSend);
-        }, 5000);
+        let countdown = 20; 
+        let intervalId = null;
+        let isTabActive = true;
 
-        // Save on page exit
+        function startSavingWithCountdown() {
+            console.log("Auto-saving enabled");
+            updateCountdown();
+        }
+
+        function updateCountdown() {
+            if (intervalId) clearInterval(intervalId);
+
+            const countdownElement = document.getElementById('countdownTimer');
+            const autoSaveMessage = document.getElementById('autoSaveMessage');
+
+            intervalId = setInterval(() => {
+                if (!isTabActive) return;
+                countdown--;
+                countdownElement.textContent = countdown; 
+
+                if (countdown <= 0) {
+                    clearInterval(intervalId);
+                    intervalId = null; 
+                    autoSaveMessage.innerHTML = "Saving...";
+                    update_nurse_information(dataToSend);
+
+                    // Restart the countdown after saving
+                    setTimeout(() => {
+                        countdown = 20;
+                        autoSaveMessage.innerHTML = `Auto-saving in <span id="countdownTimer">${countdown}</span>s...`;
+                        updateCountdown();
+                    }, 1000);
+                }
+            }, 1000);
+        }
+
+        // Pause and resume countdown when tab is inactive/active
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                isTabActive = true;
+                if (!intervalId) updateCountdown();
+            } else {
+                isTabActive = false;
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+        });
+
+        // Save before the user exits the page
         window.addEventListener('beforeunload', function() {
-            // update nurse information change before exit
             update_nurse_information(dataToSend);
         });
+
+        // Start saving when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            startSavingWithCountdown();
+        });
+        
+        function manualSave() {
+            countdown = 1;
+        }
     </script>
 @stop
