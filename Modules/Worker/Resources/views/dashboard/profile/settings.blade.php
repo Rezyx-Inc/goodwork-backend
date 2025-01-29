@@ -12,6 +12,38 @@
 @include('worker::dashboard.profile.settings.upload_document_modal')
 
 
+<!-- Static Auto-Save Notification -->
+<div class="autoSaveBox">
+    <strong>Auto-Save</strong>
+    <div id="autoSaveMessage">Auto-saving in <span id="countdownTimer">20</span>s...</div>
+    <u class ="manualSave" onclick="manualSave()"><strong>Manualy save!</strong></u>
+</div>
+
+
+<style>
+    .autoSaveBox {
+        position: fixed;
+        bottom: 30px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.527);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 14px;
+        z-index: 1000;
+        min-width: 200px;
+        text-align: center;
+    }
+
+    .manualSave{
+        color: #000000;
+        cursor: pointer;
+
+    }
+
+</style>
+
+
 <style>
     /* for collapse */
 
@@ -34,77 +66,91 @@
 </style>
 
 
+
+
+
 <script>
-
-    // Save on page exit
-    window.addEventListener('beforeunload', function() {
-        // Call the saveData function to send the AJAX request
-        saveInfos();
-    });
-
-    let intervalId;
+    let countdown = 20; // Start countdown at 20 seconds
+    let intervalId = null;
     let respErrCount = 0;
+    let isTabActive = true; // Track if the tab is active
 
-    // start the saving interval
-    function startSaving() {
+    function startSavingWithCountdown() {
+        updateCountdown();
+    }
+
+    function updateCountdown() {
+        if (intervalId) clearInterval(intervalId);
+
+        const countdownElement = document.getElementById('countdownTimer');
+        const autoSaveMessage = document.getElementById('autoSaveMessage');
+
         intervalId = setInterval(() => {
-            saveInfos();
-        }, 5000);
+            if (!isTabActive) return; // If tab is inactive, do nothing
+
+            countdown--;
+            countdownElement.textContent = countdown; // Update countdown text
+
+            if (countdown <= 0) {
+                clearInterval(intervalId);
+                intervalId = null; // Mark interval as stopped
+                autoSaveMessage.innerHTML = "Saving...";
+                saveInfos();
+
+                // Restart countdown after saving
+                setTimeout(() => {
+                    countdown = 20;
+                    autoSaveMessage.innerHTML = `Auto-saving in <span id="countdownTimer">${countdown}</span>s...`;
+                    updateCountdown();
+                }, 1000);
+            }
+        }, 1000);
     }
-
-    // stop saving
-    function stopSaving() {
-        clearInterval(intervalId);
-    }
-
-    // Listen to visibility change events
-    document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible') {
-            // Tab is active, start the interval
-            startSaving();
-        } else {
-            // Tab is inactive, stop the interval
-            stopSaving();
-        }
-    });
-
-    // Start the interval when the page loads
-    startSaving();
 
     function saveInfos() {
-        // Perform basic validation if needed
-        // if (!validateBasicInfo()) {
-        //     return; // Skip the save if validation fails
-        // }
-
-        // Get the form element
         let form = document.getElementById('worker-profile-form');
         let formData = new FormData(form);
 
-        // Send the data silently using fetch with keepalive
         fetch('/worker/update-worker-profile', {
             method: 'POST',
             body: formData,
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
-            keepalive: true // Ensures the request completes even if the page unloads
+            keepalive: true
         }).then(response => {
             respErrCount = 0;
-            // console.log("Silent save successful");
+            console.log("Silent save successful");
         }).catch(error => {
-
+            respErrCount++;
             if (respErrCount > 4) {
-                // show error message with message that data is not saving need to refresh the page
-                notie.alert({
-                    type: 3,
-                    text: 'Data is not saving, Please refresh the page',
-                    time: 5
-                })
+                document.getElementById('autoSaveMessage').innerHTML = 
+                    '<span style="color: red;">Data not saving! Refresh the page.</span>';
                 respErrCount = 0;
             }
-            respErrCount++;
         });
     }
+
+    // Pause and resume countdown based on tab visibility
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            isTabActive = true;
+            if (!intervalId) updateCountdown(); // Resume countdown only if it's not already running
+        } else {
+            isTabActive = false;
+            clearInterval(intervalId);
+            intervalId = null; // Mark interval as stopped
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        startSavingWithCountdown();
+    });
+
+    
+    function manualSave() {
+        countdown = 1;
+    }
+
 
 </script>

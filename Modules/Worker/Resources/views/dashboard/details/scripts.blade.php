@@ -1327,38 +1327,68 @@
             );
         }
         
-        let intervalId;
 
-        // start the saving interval
-        function startSaving() {
+
+        let countdown = 20; 
+        let intervalId = null;
+        let isTabActive = true;
+
+        function startSavingWithCountdown() {
+            console.log("Auto-saving enabled");
+            updateCountdown();
+        }
+
+        function updateCountdown() {
+            if (intervalId) clearInterval(intervalId);
+
+            const countdownElement = document.getElementById('countdownTimer');
+            const autoSaveMessage = document.getElementById('autoSaveMessage');
+
             intervalId = setInterval(() => {
-                update_nurse_information(dataToSend);
-            }, 5000);
+                if (!isTabActive) return;
+                countdown--;
+                countdownElement.textContent = countdown; 
+
+                if (countdown <= 0) {
+                    clearInterval(intervalId);
+                    intervalId = null; 
+                    autoSaveMessage.innerHTML = "Saving...";
+                    update_nurse_information(dataToSend);
+
+                    // Restart the countdown after saving
+                    setTimeout(() => {
+                        countdown = 20;
+                        autoSaveMessage.innerHTML = `Auto-saving in <span id="countdownTimer">${countdown}</span>s...`;
+                        updateCountdown();
+                    }, 1000);
+                }
+            }, 1000);
         }
 
-        // stop saving
-        function stopSaving() {
-            clearInterval(intervalId);
-        }
-
-        // Listen to visibility change events
+        // Pause and resume countdown when tab is inactive/active
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
-                // Tab is active, start the interval
-                startSaving();
+                isTabActive = true;
+                if (!intervalId) updateCountdown();
             } else {
-                // Tab is inactive, stop the interval
-                stopSaving();
+                isTabActive = false;
+                clearInterval(intervalId);
+                intervalId = null;
             }
         });
 
-        // Start the interval when the page loads
-        startSaving();
-
-        // Save on page exit
+        // Save before the user exits the page
         window.addEventListener('beforeunload', function() {
-            // update nurse information change before exit
             update_nurse_information(dataToSend);
         });
+
+        // Start saving when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            startSavingWithCountdown();
+        });
+        
+        function manualSave() {
+            countdown = 1;
+        }
     </script>
 @stop
