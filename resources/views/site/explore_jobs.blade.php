@@ -196,7 +196,7 @@
 
 
           {{-- As soon As possible --}}
-          <div class="ss-form-group col-md-12" style="margin: 20px 0px;">
+          <div class="ss-form-group col-md-12 mb-3">
               <div class="row">
                   <div class="row col-lg-12 col-sm-12 col-md-12 col-xs-12"
                       style="display: flex; justify-content: end; align-items:center;">
@@ -209,7 +209,7 @@
                       </label>
                   </div>
                   <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" >
-                    <div class="ss-explr-datepkr">
+                    <div class="ss-starrt-date">
                       <label>Start Date</label>
                         <input type="date" value="{{ $start_date }}" name="start_date"
                             placeholder="Start Date">
@@ -898,6 +898,15 @@ if (index > -1) {
 .ss-speilty-exprnc-add-list button {
     border: 0;
     background: transparent;
+}
+
+.ss-starrt-date input {
+    margin-bottom: 10px;
+    width: 100%;
+    border: 2px solid #3d2c39;
+    box-shadow: 5px 5px 0px 0px #403b4be5;
+    border-radius: 12px;
+    padding: 12px 15px;
 }
 </style>
 @stop
