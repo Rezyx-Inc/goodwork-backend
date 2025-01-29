@@ -238,18 +238,17 @@
               <div id="slider3"></div>
           </div>
 
-          
+          {{-- job id --}}
+          <div class="ss-input-slct-grp job_id mt-5">
+            <label for="cars">Job ID</label>
+            <div class="form-outline">
+                <input type="text" id="gw" class="gw" name="gw"
+                    placeholder="Search by Job ID" value="{{ request('gw') }}">
+            </div>
+            <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;"></div>
+            <!-- Error message display -->
+          </div>
 
-      {{-- job ID --}}
-      {{-- <div class="ss-input-slct-grp mb-3">
-        <label for="cars">Job ID</label>
-        <div class="form-odutline">
-            <input type="text" id="gw" class="gw" name="gw"
-                placeholder="Search by Job ID" value="{{ request('gw') }}">
-        </div>
-        <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;"></div>
-        <!-- Error message display -->
-      </div> --}}
       <!-- partial -->
       <!-- partial:index.partial.html -->
       {{-- <div class="ss-price-week-sec">
@@ -944,5 +943,15 @@ $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value"
     border-radius: 12px;
     padding: 12px 15px;
 }
+.job_id input {
+    border: 2px solid #3D2C39 !important;
+    width: 100%;
+    padding: 10px !important;
+    box-shadow: 10px 10px 0px 0px #3D2C39;
+    border-radius: 15px;
+    font-weight: 500;
+    font-size: 15px;
+}
+
 </style>
 @stop
