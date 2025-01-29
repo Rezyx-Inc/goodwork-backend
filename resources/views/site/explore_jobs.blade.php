@@ -146,70 +146,85 @@
                     </option>
                 @endforeach
             </select>
-        </div>
+          </div>
 
-        {{-- city --}}
-        <div class="ss-input-slct-grp mb-3">
-            <label>City</label>
-            <select name="city" id="city">
-                @if (!empty($city))
-                    <option value="">Select a city</option>
-                    <option value="{{ $city }}" selected>{{ $city }}</option>
-                @else
-                    <option value="">Select state first</option>
-                @endif
-            </select>
-        </div>
-
-
-
-
-            {{-- <div class="ss-input-slct-grp">
-              <label>State</label>
-              <select name="state" onchange="get_cities(this)">
-                <option value="">Select</option>
-                @foreach ($us_states as $v)
-                <option value="{{ $v->name }}" data-id="{{ $v->id }}"
-                  {{ $v->iso2 == $state ? 'selected' : '' }}>
-                  {{ $v->name }}({{ $v->iso2 }})
-                </option>
-                @endforeach
-              </select>
-            </div>
-
-            <div class="ss-input-slct-grp">
+          {{-- city --}}
+          <div class="ss-input-slct-grp mb-3">
               <label>City</label>
               <select name="city" id="city">
-                <option value="">Select</option>
-                @if (!empty($city))
-                <option value="{{ $city }}" selected>{{ $city }}</option>
-                @else
-                <option value="">Select City</option>
-                @endif
+                  @if (!empty($city))
+                      <option value="">Select a city</option>
+                      <option value="{{ $city }}" selected>{{ $city }}</option>
+                  @else
+                      <option value="">Select state first</option>
+                  @endif
               </select>
-            </div> --}}
+          </div>
 
 
-            <div class="ss-jobtype-dv">
-              <label>Terms</label>
-              <ul class="ks-cboxtags">
-                @foreach ($terms_key as $k => $v)
-                <li><input type="checkbox" name="terms[]" id="checkbox-{{ $k }}"
-                    value="{{ $v->title }}"
-                    {{ in_array($v->title, $terms) ? 'checked' : '' }}><label
-                    for="checkbox-{{ $k }}">{{ $v->title }}</label></li>
-                @endforeach
-              </ul>
+
+
+          <div class="ss-form-group ss-prsnl-frm-terms">
+            <label>Terms</label>
+            <div class="ss-speilty-exprnc-add-list terms-content"></div>
+            <ul style="align-items: flex-start; list-style: none;">
+                <li class="row w-100 p-0 m-0">
+                    <div class="ps-0">
+                        <select class="m-0" id="termsSelect">
+                            <option value="">Select Terms</option>
+                            @foreach ($terms_key as $term)
+                                <option value="{{ $term->id }}" 
+                                    {{ in_array($term->id, $terms) ? 'selected' : '' }}>
+                                    {{ $term->title }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <input type="hidden" id="termsAllValues" name="terms" value="{{ implode('-', $terms) }}">
+                    </div>
+                </li>
+                <li>
+                    <div class="ss-prsn-frm-plu-div">
+                        <a href="javascript:void(0)" onclick="addTerms('from_add')">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div>
+                <span class="helper help-block-terms"></span>
             </div>
+        </div>
+        
+        
+  
+          <div class="ss-form-group col-md-12" style="margin: 20px 0px;">
+              <div class="row">
+                  <div class="row col-lg-12 col-sm-12 col-md-12 col-xs-12"
+                      style="display: flex; justify-content: end; align-items:center;">
+                      <input type="hidden" name="as_soon_as" value="0">
+                      <input id="as_soon_as" name="as_soon_as" value="1" type="checkbox" 
+                          {{ $as_soon_as  ? "checked" : ""}}
+                          style="box-shadow:none; width:auto;" class="col-2">
+                      <label class="col-10">
+                          As soon As possible
+                      </label>
+                  </div>
+                  <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" >
+                      <label>Start Date</label>
+                      <input type="date" value="{{ $start_date }}" name="start_date"
+                          placeholder="Start Date">
+                  </div>
+              </div>
+          </div>
 
 
-            <div class="ss-explr-datepkr">
-              <label>Start Date</label>
-              <ul class="ss-date-with">
-                <li><input type="date" value="{{ $start_date }}" name="start_date"
-                    placeholder="Start Date"></li>
-              </ul>
-            </div>
+          <div class="ss-explr-datepkr">
+            <label>Start Date</label>
+            <ul class="ss-date-with">
+              <li><input type="date" value="{{ $start_date }}" name="start_date"
+                  placeholder="Start Date"></li>
+            </ul>
+          </div>
             {{-- <div class="ss-explr-datepkr">
                             <label>End Date</label>
                             <ul class="ss-date-with">
@@ -222,7 +237,7 @@
 
       <!-----price range------->
 
-      <!-- partial:index.partial.html -->
+      {{-- <!-- partial:index.partial.html -->
       <div class="ss-price-week-sec">
         <label>Weekly Pay</label>
         <div id="slider"></div>
@@ -240,7 +255,18 @@
       <div class="ss-price-week-sec">
         <label>Hours Per Week</label>
         <div id="slider3"></div>
-      </div>
+      </div> --}}
+
+      {{-- job ID --}}
+      {{-- <div class="ss-input-slct-grp mb-3">
+        <label for="cars">Job ID</label>
+        <div class="form-odutline">
+            <input type="text" id="gw" class="gw" name="gw"
+                placeholder="Search by Job ID" value="{{ request('gw') }}">
+        </div>
+        <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;"></div>
+        <!-- Error message display -->
+      </div> --}}
       <!-- partial -->
       <!-- partial:index.partial.html -->
       {{-- <div class="ss-price-week-sec">
@@ -259,10 +285,7 @@
       </ul>
     </div> --}}
 
-    <div class="ss-fliter-btn-dv" style="margin-top:50px;">
-      <button class="ss-fliter-btn" type="submit">Filter</button>
-    </div>
-    <input type="hidden" name="terms" value="" id="job_type">
+    {{-- <input type="hidden" name="terms" value="" id="job_type"> --}}
     {{-- <input type="hidden" name="shifts" value="" id="shift"> --}}
     <input type="hidden" name="weekly_pay_from" value="{{ $weekly_pay_from }}" id="minval">
     <input type="hidden" name="weekly_pay_to" value="{{ $weekly_pay_to }}" id="maxval">
@@ -477,6 +500,91 @@
 </script>
 
 <script>
+  let terms = []; // Initialize terms as an array to store only values (texts)
+
+document.addEventListener('DOMContentLoaded', () => {
+const preselectedTerms = document.getElementById('termsAllValues').value.split('-');
+preselectedTerms.forEach(termValue => {
+  if (termValue) {
+      terms.push(termValue); // Add only the value to the array
+  }
+});
+updateTermsList();
+});
+
+function addTerms(type) {
+const selectElement = document.getElementById('termsSelect');
+const selectedValue = selectElement.options[selectElement.selectedIndex].text; // Get the text
+
+if (!selectedValue || selectedValue === 'Select Terms') {
+  notie.alert({
+      type: 'error',
+      text: '<i class="fa fa-times"></i> Please select a term.',
+      time: 3
+  });
+  return;
+}
+
+if (!terms.includes(selectedValue)) {
+  terms.push(selectedValue); // Add the text value to the array
+  selectElement.value = ''; // Clear selection
+  updateTermsList();
+} else {
+  notie.alert({
+      type: 'warning',
+      text: '<i class="fa fa-exclamation"></i> This term is already added.',
+      time: 3
+  });
+}
+}
+
+function updateTermsList() {
+const termsContentDiv = document.querySelector('.terms-content');
+let termsHtml = '';
+
+terms.forEach(term => {
+  termsHtml += `
+      <ul class="row w-100" style="list-style: none;">
+          <li class="col-8">${term}</li>
+          <li class="col-4 text-end">
+              <button type="button" onclick="removeTerm('${term}')">
+                  <img src="{{ URL::asset('frontend/img/delete-img.png') }}" />                    
+              </button>
+          </li>
+      </ul>
+  `;
+});
+
+termsContentDiv.innerHTML = termsHtml;
+
+// Update the hidden input field with the selected terms (joined by '-')
+document.getElementById('termsAllValues').value = terms.join('-');
+}
+
+function removeTerm(termValue) {
+const index = terms.indexOf(termValue);
+if (index > -1) {
+  terms.splice(index, 1);
+  updateTermsList();
+
+  notie.alert({
+      type: 'success',
+      text: '<i class="fa fa-check"></i> Term removed successfully.',
+      time: 3
+  });
+} else {
+  notie.alert({
+      type: 'error',
+      text: '<i class="fa fa-times"></i> Term not found.',
+      time: 3
+  });
+}
+}
+
+</script>
+
+<script>
+
   function resetForm() {
     window.location.href = "{{ route('explore-jobs') }}";
   }
@@ -751,5 +859,59 @@
     border-radius: 100px;
   }
   
+  .ss-prsnl-frm-terms ul {
+    list-style-type: none;
+    display: flex;
+    gap: 22px;
+    align-items: flex-start;
+}
+.ss-prsnl-frm-terms .terms-content ul {
+    display: flex;
+    align-items: center !important;
+    margin-top: 8px;
+} 
+.ss-prsnl-frm-terms .terms-content ul li:nth-child(1) {
+    width: 90%;
+}
+.ss-prsnl-frm-terms .terms-content ul li:nth-child(2) {
+    width: 40%;
+}
+.ss-prsn-frm-plu-div i {
+    background: #3d2c39;
+    width: 65px;
+    height: 55px;
+    line-height: 55px;
+    color: #fff;
+    text-align: center;
+    font-size: 25px;
+    border-radius: 14px;
+}
+.ss-speilty-exprnc-add-list ul {
+    display: flex;
+    align-items: center !important;
+    margin-top: 8px;
+}
+
+.ss-speilty-exprnc-add-list{
+    padding-bottom: 12px;
+}
+
+.ss-speilty-exprnc-add-list ul li:nth-child(1) {
+    width: 40% !important;
+}
+
+.ss-speilty-exprnc-add-list ul li:nth-child(2) {
+    width: 40%;
+}
+
+.ss-speilty-exprnc-add-list ul li:nth-child(3) {
+    width: 20%;
+    text-align: right;
+}
+
+.ss-speilty-exprnc-add-list button {
+    border: 0;
+    background: transparent;
+}
 </style>
 @stop
