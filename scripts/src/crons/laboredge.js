@@ -25,8 +25,6 @@ mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_
     //report("src/crons/laboredge.js error on mongodb connection");
 });
 
-// Need to refresh the data and check the hourlyPay changes
-
 // Process laboredge integrations for the first time
 module.exports.init = async () => {
 
@@ -53,11 +51,19 @@ module.exports.init = async () => {
 				// select * from laboredge where user_id = laboredge.userId
 				
 				// WARNING : uses real data - mimic a normal mysql response
+				// const mysqlResp = {
+				// 	user_id:"UWU445837",
+				// 	le_password:"Newemp1!",
+				// 	le_username:"kirsten@qualityclinicians.com",
+				// 	le_organization_code:"Quality",
+				// 	le_client_id:"nexus"
+				// }
+				
 				const mysqlResp = {
 					user_id:"UWU445837",
-					le_password:"Newemp1!",
-					le_username:"kirsten@qualityclinicians.com",
-					le_organization_code:"Quality",
+					le_password:"API_VITALINK_GOODWORK_12262024",
+					le_username:"api_vitalink_goodwork",
+					le_organization_code:"vitalink",
 					le_client_id:"nexus"
 				}
 
@@ -398,6 +404,7 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 	// Array to hold the imported jobs
 	var importedJobs = [];
 
+	// console.log("Inside getJobs with access token : "+accessToken);
 	// Headers required for the API call
 	var headers = {
 		'Authorization' : 'Bearer '+accessToken,
@@ -425,6 +432,7 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 
 		var { data } = await axios.post("https://api-nexus.laboredge.com:9000/api/job-service/v1/ats/external/jobs/search", params, {headers});
 
+		// console.log("Len of data : "+data.count);
 		if( data.count > 100 ){
 
 			for(; params.pagingDetails.start < data.count ;){
@@ -734,6 +742,8 @@ async function connectNexus(credentials){
 		var accessToken = jwToken.data.access_token;
 		var refreshToken = jwToken.data.refresh_token;
 
+		// console.log("Response : "+jwToken);
+		// console.log("Access token : "+accessToken);
 	}catch(e){
 
 		// log in case of API call failure
