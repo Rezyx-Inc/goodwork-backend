@@ -209,29 +209,16 @@
                       </label>
                   </div>
                   <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" >
+                    <div class="ss-explr-datepkr">
                       <label>Start Date</label>
-                      <input type="date" value="{{ $start_date }}" name="start_date"
-                          placeholder="Start Date">
+                        <input type="date" value="{{ $start_date }}" name="start_date"
+                            placeholder="Start Date">
+                    </div>
                   </div>
               </div>
           </div>
 
-
-          <div class="ss-explr-datepkr">
-            <label>Start Date</label>
-            <ul class="ss-date-with">
-              <li><input type="date" value="{{ $start_date }}" name="start_date"
-                  placeholder="Start Date"></li>
-            </ul>
-          </div>
-            {{-- <div class="ss-explr-datepkr">
-                            <label>End Date</label>
-                            <ul class="ss-date-with">
-                              <li><div class="ss-end-date"><input type="date" value="{{$end_date}}" name="end_date" placeholder="End Date">
-        </div>
-        </li>
-        </ul>
-      </div> --}}
+          
 
 
       <!-----price range------->
