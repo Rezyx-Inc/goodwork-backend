@@ -162,9 +162,8 @@
           </div>
 
 
-
-
-          <div class="ss-form-group ss-prsnl-frm-terms">
+          {{-- terms --}}
+          <div class="ss-form-group ss-prsnl-frm-terms mb-3">
             <label>Terms</label>
             <div class="ss-speilty-exprnc-add-list terms-content"></div>
             <ul style="align-items: flex-start; list-style: none;">
@@ -193,10 +192,10 @@
             <div>
                 <span class="helper help-block-terms"></span>
             </div>
-        </div>
-        
-        
-  
+          </div>
+
+
+          {{-- As soon As possible --}}
           <div class="ss-form-group col-md-12" style="margin: 20px 0px;">
               <div class="row">
                   <div class="row col-lg-12 col-sm-12 col-md-12 col-xs-12"
