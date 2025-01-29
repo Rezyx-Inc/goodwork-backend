@@ -33,8 +33,8 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-4 ss-expl-filtr-lft-dv-bx" style="background-color:#fff8fd !important;">
-        <div>
-          <h5>Filters</h5>
+        <div style="padding:40px !important;">
+          <h4 class="text-center" style="padding-bottom: 10px; font-size: 30px; font-weight: 500;" >Filters</h4>
           <!---form--->
           <form method="get" action="{{ route('explore-jobs') }}" id="filter_form">
             <div class="ss-fliter-btn-dv" style="display: flex; justify-content: space-between;">
@@ -239,7 +239,7 @@
           </div>
 
           {{-- job id --}}
-          <div class="ss-input-slct-grp job_id mt-5">
+          <div class="ss-input-slct-grp job_id mt-5 mb-3">
             <label for="cars">Job ID</label>
             <div class="form-outline">
                 <input type="text" id="gw" class="gw" name="gw"
