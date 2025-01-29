@@ -407,9 +407,10 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 	// set the params for the first query
 	var params = {
 	    jobStatusCode: "OPEN",
+		//"pagingDetails":{"start":0}, required field, rest are optional
 	    pagingDetails:{
 	        start:0,
-	        maxRowsToFetch:100
+	        maxRowsToFetch:100 
     	}
 	};
 
