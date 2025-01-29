@@ -218,30 +218,27 @@
               </div>
           </div>
 
+          <!-- partial:index.partial.html -->
+          <div class="ss-price-week-sec">
+            <label>Weekly Pay</label>
+            <div id="slider"></div>
+          </div>
+          <!-- partial -->
+
+
+          <!-- partial:index.partial.html -->
+          <div class="ss-price-week-sec">
+              <label>Hours Per Shift</label>
+              <div id="slider2"></div>
+          </div>
+          <!-- partial -->
+          <!-- partial:index.partial.html -->
+          <div class="ss-price-week-sec">
+              <label>Hours Per Week</label>
+              <div id="slider3"></div>
+          </div>
+
           
-
-
-      <!-----price range------->
-
-      {{-- <!-- partial:index.partial.html -->
-      <div class="ss-price-week-sec">
-        <label>Weekly Pay</label>
-        <div id="slider"></div>
-      </div>
-      <!-- partial -->
-
-
-      <!-- partial:index.partial.html -->
-      <div class="ss-price-week-sec">
-        <label>Hours Per Shift</label>
-        <div id="slider2"></div>
-      </div>
-      <!-- partial -->
-      <!-- partial:index.partial.html -->
-      <div class="ss-price-week-sec">
-        <label>Hours Per Week</label>
-        <div id="slider3"></div>
-      </div> --}}
 
       {{-- job ID --}}
       {{-- <div class="ss-input-slct-grp mb-3">
@@ -654,155 +651,194 @@ if (index > -1) {
     return string ? string[1] : null;
   };
   // End url
-  // // slider call
-  $(document).ready(function() {
-    $('#slider').slider({
-      range: true,
-      min: 1000,
-      max: 10000,
-      step: 1,
-      values: [$('#minval').val() ? $('#minval').val() : 3000, $('#maxval').val() ? $('#maxval')
-        .val() : 6000
-      ],
+    // // slider call
+    $(document).ready(function() {
+            // $('#slider').slider({
+            //     range: true,
+            //     min: 1000,
+            //     max: 10000,
+            //     step: 1,
+            //     values: [$('#minval').val() ? $('#minval').val() : 3000, $('#maxval').val() ? $('#maxval')
+            //         .val() : 6000
+            //     ],
 
-      slide: function(event, ui) {
+            //     slide: function(event, ui) {
 
+            //         $('#slider .ui-slider-handle:eq(0) .price-range-min').html('$' + ui.values[0]);
+            //         $('#slider .ui-slider-handle:eq(1) .price-range-max').html('$' + ui.values[1]);
+            //         $('#slider .price-range-both').html('<i>$' + ui.values[0] + ' - $' + ui.values[1] +
+            //             '</i>');
+
+            //         // get values of min and max
+            //         $("#minval").val(ui.values[0]);
+            //         $("#maxval").val(ui.values[1]);
+
+            //         if (ui.values[0] == ui.values[1]) {
+            //             // alert('kir');
+            //             $('#slider .price-range-both i').css('display', 'none');
+            //         } else {
+            //             $('#slider .price-range-both i').css('display', 'inline');
+            //         }
+
+            //         if (collision($('.price-range-min'), $('.price-range-max')) == true) {
+            //             $('#slider .price-range-min, .price-range-max').css('opacity', '0');
+            //             $('#slider .price-range-both').css('display', 'block');
+            //         } else {
+            //             $('#slider .price-range-min, .price-range-max').css('opacity', '1');
+            //             $('#slider .price-range-both').css('display', 'none');
+            //         }
+
+            //     }
+            // });
+
+            // $('#slider .ui-slider-range').append('<span class="price-range-both value"><i>$' + $('#slider').slider(
+            //     'values', 0) + ' - $' + $('#slider').slider('values', 1) + '</i></span>');
+
+            // $('#slider .ui-slider-handle:eq(0)').append('<span class="price-range-min value">$' + $('#slider')
+            //     .slider('values', 0) + '</span>');
+
+            // $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value">$' + $('#slider')
+            //     .slider('values', 1) + '</span>');
+
+            $('#slider').slider({
+    range: true,
+    min: 1000,
+    max: 10000,
+    step: 1,
+    values: [
+        $('#minval').val() ? parseInt($('#minval').val()) : 1000, 
+        $('#maxval').val() ? parseInt($('#maxval').val()) : 10000
+    ],
+    slide: function (event, ui) {
         $('#slider .ui-slider-handle:eq(0) .price-range-min').html('$' + ui.values[0]);
         $('#slider .ui-slider-handle:eq(1) .price-range-max').html('$' + ui.values[1]);
-        $('#slider .price-range-both').html('<i>$' + ui.values[0] + ' - $' + ui.values[1] +
-          '</i>');
+        $('#slider .price-range-both').html('<i>$' + ui.values[0] + ' - $' + ui.values[1] + '</i>');
 
-        // get values of min and max
+        // Update hidden inputs
         $("#minval").val(ui.values[0]);
         $("#maxval").val(ui.values[1]);
 
+        // UI adjustments
         if (ui.values[0] == ui.values[1]) {
-          // alert('kir');
-          $('#slider .price-range-both i').css('display', 'none');
+            $('#slider .price-range-both i').css('display', 'none');
         } else {
-          $('#slider .price-range-both i').css('display', 'inline');
+            $('#slider .price-range-both i').css('display', 'inline');
         }
 
         if (collision($('.price-range-min'), $('.price-range-max')) == true) {
-          $('#slider .price-range-min, .price-range-max').css('opacity', '0');
-          $('#slider .price-range-both').css('display', 'block');
+            $('#slider .price-range-min, .price-range-max').css('opacity', '0');
+            $('#slider .price-range-both').css('display', 'block');
         } else {
-          $('#slider .price-range-min, .price-range-max').css('opacity', '1');
-          $('#slider .price-range-both').css('display', 'none');
+            $('#slider .price-range-min, .price-range-max').css('opacity', '1');
+            $('#slider .price-range-both').css('display', 'none');
         }
+    }
+});
 
-      }
-    });
-
-    $('#slider .ui-slider-range').append('<span class="price-range-both value"><i>$' + $('#slider').slider(
-      'values', 0) + ' - $' + $('#slider').slider('values', 1) + '</i></span>');
-
-    $('#slider .ui-slider-handle:eq(0)').append('<span class="price-range-min value">$' + $('#slider')
-      .slider('values', 0) + '</span>');
-
-    $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value">$' + $('#slider')
-      .slider('values', 1) + '</span>');
-
-
-
-    // // slider call
-    $('#slider2').slider({
-      range: true,
-      min: 2,
-      max: 24,
-      step: 1,
-      values: [$('#hps_minval').val() ? $('#hps_minval').val() : 2, $('#hps_maxval').val() ? $(
-        '#hps_maxval').val() : 24],
-
-      slide: function(event, ui) {
-
-        $('#slider2 .ui-slider-handle:eq(0) .price-range-min-2').html(ui.values[0]);
-        $('#slider2 .ui-slider-handle:eq(1) .price-range-max-2').html(ui.values[1]);
-        $('#slider2 .price-range-both-2').html('<i>' + ui.values[0] + ' - ' + ui.values[1] +
-          '</i>');
-
-        // get values of min and max
-        $("#hps_minval").val(ui.values[0]);
-        $("#hps_maxval").val(ui.values[1]);
-
-        if (ui.values[0] == ui.values[1]) {
-          $('#slider2 .price-range-both-2 i').css('display', 'none');
-        } else {
-          $('#slider2 .price-range-both-2 i').css('display', 'inline');
-        }
-
-        if (collision($('#slider2 .price-range-min-2'), $('#slider2 .price-range-max-2')) ==
-          true) {
-          $('#slider2 .price-range-min-2, .price-range-max-2').css('opacity', '0');
-          $('#slider2 .price-range-both-2').css('display', 'block');
-        } else {
-          $('#slider2 .price-range-min-2, .price-range-max-2').css('opacity', '1');
-          $('#slider2 .price-range-both-2').css('display', 'none');
-        }
-
-      }
-    });
-
-    $('#slider2 .ui-slider-range').append('<span class="price-range-both-2 value"><i>' + $('#slider2')
-      .slider('values', 0) + ' - ' + $('#slider2').slider('values', 1) + '</i></span>');
-
-    $('#slider2 .ui-slider-handle:eq(0)').append('<span class="price-range-min-2 value">' + $('#slider2')
-      .slider('values', 0) + '</span>');
-
-    $('#slider2 .ui-slider-handle:eq(1)').append('<span class="price-range-max-2 value">' + $('#slider2')
-      .slider('values', 1) + '</span>');
-
-    //slider3
-    $('#slider3').slider({
-      range: true,
-      min: 10,
-      max: 100,
-      step: 1,
-      values: [$('#hpw_minval').val() ? $('#hpw_minval').val() : 10, $('#hpw_maxval').val() ? $(
-        '#hpw_maxval').val() : 100],
-
-      slide: function(event, ui) {
-
-        $('#slider3 .ui-slider-handle:eq(0) .price-range-min-3').html(ui.values[0]);
-        $('#slider3 .ui-slider-handle:eq(1) .price-range-max-3').html(ui.values[1]);
-        $('#slider3 .price-range-both-3').html('<i>' + ui.values[0] + ' - ' + ui.values[1] +
-          '</i>');
-
-        // get values of min and max
-        $("#hpw_minval").val(ui.values[0]);
-        $("#hpw_maxval").val(ui.values[1]);
-
-        if (ui.values[0] == ui.values[1]) {
-          $('#slider3 .price-range-both-3 i').css('display', 'none');
-        } else {
-          $('#slider3 .price-range-both-3 i').css('display', 'inline');
-        }
-
-        if (collision($('#slider3 .price-range-min-3'), $('#slider3 .price-range-max-3')) ==
-          true) {
-          $('#slider3 .price-range-min-3, .price-range-max-3').css('opacity', '0');
-          $('#slider3 .price-range-both-3').css('display', 'block');
-        } else {
-          $('#slider3 .price-range-min-3, .price-range-max-3').css('opacity', '1');
-          $('#slider3 .price-range-both-3').css('display', 'none');
-        }
-
-      }
-    });
-
-    $('#slider3 .ui-slider-range').append('<span class="price-range-both-3 value"><i>' + $('#slider3')
-      .slider('values', 0) + ' - ' + $('#slider3').slider('values', 1) + '</i></span>');
-
-    $('#slider3 .ui-slider-handle:eq(0)').append('<span class="price-range-min-3 value">' + $('#slider3')
-      .slider('values', 0) + '</span>');
-
-    $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3')
-      .slider('values', 1) + '</span>');
+// Add dynamic price ranges
+$('#slider .ui-slider-range').append('<span class="price-range-both value"><i>$' + $('#slider').slider('values', 0) + ' - $' + $('#slider').slider('values', 1) + '</i></span>');
+$('#slider .ui-slider-handle:eq(0)').append('<span class="price-range-min value">$' + $('#slider').slider('values', 0) + '</span>');
+$('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value">$' + $('#slider').slider('values', 1) + '</span>');
 
 
 
 
-  });
+            // // slider call
+            $('#slider2').slider({
+                range: true,
+                min: 2,
+                max: 24,
+                step: 1,
+                values: [$('#hps_minval').val() ? $('#hps_minval').val() : 2, $('#hps_maxval').val() ? $(
+                    '#hps_maxval').val() : 24],
+
+                slide: function(event, ui) {
+
+                    $('#slider2 .ui-slider-handle:eq(0) .price-range-min-2').html(ui.values[0]);
+                    $('#slider2 .ui-slider-handle:eq(1) .price-range-max-2').html(ui.values[1]);
+                    $('#slider2 .price-range-both-2').html('<i>' + ui.values[0] + ' - ' + ui.values[1] +
+                        '</i>');
+
+                    // get values of min and max
+                    $("#hps_minval").val(ui.values[0]);
+                    $("#hps_maxval").val(ui.values[1]);
+
+                    if (ui.values[0] == ui.values[1]) {
+                        $('#slider2 .price-range-both-2 i').css('display', 'none');
+                    } else {
+                        $('#slider2 .price-range-both-2 i').css('display', 'inline');
+                    }
+
+                    if (collision($('#slider2 .price-range-min-2'), $('#slider2 .price-range-max-2')) ==
+                        true) {
+                        $('#slider2 .price-range-min-2, .price-range-max-2').css('opacity', '0');
+                        $('#slider2 .price-range-both-2').css('display', 'block');
+                    } else {
+                        $('#slider2 .price-range-min-2, .price-range-max-2').css('opacity', '1');
+                        $('#slider2 .price-range-both-2').css('display', 'none');
+                    }
+
+                }
+            });
+
+            $('#slider2 .ui-slider-range').append('<span class="price-range-both-2 value"></span>');
+
+            $('#slider2 .ui-slider-handle:eq(0)').append('<span class="price-range-min-2 value">' + $('#slider2')
+                .slider('values', 0) + '</span>');
+
+            $('#slider2 .ui-slider-handle:eq(1)').append('<span class="price-range-max-2 value">' + $('#slider2')
+                .slider('values', 1) + '</span>');
+
+            //slider3
+            $('#slider3').slider({
+                range: true,
+                min: 10,
+                max: 100,
+                step: 1,
+                values: [$('#hpw_minval').val() ? $('#hpw_minval').val() : 10, $('#hpw_maxval').val() ? $(
+                    '#hpw_maxval').val() : 100],
+
+                slide: function(event, ui) {
+
+                    $('#slider3 .ui-slider-handle:eq(0) .price-range-min-3').html(ui.values[0]);
+                    $('#slider3 .ui-slider-handle:eq(1) .price-range-max-3').html(ui.values[1]);
+                    $('#slider3 .price-range-both-3').html('<i>' + ui.values[0] + ' - ' + ui.values[1] +
+                        '</i>');
+
+                    // get values of min and max
+                    $("#hpw_minval").val(ui.values[0]);
+                    $("#hpw_maxval").val(ui.values[1]);
+
+                    if (ui.values[0] == ui.values[1]) {
+                        $('#slider3 .price-range-both-3 i').css('display', 'none');
+                    } else {
+                        $('#slider3 .price-range-both-3 i').css('display', 'inline');
+                    }
+
+                    if (collision($('#slider3 .price-range-min-3'), $('#slider3 .price-range-max-3')) ==
+                        true) {
+                        $('#slider3 .price-range-min-3, .price-range-max-3').css('opacity', '0');
+                        $('#slider3 .price-range-both-3').css('display', 'block');
+                    } else {
+                        $('#slider3 .price-range-min-3, .price-range-max-3').css('opacity', '1');
+                        $('#slider3 .price-range-both-3').css('display', 'none');
+                    }
+
+                }
+            });
+
+            $('#slider3 .ui-slider-range').append('<span class="price-range-both-3 value"></span>');
+
+            $('#slider3 .ui-slider-handle:eq(0)').append('<span class="price-range-min-3 value">' + $('#slider3')
+                .slider('values', 0) + '</span>');
+
+            $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3')
+                .slider('values', 1) + '</span>');
+
+            $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3')
+                .slider('values', 1) + '</span>');
+
+        });
 </script>
 
 
