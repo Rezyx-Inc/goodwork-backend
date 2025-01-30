@@ -15,9 +15,13 @@
 <!-- Static Auto-Save Notification -->
 <div class="autoSaveBox">
     <strong>Auto-Save</strong>
-    <div id="autoSaveMessage">Auto-saving in <span id="countdownTimer">20</span>s...</div>
-    <u class ="manualSave" onclick="manualSave()"><strong>Manualy save!</strong></u>
+    <div id="autoSaveMessage"></div>
+    <div class="progress">
+        <div id="progressBar" class="progress-bar" style="width: 100%;"></div>
+    </div>
+    <u class="manualSave" onclick="manualSave()"><strong>Manually Save!</strong></u>
 </div>
+
 
 
 <style>
@@ -25,20 +29,35 @@
         position: fixed;
         bottom: 30px;
         right: 20px;
-        background: rgba(0, 0, 0, 0.527);
+        background: rgba(0, 0, 0, 0.45);
         color: white;
         padding: 10px 15px;
         border-radius: 5px;
         font-size: 14px;
         z-index: 1000;
-        min-width: 200px;
+        min-width: 220px;
         text-align: center;
     }
 
-    .manualSave{
-        color: #000000;
-        cursor: pointer;
+    .progress {
+        height: 8px;
+        background: #444;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top: 5px;
+    }
 
+    .progress-bar {
+        height: 100%;
+        background: #b5649e;
+        transition: width 1s linear;
+    }
+
+    .manualSave {
+        color: #b5649e;
+        cursor: pointer;
+        display: block;
+        margin-top: 5px;
     }
 
 </style>
@@ -66,43 +85,48 @@
 </style>
 
 
-
-
-
 <script>
-    let countdown = 20; // Start countdown at 20 seconds
+    const baseDuration = 30;
+    let countdown = baseDuration;
     let intervalId = null;
-    let respErrCount = 0;
-    let isTabActive = true; // Track if the tab is active
+    let isTabActive = true;
 
-    function startSavingWithCountdown() {
-        updateCountdown();
+    function startSavingWithProgressBar() {
+        if (intervalId) return;
+        updateProgressBar();
     }
 
-    function updateCountdown() {
+    function updateProgressBar() {
         if (intervalId) clearInterval(intervalId);
 
-        const countdownElement = document.getElementById('countdownTimer');
         const autoSaveMessage = document.getElementById('autoSaveMessage');
+        const progressBar = document.getElementById('progressBar');
+
+        countdown = baseDuration; 
+        progressBar.style.width = "100%";
 
         intervalId = setInterval(() => {
-            if (!isTabActive) return; // If tab is inactive, do nothing
+            if (!isTabActive) return;
 
             countdown--;
-            countdownElement.textContent = countdown; // Update countdown text
+            let progressPercent = (countdown / baseDuration) * 100;
+            progressBar.style.width = progressPercent + "%";
 
             if (countdown <= 0) {
                 clearInterval(intervalId);
-                intervalId = null; // Mark interval as stopped
+                intervalId = null;
                 autoSaveMessage.innerHTML = "Saving...";
+                progressBar.style.width = "0%";
                 saveInfos();
 
                 // Restart countdown after saving
                 setTimeout(() => {
                     countdown = 20;
-                    autoSaveMessage.innerHTML = `Auto-saving in <span id="countdownTimer">${countdown}</span>s...`;
-                    updateCountdown();
-                }, 1000);
+                    autoSaveMessage.innerHTML = ``;
+                    // Reset progress bar
+                    progressBar.style.width = "100%"; 
+                    updateProgressBar();
+                }, 2000);
             }
         }, 1000);
     }
@@ -119,15 +143,9 @@
             },
             keepalive: true
         }).then(response => {
-            respErrCount = 0;
-            console.log("Silent save successful");
+            console.log("Auto-save successful");
         }).catch(error => {
-            respErrCount++;
-            if (respErrCount > 4) {
-                document.getElementById('autoSaveMessage').innerHTML = 
-                    '<span style="color: red;">Data not saving! Refresh the page.</span>';
-                respErrCount = 0;
-            }
+            console.error("Error saving worker information:", error);
         });
     }
 
@@ -135,22 +153,24 @@
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible') {
             isTabActive = true;
-            if (!intervalId) updateCountdown(); // Resume countdown only if it's not already running
+            // Resume countdown only if it's not running
+            if (!intervalId) updateProgressBar();
         } else {
             isTabActive = false;
+            // Stop interval
             clearInterval(intervalId);
-            intervalId = null; // Mark interval as stopped
+            intervalId = null;
         }
     });
 
+    // Start progress bar countdown when page loads
     document.addEventListener('DOMContentLoaded', () => {
-        startSavingWithCountdown();
+        startSavingWithProgressBar();
     });
 
-    
+    // Manual Save Function (Immediately Saves & Resets Timer)
     function manualSave() {
+        // Force countdown to reach zero
         countdown = 1;
     }
-
-
 </script>
