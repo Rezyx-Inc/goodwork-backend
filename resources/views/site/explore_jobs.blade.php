@@ -83,7 +83,7 @@
             </div>
 
             {{-- facility --}}
-            <div class="ss-input-slct-grp mb-3">
+            {{-- <div class="ss-input-slct-grp mb-3">
               <label for="cars">Facility</label>
               <select name="facility_name">
                   <option value="">Select</option>
@@ -103,7 +103,7 @@
                       @endif
                   @endforeach
               </select>                                    
-            </div>
+            </div> --}}
 
             {{-- profession --}}
             <div class="ss-input-slct-grp mb-3">

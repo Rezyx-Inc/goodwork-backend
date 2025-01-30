@@ -67,7 +67,7 @@
                                     </select>
                                 </div>
 
-                                <div class="ss-input-slct-grp">
+                                {{-- <div class="ss-input-slct-grp">
                                     <label for="cars">Facility</label>
                                     <select name="facility_name">
                                         <option value="">Select</option>
@@ -87,7 +87,7 @@
                                             @endif
                                         @endforeach
                                     </select>                                    
-                                </div>
+                                </div> --}}
 
                                 <div class="ss-input-slct-grp">
                                     <label for="cars">Profession</label>
