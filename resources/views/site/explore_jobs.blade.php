@@ -186,7 +186,8 @@
 
       <div class="ss-dash-profile-4-bx-dv">
         @forelse($jobs as $j)
-        <div class="ss-job-prfle-sec" onclick="redirectToJobDetails(`{{ $j->id }}`)">
+        
+        <div class="ss-job-prfle-sec" onclick="redirectToJobDetails(@json($j))">
             {{-- row 1 --}}
             <div class="row">
                 <div class="col-10">
@@ -318,8 +319,10 @@
                 </div>
             </div>
 
-
-           
+            
+            <button type="button" class="btn btn-primary" onclick="redirectToJobDetails(@json($j))">
+              View Job Details
+          </button>
         </div>
     @empty
         <div class="ss-job-prfle-sec">
@@ -332,6 +335,39 @@
 
   </div>
   </div>
+{{--  
+  <button type="button" class="btn btn-primary" onclick="redirectToJobDetails(@json($j))">
+    View Job Details
+  </button> --}}
+  <!-- Modal -->
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Please log in</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <p id="modalJobId">Job ID: </p>
+              <p id="modalJobType">Job Type: </p>
+              <p id="modalJobName">Job Name: </p>
+              <p id="modalJobFacility">Facility: </p>
+              <p id="modalJobCity">City, State: </p>
+              <p id="modalJobDuration">Duration: </p>
+              <p id="modalJobPay">Pay: </p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" onclick="window.location.href = '/login';">Log In</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+  
+
+
 </section>
 
 <!---------------------mobile show----------------->
@@ -341,11 +377,27 @@
 
 @section('js')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <script>
-  function redirectToJobDetails(id) {
-    window.location.href = `job/${id}/details`;
-  }
+ // This will be injected by Laravel, indicating if the user is logged in.
+var isLoggedIn = {{ auth()->guard('frontend')->check() ? 'true' : 'false' }};
+
+function redirectToJobDetails(job) {
+  console.log(job);
+    if (isLoggedIn === 'true') {  // Ensure isLoggedIn is compared correctly as a string
+        window.location.href = `job/${job.id}/details`;
+    } else {
+        // Show the modal if not logged in
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+
+        myModal.show();
+    }
+}
+
+
+
+
+
+
   function daysUntilWorkStarts(dateString) {
     const workStartDate = new Date(dateString);
     const today = new Date();
