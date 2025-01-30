@@ -25,15 +25,18 @@ mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_
     //report("src/crons/laboredge.js error on mongodb connection");
 });
 
+
 // Process laboredge integrations for the first time
-module.exports.init = async () => {
+module.exports.init = (async () => {
+
 
 	var limit = 100; // No. of documents per batch
-	var totalIntegrations = await Laboredge.countDocuments({}); //Fetch total no. of documents
+	var totalIntegrations = await Laboredge.countDocuments(); //Fetch total no. of documents 
 	var totalPages = Math.ceil(totalIntegrations/limit);
 
 	for( i = 0; i < totalPages; i++ ){
 
+		// console.log("Inside 'for' of init function");
 		// offset the results by i (current page) * limit (100 by default)
 		var offset = i * limit;
 		
@@ -102,15 +105,17 @@ module.exports.init = async () => {
 			}
 		})			
 	}
-}
+});
 
 // Update the existing integrations
-module.exports.update = async () => {
+module.exports.update = (async () => {
 
+	// console.log("Inside update function");
 	var limit = 100; // No. of documents per batch
 	var totalIntegrations = await Laboredge.countDocuments();//Fetch total no. of documents
 	var totalPages = Math.ceil(totalIntegrations/limit);
 
+	// console.log("totalPages : "+totalPages);
 	for( i = 0; i < totalPages; i++ ){
 
 		// offset the results by i (current page) * limit (100 by default)
@@ -202,7 +207,7 @@ module.exports.update = async () => {
 			}
 		})			
 	}
-}
+});
 
 // get professions
 async function getProfession (accessToken, userId){
@@ -407,7 +412,7 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 	// console.log("Inside getJobs with access token : "+accessToken);
 	// Headers required for the API call
 	var headers = {
-		'Authorization' : 'Bearer '+accessToken,
+		'Authorization' : 'Bearer '+accessToken, //error
 		'Content-Type': 'application/json'
 	};
 	
