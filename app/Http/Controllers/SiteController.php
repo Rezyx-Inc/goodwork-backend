@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Artisan;
 // ************ Requests ************
 use App\Http\Requests\{LoginRequest, SignupRequest, ForgotRequest, ResetRequest, OTPRequest, ContactUsRequest};
 // ************ models ************
-use App\Models\{User, States, Countries, Nurse, Availability, Keyword, Speciality, JobSaved, Profession};
+use App\Models\{User, State, Offer, Countries, Nurse, Availability, Keyword, Speciality, JobSaved, Profession};
 
 use DateTime;
 
@@ -97,121 +97,179 @@ class SiteController extends Controller
     $ret = Job::where('is_open', '1');
 
 
-
-
+    // Initialize data array
     $data = [];
     $data['user'] = auth()->guard('frontend')->user();
     $data['jobSaved'] = new JobSaved();
+
+    // Fetch related data
+    $data['organizations'] = User::where('role', 'ORGANIZATION')->get();
+    $data['recruiters'] = User::where('role', 'RECRUITER')->get();
+    $data['facilities'] = Job::where('active', '1')->get();
     $data['specialities'] = Speciality::select('full_name')->get();
     $data['professions'] = Profession::select('full_name')->get();
-    $data['terms_key'] = Keyword::where(['filter' => 'Terms'])->get();
+    $data['terms_key'] = Keyword::where(['filter' => 'terms'])->get();
     $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
-    $data['usa'] = $usa = Countries::where(['iso3' => 'USA'])->first();
-    $data['us_states'] = States::where('country_id', $usa->id)->get();
-    // $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
-
-
-    $data['profession'] = isset($request->profession) ? $request->profession : '';
-    $data['specialty'] = isset($request->specialty) ? $request->specialty : '';
-    $data['experience'] = isset($request->experience) ? $request->experience : '';
-    $data['city'] = isset($request->city) ? $request->city : '';
-    $data['state'] = isset($request->state) ? $request->state : '';
-    $data['terms'] = isset($request->terms) ? explode('-', $request->terms) : [];
-    $data['start_date'] = isset($request->start_date) ? $request->start_date : '';
-    $data['end_date'] = isset($request->end_date) ? $request->end_date : '';
-    $data['start_date'] = new DateTime($data['start_date']);
-    $data['start_date'] = $data['start_date']->format('Y-m-d');
-
-    $data['shifts'] = isset($request->shifts) ? explode('-', $request->shifts) : [];
-
-    $data['weekly_pay_from'] = isset($request->weekly_pay_from) ? $request->weekly_pay_from : 10;
-    $data['weekly_pay_to'] = isset($request->weekly_pay_to) ? $request->weekly_pay_to : 10000;
-    $data['hourly_pay_from'] = isset($request->hourly_pay_from) ? $request->hourly_pay_from : 2;
-    $data['hourly_pay_to'] = isset($request->hourly_pay_to) ? $request->hourly_pay_to : 24;
-    $data['hours_per_week_from'] = isset($request->hours_per_week_from) ? $request->hours_per_week_from : 10;
-    $data['hours_per_week_to'] = isset($request->hours_per_week_to) ? $request->hours_per_week_to : 100;
-
+    $usa = Countries::where(['iso3' => 'USA'])->first();
+    $data['us_states'] = State::select('id', 'name')->get();
     
+    // Set filter values from the request, use null as the default if not provided
+    $data['organization_name'] = $request->input('organization_name', null);
+    $data['recruiter_name'] = $request->input('recruiter_name', null);
+    $data['facilityName'] = $request->input('facility_name', null);
+    $data['job_id'] = $request->input('gw', null);
+    $data['profession'] = $request->input('profession');
+    $data['speciality'] = $request->input('speciality');
+    $data['experience'] = $request->input('experience');
+    $data['city'] = $request->input('city');
+    $data['state'] = $request->input('state');
+    $data['terms'] = $request->has('terms') ? explode('-', $request->terms) : [];
+    $data['start_date'] = $request->input('start_date', null);
+    $data['end_date'] = $request->input('end_date', null);
+    $data['start_date'] = $data['start_date'] ? (new DateTime($data['start_date']))->format('Y-m-d') : null;
+    $data['shifts'] = $request->has('shifts') ? explode('-', $request->shifts) : [];
+    $data['job_type'] = $request->input('job_type', null);
+    $data['as_soon_as'] = $request->input('as_soon_as', null);
+
+    // Pay and hour filters
+    $data['weekly_pay_from'] = $request->input('weekly_pay_from');
+    $data['weekly_pay_to'] = $request->input('weekly_pay_to');
+    $data['hourly_pay_from'] = $request->input('hourly_pay_from');
+    $data['hourly_pay_to'] = $request->input('hourly_pay_to');
+    $data['hours_per_week_from'] = $request->input('hours_per_week_from');
+    $data['hours_per_week_to'] = $request->input('hours_per_week_to');
+    
+
 
     if (!empty($gwNumber)) {
 
       if (str_starts_with($gwNumber, 'GWJ')) {
 
         $ret->where('id', $gwNumber);
-        
       } else {
 
         $ret->where('job_id', $gwNumber);
-
       }
 
       $data['jobs'] = $ret->get();
+
       return view('site.explore_jobs', $data);
     }
 
+    $data['organizations_id'] = [];
+    if (!empty($data['organization_name'])) {
+        
+      foreach ($data['organizations'] as $org) {
 
-
-    if ($data['profession']) {
-
-      $ret->where('profession', '=', $data['profession']);
+          // if only organization name is provided
+          if ($org->organization_name == $data['organization_name']) {
+            $data['organizations_id'][] = $org->id;
+          }                
+        }
+        // Apply query filter if organizations_id is not empty
+        if (!empty($data['organizations_id'])) {
+            $ret->whereIn('organization_id', $data['organizations_id']);
+        } else {
+            // no matching organization is found
+            $ret->whereRaw('1 = 0'); // No results will be returned
+        }
     }
 
-    if ($data['specialty']) {
-
-      $ret->where('specialty', '=', $data['specialty']);
+    $data['recruiters_id'] = [];
+    if (!empty($data['recruiter_name'])) {
+        foreach ($data['recruiters'] as $recruiter) {
+            // Combine first and last name for matching
+            $fullName = $recruiter->first_name . ' ' . $recruiter->last_name;
+        
+            // Check if the selected name matches the full name
+            if ($fullName === $data['recruiter_name']) {
+                $data['recruiters_id'][] = $recruiter->id;
+            }
+        }
+      
+        // Apply query filter if recruiters_id is not empty
+        if (!empty($data['recruiters_id'])) {
+            $ret->whereIn('recruiter_id', $data['recruiters_id']);
+        } else {
+            // No matching recruiter found
+            $ret->whereRaw('1 = 0'); // No results will be returned
+        }
     }
 
-    if (count($data['terms']) && !is_null($request->input('terms'))) {
 
-      $ret->whereIn('terms', $data['terms']);
-    }
-
-    if (isset($request->start_date)) {
-
-      $ret->where('start_date', '<=', $data['start_date']);
-    }
-
-    if ($data['shifts']) {
-
-      $ret->whereIn('preferred_shift', $data['shifts']);
+    if (!empty($data['facilityName'])) {
+      $ret->where('facility_name', 'like', $data['facilityName']);
     }
 
 
-    if (isset($request->weekly_pay_from)) {
+    if (!empty($data['job_type'])) {
+      $ret->where('job_type', 'like', $data['job_type']);
+    }
 
+    if (!empty($data['profession'])) {
+      $ret->where('profession', 'like', $data['profession']);
+    }
+
+    if (!empty($data['speciality'])) {
+      $ret->where('preferred_specialty', 'like', $data['speciality']);
+    }
+
+    if (!empty($data['terms']) && !is_null($request->input('terms')) && is_array($data['terms']) && count($data['terms']) > 0) {
+      $ret->where(function ($query) use ($data) {
+          foreach ($data['terms'] as $term) {
+              $query->orWhere('terms', $term);
+          }
+      });
+    }
+  
+  
+    if (!empty($data['as_soon_as'])) {
+      $ret->where('as_soon_as', '=', $data['as_soon_as']);
+    } elseif (!empty($data['start_date'])) {
+      $ret->where('start_date', '>=', $data['start_date']);
+    }
+
+    if (!empty($data['weekly_pay_from'])) {
       $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
-    }
 
-    if (isset($request->weekly_pay_to)) {
+     }
+
+    if (!empty($data['weekly_pay_to'])) {
       $ret->where('weekly_pay', '<=', $data['weekly_pay_to']);
     }
 
-    if (isset($request->hourly_pay_from)) {
+    if (!empty($data['hourly_pay_from'])) {
       $ret->where('hours_shift', '>=', $data['hourly_pay_from']);
     }
 
-    if (isset($request->hourly_pay_to)) {
+    if (!empty($data['hourly_pay_to'])) {
       $ret->where('hours_shift', '<=', $data['hourly_pay_to']);
     }
 
-    if (isset($request->hours_per_week_from)) {
+    if (!empty($data['hours_per_week_from'])) {
       $ret->where('hours_per_week', '>=', $data['hours_per_week_from']);
     }
-
-    if (isset($request->hours_per_week_to)) {
+    if (!empty($data['hours_per_week_to'])) {
       $ret->where('hours_per_week', '<=', $data['hours_per_week_to']);
     }
+    
+
 
     if (isset($request->state)) {
-      $ret->where('job_state', '=', $data['state']);
+      $ret->where('job_state', 'like', $data['state']);
     }
 
     if (isset($request->city)) {
-      $ret->where('job_city', '=', $data['city']);
+      $ret->where('job_city', 'like', $data['city']);
     }
 
-
+    //return response()->json(['message' =>  $ret->get()]);
     $data['jobs'] = $ret->get();
+
+    $jobSaved = new JobSaved;
+
+    $data['jobSaved'] = $jobSaved;
+
     return view('site.explore_jobs', $data);
   }
 
