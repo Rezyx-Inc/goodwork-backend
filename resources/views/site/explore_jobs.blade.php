@@ -33,113 +33,222 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-4 ss-expl-filtr-lft-dv-bx" style="background-color:#fff8fd !important;">
-        <div>
-          <h5>Filters</h5>
+        <div style="padding:40px !important;">
+          <h4 class="text-center" style="padding-bottom: 10px; font-size: 30px; font-weight: 500;" >Filters</h4>
           <!---form--->
           <form method="get" action="{{ route('explore-jobs') }}" id="filter_form">
+            <div class="ss-fliter-btn-dv" style="display: flex; justify-content: space-between;">
+              <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
+              <button class="ss-fliter-btn" type="submit">Filter</button>
+            </div>
 
-            <div class="ss-input-slct-grp">
+            {{-- Organization Name --}}
+            {{-- <div class="ss-input-slct-grp mb-3">
+              <label for="organization_name">Organization Name</label>
+              <select id="organization_name" name="organization_name">
+                  <option value="">Select</option>
+                  @foreach ($organizations as $v)
+                      <option value="{{ $v->organization_name }}"
+                          {{ $organization_name == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
+                      </option>
+                  @endforeach
+              </select>
+            </div> --}}
+
+            {{-- Recruiter Name --}}
+            {{-- <div class="ss-input-slct-grp mb-3">
+              <label for="recruiter_name">Recruiter Name</label>
+              <select id="recruiter_name" name="recruiter_name">
+                  <option value="">Select</option>
+                  @foreach ($recruiters as $v)
+                      <option value="{{ $v->first_name }} {{ $v->last_name }}"
+                          data-org="{{ $v->organization_name }}"
+                          {{ $recruiter_name == $v->first_name . ' ' . $v->last_name ? 'selected' : '' }}>
+                          {{ $v->first_name }} {{ $v->last_name }}
+                      </option>
+                  @endforeach
+              </select>
+            </div> --}}
+
+            {{-- job type --}}
+            <div class="ss-input-slct-grp mb-3">
+              <label for="cars">Job Type</label>
+              <select name="job_type">
+                  <option value="">Select</option>
+                  <option value="Clinical" {{ $job_type == 'Clinical' ? 'selected' : '' }}>Clinical
+                  </option>
+                  <option value="Non-Clinical" {{ $job_type == 'Non-Clinical' ? 'selected' : '' }}>
+                      Non-Clinical</option>
+              </select>
+            </div>
+
+            {{-- facility --}}
+            {{-- <div class="ss-input-slct-grp mb-3">
+              <label for="cars">Facility</label>
+              <select name="facility_name">
+                  <option value="">Select</option>
+                  @php
+                      $uniqueFacilities = [];
+                  @endphp
+                  @foreach ($facilities as $v)
+                      @if (!in_array($v->facility_name, $uniqueFacilities))
+                          <option value="{{ $v->facility_name }}" 
+                                  data-id="{{ $v->facility_name }}"
+                                  {{ $facilityName == $v->facility_name ? 'selected' : '' }}>
+                              {{ $v->facility_name }}
+                          </option>
+                          @php
+                              $uniqueFacilities[] = $v->facility_name;
+                          @endphp
+                      @endif
+                  @endforeach
+              </select>                                    
+            </div> --}}
+
+            {{-- profession --}}
+            <div class="ss-input-slct-grp mb-3">
               <label for="cars">Profession</label>
               <select name="profession">
-                <option value="">Select</option>
-                @foreach ($professions as $v)
-                <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
-                  {{ $profession == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
-                </option>
-                @endforeach
+                  <option value="">Select</option>
+                  @foreach ($professions as $v)
+                      <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
+                          {{ $profession == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
+                      </option>
+                  @endforeach
               </select>
-            </div>
+          </div>
 
-            <div class="ss-input-slct-grp">
+          {{-- specialty --}}
+          <div class="ss-input-slct-grp mb-3">
               <label>Specialty</label>
-              <select name="specialty" id="specialty">
-                <option value="">Select Specialty</option>
-                @foreach ($specialities as $speciality)
-                <option value="{{ $speciality->full_name }}">{{ $speciality->full_name }}</option>
-                @endforeach
-
+              <select name="speciality" id="speciality">
+                  <option value="">Select Specialty</option>
+                  @foreach ($specialities as $v)
+                      <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
+                          {{ $speciality == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
+                      </option>
+                  @endforeach
               </select>
-            </div>
+          </div>
 
-
-
-            <div class="ss-input-slct-grp">
-              <label>State</label>
-              <select name="state" onchange="get_cities(this)">
-                <option value="">Select</option>
-                @foreach ($us_states as $v)
-                <option value="{{ $v->name }}" data-id="{{ $v->id }}"
-                  {{ $v->iso2 == $state ? 'selected' : '' }}>
-                  {{ $v->name }}({{ $v->iso2 }})
-                </option>
+          {{-- state --}}
+          <div class="ss-input-slct-grp mb-3">
+            <label> State </label>
+            <select name="state" id="state">
+                @if (!empty($state))
+                    <option value="" selected>{{$state}}</option>
+                @else
+                    <option value="" disabled selected hidden>Select a State</option>
+                @endif
+                @foreach ($us_states as $state)
+                    <option id="{{ $state->id }}" value="{{ $state->name }}">
+                        {{ $state->name }}
+                    </option>
                 @endforeach
-              </select>
-            </div>
+            </select>
+          </div>
 
-            <div class="ss-input-slct-grp">
+          {{-- city --}}
+          <div class="ss-input-slct-grp mb-3">
               <label>City</label>
               <select name="city" id="city">
-                <option value="">Select</option>
-                @if (!empty($city))
-                <option value="{{ $city }}" selected>{{ $city }}</option>
-                @else
-                <option value="">Select City</option>
-                @endif
+                  @if (!empty($city))
+                      <option value="">Select a city</option>
+                      <option value="{{ $city }}" selected>{{ $city }}</option>
+                  @else
+                      <option value="">Select state first</option>
+                  @endif
               </select>
+          </div>
+
+
+          {{-- terms --}}
+          <div class="ss-form-group ss-prsnl-frm-terms mb-3">
+            <label>Terms</label>
+            <div class="ss-speilty-exprnc-add-list terms-content"></div>
+            <ul style="align-items: flex-start; list-style: none;">
+                <li class="row w-100 p-0 m-0">
+                    <div class="ps-0">
+                        <select class="m-0" id="termsSelect">
+                            <option value="">Select Terms</option>
+                            @foreach ($terms_key as $term)
+                                <option value="{{ $term->id }}" 
+                                    {{ in_array($term->id, $terms) ? 'selected' : '' }}>
+                                    {{ $term->title }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <input type="hidden" id="termsAllValues" name="terms" value="{{ implode('-', $terms) }}">
+                    </div>
+                </li>
+                <li>
+                    <div class="ss-prsn-frm-plu-div">
+                        <a href="javascript:void(0)" onclick="addTerms('from_add')">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div>
+                <span class="helper help-block-terms"></span>
             </div>
+          </div>
 
 
-            <div class="ss-jobtype-dv">
-              <label>Terms</label>
-              <ul class="ks-cboxtags">
-                @foreach ($terms_key as $k => $v)
-                <li><input type="checkbox" name="terms[]" id="checkbox-{{ $k }}"
-                    value="{{ $v->title }}"
-                    {{ in_array($v->title, $terms) ? 'checked' : '' }}><label
-                    for="checkbox-{{ $k }}">{{ $v->title }}</label></li>
-                @endforeach
-              </ul>
+          {{-- As soon As possible --}}
+          <div class="ss-form-group col-md-12 mb-3">
+              <div class="row">
+                  <div class="row col-lg-12 col-sm-12 col-md-12 col-xs-12"
+                      style="display: flex; justify-content: end; align-items:center;">
+                      <input type="hidden" name="as_soon_as" value="0">
+                      <input id="as_soon_as" name="as_soon_as" value="1" type="checkbox" 
+                          {{ $as_soon_as  ? "checked" : ""}}
+                          style="box-shadow:none; width:auto;" class="col-2">
+                      <label class="col-10">
+                          As soon As possible
+                      </label>
+                  </div>
+                  <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" >
+                    <div class="ss-starrt-date">
+                      <label>Start Date</label>
+                        <input type="date" value="{{ $start_date }}" name="start_date"
+                            placeholder="Start Date">
+                    </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- partial:index.partial.html -->
+          <div class="ss-price-week-sec">
+            <label>Weekly Pay</label>
+            <div id="slider"></div>
+          </div>
+          <!-- partial -->
+
+
+          <!-- partial:index.partial.html -->
+          <div class="ss-price-week-sec">
+              <label>Hours Per Shift</label>
+              <div id="slider2"></div>
+          </div>
+          <!-- partial -->
+          <!-- partial:index.partial.html -->
+          <div class="ss-price-week-sec">
+              <label>Hours Per Week</label>
+              <div id="slider3"></div>
+          </div>
+
+          {{-- job id --}}
+          <div class="ss-input-slct-grp job_id mt-5 mb-3">
+            <label for="cars">Job ID</label>
+            <div class="form-outline">
+                <input type="text" id="gw" class="gw" name="gw"
+                    placeholder="Search by Job ID" value="{{ request('gw') }}">
             </div>
+            <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;"></div>
+            <!-- Error message display -->
+          </div>
 
-
-            <div class="ss-explr-datepkr">
-              <label>Start Date</label>
-              <ul class="ss-date-with">
-                <li><input type="date" value="{{ $start_date }}" name="start_date"
-                    placeholder="Start Date"></li>
-              </ul>
-            </div>
-            {{-- <div class="ss-explr-datepkr">
-                            <label>End Date</label>
-                            <ul class="ss-date-with">
-                              <li><div class="ss-end-date"><input type="date" value="{{$end_date}}" name="end_date" placeholder="End Date">
-        </div>
-        </li>
-        </ul>
-      </div> --}}
-
-
-      <!-----price range------->
-
-      <!-- partial:index.partial.html -->
-      <div class="ss-price-week-sec">
-        <label>Weekly Pay</label>
-        <div id="slider"></div>
-      </div>
-      <!-- partial -->
-
-
-      <!-- partial:index.partial.html -->
-      <div class="ss-price-week-sec">
-        <label>Hours Per Shift</label>
-        <div id="slider2"></div>
-      </div>
-      <!-- partial -->
-      <!-- partial:index.partial.html -->
-      <div class="ss-price-week-sec">
-        <label>Hours Per Week</label>
-        <div id="slider3"></div>
-      </div>
       <!-- partial -->
       <!-- partial:index.partial.html -->
       {{-- <div class="ss-price-week-sec">
@@ -158,10 +267,7 @@
       </ul>
     </div> --}}
 
-    <div class="ss-fliter-btn-dv" style="margin-top:50px;">
-      <button class="ss-fliter-btn" type="submit">Filter</button>
-    </div>
-    <input type="hidden" name="terms" value="" id="job_type">
+    {{-- <input type="hidden" name="terms" value="" id="job_type"> --}}
     {{-- <input type="hidden" name="shifts" value="" id="shift"> --}}
     <input type="hidden" name="weekly_pay_from" value="{{ $weekly_pay_from }}" id="minval">
     <input type="hidden" name="weekly_pay_to" value="{{ $weekly_pay_to }}" id="maxval">
@@ -343,6 +449,168 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
+  // get cities according to state :
+
+  const jobState = document.getElementById('state');
+  const jobCity = document.getElementById('city');
+  let citiesData = [];
+  const selectedJobState = jobState.value;
+  const selectedState = $(jobState).find(':selected').attr('id');
+
+  jobState.addEventListener('change', async function() {
+
+      const selectedJobState = this.value;
+      const selectedState = $(this).find(':selected').attr('id');
+
+      await $.get(`/api/cities/${selectedState}`, function(cities) {
+          citiesData = cities;
+      });
+
+      jobCity.innerHTML = '<option value="">Cities</option>';
+
+      citiesData.forEach(function(City) {
+
+          const option = document.createElement('option');
+          option.value = City.name;
+          option.textContent = City.name;
+          jobCity.appendChild(option);
+
+      });
+
+  })
+
+</script>
+
+<script>
+  let terms = []; // Initialize terms as an array to store only values (texts)
+
+document.addEventListener('DOMContentLoaded', () => {
+const preselectedTerms = document.getElementById('termsAllValues').value.split('-');
+preselectedTerms.forEach(termValue => {
+  if (termValue) {
+      terms.push(termValue); // Add only the value to the array
+  }
+});
+updateTermsList();
+});
+
+function addTerms(type) {
+const selectElement = document.getElementById('termsSelect');
+const selectedValue = selectElement.options[selectElement.selectedIndex].text; // Get the text
+
+if (!selectedValue || selectedValue === 'Select Terms') {
+  notie.alert({
+      type: 'error',
+      text: '<i class="fa fa-times"></i> Please select a term.',
+      time: 3
+  });
+  return;
+}
+
+if (!terms.includes(selectedValue)) {
+  terms.push(selectedValue); // Add the text value to the array
+  selectElement.value = ''; // Clear selection
+  updateTermsList();
+} else {
+  notie.alert({
+      type: 'warning',
+      text: '<i class="fa fa-exclamation"></i> This term is already added.',
+      time: 3
+  });
+}
+}
+
+function updateTermsList() {
+const termsContentDiv = document.querySelector('.terms-content');
+let termsHtml = '';
+
+terms.forEach(term => {
+  termsHtml += `
+      <ul class="row w-100" style="list-style: none;">
+          <li class="col-8">${term}</li>
+          <li class="col-4 text-end">
+              <button type="button" onclick="removeTerm('${term}')">
+                  <img src="{{ URL::asset('frontend/img/delete-img.png') }}" />                    
+              </button>
+          </li>
+      </ul>
+  `;
+});
+
+termsContentDiv.innerHTML = termsHtml;
+
+// Update the hidden input field with the selected terms (joined by '-')
+document.getElementById('termsAllValues').value = terms.join('-');
+}
+
+function removeTerm(termValue) {
+const index = terms.indexOf(termValue);
+if (index > -1) {
+  terms.splice(index, 1);
+  updateTermsList();
+
+  notie.alert({
+      type: 'success',
+      text: '<i class="fa fa-check"></i> Term removed successfully.',
+      time: 3
+  });
+} else {
+  notie.alert({
+      type: 'error',
+      text: '<i class="fa fa-times"></i> Term not found.',
+      time: 3
+  });
+}
+}
+
+</script>
+
+<script>
+
+  function resetForm() {
+    window.location.href = "{{ route('explore-jobs') }}";
+  }
+    
+  const recruitersName = @json($recruiters); // Recruiters data from the backend
+  const orgSelect = document.getElementById('organization_name');
+  const recruiterSelect = document.getElementById('recruiter_name');
+
+  // Function to populate recruiters based on the selected organization
+  function populateRecruiters(selectedOrg, selectedRecruiter) {
+      // Clear recruiter dropdown
+      recruiterSelect.innerHTML = '<option value="">Select</option>';
+
+      // Filter and add recruiters based on the organization
+      recruitersName.forEach(recruiter => {
+          const recruiterOrg = recruiter.organization_name;
+          if (recruiterOrg === selectedOrg || !selectedOrg) {
+              // Create and append option
+              const option = document.createElement('option');
+              option.value = `${recruiter.first_name} ${recruiter.last_name}`;
+              option.textContent = `${recruiter.first_name} ${recruiter.last_name}`;
+              if (option.value === selectedRecruiter) {
+                  option.selected = true; // Persist selected recruiter
+              }
+              recruiterSelect.appendChild(option);
+          }
+      });
+  }
+
+  // Event listener for organization dropdown change
+  orgSelect.addEventListener('change', function () {
+      const selectedOrg = this.value;
+      populateRecruiters(selectedOrg, recruiterSelect.value);
+  });
+
+  // Populate recruiters on page load (for persistence after form submission)
+  document.addEventListener('DOMContentLoaded', function () {
+      const selectedOrg = orgSelect.value; // Get currently selected organization
+      const selectedRecruiter = recruiterSelect.value; // Get currently selected recruiter
+      populateRecruiters(selectedOrg, selectedRecruiter);
+  });
+</script>
+
+<script>
   function redirectToJobDetails(id) {
     window.location.href = `job/${id}/details`;
   }
@@ -382,259 +650,308 @@
     return string ? string[1] : null;
   };
   // End url
-  // // slider call
-  $(document).ready(function() {
-    $('#slider').slider({
-      range: true,
-      min: 1000,
-      max: 10000,
-      step: 1,
-      values: [$('#minval').val() ? $('#minval').val() : 3000, $('#maxval').val() ? $('#maxval')
-        .val() : 6000
-      ],
+    // // slider call
+    $(document).ready(function() {
+            // $('#slider').slider({
+            //     range: true,
+            //     min: 1000,
+            //     max: 10000,
+            //     step: 1,
+            //     values: [$('#minval').val() ? $('#minval').val() : 3000, $('#maxval').val() ? $('#maxval')
+            //         .val() : 6000
+            //     ],
 
-      slide: function(event, ui) {
+            //     slide: function(event, ui) {
 
+            //         $('#slider .ui-slider-handle:eq(0) .price-range-min').html('$' + ui.values[0]);
+            //         $('#slider .ui-slider-handle:eq(1) .price-range-max').html('$' + ui.values[1]);
+            //         $('#slider .price-range-both').html('<i>$' + ui.values[0] + ' - $' + ui.values[1] +
+            //             '</i>');
+
+            //         // get values of min and max
+            //         $("#minval").val(ui.values[0]);
+            //         $("#maxval").val(ui.values[1]);
+
+            //         if (ui.values[0] == ui.values[1]) {
+            //             // alert('kir');
+            //             $('#slider .price-range-both i').css('display', 'none');
+            //         } else {
+            //             $('#slider .price-range-both i').css('display', 'inline');
+            //         }
+
+            //         if (collision($('.price-range-min'), $('.price-range-max')) == true) {
+            //             $('#slider .price-range-min, .price-range-max').css('opacity', '0');
+            //             $('#slider .price-range-both').css('display', 'block');
+            //         } else {
+            //             $('#slider .price-range-min, .price-range-max').css('opacity', '1');
+            //             $('#slider .price-range-both').css('display', 'none');
+            //         }
+
+            //     }
+            // });
+
+            // $('#slider .ui-slider-range').append('<span class="price-range-both value"><i>$' + $('#slider').slider(
+            //     'values', 0) + ' - $' + $('#slider').slider('values', 1) + '</i></span>');
+
+            // $('#slider .ui-slider-handle:eq(0)').append('<span class="price-range-min value">$' + $('#slider')
+            //     .slider('values', 0) + '</span>');
+
+            // $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value">$' + $('#slider')
+            //     .slider('values', 1) + '</span>');
+
+            $('#slider').slider({
+    range: true,
+    min: 1000,
+    max: 10000,
+    step: 1,
+    values: [
+        $('#minval').val() ? parseInt($('#minval').val()) : 1000, 
+        $('#maxval').val() ? parseInt($('#maxval').val()) : 10000
+    ],
+    slide: function (event, ui) {
         $('#slider .ui-slider-handle:eq(0) .price-range-min').html('$' + ui.values[0]);
         $('#slider .ui-slider-handle:eq(1) .price-range-max').html('$' + ui.values[1]);
-        $('#slider .price-range-both').html('<i>$' + ui.values[0] + ' - $' + ui.values[1] +
-          '</i>');
+        $('#slider .price-range-both').html('<i>$' + ui.values[0] + ' - $' + ui.values[1] + '</i>');
 
-        // get values of min and max
+        // Update hidden inputs
         $("#minval").val(ui.values[0]);
         $("#maxval").val(ui.values[1]);
 
+        // UI adjustments
         if (ui.values[0] == ui.values[1]) {
-          // alert('kir');
-          $('#slider .price-range-both i').css('display', 'none');
+            $('#slider .price-range-both i').css('display', 'none');
         } else {
-          $('#slider .price-range-both i').css('display', 'inline');
+            $('#slider .price-range-both i').css('display', 'inline');
         }
 
         if (collision($('.price-range-min'), $('.price-range-max')) == true) {
-          $('#slider .price-range-min, .price-range-max').css('opacity', '0');
-          $('#slider .price-range-both').css('display', 'block');
+            $('#slider .price-range-min, .price-range-max').css('opacity', '0');
+            $('#slider .price-range-both').css('display', 'block');
         } else {
-          $('#slider .price-range-min, .price-range-max').css('opacity', '1');
-          $('#slider .price-range-both').css('display', 'none');
+            $('#slider .price-range-min, .price-range-max').css('opacity', '1');
+            $('#slider .price-range-both').css('display', 'none');
         }
+    }
+});
 
-      }
-    });
-
-    $('#slider .ui-slider-range').append('<span class="price-range-both value"><i>$' + $('#slider').slider(
-      'values', 0) + ' - $' + $('#slider').slider('values', 1) + '</i></span>');
-
-    $('#slider .ui-slider-handle:eq(0)').append('<span class="price-range-min value">$' + $('#slider')
-      .slider('values', 0) + '</span>');
-
-    $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value">$' + $('#slider')
-      .slider('values', 1) + '</span>');
-
-
-
-    // // slider call
-    $('#slider2').slider({
-      range: true,
-      min: 2,
-      max: 24,
-      step: 1,
-      values: [$('#hps_minval').val() ? $('#hps_minval').val() : 2, $('#hps_maxval').val() ? $(
-        '#hps_maxval').val() : 24],
-
-      slide: function(event, ui) {
-
-        $('#slider2 .ui-slider-handle:eq(0) .price-range-min-2').html(ui.values[0]);
-        $('#slider2 .ui-slider-handle:eq(1) .price-range-max-2').html(ui.values[1]);
-        $('#slider2 .price-range-both-2').html('<i>' + ui.values[0] + ' - ' + ui.values[1] +
-          '</i>');
-
-        // get values of min and max
-        $("#hps_minval").val(ui.values[0]);
-        $("#hps_maxval").val(ui.values[1]);
-
-        if (ui.values[0] == ui.values[1]) {
-          $('#slider2 .price-range-both-2 i').css('display', 'none');
-        } else {
-          $('#slider2 .price-range-both-2 i').css('display', 'inline');
-        }
-
-        if (collision($('#slider2 .price-range-min-2'), $('#slider2 .price-range-max-2')) ==
-          true) {
-          $('#slider2 .price-range-min-2, .price-range-max-2').css('opacity', '0');
-          $('#slider2 .price-range-both-2').css('display', 'block');
-        } else {
-          $('#slider2 .price-range-min-2, .price-range-max-2').css('opacity', '1');
-          $('#slider2 .price-range-both-2').css('display', 'none');
-        }
-
-      }
-    });
-
-    $('#slider2 .ui-slider-range').append('<span class="price-range-both-2 value"><i>' + $('#slider2')
-      .slider('values', 0) + ' - ' + $('#slider2').slider('values', 1) + '</i></span>');
-
-    $('#slider2 .ui-slider-handle:eq(0)').append('<span class="price-range-min-2 value">' + $('#slider2')
-      .slider('values', 0) + '</span>');
-
-    $('#slider2 .ui-slider-handle:eq(1)').append('<span class="price-range-max-2 value">' + $('#slider2')
-      .slider('values', 1) + '</span>');
-
-    //slider3
-    $('#slider3').slider({
-      range: true,
-      min: 10,
-      max: 100,
-      step: 1,
-      values: [$('#hpw_minval').val() ? $('#hpw_minval').val() : 10, $('#hpw_maxval').val() ? $(
-        '#hpw_maxval').val() : 100],
-
-      slide: function(event, ui) {
-
-        $('#slider3 .ui-slider-handle:eq(0) .price-range-min-3').html(ui.values[0]);
-        $('#slider3 .ui-slider-handle:eq(1) .price-range-max-3').html(ui.values[1]);
-        $('#slider3 .price-range-both-3').html('<i>' + ui.values[0] + ' - ' + ui.values[1] +
-          '</i>');
-
-        // get values of min and max
-        $("#hpw_minval").val(ui.values[0]);
-        $("#hpw_maxval").val(ui.values[1]);
-
-        if (ui.values[0] == ui.values[1]) {
-          $('#slider3 .price-range-both-3 i').css('display', 'none');
-        } else {
-          $('#slider3 .price-range-both-3 i').css('display', 'inline');
-        }
-
-        if (collision($('#slider3 .price-range-min-3'), $('#slider3 .price-range-max-3')) ==
-          true) {
-          $('#slider3 .price-range-min-3, .price-range-max-3').css('opacity', '0');
-          $('#slider3 .price-range-both-3').css('display', 'block');
-        } else {
-          $('#slider3 .price-range-min-3, .price-range-max-3').css('opacity', '1');
-          $('#slider3 .price-range-both-3').css('display', 'none');
-        }
-
-      }
-    });
-
-    $('#slider3 .ui-slider-range').append('<span class="price-range-both-3 value"><i>' + $('#slider3')
-      .slider('values', 0) + ' - ' + $('#slider3').slider('values', 1) + '</i></span>');
-
-    $('#slider3 .ui-slider-handle:eq(0)').append('<span class="price-range-min-3 value">' + $('#slider3')
-      .slider('values', 0) + '</span>');
-
-    $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3')
-      .slider('values', 1) + '</span>');
+// Add dynamic price ranges
+$('#slider .ui-slider-range').append('<span class="price-range-both value"><i>$' + $('#slider').slider('values', 0) + ' - $' + $('#slider').slider('values', 1) + '</i></span>');
+$('#slider .ui-slider-handle:eq(0)').append('<span class="price-range-min value">$' + $('#slider').slider('values', 0) + '</span>');
+$('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value">$' + $('#slider').slider('values', 1) + '</span>');
 
 
 
 
-  });
-</script>
-<script>
-  $(document).ready(function() {
-        $("#filter_form").submit(function(e) {
-          e.preventDefault(); // Prevent the form from submitting initially
+            // // slider call
+            $('#slider2').slider({
+                range: true,
+                min: 2,
+                max: 24,
+                step: 1,
+                values: [$('#hps_minval').val() ? $('#hps_minval').val() : 2, $('#hps_maxval').val() ? $(
+                    '#hps_maxval').val() : 24],
 
-          // Get all selected checkboxes with the name "categories[]"
-          const selectedCategories = $("input[name='terms[]']:checked");
+                slide: function(event, ui) {
 
+                    $('#slider2 .ui-slider-handle:eq(0) .price-range-min-2').html(ui.values[0]);
+                    $('#slider2 .ui-slider-handle:eq(1) .price-range-max-2').html(ui.values[1]);
+                    $('#slider2 .price-range-both-2').html('<i>' + ui.values[0] + ' - ' + ui.values[1] +
+                        '</i>');
 
-          // Extract the values (category names) and join them into a comma-separated string
-          const categoriesString = selectedCategories.map(function() {
-            return $(this).val();
-          }).get().join('-');
-          // Set the categoriesString as the value of the hidden input field
-          $("#job_type").val(categoriesString);
+                    // get values of min and max
+                    $("#hps_minval").val(ui.values[0]);
+                    $("#hps_maxval").val(ui.values[1]);
 
-          // const shiftTypes = $("input[name='shift[]']:checked");
-          // const shiftString = shiftTypes.map(function() {
-          // 	return $(this).val();
-          // }).get().join('-');
-          // Set the categoriesString as the value of the hidden input field
-          // $("#shift").val(shiftString);
-          $(this).find("input[name='terms[]']").remove();
-          // $(this).find("input[name='shift[]']").remove();
+                    if (ui.values[0] == ui.values[1]) {
+                        $('#slider2 .price-range-both-2 i').css('display', 'none');
+                    } else {
+                        $('#slider2 .price-range-both-2 i').css('display', 'inline');
+                    }
 
-          // Change the value of the profession select to the text of the selected option
-          const professionSelect = $("select[name='profession']");
-          const selectedOptionText = professionSelect.find("option:selected").text();
+                    if (collision($('#slider2 .price-range-min-2'), $('#slider2 .price-range-max-2')) ==
+                        true) {
+                        $('#slider2 .price-range-min-2, .price-range-max-2').css('opacity', '0');
+                        $('#slider2 .price-range-both-2').css('display', 'block');
+                    } else {
+                        $('#slider2 .price-range-min-2, .price-range-max-2').css('opacity', '1');
+                        $('#slider2 .price-range-both-2').css('display', 'none');
+                    }
 
-          // Add a hidden input to the form with the text of the selected option
-          $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText +
-            '">');
+                }
+            });
 
+            $('#slider2 .ui-slider-range').append('<span class="price-range-both-2 value"></span>');
 
-          // Now, you can submit the form programmatically
-          console.log('my form');
-          console.log($(this).serializeArray());
-          // setInterval(() => {
-          //   this.submit();
-          // }, 500000);
+            $('#slider2 .ui-slider-handle:eq(0)').append('<span class="price-range-min-2 value">' + $('#slider2')
+                .slider('values', 0) + '</span>');
 
-          this.submit();
+            $('#slider2 .ui-slider-handle:eq(1)').append('<span class="price-range-max-2 value">' + $('#slider2')
+                .slider('values', 1) + '</span>');
+
+            //slider3
+            $('#slider3').slider({
+                range: true,
+                min: 10,
+                max: 100,
+                step: 1,
+                values: [$('#hpw_minval').val() ? $('#hpw_minval').val() : 10, $('#hpw_maxval').val() ? $(
+                    '#hpw_maxval').val() : 100],
+
+                slide: function(event, ui) {
+
+                    $('#slider3 .ui-slider-handle:eq(0) .price-range-min-3').html(ui.values[0]);
+                    $('#slider3 .ui-slider-handle:eq(1) .price-range-max-3').html(ui.values[1]);
+                    $('#slider3 .price-range-both-3').html('<i>' + ui.values[0] + ' - ' + ui.values[1] +
+                        '</i>');
+
+                    // get values of min and max
+                    $("#hpw_minval").val(ui.values[0]);
+                    $("#hpw_maxval").val(ui.values[1]);
+
+                    if (ui.values[0] == ui.values[1]) {
+                        $('#slider3 .price-range-both-3 i').css('display', 'none');
+                    } else {
+                        $('#slider3 .price-range-both-3 i').css('display', 'inline');
+                    }
+
+                    if (collision($('#slider3 .price-range-min-3'), $('#slider3 .price-range-max-3')) ==
+                        true) {
+                        $('#slider3 .price-range-min-3, .price-range-max-3').css('opacity', '0');
+                        $('#slider3 .price-range-both-3').css('display', 'block');
+                    } else {
+                        $('#slider3 .price-range-min-3, .price-range-max-3').css('opacity', '1');
+                        $('#slider3 .price-range-both-3').css('display', 'none');
+                    }
+
+                }
+            });
+
+            $('#slider3 .ui-slider-range').append('<span class="price-range-both-3 value"></span>');
+
+            $('#slider3 .ui-slider-handle:eq(0)').append('<span class="price-range-min-3 value">' + $('#slider3')
+                .slider('values', 0) + '</span>');
+
+            $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3')
+                .slider('values', 1) + '</span>');
+
+            $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3')
+                .slider('values', 1) + '</span>');
+
         });
 </script>
 
 
 <script>
-  $(document).ready(function() {
-    $("#filter_form").submit(function(e) {
-      e.preventDefault();
-
-      // Clear previous error message
-      $('#gwError').hide().text('');
-
-      // Get the value of the gw input
-      var gwValue = $('#gw').val();
-
-      // Validation checks
-      // if (gwValue.length > 0 && gwValue[0].toLowerCase() !== 'g') {
-      //   // First character should be 'G' or 'g'
-      //   $('#gwError').text('The GoodWork Number must start with "G".').show();
-      // } else if (gwValue.length > 1 && gwValue[1].toLowerCase() !== 'w') {
-      //   // Second character should be 'W' or 'w'
-      //   $('#gwError').text('The GoodWork Number must start with "GW".').show();
-      // } else if (gwValue.length > 2 && gwValue[2].toLowerCase() !== 'j') {
-      //   // Third character should be 'J' or 'j'
-      //   $('#gwError').text('The GoodWork Number must start with "GWJ".').show();
-      // } else if (gwValue.length > 3 && !/^\d+$/.test(gwValue.slice(3))) {
-      //   // After the third character, it should only be numbers
-      //   $('#gwError').text('The GoodWork Number must be followed by numbers after "GWJ".').show();
-      // } else {
-      
-        // Check if terms input is empty and remove it
-        var termsInput = $('input[name="terms"]');
-        if (termsInput.length && termsInput.val() === '') {
-          termsInput.remove(); // Remove the empty terms input
-        }
-
-        // Get all selected checkboxes with the name "categories[]"
-        const selectedCategories = $("input[name='terms[]']:checked");
-
-        // Extract the values (category names) and join them into a comma-separated string
-        const categoriesString = selectedCategories.map(function() {
-          return $(this).val();
-        }).get().join('-');
-        // Set the categoriesString as the value of the hidden input field
-        $("#job_type").val(categoriesString);
-
-        // Change the value of the profession select to the text of the selected option
-        const professionSelect = $("select[name='profession']");
-        const selectedOptionText = professionSelect.find("option:selected").text();
-
-        // Add a hidden input to the form with the text of the selected option
-        $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText + '">');
-
-        // Now, you can submit the form programmatically
-        console.log('my form');
-        console.log($(this).serializeArray());
-
-        this.submit(); // Submit the form
-      // }
+    $(document).ready(function() {
+      $("#filter_form").submit(function(e) {
+          //e.preventDefault();
+          // Clear previous error message
+          $('#gwError').hide().text('');
+          // Get the value of the gw input
+          var gwValue = $('#gw').val();
+          
+          const categoriesString = selectedCategories.map(function() {
+              return $(this).val();
+          }).get().join('-');
+          // Set the categoriesString as the value of the hidden input field
+          $("#job_type").val(categoriesString);
+          // $(this).find("input[name='terms[]']").remove();
+          // Change the value of the profession select to the text of the selected option
+          const professionSelect = $("select[name='profession']");
+          const selectedOptionText = professionSelect.find("option:selected").text();
+          // Add a hidden input to the form with the text of the selected option
+          $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText +
+              '">');
+          this.submit(); // Submit the form
+        });
     });
-  });
 </script>
 
+<style>
+  span.ss-reset-btn {
+    border: 1px #3d2c39 solid;
+    cursor: pointer;
+    background: #3d2c3998;
+    padding: 10px ;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    width: 100%;
+    border-radius: 100px;
+  }
+  
+  .ss-prsnl-frm-terms ul {
+    list-style-type: none;
+    display: flex;
+    gap: 22px;
+    align-items: flex-start;
+}
+.ss-prsnl-frm-terms .terms-content ul {
+    display: flex;
+    align-items: center !important;
+    margin-top: 8px;
+} 
+.ss-prsnl-frm-terms .terms-content ul li:nth-child(1) {
+    width: 90%;
+}
+.ss-prsnl-frm-terms .terms-content ul li:nth-child(2) {
+    width: 40%;
+}
+.ss-prsn-frm-plu-div i {
+    background: #3d2c39;
+    width: 65px;
+    height: 55px;
+    line-height: 55px;
+    color: #fff;
+    text-align: center;
+    font-size: 25px;
+    border-radius: 14px;
+}
+.ss-speilty-exprnc-add-list ul {
+    display: flex;
+    align-items: center !important;
+    margin-top: 8px;
+}
+
+.ss-speilty-exprnc-add-list{
+    padding-bottom: 12px;
+}
+
+.ss-speilty-exprnc-add-list ul li:nth-child(1) {
+    width: 40% !important;
+}
+
+.ss-speilty-exprnc-add-list ul li:nth-child(2) {
+    width: 40%;
+}
+
+.ss-speilty-exprnc-add-list ul li:nth-child(3) {
+    width: 20%;
+    text-align: right;
+}
+
+.ss-speilty-exprnc-add-list button {
+    border: 0;
+    background: transparent;
+}
+
+.ss-starrt-date input {
+    margin-bottom: 10px;
+    width: 100%;
+    border: 2px solid #3d2c39;
+    box-shadow: 5px 5px 0px 0px #403b4be5;
+    border-radius: 12px;
+    padding: 12px 15px;
+}
+.job_id input {
+    border: 2px solid #3D2C39 !important;
+    width: 100%;
+    padding: 10px !important;
+    box-shadow: 10px 10px 0px 0px #3D2C39;
+    border-radius: 15px;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+</style>
 @stop

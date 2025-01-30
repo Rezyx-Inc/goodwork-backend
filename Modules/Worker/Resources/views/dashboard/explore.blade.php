@@ -20,7 +20,7 @@
                     <div class="col-lg-4">
                         <div class="ss-dash-explr-job-dv" style="padding:40px !important;">
                             <h4>Filters</h4>
-                            <form method="get" action="{{ route('worker.explore') }}" id="filter_form"> @csrf
+                            <form method="post" action="{{ route('worker.exploreSearch') }}" id="filter_form"> @csrf
                                 <div class="ss-fliter-btn-dv" style="display: flex; justify-content: space-between;">
                                     <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
                                     <button class="ss-fliter-btn" type="submit">Filter</button>
@@ -28,81 +28,33 @@
                                
                                
                                 {{-- Organization Name --}}
-<div class="ss-input-slct-grp">
-    <label for="organization_name">Organization Name</label>
-    <select id="organization_name" name="organization_name">
-        <option value="">Select</option>
-        @foreach ($organizations as $v)
-            <option value="{{ $v->organization_name }}"
-                {{ $organization_name == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
-            </option>
-        @endforeach
-    </select>
-</div>
-
-{{-- Recruiter Name --}}
-<div class="ss-input-slct-grp">
-    <label for="recruiter_name">Recruiter Name</label>
-    <select id="recruiter_name" name="recruiter_name">
-        <option value="">Select</option>
-        @foreach ($recruiters as $v)
-            <option value="{{ $v->first_name }} {{ $v->last_name }}"
-                data-org="{{ $v->organization_name }}"
-                {{ $recruiter_name == $v->first_name . ' ' . $v->last_name ? 'selected' : '' }}>
-                {{ $v->first_name }} {{ $v->last_name }}
-            </option>
-        @endforeach
-    </select>
-</div>
-
-                                
-
-
-                                {{-- Recruiter First Name --}}
                                 {{-- <div class="ss-input-slct-grp">
-                                    <label for="cars">Recruiter First Name</label>
-                                    <select name="recruiter_first_name">
+                                    <label for="organization_name">Organization Name</label>
+                                    <select id="organization_name" name="organization_name">
                                         <option value="">Select</option>
-                                        @php
-                                            $uniqueRecruiters = [];
-                                        @endphp
-                                        @foreach ($recruiters as $v)
-                                            @if (!in_array($v->first_name, $uniqueRecruiters))
-                                                <option value="{{ $v->first_name }}" 
-                                                        data-id="{{ $v->first_name }}"
-                                                        {{ $recruiter_first_name == $v->first_name ? 'selected' : '' }}>
-                                                    {{ $v->first_name }}
-                                                </option>
-                                                @php
-                                                    $uniqueRecruiters[] = $v->first_name;
-                                                @endphp
-                                            @endif
+                                        @foreach ($organizations as $v)
+                                            <option value="{{ $v->organization_name }}"
+                                                {{ $organization_name == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div> --}}
-                                
-                                {{-- Recruiter Last Name --}}
+
+                                {{-- Recruiter Name --}}
                                 {{-- <div class="ss-input-slct-grp">
-                                    <label for="cars">Recruiter Last Name</label>
-                                    <select name="recruiter_last_name">
+                                    <label for="recruiter_name">Recruiter Name</label>
+                                    <select id="recruiter_name" name="recruiter_name">
                                         <option value="">Select</option>
-                                        @php
-                                            $uniqueRecruiters = [];
-                                        @endphp
                                         @foreach ($recruiters as $v)
-                                            @if (!in_array($v->last_name, $uniqueRecruiters))
-                                                <option value="{{ $v->last_name }}" 
-                                                        data-id="{{ $v->last_name }}"
-                                                        {{ $recruiter_last_name == $v->last_name ? 'selected' : '' }}>
-                                                    {{ $v->last_name }}
-                                                </option>
-                                                @php
-                                                    $uniqueRecruiters[] = $v->last_name;
-                                                @endphp
-                                            @endif
+                                            <option value="{{ $v->first_name }} {{ $v->last_name }}"
+                                                data-org="{{ $v->organization_name }}"
+                                                {{ $recruiter_name == $v->first_name . ' ' . $v->last_name ? 'selected' : '' }}>
+                                                {{ $v->first_name }} {{ $v->last_name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div> --}}
+
                                 
                                 <div class="ss-input-slct-grp">
                                     <label for="cars">Job Type</label>
@@ -115,7 +67,7 @@
                                     </select>
                                 </div>
 
-                                <div class="ss-input-slct-grp">
+                                {{-- <div class="ss-input-slct-grp">
                                     <label for="cars">Facility</label>
                                     <select name="facility_name">
                                         <option value="">Select</option>
@@ -135,7 +87,7 @@
                                             @endif
                                         @endforeach
                                     </select>                                    
-                                </div>
+                                </div> --}}
 
                                 <div class="ss-input-slct-grp">
                                     <label for="cars">Profession</label>
@@ -190,17 +142,6 @@
                                     </select>
                                 </div>
 
-                                {{-- <div class="ss-jobtype-dv">
-                                    <label>Terms</label>
-                                    <ul class="ks-cboxtags">
-                                        @foreach ($terms_key as $k => $v)
-                                            <li><input type="checkbox" name="terms[]" id="checkbox-{{ $k }}"
-                                                    value="{{ $v->title }}"
-                                                    {{ in_array($v->title, $terms) ? 'checked' : '' }}><label
-                                                    for="checkbox-{{ $k }}">{{ $v->title }}</label></li>
-                                        @endforeach
-                                    </ul>
-                                </div> --}}
 
                                 <div class="ss-form-group ss-prsnl-frm-terms">
                                     <label>Terms</label>
