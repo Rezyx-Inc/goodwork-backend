@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="form-outer">
-                <form method="post" id="create_job_form" action="{{ route('addJob.store') }}">
+                <form method="post" id="draft_job_form" action="{{ route('addJob.store') }}">
                
                     @csrf
                     <!-- first form slide required inputs for adding jobs -->
