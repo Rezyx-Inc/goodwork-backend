@@ -20,7 +20,7 @@
                     <div class="col-lg-4">
                         <div class="ss-dash-explr-job-dv" style="padding:40px !important;">
                             <h4>Filters</h4>
-                            <form method="get" action="{{ route('worker.explore') }}" id="filter_form"> @csrf
+                            <form method="post" action="{{ route('worker.exploreSearch') }}" id="filter_form"> @csrf
                                 <div class="ss-fliter-btn-dv" style="display: flex; justify-content: space-between;">
                                     <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
                                     <button class="ss-fliter-btn" type="submit">Filter</button>

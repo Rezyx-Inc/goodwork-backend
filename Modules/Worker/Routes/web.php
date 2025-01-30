@@ -37,6 +37,7 @@ Route::prefix('worker')->group(function () {
             Route::get('messages', ['uses' => 'WorkerController@get_messages', 'as' => 'worker.messages']);
             Route::get('profile/{type}', ['uses' => 'WorkerDashboardController@my_profile', 'as' => 'profile']);
             Route::get('explore', ['uses' => 'WorkerDashboardController@explore', 'as' => 'worker.explore']);
+            Route::post('explore', ['uses' => 'WorkerDashboardController@explore', 'as' => 'worker.exploreSearch']);
             Route::post('help-and-support', ['uses' => 'WorkerDashboardController@helpAndSupport', 'as' => 'worker-help-and-support']);
             Route::post('worker-update-profile', ['uses' => 'WorkerDashboardController@updateProfile', 'as' => 'worker-update-profile']);
 
