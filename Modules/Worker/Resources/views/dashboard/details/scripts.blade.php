@@ -1326,10 +1326,11 @@
                 '_blank' 
             );
         }
+
+        // auto-save script
         
-
-
-        let countdown = 20; 
+        const baseDuration = 30;
+        let countdown = baseDuration;
         let intervalId = null;
         let isTabActive = true;
 
@@ -1341,31 +1342,35 @@
         function updateCountdown() {
             if (intervalId) clearInterval(intervalId);
 
-            const countdownElement = document.getElementById('countdownTimer');
             const autoSaveMessage = document.getElementById('autoSaveMessage');
+            const progressBar = document.getElementById('progressBar');
 
             intervalId = setInterval(() => {
                 if (!isTabActive) return;
+
                 countdown--;
-                countdownElement.textContent = countdown; 
+                progressBar.style.width = (countdown / baseDuration) * 100 + "%";
 
                 if (countdown <= 0) {
                     clearInterval(intervalId);
                     intervalId = null; 
                     autoSaveMessage.innerHTML = "Saving...";
+                    progressBar.style.width = "0%";
                     update_nurse_information(dataToSend);
 
                     // Restart the countdown after saving
                     setTimeout(() => {
-                        countdown = 20;
-                        autoSaveMessage.innerHTML = `Auto-saving in <span id="countdownTimer">${countdown}</span>s...`;
+                        countdown = baseDuration;
+                        autoSaveMessage.innerHTML = ``;
+                        // Reset progress bar
+                        progressBar.style.width = "100%"; 
                         updateCountdown();
-                    }, 1000);
+                    }, 2000);
                 }
             }, 1000);
         }
 
-        // Pause and resume countdown when tab is inactive/active
+        // Pause & resume countdown based on tab visibility
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
                 isTabActive = true;
@@ -1386,8 +1391,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             startSavingWithCountdown();
         });
-        
+
+        // Manual Save Function (Immediate Save & Resets Timer)
         function manualSave() {
+            // Forces countdown to reach zero
             countdown = 1;
         }
     </script>
