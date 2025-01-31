@@ -3,6 +3,19 @@
 @section('content')
 @section('css')
 <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
+<link href="{{URL::asset('landing/css/bootstrap.min.css')}}" rel="stylesheet" crossorigin="anonymous">
+<link rel="stylesheet" href="{{URL::asset('frontend/css/fontawesome_all.css')}}" />
+{{-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" /> --}}
+<!-- Google Fonts Roboto -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+<!-- MDB -->
+<link href="{{ URL::asset('backend/vendors/confirm/jquery-confirm.min.css') }}" rel="stylesheet">
+{{-- <link href="{{ URL::asset('backend/vendors/datatables/jquery.dataTables.min.css') }}" rel="stylesheet"> --}}
+{{-- Notie --}}
+<link rel="stylesheet" type="text/css" href="{{ URL::asset('backend/vendors/notie/dist/notie.css') }}">
+<!-- Custom styles -->
+<link rel="stylesheet" href="{{URL::asset('frontend/css/style.css')}}" />
+@yield('css')
 @stop
 
 
@@ -445,23 +458,24 @@
 </button> --}}
 
 <!-- Modal -->
+<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content" style="background-color: #fff8fd;">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Job Details</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="modal-body-content">
-        <!-- Dynamic job content will go here -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: #fff8fd;">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Job Details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Job details will be injected here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
+  
 
 
 </section>
@@ -473,34 +487,119 @@
 
 @section('js')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{{-- var isLoggedIn = {{ auth()->guard('frontend')->check() ? 'true' : 'false' }}; --}}
 
 <script>
- //This will be injected by Laravel, indicating if the user is logged in.
- var isLoggedIn = auth()->guard('frontend');
+    var isLoggedIn = @json(auth()->guard('frontend')->check());
 
-function redirectToJobDetails(job) {
-  var jsonJob = JSON.parse(job);
-  console.log(isLoggedIn);
-  
-    if (isLoggedIn === 'true') {  // Ensure isLoggedIn is compared correctly as a string
-        window.location.href = `job/${jsonJob.id}/details`;
-    } else {
-        // Show the modal if not logged in
+    function redirectToJobDetails(job) {
+        if (isLoggedIn) {  
+            window.location.href = `job/${job.id}/details`;
+        } else {
+            showJobModal(job);
+        }
+    }
+    function showJobModal(job) {
+        // Image paths from Blade
+        const locationIcon = @json(asset('frontend/img/location.png'));
+        const calendarIcon = @json(asset('frontend/img/calendar.png'));
+        const dollarIcon = @json(asset('frontend/img/dollarcircle.png'));
+        const recruiterImage = job.recruiter && job.recruiter.image ? job.recruiter.image : 'default-image.png'; // Fallback if image is missing
+        const recruiterName = job.recruiter ? `${job.recruiter.first_name} ${job.recruiter.last_name}` : 'N/A'; // Fallback if recruiter is missing
+        const offerCount = job.offer_count || 'N/A'; // Fallback if offer count is missing
+        const userProfilePath = @json(asset('images/nurses/profile/')); // Path for profile images
+
+        // Set job data in the modal
+        document.querySelector("#exampleModal .modal-body").innerHTML = `
+        <main class="ss-main-body-sec px-1">
+        <div class="ss-apply-on-jb-mmn-dv">
+        <div class="row">
+        <div class="col-lg-12">
+            <div class="ss-apply-on-jb-mmn-dv-box-divs">
+                <div class="ss-job-prfle-sec">
+                    <p>${job.job_type} <span>+50 Applied</span></p>
+                    <h4>${job.job_name}</h4>
+                    <h6>${job.facility?.name || 'NA'}</h6>
+                    <ul>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <img src="${locationIcon}" alt="Location">
+                                ${job.job_city}, ${job.job_state}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <img src="${calendarIcon}" alt="Calendar">
+                                ${job.preferred_assignment_duration} wks
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <img src="${dollarIcon}" alt="Salary">
+                                ${job.weekly_pay}/wk
+                            </a>
+                        </li>
+                    </ul>
+                    <h5>Recently Added</h5>
+                </div>
+            </div>
+            <div class="ss-job-apply-on-view-detls-mn-dv">
+                <div class="ss-job-apply-on-tx-bx-hed-dv">
+                    <ul>
+                        <li>
+                            <p>Recruiter</p>
+                        </li>
+                        <li>
+                            <img width="50px" height="50px"
+                                 src="${userProfilePath}/${recruiterImage}"
+                                 onerror="this.onerror=null;this.src='default-image.png';" />
+                            ${recruiterName}
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <span>${job.id}</span>
+                            <h6>${offerCount} Applied</h6>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="ss-jb-apply-on-disc-txt">
+                                <h5>Description</h5>
+                                <p>${job.description}<a href="#">Read More</a></p>
+            </div>
+        </div>
+        </div>
+        </div>
+        </main>
+        `;
+
+        // Show the modal
         var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-
         myModal.show();
     }
 
-}
-document.querySelectorAll(".job-item").forEach(item => {
-    item.addEventListener("click", function() {
-        const jobId = this.getAttribute("data-id");
-        redirectToJobDetails(jobId);
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".job-item").forEach(item => {
+            item.addEventListener("click", function() {
+                const jobData = this.dataset.job;
+                try {
+                    const job = JSON.parse(jobData);
+                    redirectToJobDetails(job);
+                } catch (error) {
+                    console.error("Invalid job data:", error);
+                }
+            });
+        });
     });
-});
-
-
 </script>
+
+
+
+
+
+
+
 <script>
   // get cities according to state :
 
