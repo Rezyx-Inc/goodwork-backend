@@ -506,73 +506,134 @@
         const dollarIcon = @json(asset('frontend/img/dollarcircle.png'));
         const recruiterImage = job.recruiter && job.recruiter.image ? job.recruiter.image : 'default-image.png'; // Fallback if image is missing
         const recruiterName = job.recruiter ? `${job.recruiter.first_name} ${job.recruiter.last_name}` : 'N/A'; // Fallback if recruiter is missing
-        const offerCount = job.offer_count || 'N/A'; // Fallback if offer count is missing
         const userProfilePath = @json(asset('images/nurses/profile/')); // Path for profile images
 
         // Set job data in the modal
         document.querySelector("#exampleModal .modal-body").innerHTML = `
-        <main class="ss-main-body-sec px-1">
+    <main class="ss-main-body-sec px-1">
         <div class="ss-apply-on-jb-mmn-dv">
-        <div class="row">
-        <div class="col-lg-12">
-            <div class="ss-apply-on-jb-mmn-dv-box-divs">
-                <div class="ss-job-prfle-sec">
-                    <p>${job.job_type} <span>+50 Applied</span></p>
-                    <h4>${job.job_name}</h4>
-                    <h6>${job.facility?.name || 'NA'}</h6>
-                    <ul>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <img src="${locationIcon}" alt="Location">
-                                ${job.job_city}, ${job.job_state}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <img src="${calendarIcon}" alt="Calendar">
-                                ${job.preferred_assignment_duration} wks
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <img src="${dollarIcon}" alt="Salary">
-                                ${job.weekly_pay}/wk
-                            </a>
-                        </li>
-                    </ul>
-                    <h5>Recently Added</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ss-apply-on-jb-mmn-dv-box-divs">
+                        <div class="ss-job-prfle-sec">
+                            <div class="row">
+                                <div class="col-10">
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                <svg style="vertical-align: sub;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
+                                                    <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                                                </svg>
+                                                ${job.profession}
+                                            </a>
+                                        </li>
+                                        <li><a href="#">${job.preferred_specialty}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-7">
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                <img class="icon_cards" src="${locationIcon}">
+                                                ${job.job_city}, ${job.job_state}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-5 d-flex justify-content-end">
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                <img class="icon_cards" src="${calendarIcon}">
+                                                ${job.preferred_assignment_duration} wks
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <img class="icon_cards" src="${calendarIcon}">
+                                                ${job.hours_per_week} hrs/wk
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-end">
+                                    <ul>
+                                        <li>
+                                            <img class="icon_cards" src="frontend/img/dollarcircle.png">
+                                            ${(Number(job.actual_hourly_rate) || 0).toFixed(2)}/hr
+                                        </li>
+                                        <li>
+                                            <img class="icon_cards" src="frontend/img/dollarcircle.png">
+                                            ${(Number(job.weekly_pay) || 0).toFixed(2)}/hr
+                                        </li>
+                                        <li style="font-weight: 600;">
+                                            <img class="icon_cards" src="frontend/img/dollarcircle.png">
+                                            ${(job.weekly_pay * 4 * 12).toFixed(2)}/yr
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ss-job-apply-on-view-detls-mn-dv">
+                            <div class="ss-job-apply-on-tx-bx-hed-dv">
+                                <ul>
+                                    <li>
+                                        <p>Recruiter</p>
+                                    </li>
+                                    <li>
+                                        <img width="50px" height="50px" src="${userProfilePath}/${recruiterImage}" onerror="this.onerror=null;this.src='default-image.png';" />
+                                        ${recruiterName}
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li>
+                                        <span>${job.id}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="ss-jb-aap-on-txt-abt-dv">
+    <h5>About Work</h5>
+    <ul>
+        <li>
+            <h6>Organization Name</h6>
+            <p>${job.recruiter ? job.recruiter : 'Missing information'}</p>
+        </li>
+        <li>
+            <h6>Date Posted</h6>
+            <p>${new Date(job.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
+        </li>
+        <li>
+            <h6>Type</h6>
+            <p>${job.job_type}</p>
+        </li>
+        <li>
+            <h6>Terms</h6>
+            <p>${job.terms}</p>
+        </li>
+    </ul>
+</div>
+
+
+                        </div>
+
+                        <div class="ss-jb-apply-on-disc-txt">
+                            <h5>Description</h5>
+                            <p>${job.description}<a href="#">Read More</a></p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="ss-job-apply-on-view-detls-mn-dv">
-                <div class="ss-job-apply-on-tx-bx-hed-dv">
-                    <ul>
-                        <li>
-                            <p>Recruiter</p>
-                        </li>
-                        <li>
-                            <img width="50px" height="50px"
-                                 src="${userProfilePath}/${recruiterImage}"
-                                 onerror="this.onerror=null;this.src='default-image.png';" />
-                            ${recruiterName}
-                        </li>
-                    </ul>
-                    <ul>
-                        <li>
-                            <span>${job.id}</span>
-                            <h6>${offerCount} Applied</h6>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="ss-jb-apply-on-disc-txt">
-                                <h5>Description</h5>
-                                <p>${job.description}<a href="#">Read More</a></p>
-            </div>
         </div>
-        </div>
-        </div>
-        </main>
-        `;
+    </main>
+`;
+
 
         // Show the modal
         var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
@@ -1103,5 +1164,18 @@ $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value"
     font-size: 15px;
 }
 
+.ss-job-prfle-sec-card-job-details-user-logout{
+
+    box-shadow: 10px 10px 0px 0px #403B4BE5;
+    border: 2px solid #3D2C39;
+    padding: 15px;
+    border-bottom: 5px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    position: relative;
+    background: #fff;
+    cursor: pointer;
+    margin-left: 0px !important ;
+}
 </style>
 @stop
