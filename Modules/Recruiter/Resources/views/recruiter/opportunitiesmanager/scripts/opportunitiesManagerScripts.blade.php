@@ -4370,86 +4370,83 @@
 
     function appendJobToPublishedAndDraftCards(job, type) {
         
-    var publishedOrDraftsCards = null;
+        var publishedOrDraftsCards = null;
 
-    if(type === 'published') {
-         publishedOrDraftsCards = document.getElementById('publishedCards');
-         var publishedJob = document.createElement('div');
-        publishedJob.classList.add('col-12', 'ss-job-prfle-sec', 'published-cards');
-        publishedJob.id = job['id'] + '_published';
-        publishedJob.setAttribute('onclick', "opportunitiesType('published', '" + job['id'] + "', 'jobdetails'), toggleActiveClass('" + job['id'] + "_published', 'published-cards')");
-    } else {
-        publishedOrDraftsCards = document.getElementById('draftCards');
-        var publishedJob = document.createElement('div');
-        publishedJob.classList.add('col-12', 'ss-job-prfle-sec', 'draft-cards');
-        publishedJob.id = job['id'] + '_drafts';
-        let job_id = draftJobs.length;
-        publishedJob.setAttribute('job_id', job_id);
-        publishedJob.setAttribute('onclick', "editDataJob(this), toggleActiveClass('" + job['id'] + "_drafts', 'draft-cards')");
+        if(type === 'published') {
+             publishedOrDraftsCards = document.getElementById('publishedCards');
+             var publishedJob = document.createElement('div');
+            publishedJob.classList.add('col-12', 'ss-job-prfle-sec', 'published-cards');
+            publishedJob.id = job['id'] + '_published';
+            publishedJob.setAttribute('onclick', "opportunitiesType('published', '" + job['id'] + "', 'jobdetails'), toggleActiveClass('" + job['id'] + "_published', 'published-cards')");
+        } else {
+            publishedOrDraftsCards = document.getElementById('draftCards');
+            var publishedJob = document.createElement('div');
+            publishedJob.classList.add('col-12', 'ss-job-prfle-sec', 'draft-cards');
+            publishedJob.id = job['id'] + '_drafts';
+            let job_id = draftJobs.length;
+            publishedJob.setAttribute('job_id', job_id);
+            publishedJob.setAttribute('onclick', "editDataJob(this), toggleActiveClass('" + job['id'] + "_drafts', 'draft-cards')");
+        }
+
+        var jobType = job['job_type'] === 'Travel' ? 'Travel' : 'Local';
+        var jobTypeClass = job['job_type'] === 'Travel' ? 'travel' : 'local';
+
+        var jobTypeSpan = document.createElement('span');
+        jobTypeSpan.classList.add('job-type', jobTypeClass);
+        jobTypeSpan.textContent = jobType;
+
+        var jobTypeApplied = document.createElement('span');
+        jobTypeApplied.classList.add('job-type-applied');
+        jobTypeApplied.textContent = '0 Applied';
+
+        var jobProfession = document.createElement('h4');
+        jobProfession.textContent = job['profession'] + ' - ' + job['preferred_specialty'];
+
+        var jobName = document.createElement('h6');
+        jobName.textContent = job['job_name'];
+
+        var jobLocation = document.createElement('ul');
+        var jobLocationCity = document.createElement('li');
+        var jobLocationCityLink = document.createElement('a');
+        var jobLocationCityImg = document.createElement('img');
+        jobLocationCityImg.src = '{{ URL::asset('frontend/img/location.png') }}';
+        jobLocationCityLink.appendChild(jobLocationCityImg);
+        jobLocationCityLink.innerHTML += job['job_city'] + ', ' + job['job_state'];
+        jobLocationCity.appendChild(jobLocationCityLink);
+
+        var jobLocationDuration = document.createElement('li');
+        var jobLocationDurationLink = document.createElement('a');
+        var jobLocationDurationImg = document.createElement('img');
+        jobLocationDurationImg.src = '{{ URL::asset('frontend/img/calendar.png') }}';
+        jobLocationDurationLink.appendChild(jobLocationDurationImg);
+        jobLocationDurationLink.innerHTML += job['preferred_assignment_duration'] + ' wks';
+        jobLocationDuration.appendChild(jobLocationDurationLink);
+
+        var jobLocationPay = document.createElement('li');
+        var jobLocationPayLink = document.createElement('a');
+        var jobLocationPayImg = document.createElement('img');
+        jobLocationPayImg.src = '{{ URL::asset('frontend/img/dollarcircle.png') }}';
+        jobLocationPayLink.appendChild(jobLocationPayImg);
+        jobLocationPayLink.innerHTML += job['weekly_pay'] + '/wk';
+        jobLocationPay.appendChild(jobLocationPayLink);
+
+        jobLocation.appendChild(jobLocationCity);
+        jobLocation.appendChild(jobLocationDuration);
+        jobLocation.appendChild(jobLocationPay);
+
+        publishedJob.appendChild(jobTypeSpan);
+        publishedJob.appendChild(jobTypeApplied);
+        publishedJob.appendChild(jobProfession);
+        publishedJob.appendChild(jobName);
+        publishedJob.appendChild(jobLocation);
+
+        var container = publishedOrDraftsCards.querySelector('.ss-account-form-lft-1');
+        if (container) {
+            container.insertBefore(publishedJob, container.children[1]);
+        } else {
+            publishedOrDraftsCards.appendChild(publishedJob);
+        }
     }
 
-    var jobType = job['job_type'] === 'Travel' ? 'Travel' : 'Local';
-    var jobTypeClass = job['job_type'] === 'Travel' ? 'travel' : 'local';
-
-    var jobTypeSpan = document.createElement('span');
-    jobTypeSpan.classList.add('job-type', jobTypeClass);
-    jobTypeSpan.textContent = jobType;
-
-    var jobTypeApplied = document.createElement('span');
-    jobTypeApplied.classList.add('job-type-applied');
-    jobTypeApplied.textContent = '0 Applied';
-
-    var jobProfession = document.createElement('h4');
-    jobProfession.textContent = job['profession'] + ' - ' + job['preferred_specialty'];
-
-    var jobName = document.createElement('h6');
-    jobName.textContent = job['job_name'];
-
-    var jobLocation = document.createElement('ul');
-    var jobLocationCity = document.createElement('li');
-    var jobLocationCityLink = document.createElement('a');
-    var jobLocationCityImg = document.createElement('img');
-    jobLocationCityImg.src = '{{ URL::asset('frontend/img/location.png') }}';
-    jobLocationCityLink.appendChild(jobLocationCityImg);
-    jobLocationCityLink.innerHTML += job['job_city'] + ', ' + job['job_state'];
-    jobLocationCity.appendChild(jobLocationCityLink);
-
-    var jobLocationDuration = document.createElement('li');
-    var jobLocationDurationLink = document.createElement('a');
-    var jobLocationDurationImg = document.createElement('img');
-    jobLocationDurationImg.src = '{{ URL::asset('frontend/img/calendar.png') }}';
-    jobLocationDurationLink.appendChild(jobLocationDurationImg);
-    jobLocationDurationLink.innerHTML += job['preferred_assignment_duration'] + ' wks';
-    jobLocationDuration.appendChild(jobLocationDurationLink);
-
-    var jobLocationPay = document.createElement('li');
-    var jobLocationPayLink = document.createElement('a');
-    var jobLocationPayImg = document.createElement('img');
-    jobLocationPayImg.src = '{{ URL::asset('frontend/img/dollarcircle.png') }}';
-    jobLocationPayLink.appendChild(jobLocationPayImg);
-    jobLocationPayLink.innerHTML += job['weekly_pay'] + '/wk';
-    jobLocationPay.appendChild(jobLocationPayLink);
-
-    jobLocation.appendChild(jobLocationCity);
-    jobLocation.appendChild(jobLocationDuration);
-    jobLocation.appendChild(jobLocationPay);
-
-    publishedJob.appendChild(jobTypeSpan);
-    publishedJob.appendChild(jobTypeApplied);
-    publishedJob.appendChild(jobProfession);
-    publishedJob.appendChild(jobName);
-    publishedJob.appendChild(jobLocation);
-
-    var container = publishedOrDraftsCards.querySelector('.ss-account-form-lft-1');
-    if (container) {
-        container.insertBefore(publishedJob, container.children[1]);
-    } else {
-        publishedOrDraftsCards.appendChild(publishedJob);
-    }
-}
-
-
-
-    
 </script>
 
