@@ -292,8 +292,8 @@
 
       <div class="ss-dash-profile-4-bx-dv">
         @forelse($jobs as $j)
-        <div class="ss-job-prfle-sec" onclick="redirectToJobDetails(`{{ $j->id }}`)">
-            {{-- row 1 --}}
+        <div class="ss-job-prfle-sec job-item" data-id="{{ $j }}" data-job="{{ json_encode($j) }}">
+          {{-- row 1 --}}
             <div class="row">
                 <div class="col-10">
                     <ul>
@@ -438,6 +438,32 @@
 
   </div>
   </div>
+
+<!-- Button trigger modal -->
+{{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button> --}}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="background-color: #fff8fd;">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Job Details</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modal-body-content">
+        <!-- Dynamic job content will go here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 </section>
 
 <!---------------------mobile show----------------->
@@ -448,6 +474,33 @@
 @section('js')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<script>
+ //This will be injected by Laravel, indicating if the user is logged in.
+ var isLoggedIn = auth()->guard('frontend');
+
+function redirectToJobDetails(job) {
+  var jsonJob = JSON.parse(job);
+  console.log(isLoggedIn);
+  
+    if (isLoggedIn === 'true') {  // Ensure isLoggedIn is compared correctly as a string
+        window.location.href = `job/${jsonJob.id}/details`;
+    } else {
+        // Show the modal if not logged in
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+
+        myModal.show();
+    }
+
+}
+document.querySelectorAll(".job-item").forEach(item => {
+    item.addEventListener("click", function() {
+        const jobId = this.getAttribute("data-id");
+        redirectToJobDetails(jobId);
+    });
+});
+
+
+</script>
 <script>
   // get cities according to state :
 
@@ -611,9 +664,7 @@ if (index > -1) {
 </script>
 
 <script>
-  function redirectToJobDetails(id) {
-    window.location.href = `job/${id}/details`;
-  }
+  
   function daysUntilWorkStarts(dateString) {
     const workStartDate = new Date(dateString);
     const today = new Date();
