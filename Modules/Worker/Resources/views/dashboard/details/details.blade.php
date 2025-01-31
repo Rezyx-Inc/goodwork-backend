@@ -2245,11 +2245,14 @@
             @include('worker::dashboard.details.new_inputs_modals')
 
 
-            <!-- Auto-Save Notification -->
+            <!-- Static Auto-Save Notification -->
             <div class="autoSaveBox">
                 <strong>Auto-Save</strong>
-                <div id="autoSaveMessage">Auto-saving in <span id="countdownTimer">20</span>s...</div>
-                <u class ="manualSave" onclick="manualSave()"><strong>Manualy save!</strong></u>
+                <div id="autoSaveMessage"></div>
+                <div class="progress">
+                    <div id="progressBar" class="progress-bar" style="width: 100%;"></div>
+                </div>
+                <u class="manualSave" onclick="manualSave()"><strong>Manually Save!</strong></u>
             </div>
 
         </div>
@@ -2406,21 +2409,38 @@
 <style>
     .autoSaveBox {
         position: fixed;
-        bottom: 20px;
+        bottom: 30px;
         right: 20px;
-        background: rgba(0, 0, 0, 0.527);
+        background: rgba(0, 0, 0, 0.45);
         color: white;
         padding: 10px 15px;
         border-radius: 5px;
         font-size: 14px;
         z-index: 1000;
-        min-width: 200px;
+        min-width: 220px;
         text-align: center;
     }
-    .manualSave{
-        color: #000000;
-        cursor: pointer;
 
+    .progress {
+        height: 8px;
+        background: #444;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top: 5px;
     }
+
+    .progress-bar {
+        height: 100%;
+        background: #b5649e;
+        transition: width 1s linear;
+    }
+
+    .manualSave {
+        color: #b5649e;
+        cursor: pointer;
+        display: block;
+        margin-top: 5px;
+    }
+
 
 </style>
