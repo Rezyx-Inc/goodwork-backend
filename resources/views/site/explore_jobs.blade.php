@@ -79,31 +79,31 @@
 
                         {{-- Organization Name --}}
                         {{-- <div class="ss-input-slct-grp mb-3">
-              <label for="organization_name">Organization Name</label>
-              <select id="organization_name" name="organization_name">
-                  <option value="">Select</option>
-                  @foreach ($organizations as $v)
-                      <option value="{{ $v->organization_name }}"
-                          {{ $organization_name == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
-                      </option>
-                  @endforeach
-              </select>
-            </div> --}}
+                          <label for="organization_name">Organization Name</label>
+                          <select id="organization_name" name="organization_name">
+                              <option value="">Select</option>
+                              @foreach ($organizations as $v)
+                                  <option value="{{ $v->organization_name }}"
+                                      {{ $organization_name == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
+                                  </option>
+                              @endforeach
+                          </select>
+                        </div> --}}
 
                         {{-- Recruiter Name --}}
                         {{-- <div class="ss-input-slct-grp mb-3">
-              <label for="recruiter_name">Recruiter Name</label>
-              <select id="recruiter_name" name="recruiter_name">
-                  <option value="">Select</option>
-                  @foreach ($recruiters as $v)
-                      <option value="{{ $v->first_name }} {{ $v->last_name }}"
-                          data-org="{{ $v->organization_name }}"
-                          {{ $recruiter_name == $v->first_name . ' ' . $v->last_name ? 'selected' : '' }}>
-                          {{ $v->first_name }} {{ $v->last_name }}
-                      </option>
-                  @endforeach
-              </select>
-            </div> --}}
+                          <label for="recruiter_name">Recruiter Name</label>
+                          <select id="recruiter_name" name="recruiter_name">
+                              <option value="">Select</option>
+                              @foreach ($recruiters as $v)
+                                  <option value="{{ $v->first_name }} {{ $v->last_name }}"
+                                      data-org="{{ $v->organization_name }}"
+                                      {{ $recruiter_name == $v->first_name . ' ' . $v->last_name ? 'selected' : '' }}>
+                                      {{ $v->first_name }} {{ $v->last_name }}
+                                  </option>
+                              @endforeach
+                          </select>
+                        </div> --}}
 
                         {{-- job type --}}
                         <div class="ss-input-slct-grp mb-3">
@@ -119,26 +119,26 @@
 
                         {{-- facility --}}
                         {{-- <div class="ss-input-slct-grp mb-3">
-              <label for="cars">Facility</label>
-              <select name="facility_name">
-                  <option value="">Select</option>
-                  @php
-                      $uniqueFacilities = [];
-                  @endphp
-                  @foreach ($facilities as $v)
-                      @if (!in_array($v->facility_name, $uniqueFacilities))
-                          <option value="{{ $v->facility_name }}" 
-                                  data-id="{{ $v->facility_name }}"
-                                  {{ $facilityName == $v->facility_name ? 'selected' : '' }}>
-                              {{ $v->facility_name }}
-                          </option>
-                          @php
-                              $uniqueFacilities[] = $v->facility_name;
-                          @endphp
-                      @endif
-                  @endforeach
-              </select>                                    
-            </div> --}}
+                          <label for="cars">Facility</label>
+                          <select name="facility_name">
+                              <option value="">Select</option>
+                              @php
+                                  $uniqueFacilities = [];
+                              @endphp
+                              @foreach ($facilities as $v)
+                                  @if (!in_array($v->facility_name, $uniqueFacilities))
+                                      <option value="{{ $v->facility_name }}" 
+                                              data-id="{{ $v->facility_name }}"
+                                              {{ $facilityName == $v->facility_name ? 'selected' : '' }}>
+                                          {{ $v->facility_name }}
+                                      </option>
+                                      @php
+                                          $uniqueFacilities[] = $v->facility_name;
+                                      @endphp
+                                  @endif
+                              @endforeach
+                          </select>                                    
+                        </div> --}}
 
                         {{-- profession --}}
                         <div class="ss-input-slct-grp mb-3">
@@ -290,7 +290,7 @@
                         {{-- <div class="ss-price-week-sec">
                         <label>Assignment Length</label>
                         <div id="slider4"></div>
-                    </div> --}}
+                        </div> --}}
                         <!-- partial -->
 
 
@@ -299,9 +299,9 @@
                                  <ul class="ks-cboxtags">
                                     @foreach ($prefered_shifts as $k => $v)
                                     <li><input type="checkbox" name="shift[]" id="checkboxDay-{{$k}}" value="{{$v->title}}" {{ (in_array($v->title,$shifts)) ? 'checked': ''}}><label for="checkboxDay-{{$k}}">{{$v->title}}</label></li>
-      @endforeach
-      </ul>
-    </div> --}}
+                        @endforeach
+                        </ul>
+                        </div> --}}
 
                         {{-- <input type="hidden" name="terms" value="" id="job_type"> --}}
                         {{-- <input type="hidden" name="shifts" value="" id="shift"> --}}
@@ -315,7 +315,7 @@
                         <input type="hidden" name="hours_per_week_to" value="{{ $hours_per_week_to }}"
                             id="hpw_maxval">
                         {{-- <input type="hidden" name="assignment_from" value="{{$assignment_from}}" id="al_minval">
-    <input type="hidden" name="assignment_to" value="{{$assignment_to}}" id="al_maxval"> --}}
+                        <input type="hidden" name="assignment_to" value="{{$assignment_to}}" id="al_maxval"> --}}
                     </form>
                 </div>
             </div>
@@ -482,22 +482,21 @@
   Launch demo modal
 </button> --}}
 
-        <!-- Modal -->
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+
+        <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-scrollable">
-                <div class="modal-content" style="background-color: #fff8fd;">
+                <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Job Details</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                        </button>
                     </div>
                     <div class="modal-body">
-                        <!-- Job details will be injected here -->
+                        ...
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -529,14 +528,13 @@
 
     function showJobModal(job, users) {
 
-
         // Image paths from Blade
         const locationIcon = @json(asset('frontend/img/location.png'));
         const calendarIcon = @json(asset('frontend/img/calendar.png'));
         const dollarIcon = @json(asset('frontend/img/dollarcircle.png'));
 
         // Default recruiter image if not provided
-        const recruiterImage = job.recruiter && job.recruiter.image ? job.recruiter.image : 'default-image.png';
+        const recruiterImage = (job.recruiter && job.recruiter.image) ? job.recruiter.image : 'default-image.png';
 
         // Path for profile images
         const userProfilePath = @json(asset('images/nurses/profile/'));
@@ -544,6 +542,7 @@
         // full name
         const creator = users.find(user => user.id === job.created_by);
         const fullName = creator ? creator.first_name + ' ' + creator.last_name : 'Unknown';
+        const userRole = creator ? creator.role : 'Unknown';
 
         // org name
         const org = users.find(user => user.id === job.organization_id);
@@ -627,7 +626,7 @@
                             <div class="ss-job-apply-on-tx-bx-hed-dv">
                                 <ul>
                                     <li>
-                                        <p>Recruiter</p>
+                                        <p>${userRole}</p>
                                     </li>
                                     <li>
                                         <img width="50px" height="50px" src="${userProfilePath}/${recruiterImage}" onerror="this.onerror=null;this.src='default-image.png';" />
@@ -669,21 +668,182 @@
 
 
                             <div class="ss-jb-apl-oninfrm-mn-dv">
-
+                                <center>
+                                    <div class="mb-3">
+                                        <h5>Work Information</h5>
+                                    </div>
+                                </center>
                                 <button class="btn first-collapse" data-toggle="collapse"
                                     data-target="#summary">Summary</button>
                                 <div id="summary" class="collapse">
-                                    <ul class="ss-jb-apply-on-inf-hed mt-3">
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul type_item ss-s-jb-apl-bg-pink">
                                         <li>
-                                            <h5>Work Information</h5>
+                                            <span>Type</span>
+                                            
                                         </li>
                                         <li>
-                                            <h5>Your Information</h5>
+                                            <h6>
+                                              ${job.job_type}
+                                            </h6>
+                                        </li>
+                                    </ul>
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul terms_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Terms</span>
+                                        </li>
+                                        <li>
+                                             <h6>
+                                               ${job.terms}
+                                            </h6>
+                                        </li>
+                                    </ul>
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul terms_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Terms</span>
+                                        </li>
+                                        <li>
+                                             <h6>
+                                               ${job.terms}
+                                            </h6>
+                                        </li>
+                                    </ul>
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul terms_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Profession</span>
+                                        </li>
+                                        <li>
+                                             <h6>
+                                               ${job.profession}
+                                            </h6>
+                                        </li>
+                                    </ul>
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul terms_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Specialty</span>
+                                        </li>
+                                        <li>
+                                             <h6>
+                                               ${job.preferred_specialty}
+                                            </h6>
+                                        </li>
+                                    </ul>
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul actual_hourly_rate_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Est. Taxable Hourly Rate</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                $${job.actual_hourly_rate}
+                                            </h6>
+                                        </li>
+                                    </ul>
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul hours_per_week_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Hours/Week</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.hours_per_week}
+                                            </h6>
                                         </li>
                                     </ul>
 
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul job_state_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Facility State</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.job_state}
+                                            </h6>
+                                        </li>
+                                    </ul>
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul job_city_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Facility City</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.job_city}
+                                            </h6>
+                                        </li>
+                                    </ul>
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul resume_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Resume</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.is_resume ? 'Required' : 'Not Required'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+                                </div>
 
-                                    
+                                <button class="btn first-collapse mt-3" data-toggle="collapse"
+                                    data-target="#shift">Shift</button>
+                                <div id="shift" class="collapse">
+
+                                    <ul id="worker_shift_time_of_day" class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Shift Time Of Day</span>
+                                        
+                                        </li>
+                                        <li>
+                                             <h6>
+                                                ${job.preferred_shift_duration ? job.preferred_shift_duration : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul type_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Guaranteed Hours</span>
+
+                                        </li>
+                                        <li>
+                                           <h6>
+                                                ${job.guaranteed_hours ? job.guaranteed_hours.toLocaleString() : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul type_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Hours/Shift</span>
+
+                                        </li>
+                                        <li>
+                                           <h6>
+                                                ${job.hours_shift ? job.hours_shift : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul type_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Shifts/Week</span>
+                                        
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.weeks_shift ? job.weeks_shift.toLocaleString() : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul type_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Weeks/Assignment</span>
+                                        
+                                        </li>
+                                        <li>
+                                             <h6>
+                                                ${job.preferred_assignment_duration ? job.preferred_assignment_duration : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
 
 
                                 </div>
@@ -696,13 +856,14 @@
             </div>
         </div>
     </main>
-`;
+    `;
 
 
         // Show the modal
         var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
         myModal.show();
     }
+
     document.addEventListener("DOMContentLoaded", function() {
         document.querySelectorAll(".job-item").forEach(item => {
             item.addEventListener("click", function() {
