@@ -589,6 +589,8 @@ function apply_on_jobs(obj,worked_at_facility_before,reload_page = true)
                 // On success: Remove both buttons
                 applyButton.remove();
                 applyButtonLoading.remove();
+                // in a new tab call  route thanks for applying
+                window.open(full_path + 'worker/thanks-for-applying', '_blank');
                 return;
             }else{
                 notie.alert({
