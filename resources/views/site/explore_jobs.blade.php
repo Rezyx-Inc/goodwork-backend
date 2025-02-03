@@ -681,7 +681,7 @@
 
     function redirectToJobDetails(job, users) {
         if (isLoggedIn) {
-            window.location.href = `job/${job.id}/details`;
+            window.location.href = `worker/job/${job.id}/details`;
         } else {
             showJobModal(job, users);
         }
