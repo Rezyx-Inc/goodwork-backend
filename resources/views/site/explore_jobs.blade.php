@@ -497,7 +497,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="close_modal_button" data-dismiss="modal">Close</button>
-                        <button type="button" class="apply_modal_button" data-dismiss="modal">Apply</button>
+                        <button type="button" class="apply_modal_button"  onclick="applyButton()">Apply</button>
                     </div>
                 </div>
             </div>
@@ -517,6 +517,10 @@
 {{-- var isLoggedIn = {{ auth()->guard('frontend')->check() ? 'true' : 'false' }}; --}}
 
 <script>
+    const applyButton = () => {
+        window.location.href = "{{ route('worker.login') }}";
+    }
+    
     var isLoggedIn = @json(auth()->guard('frontend')->check());
 
     function redirectToJobDetails(job, users) {
