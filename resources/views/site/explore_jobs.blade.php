@@ -603,7 +603,7 @@
                             <li>Free consultation and zero up-front fees</li>
                         </ul>
                         <a href="https://www.bhmediatrack.com/cmp/M15NZ8/2MCHZ8R/?sub1=&sub2=&sub3="
-                            class="cta-button">Start Now</a>
+                            class="cta-button" target="_blank">Start Now</a>
                     </div>
                 </div>
 
@@ -615,7 +615,7 @@
                             Our Industry-leading resume tools take your job search from basic to next level.
                         </p>
                         <a href="https://www.bhmediatrack.com/25S2ZK4/2LWX2H7/?sub1=1&sub2=2&sub3=3"
-                            class="cta-button">Free Trials</a>
+                            class="cta-button" target="_blank">Free Trials</a>
                     </div>
                 </div>
 
@@ -631,7 +631,7 @@
                             <li>No mandatory fees</li>
                         </ul>
                         <a href="https://www.bhmediatrack.com/25S2ZK4/6Z7MWN9/?sub1=1&sub2=2&sub3=3"
-                            class="cta-button">Get Started</a>
+                            class="cta-button" target="_blank">Get Started</a>
                     </div>
                 </div>
             </div>
