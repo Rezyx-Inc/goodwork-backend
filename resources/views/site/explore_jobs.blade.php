@@ -488,7 +488,7 @@
             <div class="modal-dialog modal-lg modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
                         <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
                         </button>
                     </div>
@@ -556,7 +556,10 @@
         // set the set ask recruiter as a link to message
         let askRecruiter = '<a class="ask_recruiter_href" href="{{ route('worker.login') }}" >Ask recruiter</a>';
 
+        // set modal title
+        document.querySelector("#exampleModal .modal-title").innerHTML = `job ID: ${job.job_id}`
 
+        
         // Set job data in the modal
         document.querySelector("#exampleModal .modal-body").innerHTML = `
     <main class="ss-main-body-sec px-1">
