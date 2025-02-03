@@ -549,6 +549,9 @@
         const org = users.find(user => user.id === job.organization_id);
         const orgrName = org ? org.organization_name : 'Unknown';
 
+        // set the set ask recruiter as a link to message
+        let askRecruiter = '<a class="ask_recruiter_href" href="{{ route('worker.login') }}" >Ask recruiter</a>';
+
 
         // Set job data in the modal
         document.querySelector("#exampleModal .modal-body").innerHTML = `
@@ -792,7 +795,7 @@
                                         </li>
                                         <li>
                                              <h6>
-                                                ${job.preferred_shift_duration ? job.preferred_shift_duration : 'Ask Recruiter'}
+                                                ${job.preferred_shift_duration ? job.preferred_shift_duration : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -804,7 +807,7 @@
                                         </li>
                                         <li>
                                            <h6>
-                                                ${job.guaranteed_hours ? job.guaranteed_hours.toLocaleString() : 'Ask Recruiter'}
+                                                ${job.guaranteed_hours ? job.guaranteed_hours.toLocaleString() : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -816,7 +819,7 @@
                                         </li>
                                         <li>
                                            <h6>
-                                                ${job.hours_shift ? job.hours_shift : 'Ask Recruiter'}
+                                                ${job.hours_shift ? job.hours_shift : askRecruiter}
                                                 </h6>
                                                 </li>
                                                 </ul>
@@ -828,7 +831,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.weeks_shift ? job.weeks_shift.toLocaleString() : 'Ask Recruiter'}
+                                                ${job.weeks_shift ? job.weeks_shift.toLocaleString() : askRecruiter}
                                             </h6>
                                         </li>
                                         </ul>
@@ -840,7 +843,7 @@
                                             </li>
                                         <li>
                                              <h6>
-                                                ${job.preferred_assignment_duration ? job.preferred_assignment_duration : 'Ask Recruiter'}
+                                                ${job.preferred_assignment_duration ? job.preferred_assignment_duration : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -852,7 +855,7 @@
                                             </li>
                                         <li>
                                             <h6>
-                                                ${job.as_soon_as == 1 ? 'As soon as possible' : (job.start_date || 'Ask Recruiter')}
+                                                ${job.as_soon_as == 1 ? 'As soon as possible' : (job.start_date || askRecruiter)}
                                             </h6>
                                         </li>
                                         </ul>
@@ -864,7 +867,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.rto ? job.rto : 'Ask Recruiter'}
+                                                    ${job.rto ? job.rto : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -880,7 +883,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.overtime ? job.overtime : 'Ask Recruiter'}
+                                                ${job.overtime ? job.overtime : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -891,7 +894,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.on_call_rate ? `$${job.on_call_rate}` : 'Ask Recruiter'}
+                                                ${job.on_call_rate ? `$${job.on_call_rate}` : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -902,7 +905,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.call_back_rate ? `$${job.call_back_rate}` : 'Ask Recruiter'}
+                                                ${job.call_back_rate ? `$${job.call_back_rate}` : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -913,7 +916,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.orientation_rate ? job.orientation_rate : 'Ask Recruiter'}
+                                                ${job.orientation_rate ? job.orientation_rate : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -924,7 +927,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.weekly_non_taxable_amount ? `$${job.weekly_non_taxable_amount}` : 'Ask Recruiter'}
+                                                ${job.weekly_non_taxable_amount ? `$${job.weekly_non_taxable_amount}` : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -935,7 +938,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.feels_like_per_hour ?  `$${job.feels_like_per_hour}` : 'Ask Recruiter'}
+                                                ${job.feels_like_per_hour ?  `$${job.feels_like_per_hour}` : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -946,7 +949,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.goodwork_weekly_amount ? `$${job.goodwork_weekly_amount}` : 'Ask Recruiter'}
+                                                ${job.goodwork_weekly_amount ? `$${job.goodwork_weekly_amount}` : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -957,7 +960,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.referral_bonus ? job.referral_bonus : 'Ask Recruiter'}
+                                                ${job.referral_bonus ? job.referral_bonus : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -968,7 +971,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.sign_on_bonus ? `$${job.sign_on_bonus}` : 'Ask Recruiter'}
+                                                ${job.sign_on_bonus ? `$${job.sign_on_bonus}` : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -979,7 +982,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.extension_bonus ? '$' + job.extension_bonus.toLocaleString() : 'Ask Recruiter'}
+                                                ${job.extension_bonus ? '$' + job.extension_bonus.toLocaleString() : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -990,7 +993,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.completion_bonus ? '$' + job.completion_bonus.toLocaleString() : 'Ask Recruiter'}
+                                                ${job.completion_bonus ? '$' + job.completion_bonus.toLocaleString() : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1001,7 +1004,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.other_bonus ? '$' + job.other_bonus.toLocaleString() : 'Ask Recruiter'}
+                                                ${job.other_bonus ? '$' + job.other_bonus.toLocaleString() : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1012,7 +1015,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.health_insaurance ? (job.health_insaurance == '1' ? 'Yes' : 'No') : 'Ask Recruiter'}
+                                                ${job.health_insaurance ? (job.health_insaurance == '1' ? 'Yes' : 'No') : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1023,7 +1026,7 @@
                                             </li>
                                             <li>
                                             <h6>
-                                                ${job.pay_frequency ? job.pay_frequency : 'Ask Recruiter'}
+                                                ${job.pay_frequency ? job.pay_frequency : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1034,7 +1037,7 @@
                                             </li>
                                             <li>
                                             <h6>
-                                                ${job.benefits ? job.benefits : 'Ask Recruiter'}
+                                                ${job.benefits ? job.benefits : askRecruiter}
                                                 </h6>
                                             
                                         </li>
@@ -1047,7 +1050,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.dental ? (job.dental === '1' ? 'Yes' : 'No') : 'Ask Recruiter'}
+                                                ${job.dental ? (job.dental === '1' ? 'Yes' : 'No') : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1059,7 +1062,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.vision ? (job.vision === '1' ? 'Yes' : 'No') : 'Ask Recruiter'}
+                                                ${job.vision ? (job.vision === '1' ? 'Yes' : 'No') : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1071,7 +1074,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.four_zero_one_k ? (job.four_zero_one_k === '1' ? 'Yes' : 'No') : 'Ask Recruiter'}
+                                                ${job.four_zero_one_k ? (job.four_zero_one_k === '1' ? 'Yes' : 'No') : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1089,7 +1092,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.clinical_setting ? job.clinical_setting : 'Ask Recruiter'}
+                                                ${job.clinical_setting ? job.clinical_setting : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1100,7 +1103,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.preferred_work_location ? job.preferred_work_location : 'Ask Recruiter'}
+                                                ${job.preferred_work_location ? job.preferred_work_location : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1111,7 +1114,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.facility_name ? job.facility_name : 'Ask Recruiter'}
+                                                ${job.facility_name ? job.facility_name : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1122,7 +1125,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.facilitys_parent_system ? job.facilitys_parent_system : 'Ask Recruiter'}
+                                                ${job.facilitys_parent_system ? job.facilitys_parent_system : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1133,7 +1136,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.facility_shift_cancelation_policy ? job.facility_shift_cancelation_policy : 'Ask Recruiter'}
+                                                ${job.facility_shift_cancelation_policy ? job.facility_shift_cancelation_policy : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1144,7 +1147,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.contract_termination_policy ? job.contract_termination_policy : 'Ask Recruiter'}
+                                                ${job.contract_termination_policy ? job.contract_termination_policy : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1155,7 +1158,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.traveler_distance_from_facility ? job.traveler_distance_from_facility : 'Ask Recruiter'}
+                                                ${job.traveler_distance_from_facility ? job.traveler_distance_from_facility : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1172,7 +1175,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.job_location ? job.job_location.split(',').map(v => `${v} Required`).join('<br>') : 'Ask Recruiter'}
+                                                ${job.job_location ? job.job_location.split(',').map(v => `${v} Required`).join('<br>') : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1183,7 +1186,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.certificate ? job.certificate.split(',').map(v => `${v} Required`).join('<br>') : 'Ask Recruiter'}
+                                                ${job.certificate ? job.certificate.split(',').map(v => `${v} Required`).join('<br>') : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1200,7 +1203,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.urgency ? job.urgency : 'Ask Recruiter'}
+                                                ${job.urgency ? job.urgency : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1211,7 +1214,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.preferred_experience ? `${job.preferred_experience} Years Required` : 'Ask Recruiter'}
+                                                ${job.preferred_experience ? `${job.preferred_experience} Years Required` : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1222,7 +1225,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.number_of_references ? `${job.number_of_references} references` : 'Ask Recruiter'}
+                                                ${job.number_of_references ? `${job.number_of_references} references` : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1233,7 +1236,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.skills ? job.skills.replace(/,/g, ', ') : 'Ask Recruiter'}
+                                                ${job.skills ? job.skills.replace(/,/g, ', ') : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1244,7 +1247,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.on_call ? (job.on_call === '1' ? 'Yes' : 'No') : 'Ask Recruiter'}
+                                                ${job.on_call ? (job.on_call === '1' ? 'Yes' : 'No') : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1255,7 +1258,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.block_scheduling ? (job.block_scheduling === '1' ? 'Yes' : 'No') : 'Ask Recruiter'}
+                                                ${job.block_scheduling ? (job.block_scheduling === '1' ? 'Yes' : 'No') : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1266,7 +1269,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.float_requirement ? (job.float_requirement === '1' ? 'Yes' : 'No') : 'Ask Recruiter'}
+                                                ${job.float_requirement ? (job.float_requirement === '1' ? 'Yes' : 'No') : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1277,7 +1280,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.Patient_ratio ? job.Patient_ratio.toLocaleString() : 'Ask Recruiter'}
+                                                ${job.Patient_ratio ? job.Patient_ratio.toLocaleString() : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1288,7 +1291,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.Emr ? job.Emr : 'Ask Recruiter'}
+                                                ${job.Emr ? job.Emr : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1305,7 +1308,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.nurse_classification ? job.nurse_classification : 'Ask Recruiter'}
+                                                ${job.nurse_classification ? job.nurse_classification : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1320,7 +1323,7 @@
                                         </li>
                                         <li>
                                             <h6>
-                                                ${job.vaccinations ? job.vaccinations.split(',').map(v => `${v} Required`).join('<br>') : 'Ask Recruiter'}
+                                                ${job.vaccinations ? job.vaccinations.split(',').map(v => `${v} Required`).join('<br>') : askRecruiter}
                                             </h6>
                                         </li>
                                     </ul>
@@ -1967,6 +1970,15 @@
         padding: 10px 60px;
         color: #fff;
         border-radius: 20px;
+    }
+
+    .ask_recruiter_href {
+        color: #333;
+    }
+
+    .ask_recruiter_href:hover {
+        color: black;
+        text-decoration: underline;
     }
 </style>
 
