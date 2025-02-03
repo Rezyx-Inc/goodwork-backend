@@ -496,7 +496,8 @@
                         ...
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="close_modal_button" data-dismiss="modal">Close</button>
+                        <button type="button" class="apply_modal_button" data-dismiss="modal">Apply</button>
                     </div>
                 </div>
             </div>
@@ -816,11 +817,11 @@
                                         <li>
                                            <h6>
                                                 ${job.hours_shift ? job.hours_shift : 'Ask Recruiter'}
-                                            </h6>
-                                        </li>
-                                    </ul>
-
-                                    <ul class="ss-s-jb-apl-on-inf-txt-ul type_item ss-s-jb-apl-bg-pink">
+                                                </h6>
+                                                </li>
+                                                </ul>
+                                                
+                                                <ul class="ss-s-jb-apl-on-inf-txt-ul type_item ss-s-jb-apl-bg-pink">
                                         <li>
                                             <span>Shifts/Week</span>
                                         
@@ -830,13 +831,13 @@
                                                 ${job.weeks_shift ? job.weeks_shift.toLocaleString() : 'Ask Recruiter'}
                                             </h6>
                                         </li>
-                                    </ul>
-
+                                        </ul>
+                                        
                                     <ul class="ss-s-jb-apl-on-inf-txt-ul type_item ss-s-jb-apl-bg-pink">
                                         <li>
                                             <span>Weeks/Assignment</span>
-                                        
-                                        </li>
+                                            
+                                            </li>
                                         <li>
                                              <h6>
                                                 ${job.preferred_assignment_duration ? job.preferred_assignment_duration : 'Ask Recruiter'}
@@ -844,9 +845,492 @@
                                         </li>
                                     </ul>
 
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul type_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Start Date</span>
+                                            
+                                            </li>
+                                        <li>
+                                            <h6>
+                                                ${job.as_soon_as == 1 ? 'As soon as possible' : (job.start_date || 'Ask Recruiter')}
+                                            </h6>
+                                        </li>
+                                        </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul type_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>RTO</span>
+                                            
+                                            </li>
+                                            <li>
+                                                <h6>
+                                                    ${job.rto ? job.rto : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <button class="btn first-collapse mt-3" data-toggle="collapse"
+                                   data-target="#pay">Pay</button>
+                                <div id="pay" class="collapse">
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul overtime_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Overtime</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.overtime ? job.overtime : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul on_call_rate_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>On Call Rate</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.on_call_rate ? `$${job.on_call_rate}` : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul call_back_rate_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Call Back Rate</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.call_back_rate ? `$${job.call_back_rate}` : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul orientation_rate_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Orientation Rate</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.orientation_rate ? job.orientation_rate : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul weekly_non_taxable_amount_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Est. Weekly Non-Taxable Amount</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.weekly_non_taxable_amount ? `$${job.weekly_non_taxable_amount}` : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul feels_like_per_hour_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Feels Like $/Hr</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.feels_like_per_hour ?  `$${job.feels_like_per_hour}` : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Est. Goodwork Weekly Amount</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.goodwork_weekly_amount ? `$${job.goodwork_weekly_amount}` : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul referral_bonus_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Referral Bonus</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.referral_bonus ? job.referral_bonus : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul sign_on_bonus_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Sign-On Bonus</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.sign_on_bonus ? `$${job.sign_on_bonus}` : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul extension_bonus_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Extension Bonus</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.extension_bonus ? '$' + job.extension_bonus.toLocaleString() : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul completion_bonus_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Completion Bonus</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.completion_bonus ? '$' + job.completion_bonus.toLocaleString() : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul other_bonus_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Other Bonus</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.other_bonus ? '$' + job.other_bonus.toLocaleString() : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul health_insaurance_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Health Insurance</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.health_insaurance ? (job.health_insaurance == '1' ? 'Yes' : 'No') : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Pay Frequency</span>
+                                            </li>
+                                            <li>
+                                            <h6>
+                                                ${job.pay_frequency ? job.pay_frequency : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul id="worker_benefits" class="ss-s-jb-apl-on-inf-txt-ul benefits_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Benefits</span>
+                                            </li>
+                                            <li>
+                                            <h6>
+                                                ${job.benefits ? job.benefits : 'Ask Recruiter'}
+                                                </h6>
+                                            
+                                        </li>
+                                    </ul>
+
+                                    <ul id="worker_dental" class="ss-s-jb-apl-on-inf-txt-ul dental_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Dental</span>
+                                        
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.dental ? (job.dental === '1' ? 'Yes' : 'No') : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul id="worker_vision" class="ss-s-jb-apl-on-inf-txt-ul vision_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Vision</span>
+
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.vision ? (job.vision === '1' ? 'Yes' : 'No') : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul id="worker_four_zero_one_k" class="ss-s-jb-apl-on-inf-txt-ul four_zero_one_k_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>401K</span>
+
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.four_zero_one_k ? (job.four_zero_one_k === '1' ? 'Yes' : 'No') : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
 
 
                                 </div>
+
+                                <button class="btn first-collapse mt-3" data-toggle="collapse"
+                                    data-target="#location">Location</button>
+                                <div id="location" class="collapse">
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul clinical_setting_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Clinical Setting</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.clinical_setting ? job.clinical_setting : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Address</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.preferred_work_location ? job.preferred_work_location : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Facility</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.facility_name ? job.facility_name : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Facility's Parent System</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.facilitys_parent_system ? job.facilitys_parent_system : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul facility_shift_cancelation_policy_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Facility Shift Cancellation Policy</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.facility_shift_cancelation_policy ? job.facility_shift_cancelation_policy : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul contract_termination_policy_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Contract Termination Policy</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.contract_termination_policy ? job.contract_termination_policy : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul traveler_distance_from_facility_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Min Miles Must Live From Facility</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.traveler_distance_from_facility ? job.traveler_distance_from_facility : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+   
+                                </div>
+
+                                <button class="btn first-collapse mt-3" data-toggle="collapse"
+                                    data-target="#certslicen">Certs & Licences</button>
+                                <div id="certslicen" class="collapse">
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul job_location_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Professional Licensure</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.job_location ? job.job_location.split(',').map(v => `${v} Required`).join('<br>') : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+                                    
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul certificate_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Certifications</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.certificate ? job.certificate.split(',').map(v => `${v} Required`).join('<br>') : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                </div>
+
+                                <button class="btn first-collapse mt-3" data-toggle="collapse"
+                                    data-target="#workInfo">Work Info</button>
+                                <div id="workInfo" class="collapse">
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul urgency_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Urgency</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.urgency ? job.urgency : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul preferred_experience_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Experience</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.preferred_experience ? `${job.preferred_experience} Years Required` : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul number_of_references_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Number of references</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.number_of_references ? `${job.number_of_references} references` : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul skills_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Skills checklist</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.skills ? job.skills.replace(/,/g, ', ') : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul on_call_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>On call</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.on_call ? (job.on_call === '1' ? 'Yes' : 'No') : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul block_scheduling_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Block Scheduling</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.block_scheduling ? (job.block_scheduling === '1' ? 'Yes' : 'No') : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul float_requirement_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Float Requirements</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.float_requirement ? (job.float_requirement === '1' ? 'Yes' : 'No') : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul Patient_ratio_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Patient Ratio</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.Patient_ratio ? job.Patient_ratio.toLocaleString() : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul emr_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>EMR</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.Emr ? job.Emr : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+
+                                </div>
+
+                                <button class="btn first-collapse mt-3" data-toggle="collapse" data-target="#idTax">ID &
+                                    Tax Info</button>
+                                <div id="idTax" class="collapse">
+
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul urgency_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Classification</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.nurse_classification ? job.nurse_classification : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <button class="btn first-collapse mt-3" data-toggle="collapse" data-target="#medInf">
+                                    Medical info</button>
+                                <div id="medInf" class="collapse">
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul vaccinations_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Vaccinations & Immunizations</span>
+                                        </li>
+                                        <li>
+                                            <h6>
+                                                ${job.vaccinations ? job.vaccinations.split(',').map(v => `${v} Required`).join('<br>') : 'Ask Recruiter'}
+                                            </h6>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <ul class="ss-s-jb-apl-on-inf-txt-ul">
+                                    <li>
+                                        <span style="font-size: larger">(*) : Required Fields</span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
 
@@ -1465,6 +1949,24 @@
         font-style: normal;
         width: 100%;
         background: #FFEEEF;
+    }
+
+    .close_modal_button {
+        border: 1px #3d2c39 solid;
+        cursor: pointer;
+        background: #3d2c3998;
+        padding: 10px 60px;
+        text-align: center;
+        color: #fff;
+        border-radius: 20px;
+    }
+
+    .apply_modal_button {
+        border: 0;
+        background: #3d2c39;
+        padding: 10px 60px;
+        color: #fff;
+        border-radius: 20px;
     }
 </style>
 
