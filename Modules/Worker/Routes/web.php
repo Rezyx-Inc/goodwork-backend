@@ -109,6 +109,9 @@ Route::prefix('worker')->group(function () {
             // apply on job
             Route::post('apply-on-job', ['uses' => 'WorkerDashboardController@apply_on_jobs', 'as' => 'apply-on-job']);
 
+            // thanks-for-applying
+            Route::get('thanks-for-applying', ['uses' => 'WorkerDashboardController@thanks_for_applying', 'as' => 'thanks-for-applying']);
+
             // reading message notification
             Route::post('read-message-notification', ['uses' => 'WorkerController@read_message_notification', 'as' => 'read-message-notification']);
 

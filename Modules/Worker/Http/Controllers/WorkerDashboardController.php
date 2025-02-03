@@ -778,6 +778,15 @@ class WorkerDashboardController extends Controller
     }
   }
 
+  // 
+  public function thanks_for_applying()
+  {
+    $data = [];
+    $data['user'] = $user = auth()->guard('frontend')->user();
+
+    return view('worker::dashboard.details.thanks_for_applying_msg', compact('data'));
+  }
+
   public function my_work_journey()
   {
     try {
