@@ -37,6 +37,108 @@
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     @yield('css')
+
+    
+
+
+
+
+
+
+    <style>
+        /* Ads Container */
+        .ads-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: sticky;
+            top: 10px;
+            overflow-y: auto;
+            z-index: 10;
+        }
+    
+        .ad {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+    
+        .ad:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+    
+        /* Ad Image */
+        .ad-image {
+            width: 100%;
+            height: auto; /* Adjust height automatically */
+            max-height: 200px; /* Limit maximum height */
+            object-fit: contain; /* Ensure the image fits without cropping */
+            display: block;
+            margin: 0 auto; /* Center the image horizontally */
+        }
+    
+        /* Ad Content */
+        .ad-content {
+            padding: 20px;
+            text-align: center; /* Center-align all text */
+        }
+    
+        .ad-content h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333333;
+        }
+    
+        .ad-content p {
+            font-size: 14px;
+            color: #666666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+    
+        .ad-content ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+    
+        .ad-content ul li {
+            font-size: 14px;
+            color: #666666;
+            line-height: 1.5;
+        }
+    
+        /* Call-to-Action Button */
+        .cta-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+    
+        .cta-button:hover {
+            background-color: #0056b3;
+            color: #ffffff
+        }
+    </style>
+
+
+
+
+
 @stop
 
 
@@ -64,425 +166,395 @@
 
 
 <section class="ss-explore-job-mn-sec">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4 ss-expl-filtr-lft-dv-bx" style="background-color:#fff8fd !important;">
-                <div style="padding:40px !important;">
-                    <h4 class="text-center" style="padding-bottom: 10px; font-size: 30px; font-weight: 500;">Filters
-                    </h4>
-                    <!---form--->
-                    <form method="get" action="{{ route('explore-jobs') }}" id="filter_form">
-                        <div class="ss-fliter-btn-dv" style="display: flex; justify-content: space-between;">
-                            <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
-                            <button class="ss-fliter-btn" type="submit">Filter</button>
-                        </div>
+    <div class="row">
+        <div class="col-lg-9">
+            <div class="row">
+                <div class="col-lg-4 ss-expl-filtr-lft-dv-bx" style="background-color:#fff8fd !important;">
+                    <div style="padding:40px !important;">
+                        <h4 class="text-center" style="padding-bottom: 10px; font-size: 30px; font-weight: 500;">Filters
+                        </h4>
+                        <!---form--->
+                        <form method="get" action="{{ route('explore-jobs') }}" id="filter_form">
+                            <div class="ss-fliter-btn-dv" style="display: flex; justify-content: space-between;">
+                                <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
+                                <button class="ss-fliter-btn" type="submit">Filter</button>
+                            </div>
 
-                        {{-- Organization Name --}}
-                        {{-- <div class="ss-input-slct-grp mb-3">
-              <label for="organization_name">Organization Name</label>
-              <select id="organization_name" name="organization_name">
-                  <option value="">Select</option>
-                  @foreach ($organizations as $v)
-                      <option value="{{ $v->organization_name }}"
-                          {{ $organization_name == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
-                      </option>
-                  @endforeach
-              </select>
-            </div> --}}
-
-                        {{-- Recruiter Name --}}
-                        {{-- <div class="ss-input-slct-grp mb-3">
-              <label for="recruiter_name">Recruiter Name</label>
-              <select id="recruiter_name" name="recruiter_name">
-                  <option value="">Select</option>
-                  @foreach ($recruiters as $v)
-                      <option value="{{ $v->first_name }} {{ $v->last_name }}"
-                          data-org="{{ $v->organization_name }}"
-                          {{ $recruiter_name == $v->first_name . ' ' . $v->last_name ? 'selected' : '' }}>
-                          {{ $v->first_name }} {{ $v->last_name }}
-                      </option>
-                  @endforeach
-              </select>
-            </div> --}}
-
-                        {{-- job type --}}
-                        <div class="ss-input-slct-grp mb-3">
-                            <label for="cars">Job Type</label>
-                            <select name="job_type">
-                                <option value="">Select</option>
-                                <option value="Clinical" {{ $job_type == 'Clinical' ? 'selected' : '' }}>Clinical
-                                </option>
-                                <option value="Non-Clinical" {{ $job_type == 'Non-Clinical' ? 'selected' : '' }}>
-                                    Non-Clinical</option>
-                            </select>
-                        </div>
-
-                        {{-- facility --}}
-                        {{-- <div class="ss-input-slct-grp mb-3">
-              <label for="cars">Facility</label>
-              <select name="facility_name">
-                  <option value="">Select</option>
-                  @php
-                      $uniqueFacilities = [];
-                  @endphp
-                  @foreach ($facilities as $v)
-                      @if (!in_array($v->facility_name, $uniqueFacilities))
-                          <option value="{{ $v->facility_name }}" 
-                                  data-id="{{ $v->facility_name }}"
-                                  {{ $facilityName == $v->facility_name ? 'selected' : '' }}>
-                              {{ $v->facility_name }}
-                          </option>
-                          @php
-                              $uniqueFacilities[] = $v->facility_name;
-                          @endphp
-                      @endif
-                  @endforeach
-              </select>                                    
-            </div> --}}
-
-                        {{-- profession --}}
-                        <div class="ss-input-slct-grp mb-3">
-                            <label for="cars">Profession</label>
-                            <select name="profession">
-                                <option value="">Select</option>
-                                @foreach ($professions as $v)
-                                    <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
-                                        {{ $profession == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
+                            {{-- job type --}}
+                            <div class="ss-input-slct-grp mb-3">
+                                <label for="cars">Job Type</label>
+                                <select name="job_type">
+                                    <option value="">Select</option>
+                                    <option value="Clinical" {{ $job_type == 'Clinical' ? 'selected' : '' }}>Clinical
                                     </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        {{-- specialty --}}
-                        <div class="ss-input-slct-grp mb-3">
-                            <label>Specialty</label>
-                            <select name="speciality" id="speciality">
-                                <option value="">Select Specialty</option>
-                                @foreach ($specialities as $v)
-                                    <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
-                                        {{ $speciality == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        {{-- state --}}
-                        <div class="ss-input-slct-grp mb-3">
-                            <label> State </label>
-                            <select name="state" id="state">
-                                @if (!empty($state))
-                                    <option value="" selected>{{ $state }}</option>
-                                @else
-                                    <option value="" disabled selected hidden>Select a State</option>
-                                @endif
-                                @foreach ($us_states as $state)
-                                    <option id="{{ $state->id }}" value="{{ $state->name }}">
-                                        {{ $state->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        {{-- city --}}
-                        <div class="ss-input-slct-grp mb-3">
-                            <label>City</label>
-                            <select name="city" id="city">
-                                @if (!empty($city))
-                                    <option value="">Select a city</option>
-                                    <option value="{{ $city }}" selected>{{ $city }}</option>
-                                @else
-                                    <option value="">Select state first</option>
-                                @endif
-                            </select>
-                        </div>
-
-
-                        {{-- terms --}}
-                        <div class="ss-form-group ss-prsnl-frm-terms mb-3">
-                            <label>Terms</label>
-                            <div class="ss-speilty-exprnc-add-list terms-content"></div>
-                            <ul style="align-items: flex-start; list-style: none;">
-                                <li class="row w-100 p-0 m-0">
-                                    <div class="ps-0">
-                                        <select class="m-0" id="termsSelect">
-                                            <option value="">Select Terms</option>
-                                            @foreach ($terms_key as $term)
-                                                <option value="{{ $term->id }}"
-                                                    {{ in_array($term->id, $terms) ? 'selected' : '' }}>
-                                                    {{ $term->title }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <input type="hidden" id="termsAllValues" name="terms"
-                                            value="{{ implode('-', $terms) }}">
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="ss-prsn-frm-plu-div">
-                                        <a href="javascript:void(0)" onclick="addTerms('from_add')">
-                                            <i class="fa fa-plus" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div>
-                                <span class="helper help-block-terms"></span>
+                                    <option value="Non-Clinical" {{ $job_type == 'Non-Clinical' ? 'selected' : '' }}>
+                                        Non-Clinical</option>
+                                </select>
                             </div>
-                        </div>
+
+                            {{-- profession --}}
+                            <div class="ss-input-slct-grp mb-3">
+                                <label for="cars">Profession</label>
+                                <select name="profession">
+                                    <option value="">Select</option>
+                                    @foreach ($professions as $v)
+                                        <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
+                                            {{ $profession == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            {{-- specialty --}}
+                            <div class="ss-input-slct-grp mb-3">
+                                <label>Specialty</label>
+                                <select name="speciality" id="speciality">
+                                    <option value="">Select Specialty</option>
+                                    @foreach ($specialities as $v)
+                                        <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
+                                            {{ $speciality == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            {{-- state --}}
+                            <div class="ss-input-slct-grp mb-3">
+                                <label> State </label>
+                                <select name="state" id="state">
+                                    @if (!empty($state))
+                                        <option value="" selected>{{ $state }}</option>
+                                    @else
+                                        <option value="" disabled selected hidden>Select a State</option>
+                                    @endif
+                                    @foreach ($us_states as $state)
+                                        <option id="{{ $state->id }}" value="{{ $state->name }}">
+                                            {{ $state->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            {{-- city --}}
+                            <div class="ss-input-slct-grp mb-3">
+                                <label>City</label>
+                                <select name="city" id="city">
+                                    @if (!empty($city))
+                                        <option value="">Select a city</option>
+                                        <option value="{{ $city }}" selected>{{ $city }}</option>
+                                    @else
+                                        <option value="">Select state first</option>
+                                    @endif
+                                </select>
+                            </div>
 
 
-                        {{-- As soon As possible --}}
-                        <div class="ss-form-group col-md-12 mb-3">
-                            <div class="row">
-                                <div class="row col-lg-12 col-sm-12 col-md-12 col-xs-12"
-                                    style="display: flex; justify-content: end; align-items:center;">
-                                    <input type="hidden" name="as_soon_as" value="0">
-                                    <input id="as_soon_as" name="as_soon_as" value="1" type="checkbox"
-                                        {{ $as_soon_as ? 'checked' : '' }} style="box-shadow:none; width:auto;"
-                                        class="col-2">
-                                    <label class="col-10">
-                                        As soon As possible
-                                    </label>
-                                </div>
-                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                                    <div class="ss-starrt-date">
-                                        <label>Start Date</label>
-                                        <input type="date" value="{{ $start_date }}" name="start_date"
-                                            placeholder="Start Date">
-                                    </div>
+                            {{-- terms --}}
+                            <div class="ss-form-group ss-prsnl-frm-terms mb-3">
+                                <label>Terms</label>
+                                <div class="ss-speilty-exprnc-add-list terms-content"></div>
+                                <ul style="align-items: flex-start; list-style: none;">
+                                    <li class="row w-100 p-0 m-0">
+                                        <div class="ps-0">
+                                            <select class="m-0" id="termsSelect">
+                                                <option value="">Select Terms</option>
+                                                @foreach ($terms_key as $term)
+                                                    <option value="{{ $term->id }}"
+                                                        {{ in_array($term->id, $terms) ? 'selected' : '' }}>
+                                                        {{ $term->title }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <input type="hidden" id="termsAllValues" name="terms"
+                                                value="{{ implode('-', $terms) }}">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="ss-prsn-frm-plu-div">
+                                            <a href="javascript:void(0)" onclick="addTerms('from_add')">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div>
+                                    <span class="helper help-block-terms"></span>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- partial:index.partial.html -->
-                        <div class="ss-price-week-sec">
-                            <label>Weekly Pay</label>
-                            <div id="slider"></div>
-                        </div>
-                        <!-- partial -->
 
 
-                        <!-- partial:index.partial.html -->
-                        <div class="ss-price-week-sec">
-                            <label>Hours Per Shift</label>
-                            <div id="slider2"></div>
-                        </div>
-                        <!-- partial -->
-                        <!-- partial:index.partial.html -->
-                        <div class="ss-price-week-sec">
-                            <label>Hours Per Week</label>
-                            <div id="slider3"></div>
-                        </div>
-
-                        {{-- job id --}}
-                        <div class="ss-input-slct-grp job_id mt-5 mb-3">
-                            <label for="cars">Job ID</label>
-                            <div class="form-outline">
-                                <input type="text" id="gw" class="gw" name="gw"
-                                    placeholder="Search by Job ID" value="{{ request('gw') }}">
+                            {{-- As soon As possible --}}
+                            <div class="ss-form-group col-md-12 mb-3">
+                                <div class="row">
+                                    <div class="row col-lg-12 col-sm-12 col-md-12 col-xs-12"
+                                        style="display: flex; justify-content: end; align-items:center;">
+                                        <input type="hidden" name="as_soon_as" value="0">
+                                        <input id="as_soon_as" name="as_soon_as" value="1" type="checkbox"
+                                            {{ $as_soon_as ? 'checked' : '' }} style="box-shadow:none; width:auto;"
+                                            class="col-2">
+                                        <label class="col-10">
+                                            As soon As possible
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <div class="ss-starrt-date">
+                                            <label>Start Date</label>
+                                            <input type="date" value="{{ $start_date }}" name="start_date"
+                                                placeholder="Start Date">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;"></div>
-                            <!-- Error message display -->
-                        </div>
 
-                        <!-- partial -->
-                        <!-- partial:index.partial.html -->
-                        {{-- <div class="ss-price-week-sec">
-                        <label>Assignment Length</label>
-                        <div id="slider4"></div>
-                    </div> --}}
-                        <!-- partial -->
-
-
-                        {{-- <div class="ss-jobtype-dv ss-shift-type-inpy">
-                            <label>Shift type</label>
-                                 <ul class="ks-cboxtags">
-                                    @foreach ($prefered_shifts as $k => $v)
-                                    <li><input type="checkbox" name="shift[]" id="checkboxDay-{{$k}}" value="{{$v->title}}" {{ (in_array($v->title,$shifts)) ? 'checked': ''}}><label for="checkboxDay-{{$k}}">{{$v->title}}</label></li>
-      @endforeach
-      </ul>
-    </div> --}}
-
-                        {{-- <input type="hidden" name="terms" value="" id="job_type"> --}}
-                        {{-- <input type="hidden" name="shifts" value="" id="shift"> --}}
-                        <input type="hidden" name="weekly_pay_from" value="{{ $weekly_pay_from }}" id="minval">
-                        <input type="hidden" name="weekly_pay_to" value="{{ $weekly_pay_to }}" id="maxval">
-                        <input type="hidden" name="hourly_pay_from" value="{{ $hourly_pay_from }}"
-                            id="hps_minval">
-                        <input type="hidden" name="hourly_pay_to" value="{{ $hourly_pay_to }}" id="hps_maxval">
-                        <input type="hidden" name="hours_per_week_from" value="{{ $hours_per_week_from }}"
-                            id="hpw_minval">
-                        <input type="hidden" name="hours_per_week_to" value="{{ $hours_per_week_to }}"
-                            id="hpw_maxval">
-                        {{-- <input type="hidden" name="assignment_from" value="{{$assignment_from}}" id="al_minval">
-    <input type="hidden" name="assignment_to" value="{{$assignment_to}}" id="al_maxval"> --}}
-                    </form>
-                </div>
-            </div>
-
-
-            <div class="col-lg-8">
-
-                <!-----------jobs profiles---------->
-
-                <div class="ss-dash-profile-jb-mn-dv">
-
-                    <div class="ss-dash-profile-4-bx-dv">
-                        @forelse($jobs as $j)
-                            <div class="ss-job-prfle-sec job-item" data-users="{{ $allusers }}"
-                                data-id="{{ $j }}" data-job="{{ json_encode($j) }}">
-                                {{-- row 1 --}}
-                                <div class="row">
-                                    <div class="col-10">
-                                        <ul>
-                                            @if (isset($j->profession))
-                                                <li><a href="#"><svg style="vertical-align: sub;"
-                                                            xmlns="http://www.w3.org/2000/svg" width="16"
-                                                            height="16" fill="currentColor"
-                                                            class="bi bi-briefcase" viewBox="0 0 16 16">
-                                                            <path
-                                                                d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
-                                                        </svg> {{ $j->profession }}</a></li>
-                                            @endif
-                                            @if (isset($j->preferred_specialty))
-                                                <li><a href="#"> {{ $j->preferred_specialty }}</a></li>
-                                            @endif
-                                        </ul>
-                                    </div>
-                                    <p class="col-2 text-center" style="padding-right:20px;">
-                                        <span>+{{ $j->getOfferCount() }} Applied</span>
-                                    </p>
-                                </div>
-                                {{-- row 2 --}}
-                                <div class="row">
-                                    {{-- <div class="col-3"><ul><li><a href="{{route('worker_job-details',['id'=>$j->id])}}"><img class="icon_cards" src="{{URL::asset('frontend/img/job.png')}}"> {{$j->job_name}}</a></li>
-                  </ul>
-                </div> --}}
-                                </div>
-                                {{-- row 3 --}}
-                                <div class="row">
-                                    <div class="col-7">
-                                        <ul>
-                                            @if (isset($j->job_city) && isset($j->job_state))
-                                                <li><a href="#"><img class="icon_cards"
-                                                            src="{{ URL::asset('frontend/img/location.png') }}">
-                                                        {{ $j->job_city }}, {{ $j->job_state }}</a></li>
-                                            @endif
-                                        </ul>
-                                    </div>
-                                    <div class="col-5 d-flex justify-content-end">
-                                        <ul>
-                                            @if (isset($j->preferred_assignment_duration) && isset($j->terms) && $j->terms == 'Contract')
-                                                <li><a href="#"><img class="icon_cards"
-                                                            src="{{ URL::asset('frontend/img/calendar.png') }}">
-                                                        {{ $j->preferred_assignment_duration }} wks / assignment
-                                                    </a></li>
-                                            @endif
-                                            @if (isset($j->hours_per_week))
-                                                <li><a href="#"><img class="icon_cards"
-                                                            src="{{ URL::asset('frontend/img/calendar.png') }}">
-                                                        {{ $j->hours_per_week }} hrs/wk</a></li>
-                                            @endif
-                                    </div>
-                                </div>
-                                {{-- row 4 --}}
-
-                                <div class="row">
-
-                                    <div class="col-4">
-                                        <ul>
-                                            @if (isset($j->preferred_shift_duration))
-                                                <li>
-                                                    @if ($j->preferred_shift_duration == '5x8 Days' || $j->preferred_shift_duration == '4x10 Days')
-                                                        <svg style="vertical-align: bottom;"
-                                                            xmlns="http://www.w3.org/2000/svg" width="25"
-                                                            height="25" fill="currentColor"
-                                                            class="bi bi-brightness-alt-high-fill"
-                                                            viewBox="0 0 16 16">
-                                                            <path
-                                                                d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3m8 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5m-13.5.5a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1zm11.157-6.157a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.9 2.121a.5.5 0 0 0 .707-.707L3.05 5.343a.5.5 0 1 0-.707.707zM8 7a4 4 0 0 0-4 4 .5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5 4 4 0 0 0-4-4" />
-                                                        </svg>
-                                                    @elseif ($j->preferred_shift_duration == '3x12 Nights or Days')
-                                                        <svg style="vertical-align: text-bottom;"
-                                                            xmlns="http://www.w3.org/2000/svg" width="20"
-                                                            height="16" fill="currentColor"
-                                                            class="bi bi-moon-stars" viewBox="0 0 16 16">
-                                                            <path
-                                                                d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286" />
-                                                            <path
-                                                                d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z" />
-                                                        </svg>
-                                                    @endif
-                                                    {{ $j->preferred_shift_duration }}
-                                                </li>
-                                            @endif
-                                        </ul>
-                                    </div>
-
-                                    <div class="col-8 d-flex justify-content-end">
-                                        <ul>
-                                            @if (isset($j->actual_hourly_rate))
-                                                <li><img class="icon_cards"
-                                                        src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                    {{ number_format($j->actual_hourly_rate) }}/hr
-                                                </li>
-                                            @endif
-                                            @if (isset($j->weekly_pay))
-                                                <li><img class="icon_cards"
-                                                        src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                    {{ number_format($j->weekly_pay) }}/wk
-                                                </li>
-                                            @endif
-                                            @if (isset($j->weekly_pay))
-                                                <li style="font-weight: 600;"><img class="icon_cards"
-                                                        src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                    {{ number_format($j->weekly_pay * 4 * 12) }}/yr
-                                                </li>
-                                            @endif
-                                        </ul>
-                                    </div>
-                                </div>
-
-
-                                {{-- row 5 --}}
-                                <div class="row">
-                                    {{-- <div class="col-6"><h5>Recently Added</h5></div> --}}
-
-                                    <div class="col-6 d-flex justify-content-start">
-                                        @if ($j->as_soon_as == true)
-                                            <p class="col-12" style="padding-bottom: 0px; padding-top: 8px;">
-                                                As soon as possible</p>
-                                        @endif
-                                    </div>
-                                    <div class="col-6 d-flex justify-content-end">
-                                        @if ($j->urgency == 'Auto Offer' || $j->as_soon_as == true)
-                                            <p class="col-2 text-center"
-                                                style="padding-bottom: 0px; padding-top: 8px;">Urgent</p>
-                                        @endif
-                                    </div>
-                                </div>
-
-
-
+                            <!-- partial:index.partial.html -->
+                            <div class="ss-price-week-sec">
+                                <label>Weekly Pay</label>
+                                <div id="slider"></div>
                             </div>
-                        @empty
-                            <div class="ss-job-prfle-sec">
-                                <h4>No Data found</h4>
-                            </div>
-                        @endforelse
+                            <!-- partial -->
 
+
+                            <!-- partial:index.partial.html -->
+                            <div class="ss-price-week-sec">
+                                <label>Hours Per Shift</label>
+                                <div id="slider2"></div>
+                            </div>
+                            <!-- partial -->
+                            <!-- partial:index.partial.html -->
+                            <div class="ss-price-week-sec">
+                                <label>Hours Per Week</label>
+                                <div id="slider3"></div>
+                            </div>
+
+                            {{-- job id --}}
+                            <div class="ss-input-slct-grp job_id mt-5 mb-3">
+                                <label for="cars">Job ID</label>
+                                <div class="form-outline">
+                                    <input type="text" id="gw" class="gw" name="gw"
+                                        placeholder="Search by Job ID" value="{{ request('gw') }}">
+                                </div>
+                                <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;"></div>
+                                <!-- Error message display -->
+                            </div>
+
+                            <input type="hidden" name="weekly_pay_from" value="{{ $weekly_pay_from }}" id="minval">
+                            <input type="hidden" name="weekly_pay_to" value="{{ $weekly_pay_to }}" id="maxval">
+                            <input type="hidden" name="hourly_pay_from" value="{{ $hourly_pay_from }}"
+                                id="hps_minval">
+                            <input type="hidden" name="hourly_pay_to" value="{{ $hourly_pay_to }}" id="hps_maxval">
+                            <input type="hidden" name="hours_per_week_from" value="{{ $hours_per_week_from }}"
+                                id="hpw_minval">
+                            <input type="hidden" name="hours_per_week_to" value="{{ $hours_per_week_to }}"
+                                id="hpw_maxval">
+                        </form>
                     </div>
                 </div>
 
+
+                <div class="col-lg-8">
+
+                    <!-----------jobs profiles---------->
+
+                    <div class="ss-dash-profile-jb-mn-dv">
+
+                        <div class="ss-dash-profile-4-bx-dv">
+                            @forelse($jobs as $j)
+                                <div class="ss-job-prfle-sec job-item" data-users="{{ $allusers }}"
+                                    data-id="{{ $j }}" data-job="{{ json_encode($j) }}">
+                                    {{-- row 1 --}}
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <ul>
+                                                @if (isset($j->profession))
+                                                    <li><a href="#"><svg style="vertical-align: sub;"
+                                                                xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                height="16" fill="currentColor"
+                                                                class="bi bi-briefcase" viewBox="0 0 16 16">
+                                                                <path
+                                                                    d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                                                            </svg> {{ $j->profession }}</a></li>
+                                                @endif
+                                                @if (isset($j->preferred_specialty))
+                                                    <li><a href="#"> {{ $j->preferred_specialty }}</a></li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                        <p class="col-2 text-center" style="padding-right:20px;">
+                                            <span>+{{ $j->getOfferCount() }} Applied</span>
+                                        </p>
+                                    </div>
+                                    {{-- row 2 --}}
+                                    <div class="row">
+                                        {{-- <div class="col-3"><ul><li><a href="{{route('worker_job-details',['id'=>$j->id])}}"><img class="icon_cards" src="{{URL::asset('frontend/img/job.png')}}"> {{$j->job_name}}</a></li>
+                    </ul>
+                    </div> --}}
+                                    </div>
+                                    {{-- row 3 --}}
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <ul>
+                                                @if (isset($j->job_city) && isset($j->job_state))
+                                                    <li><a href="#"><img class="icon_cards"
+                                                                src="{{ URL::asset('frontend/img/location.png') }}">
+                                                            {{ $j->job_city }}, {{ $j->job_state }}</a></li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                        <div class="col-5 d-flex justify-content-end">
+                                            <ul>
+                                                @if (isset($j->preferred_assignment_duration) && isset($j->terms) && $j->terms == 'Contract')
+                                                    <li><a href="#"><img class="icon_cards"
+                                                                src="{{ URL::asset('frontend/img/calendar.png') }}">
+                                                            {{ $j->preferred_assignment_duration }} wks / assignment
+                                                        </a></li>
+                                                @endif
+                                                @if (isset($j->hours_per_week))
+                                                    <li><a href="#"><img class="icon_cards"
+                                                                src="{{ URL::asset('frontend/img/calendar.png') }}">
+                                                            {{ $j->hours_per_week }} hrs/wk</a></li>
+                                                @endif
+                                        </div>
+                                    </div>
+                                    {{-- row 4 --}}
+
+                                    <div class="row">
+
+                                        <div class="col-4">
+                                            <ul>
+                                                @if (isset($j->preferred_shift_duration))
+                                                    <li>
+                                                        @if ($j->preferred_shift_duration == '5x8 Days' || $j->preferred_shift_duration == '4x10 Days')
+                                                            <svg style="vertical-align: bottom;"
+                                                                xmlns="http://www.w3.org/2000/svg" width="25"
+                                                                height="25" fill="currentColor"
+                                                                class="bi bi-brightness-alt-high-fill"
+                                                                viewBox="0 0 16 16">
+                                                                <path
+                                                                    d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3m8 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5m-13.5.5a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1zm11.157-6.157a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.9 2.121a.5.5 0 0 0 .707-.707L3.05 5.343a.5.5 0 1 0-.707.707zM8 7a4 4 0 0 0-4 4 .5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5 4 4 0 0 0-4-4" />
+                                                            </svg>
+                                                        @elseif ($j->preferred_shift_duration == '3x12 Nights or Days')
+                                                            <svg style="vertical-align: text-bottom;"
+                                                                xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                height="16" fill="currentColor"
+                                                                class="bi bi-moon-stars" viewBox="0 0 16 16">
+                                                                <path
+                                                                    d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286" />
+                                                                <path
+                                                                    d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z" />
+                                                            </svg>
+                                                        @endif
+                                                        {{ $j->preferred_shift_duration }}
+                                                    </li>
+                                                @endif
+                                            </ul>
+                                        </div>
+
+                                        <div class="col-8 d-flex justify-content-end">
+                                            <ul>
+                                                @if (isset($j->actual_hourly_rate))
+                                                    <li><img class="icon_cards"
+                                                            src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
+                                                        {{ number_format($j->actual_hourly_rate) }}/hr
+                                                    </li>
+                                                @endif
+                                                @if (isset($j->weekly_pay))
+                                                    <li><img class="icon_cards"
+                                                            src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
+                                                        {{ number_format($j->weekly_pay) }}/wk
+                                                    </li>
+                                                @endif
+                                                @if (isset($j->weekly_pay))
+                                                    <li style="font-weight: 600;"><img class="icon_cards"
+                                                            src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
+                                                        {{ number_format($j->weekly_pay * 4 * 12) }}/yr
+                                                    </li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                    {{-- row 5 --}}
+                                    <div class="row">
+                                        {{-- <div class="col-6"><h5>Recently Added</h5></div> --}}
+
+                                        <div class="col-6 d-flex justify-content-start">
+                                            @if ($j->as_soon_as == true)
+                                                <p class="col-12" style="padding-bottom: 0px; padding-top: 8px;">
+                                                    As soon as possible</p>
+                                            @endif
+                                        </div>
+                                        <div class="col-6 d-flex justify-content-end">
+                                            @if ($j->urgency == 'Auto Offer' || $j->as_soon_as == true)
+                                                <p class="col-2 text-center"
+                                                    style="padding-bottom: 0px; padding-top: 8px;">Urgent</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            @empty
+                                <div class="ss-job-prfle-sec">
+                                    <h4>No Data found</h4>
+                                </div>
+                            @endforelse
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="col-lg-3">
+            {{-- ads container --}}
+            <div class="ads-container">
+                <div class="ad">
+                    <img src="{{ asset('images/debtmd.png') }}" alt="Ad Image" class="ad-image">
+                    <div class="ad-content">
+                        <h2>Become Debt-Free Today</h2>
+                        <ul>
+                            <li>Up to 50% lower monthly payments</li>
+                            <li>Flexible payment plans from 12-48 months</li>
+                            <li>Free consultation and zero up-front fees</li>
+                        </ul>
+                        <a href="https://www.bhmediatrack.com/cmp/M15NZ8/2MCHZ8R/?sub1=&sub2=&sub3=" class="cta-button">Start Now</a>
+                    </div>
+                </div>
+        
+                <div class="ad">
+                    <img src="{{ asset('images/myPerfectResume.png') }}" alt="Ad Image" class="ad-image">
+                    <div class="ad-content">
+                        <h2>Get the help you need to land your next gig with a <b>custom resume!</b></h2>
+                        <p>
+                            Our Industry-leading resume tools take your job search from basic to next level.
+                        </p>
+                        <a href="https://www.bhmediatrack.com/25S2ZK4/2LWX2H7/?sub1=1&sub2=2&sub3=3" class="cta-button">Free Trials</a>
+                    </div>
+                </div>
+        
+                <div class="ad">
+                    <img src="{{ asset('images/chime.png') }}" alt="Ad Image" class="ad-image">
+                    <div class="ad-content">
+                        <h2>
+                            The best way to get up to $500 before payday*
+                        </h2>
+                        <ul>
+                            <li>No interest*</li>
+                            <li>No credit check</li>
+                            <li>No mandatory fees</li>
+                        </ul>
+                        <a href="https://www.bhmediatrack.com/25S2ZK4/6Z7MWN9/?sub1=1&sub2=2&sub3=3" class="cta-button">Get Started</a>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Button trigger modal -->
-        {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button> --}}
 
-        <!-- Modal -->
+
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">

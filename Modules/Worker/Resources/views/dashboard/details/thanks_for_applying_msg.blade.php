@@ -28,59 +28,51 @@
     <link rel="stylesheet" href="{{ URL::asset('frontend/css/style.css') }}" />
     <link rel="stylesheet" href="{{ URL::asset('frontend/custom/css/custom.css') }}" />
     @yield('css')
+
+
     <style>
-        
-
-
-
-
         .ads-container {
-    max-width: 800px;
-    margin: 0 auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-.ad {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid #ddd; /* Optional: Add a border to separate ads */
-}
+        .ad {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd; /* Optional: Add a border to separate ads */
+        }
 
-.ad-image {
-    max-width: 200px;
-    height: auto;
-    border-radius: 8px;
-    margin-right: 20px; /* Space between image and text */
-}
+        .ad-image {
+            max-width: 200px;
+            height: auto;
+            border-radius: 8px;
+            margin-right: 20px; /* Space between image and text */
+        }
 
-.ad-content {
-    flex: 1;
-}
+        .ad-content {
+            flex: 1;
+        }
 
-.cta-button {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-top: 20px;
-    background-color: #007bff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-}
+        .cta-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
 
-.cta-button:hover {
-    background-color: #0056b3;
-}
-
-
-
-
-
+        .cta-button:hover {
+            background-color: #0056b3;
+        }
 
     </style>
 </head>
