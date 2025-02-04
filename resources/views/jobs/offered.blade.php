@@ -33,7 +33,7 @@
     </div>
     <div class="ss-jb-apply-on-disc-txt mb-3">
         <h5>Description</h5>
-        <p>{{ $jobdetails['description'] }}</p>
+        <p>{!! $jobdetails['description'] !!}</p>
     </div>
     <ul class="ss-jb-apply-on-inf-hed-rec row">
         <li class="col-md-6 mb-3">

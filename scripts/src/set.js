@@ -1,20 +1,29 @@
 require("dotenv").config();  //To read environment variables from the .env file
 
-const WEBHOOK_URL = process.env.WEBHOOK_URL; // Fetch url from the env file
-const axios = require('axios'); //To make API calls
+const WEBHOOK_URL = process.env.WEBHOOK_URL;
+const axios = require('axios');
+const os = require('os')
 
 //Function to report errors, through the API (Weebhook url)
 module.exports.report = async (type, indicator, msg) => {
 
-  if(process.env.ENABLE_REPORTER){
+  if(process.env.ENABLE_REPORTER === "true"){
     type.toLowerCase() == "error" ? type=":rotating_light: ERROR :rotating_light:": type.toUpperCase();
     type.toLowerCase() == "notification" ? type=":loudspeaker: notification :loudspeaker:": type.toUpperCase();
 
     try{
 
-      await axios.post(WEBHOOK_URL, {
-        content: type + ' :arrow_right: :arrow_right: :arrow_right: ' +indicator.toUpperCase() + ' :arrow_right: :arrow_right: :arrow_right: ' + msg + ' @ ' + process.env.APP_URL,
-      });
+      if(process.env.APP_URL == "http://localhost/" || "http://localhost/public"){
+
+        await axios.post(WEBHOOK_URL, {
+          content: type + ' :arrow_right: :arrow_right: :arrow_right: ' +indicator.toUpperCase() + ' :arrow_right: :arrow_right: :arrow_right: ' + msg + ' @ ' + os.hostname(),
+        });
+
+      }else{
+        await axios.post(WEBHOOK_URL, {
+          content: type + ' :arrow_right: :arrow_right: :arrow_right: ' +indicator.toUpperCase() + ' :arrow_right: :arrow_right: :arrow_right: ' + msg + ' @ ' + process.env.APP_URL,
+        });
+      }
 
     }catch(e){
 

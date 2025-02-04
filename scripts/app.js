@@ -84,10 +84,7 @@ pm2.connect( async function(err) {
     });
 
     // Crons management
-    console.log(process.env.ENABLE_CRONS)
-
-    //Check if crons are enabled
-    if(process.env.ENABLE_CRONS){
+    if(process.env.ENABLE_CRONS === "true"){
       console.log("Starting the Cron service.")
       await pm2.start({
         script    : crons,

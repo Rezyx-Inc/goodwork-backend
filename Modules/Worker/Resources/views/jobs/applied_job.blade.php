@@ -44,7 +44,7 @@
 
     <div class="ss-jb-apply-on-disc-txt">
         <h5>Description</h5>
-        <p>{{ $model->description }}</p>
+        <p>{!! $model->description !!}</p>
     </div>
 
 

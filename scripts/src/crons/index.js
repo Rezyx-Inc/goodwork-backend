@@ -21,8 +21,7 @@ var ardorHealth = require("../integrations/ardorHealth.js");
 //     await gSheetAuth(true);
 // })();
 
-//Checking if cron jobs are enabled
-if (process.env.ENABLE_CRONS) {
+if (process.env.ENABLE_CRONS === "true") {
     console.log("Starting integrations cron jobs.");
 
     // Check newly added integrations every 10 minutes
