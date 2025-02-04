@@ -31,18 +31,10 @@ class LogApiRequests
                 }
             }
 
-            if (!$shouldLog) {
-                // log nessesary information
-                Log::info('');
-                Log::info('*******************API LOG*******************');
-                Log::info('=======> API Request:', [
-                    'route' => $routeName,
-                    'body' => $request->all(),
-                ]);
-
-
-                return $next($request);
-            }
+            // // filter out the routes that should not be logged
+            // if (!$shouldLog) {
+            //     return $next($request);
+            // }
 
 
             // Max length for the logged response content
@@ -50,6 +42,9 @@ class LogApiRequests
 
 
             // separator and space before the log
+            Log::info('');
+            Log::info('');
+            Log::info('');
             Log::info('*******************API LOG*******************');
 
 
@@ -73,6 +68,7 @@ class LogApiRequests
                 ? substr($responseContent, 0, $maxLength) . '... [truncated]'
                 : $responseContent;
 
+            Log::info('');
             // Log the response
             Log::info('=======> API Response:', [
                 'status' => $response->getStatusCode(),
