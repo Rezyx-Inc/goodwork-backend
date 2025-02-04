@@ -681,7 +681,7 @@
 
     function redirectToJobDetails(job, users) {
         if (isLoggedIn) {
-            window.location.href = 'worker/job/'+job.id+'/details';
+            window.location.href = `worker/job/${job.id}/details`;
         } else {
             showJobModal(job, users);
         }
@@ -713,7 +713,7 @@
         let askRecruiter = '<a class="ask_recruiter_href" href="{{ route('worker.login') }}" >Ask recruiter</a>';
 
         // set modal title
-        document.querySelector("#exampleModal .modal-title").innerHTML = 'job ID: '+job.job_id;
+        document.querySelector("#exampleModal .modal-title").innerHTML = `job ID: ${job.job_id}`
 
 
         // Set job data in the modal
@@ -1578,7 +1578,7 @@
         const selectedJobState = this.value;
         const selectedState = $(this).find(':selected').attr('id');
 
-        await $.get('/api/cities/'+selectedState, function(cities) {
+        await $.get(`/api/cities/${selectedState}`, function(cities) {
             citiesData = cities;
         });
 
@@ -1730,7 +1730,7 @@
         today.setHours(0, 0, 0, 0);
         const differenceInMilliseconds = workStartDate - today;
         const differenceInDays = Math.ceil(differenceInMilliseconds / (1000 * 60 * 60 * 24));
-        return 'Work starts in '+differenceInDays+' days';
+        return `Work starts in ${differenceInDays} days`;
     }
 
     document.addEventListener('DOMContentLoaded', function() {
