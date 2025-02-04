@@ -190,7 +190,7 @@
 
                             <div class="ss-jb-apply-on-disc-txt">
                                 <h5>Description</h5>
-                                <p id="job_description">{{ $model->description }} </p>
+                                <p id="job_description">{!! $model->description !!} </p>
                             </div>
 
 

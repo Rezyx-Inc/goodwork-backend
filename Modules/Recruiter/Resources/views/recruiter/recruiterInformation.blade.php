@@ -49,7 +49,7 @@
                     </div>
                     <div class="ss-jb-apply-on-disc-txt col-md-12 mt-4 mb-3">
                         <h5>Description</h5>
-                        <p class="mb-3">{{ $jobdetails->description ?? 'Missing Description information' }}</p>
+                        <p class="mb-3">{!! $jobdetails->description ?? 'Missing Description information' !!}</p>
                     </div>
 
                     <div class="ss-job-ap-on-offred-new-dv">
@@ -290,7 +290,7 @@
 
                                     <div class="col-lg-5 col-md-5 col-sm-12">
                                         <p class="mt-3">Referral Bonus</p>
-                                        <h6>${{ $jobdetails->referral_bonus ?? 'Missing Referral Bonus information' }}
+                                        <h6>{{ '$' . $jobdetails->referral_bonus ?? 'Missing Referral Bonus information' }}
                                         </h6>
                                     </div>
 
@@ -298,7 +298,7 @@
 
                                     <div class="col-lg-5 col-md-5 col-sm-12">
                                         <p class="mt-3">Sign-On Bonus</p>
-                                        <h6>${{ $jobdetails->sign_on_bonus ?? 'Missing Sign-On Bonus information' }}
+                                        <h6>{{ '$' . $jobdetails->sign_on_bonus ?? 'Missing Sign-On Bonus information' }}
                                         </h6>
                                     </div>
 
@@ -306,7 +306,7 @@
 
                                     <div class="col-lg-5 col-md-5 col-sm-12">
                                         <p class="mt-3">Extension Bonus</p>
-                                        <h6>${{ $jobdetails->extension_bonus ?? 'Missing Extension Bonus information' }}
+                                        <h6>{{ '$' . $jobdetails->extension_bonus ?? 'Missing Extension Bonus information' }}
                                         </h6>
                                     </div>
 
@@ -314,7 +314,7 @@
 
                                     <div class="col-lg-5 col-md-5 col-sm-12">
                                         <p class="mt-3">Completion Bonus</p>
-                                        <h6>${{ $jobdetails->completion_bonus ?? 'Missing Completion Bonus information' }}
+                                        <h6>{{ '$' . $jobdetails->completion_bonus ?? 'Missing Completion Bonus information' }}
                                         </h6>
                                     </div>
 
@@ -322,7 +322,7 @@
 
                                     <div class="col-lg-5 col-md-5 col-sm-12">
                                         <p class="mt-3">Other Bonus</p>
-                                        <h6>${{ $jobdetails->other_bonus ?? 'Missing Other Bonus information' }}</h6>
+                                        <h6>{{ '$' . $jobdetails->other_bonus ?? 'Missing Other Bonus information' }}</h6>
                                     </div>
 
                                     {{--  Total Organization Amount --}}

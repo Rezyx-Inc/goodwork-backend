@@ -899,7 +899,10 @@ class WorkerController extends Controller
             }
 
             if ($data['state']) {
-                $ret->where('jobs.job_state', '=', $data['state']);
+
+                $state = State::where('name' ,$data['state'])->get();
+
+                $ret->where('job_state', '=', $state[0]->name)->orWhere('job_state', '=', $state[0]->iso2);
             }
 
             if (count($data['job_type'])) {
