@@ -263,6 +263,9 @@ class SiteController extends Controller
       $ret->where('job_city', 'like', $data['city']);
     }
 
+    $allusers = User::get();
+            $data['allusers'] = $allusers;
+
     //return response()->json(['message' =>  $ret->get()]);
     $data['jobs'] = $ret->get();
 
