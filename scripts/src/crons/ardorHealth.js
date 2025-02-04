@@ -5,7 +5,12 @@ const axios = require('axios').default; // To fetch data from a url
 const { getSpecialties, getNcSpecialties ,importArdorHealthJobs, cleanArdorHealthJobs} = require('../mysql/queries.js');
 var { report } = require("../set.js");
 
-const ardorOrgId= "GWU000002";
+if(process.env.APP_ENV == "production"){
+  const ardorOrgId= "GWU000018";
+}else{
+  const ardorOrgId= "GWU000002";
+}
+
 
 // Async function for setting property values to parse accordingly
 module.exports.init = async function (){
