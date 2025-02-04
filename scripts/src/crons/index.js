@@ -3,19 +3,19 @@ require("dotenv").config();
 
 //import all required libraries and/or modules
 var cron = require("node-cron"); // Used to schedule cron jobs
-var laboredge = require("./laboredge.js");
+var { vitalink } = require("../integrations/laboredge");
 var { report } = require("../set.js");
 
 //var gsheet = require("../gSheet/index.js").main;
 //var gSheetAuth = require("../gSheet/services/authService.js").authorize;
 
-var ardorHealth = require("./ardorHealth.js");
+var ardorHealth = require("../integrations/ardorHealth.js");
 
 // Uncomment to seed accounts
-//laboredge.seed(999);
+//vitalink.seed(999);
 
 //report("Hello from cron")
-//laboredge.update();
+//vitalink.update();
 // (async () => {
 //     console.log("Exec imm");
 //     await gSheetAuth(true);
@@ -28,7 +28,7 @@ if (process.env.ENABLE_CRONS) {
     // Check newly added integrations every 10 minutes
     //cron.schedule("*/10 * * * *", () => {
         //console.log("Checking new integrations");
-        // laboredge.init();
+        // vitalink.init();
     //});
 
     // Check newly added integrations every 30 minutes
@@ -41,14 +41,14 @@ if (process.env.ENABLE_CRONS) {
     cron.schedule("0 * * * *", () => {
         console.log("Hourly Checking job updates");
         ardorHealth.init();
-    //     // laboredge.update();
+    //     // vitalink.update();
     //     gsheet();
     });
 
     // Check other updates every day at 1 am
     cron.schedule("0 1 * * *", () => {
         console.log("Checking other updates");
-        //laboredge.updateOthers();
+        //vitalink.updateOthers();
     });
 
     //Handling unexpected termination on SIGTERM signal

@@ -6,14 +6,14 @@ const url = require('url'); //  Contains url related functions
 const axios = require("axios"); // Used to make http requests
 
 const mongoose = require('mongoose'); //  To connect to mongoDB
-const queries = require("../mysql/queries.js")
+const queries = require("../../mysql/queries.js")
 
-const Laboredge = require('../models/Laboredge');
-const Logs = require('../models/Logs');
+const Laboredge = require('../../models/Laboredge');
+const Logs = require('../../models/Logs');
 var moment = require("moment"); // Used for date-time changes
 
 var _ = require('lodash'); // Used for data manipulation
-var { report } = require('../set.js')
+var { report } = require('../../set.js')
 
 //Connect to DB
 mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_DATABASE_NAME)
