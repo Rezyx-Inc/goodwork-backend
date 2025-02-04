@@ -363,8 +363,8 @@ async function main() {
     //await addJobsWithLocalData()
 
     //from public sheet
-    const url = "https://docs.google.com/spreadsheets/d/19V064m9xqBDoRNH9zRRfP4XIOUHpBIgRHs2XwiJWC5Q/edit?gid=0#gid=0";
-    await addJobsFromPublicSheet(url)
+    // const url = "https://docs.google.com/spreadsheets/d/19V064m9xqBDoRNH9zRRfP4XIOUHpBIgRHs2XwiJWC5Q/edit?gid=0#gid=0";
+    // await addJobsFromPublicSheet(url)
 
     //from auth sheet
     //await addJobsFromLinkWithAuth();
