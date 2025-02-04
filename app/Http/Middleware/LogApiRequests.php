@@ -32,6 +32,15 @@ class LogApiRequests
             }
 
             if (!$shouldLog) {
+                // log nessesary information
+                Log::info('');
+                Log::info('*******************API LOG*******************');
+                Log::info('=======> API Request:', [
+                    'route' => $routeName,
+                    'body' => $request->all(),
+                ]);
+
+
                 return $next($request);
             }
 
