@@ -166,7 +166,8 @@
 
             });
         </script>
-
+        <!-- Bootstrap 4 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="{{URL::asset('frontend/custom/js/profile.js')}}"></script>
         <script type="text/javascript" src="{{URL::asset('frontend/custom/js/script.js')}}"></script>
         @yield('js')
