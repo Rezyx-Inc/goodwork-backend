@@ -1639,6 +1639,19 @@
         const termsContentDiv = document.querySelector('.terms-content');
         let termsHtml = '';
 
+        terms.forEach(term => {
+            termsHtml += `
+      <ul class="row w-100" style="list-style: none;">
+          <li class="col-8">${term}</li>
+          <li class="col-4 text-end">
+              <button type="button" onclick="removeTerm('${term}')">
+                  <img src="{{ URL::asset('frontend/img/delete-img.png') }}" />                    
+              </button>
+          </li>
+      </ul>
+  `;
+        });
+
         termsContentDiv.innerHTML = termsHtml;
 
         // Update the hidden input field with the selected terms (joined by '-')
@@ -1686,7 +1699,11 @@
             if (recruiterOrg === selectedOrg || !selectedOrg) {
                 // Create and append option
                 const option = document.createElement('option');
-
+                option.value = `${recruiter.first_name} ${recruiter.last_name}`;
+                option.textContent = `${recruiter.first_name} ${recruiter.last_name}`;
+                if (option.value === selectedRecruiter) {
+                    option.selected = true; // Persist selected recruiter
+                }
                 recruiterSelect.appendChild(option);
             }
         });
