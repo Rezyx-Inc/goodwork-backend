@@ -4,13 +4,13 @@ var xml2js = require('xml2js'); // To parse XML into JS objects
 const axios = require('axios').default; // To fetch data from a url
 const { getSpecialties, getNcSpecialties ,importArdorHealthJobs, cleanArdorHealthJobs} = require('../mysql/queries.js');
 var { report } = require("../set.js");
+require("dotenv").config();
 
 if(process.env.APP_ENV == "production"){
-  const ardorOrgId= "GWU000018";
+  var ardorOrgId= "GWU000018";
 }else{
-  const ardorOrgId= "GWU000002";
+  var ardorOrgId= "GWU000002";
 }
-
 
 // Async function for setting property values to parse accordingly
 module.exports.init = async function (){
