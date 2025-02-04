@@ -3,13 +3,13 @@ require("dotenv").config();
 
 //import all required libraries and/or modules
 var cron = require("node-cron"); // Used to schedule cron jobs
-var laboredge = require("./laboredge.js");
+var vitalink = require("../integrations/laboredge/vitalink.js");
 var { report } = require("../set.js");
 
 //var gsheet = require("../gSheet/index.js").main;
 //var gSheetAuth = require("../gSheet/services/authService.js").authorize;
 
-var ardorHealth = require("./ardorHealth.js");
+var ardorHealth = require("../integrations/ardorHealth.js");
 
 // Uncomment to seed accounts
 //laboredge.seed(999);
