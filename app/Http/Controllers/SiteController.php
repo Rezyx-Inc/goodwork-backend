@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Artisan;
 // ************ Requests ************
 use App\Http\Requests\{LoginRequest, SignupRequest, ForgotRequest, ResetRequest, OTPRequest, ContactUsRequest};
 // ************ models ************
-use App\Models\{User, State, Offer, Countries, Nurse, Availability, Keyword, Speciality, JobSaved, Profession};
+use App\Models\{User, State, Offer, Countries, Nurse, Availability, Keyword, Speciality, JobSaved, Profession, States};
 
 use DateTime;
 
@@ -256,7 +256,9 @@ class SiteController extends Controller
 
 
     if (isset($request->state)) {
-      $ret->where('job_state', 'like', $data['state']);
+      $state = State::where('name' ,$data['state'])->get();
+
+      $ret->where('job_state', '=', $state[0]->name)->orWhere('job_state', '=', $state[0]->iso2);
     }
 
     if (isset($request->city)) {
