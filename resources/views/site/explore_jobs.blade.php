@@ -366,10 +366,10 @@
 
                     <div class="ss-dash-profile-jb-mn-dv">
 
-                        <div class="ss-dash-profile-4-bx-dv">
+                        <div class="ss-dash-profile-4-bx-dv" id="job-item-container">
                             @forelse($jobs as $j)
                                 <div class="ss-job-prfle-sec job-item" data-users="{{ $allusers }}"
-                                    data-id="{{ $j }}" data-job="{{ json_encode($j) }}">
+                                    data-id="{{ $j->id }}" data-job="{{ json_encode($j) }}">
                                     {{-- row 1 --}}
                                     <div class="row">
                                         <div class="col-10">
@@ -394,9 +394,6 @@
                                     </div>
                                     {{-- row 2 --}}
                                     <div class="row">
-                                        {{-- <div class="col-3"><ul><li><a href="{{route('worker_job-details',['id'=>$j->id])}}"><img class="icon_cards" src="{{URL::asset('frontend/img/job.png')}}"> {{$j->job_name}}</a></li>
-                    </ul>
-                    </div> --}}
                                     </div>
                                     {{-- row 3 --}}
                                     <div class="row">
@@ -511,6 +508,7 @@
                             @endforelse
 
                         </div>
+                        <div id="loadTrigger"></div>
                     </div>
 
                 </div>
@@ -911,7 +909,63 @@
         $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3')
             .slider('values', 1) + '</span>');
 
+        // Add an intersect Observer for infinite scroll
+        var skip = 0;
+        var el = document.querySelector('#loadTrigger');
+
+        var observer = new window.IntersectionObserver(([entry]) => {
+
+            // Only observe intersections
+            if (entry.isIntersecting) {
+                skip > 0 ? null : 0;
+
+                //Do the Ajax call
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: full_path + "explore-jobs?skip=100",
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        ajaxindicatorstop();
+
+                        addJobCards(data.message);
+                        // Increment skip, reassign the last child and reload the observer
+                        skip+=10;
+                    },
+                    error: function(resp) {
+
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-check"></i> Oops ! Can\'t load more jobs ! Please try later.',
+                            time: 5
+                        });
+                    }
+                });
+
+                document.querySelectorAll(".job-item").forEach(item => {
+
+                    item.removeEventListener("click",handleCardClickEvent);
+                    item.removeEventListener("click",handleCardClickEvent, true);
+                    item.addEventListener("click", handleCardClickEvent);
+                });
+
+                return
+            }
+
+        }, {
+          root: null,
+          threshold: 0.5,
+        });
+
+        // Observe
+        observer.observe(el);
+
         document.querySelectorAll(".job-item").forEach(item => {
+
             item.addEventListener("click", function() {
                 const jobData = this.dataset.job;
                 const allusers = this.dataset.users; // Corrected from 'allusers' to 'users'
@@ -924,6 +978,22 @@
                 }
             });
         });
+
+        function handleCardClickEvent(){
+            var jobData = this.dataset.job;
+            var allusers = this.dataset.users; // Corrected from 'allusers' to 'users'
+
+            jobData = JSON.parse(jobData.replaceAll("'", "\""));
+            allusers= JSON.parse(allusers.replaceAll("'", "\""));
+
+            try {
+                const job = jobData;
+                const users = allusers;
+                redirectToJobDetails(job, users);
+            } catch (error) {
+                console.error("Invalid job data:", error);
+            }
+        }
     });
 </script>
 
