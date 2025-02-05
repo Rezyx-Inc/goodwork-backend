@@ -18,6 +18,7 @@
 
     function showJobModal(job, users) {
 
+
         // Image paths from Blade
         const locationIcon = @json(asset('frontend/img/location.png'));
         const calendarIcon = @json(asset('frontend/img/calendar.png'));
