@@ -640,6 +640,28 @@
 
     })
 
+    $("#filter_form").submit(function(e) {
+        //e.preventDefault();
+        // Clear previous error message
+        $('#gwError').hide().text('');
+        // Get the value of the gw input
+        var gwValue = $('#gw').val();
+
+        const categoriesString = selectedCategories.map(function() {
+            return $(this).val();
+        }).get().join('-');
+        // Set the categoriesString as the value of the hidden input field
+        $("#job_type").val(categoriesString);
+        // $(this).find("input[name='terms[]']").remove();
+        // Change the value of the profession select to the text of the selected option
+        const professionSelect = $("select[name='profession']");
+        const selectedOptionText = professionSelect.find("option:selected").text();
+        // Add a hidden input to the form with the text of the selected option
+        $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText +
+            '">');
+        this.submit(); // Submit the form
+    });
+
     let terms = []; // Initialize terms as an array to store only values (texts)
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -651,20 +673,6 @@
             }
         });
         updateTermsList();
-
-        document.querySelectorAll(".job-item").forEach(item => {
-            item.addEventListener("click", function() {
-                const jobData = this.dataset.job;
-                const allusers = this.dataset.users; // Corrected from 'allusers' to 'users'
-                try {
-                    const job = JSON.parse(jobData);
-                    const users = JSON.parse(allusers);
-                    redirectToJobDetails(job, users);
-                } catch (error) {
-                    console.error("Invalid job data:", error);
-                }
-            });
-        });
 
     });
 
@@ -903,29 +911,18 @@
         $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3')
             .slider('values', 1) + '</span>');
 
-    });
-
-    $(document).ready(function() {
-        $("#filter_form").submit(function(e) {
-            //e.preventDefault();
-            // Clear previous error message
-            $('#gwError').hide().text('');
-            // Get the value of the gw input
-            var gwValue = $('#gw').val();
-
-            const categoriesString = selectedCategories.map(function() {
-                return $(this).val();
-            }).get().join('-');
-            // Set the categoriesString as the value of the hidden input field
-            $("#job_type").val(categoriesString);
-            // $(this).find("input[name='terms[]']").remove();
-            // Change the value of the profession select to the text of the selected option
-            const professionSelect = $("select[name='profession']");
-            const selectedOptionText = professionSelect.find("option:selected").text();
-            // Add a hidden input to the form with the text of the selected option
-            $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText +
-                '">');
-            this.submit(); // Submit the form
+        document.querySelectorAll(".job-item").forEach(item => {
+            item.addEventListener("click", function() {
+                const jobData = this.dataset.job;
+                const allusers = this.dataset.users; // Corrected from 'allusers' to 'users'
+                try {
+                    const job = JSON.parse(jobData);
+                    const users = JSON.parse(allusers);
+                    redirectToJobDetails(job, users);
+                } catch (error) {
+                    console.error("Invalid job data:", error);
+                }
+            });
         });
     });
 </script>
