@@ -196,16 +196,6 @@
                                     </ul>
                                     <ul class="ss-s-jb-apl-on-inf-txt-ul terms_item ss-s-jb-apl-bg-pink">
                                         <li>
-                                            <span>Terms</span>
-                                        </li>
-                                        <li>
-                                             <h6>
-                                               ${job.terms}
-                                            </h6>
-                                        </li>
-                                    </ul>
-                                    <ul class="ss-s-jb-apl-on-inf-txt-ul terms_item ss-s-jb-apl-bg-pink">
-                                        <li>
                                             <span>Profession</span>
                                         </li>
                                         <li>
@@ -231,6 +221,16 @@
                                         <li>
                                             <h6>
                                                 $${job.actual_hourly_rate}
+                                            </h6>
+                                        </li>
+                                    </ul>
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul terms_item ss-s-jb-apl-bg-pink">
+                                        <li>
+                                            <span>Est. Weekly Rate</span>
+                                        </li>
+                                        <li>
+                                             <h6>
+                                                $${(Number(job.weekly_pay) || 0).toFixed(2)}
                                             </h6>
                                         </li>
                                     </ul>
