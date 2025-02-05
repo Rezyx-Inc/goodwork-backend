@@ -347,7 +347,7 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
             let recruiterId = await getNextUpRecruiter(ardorOrgId);
 
             const query = await pool.query(
-                "INSERT INTO jobs (created_at, updated_at, professional_licensure, facility_state, facility_city, terms, id, organization_id, created_by, job_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, job_type, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate, recruiter_id ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+                "INSERT INTO jobs (created_at, updated_at, professional_licensure, facility_state, facility_city, terms, id, organization_id, created_by, job_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, job_type, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate, recruiter_id, tax_status ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
                 [
                     created_at,
                     updated_at,
@@ -377,7 +377,8 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
                     importData.license[0],
                     importData.Specialty,
                     hourlyPay,
-                    recruiterId
+                    recruiterId,
+                    ""
                 ]
             );
 
