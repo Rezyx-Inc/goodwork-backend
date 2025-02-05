@@ -1,49 +1,23 @@
 @extends('layouts.main')
-@section('mytitle', ' For Organizations | Saas')
+@section('mytitle', ' Explore Jobs')
 @section('content')
 @section('css')
+
     <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
     <link href="{{ URL::asset('landing/css/bootstrap.min.css') }}" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ URL::asset('frontend/css/fontawesome_all.css') }}" />
     {{-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" /> --}}
-    <!-- Google Fonts Roboto -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
-    <!-- MDB -->
-    <link href="{{ URL::asset('backend/vendors/confirm/jquery-confirm.min.css') }}" rel="stylesheet">
-    {{-- <link href="{{ URL::asset('backend/vendors/datatables/jquery.dataTables.min.css') }}" rel="stylesheet"> --}}
-    {{-- Notie --}}
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('backend/vendors/notie/dist/notie.css') }}">
-    <!-- Custom styles -->
-    <link rel="stylesheet" href="{{ URL::asset('frontend/css/style.css') }}" />
-    @yield('css')
 
-    <!-- <link href="{{ URL::asset('landing/css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
-    <link href="{{ URL::asset('landing/css/bootstrap.min.css') }}" rel="stylesheet" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ URL::asset('frontend/css/mdb.min.css') }}" />
-    <link rel="stylesheet" href="{{ URL::asset('frontend/css/fontawesome_all.css') }}" />
-    {{-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" /> --}}
     <!-- Google Fonts Roboto -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
-    <!-- MDB -->
-    <link rel="stylesheet" href="{{ URL::asset('frontend/css/mdb.min.css') }}" />
-    {{-- jquery confirm --}}
-    <link href="{{ URL::asset('backend/vendors/confirm/jquery-confirm.min.css') }}" rel="stylesheet">
-    {{-- <link href="{{ URL::asset('backend/vendors/datatables/jquery.dataTables.min.css') }}" rel="stylesheet"> --}}
-    {{-- Notie --}}
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('backend/vendors/notie/dist/notie.css') }}">
-    <!-- Custom styles -->
-    <link rel="stylesheet" href="{{ URL::asset('frontend/css/style.css') }}" />
 
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="{{ URL::asset('frontend/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ URL::asset('frontend/css/mdb.min.css') }}" />
     @yield('css')
-
-
-
-
-
-
-
 
     <style>
         /* Ads Container */
@@ -184,34 +158,6 @@
                                 <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
                                 <button class="ss-fliter-btn" type="submit">Filter</button>
                             </div>
-
-                            {{-- Organization Name --}}
-                            {{-- <div class="ss-input-slct-grp mb-3">
-                          <label for="organization_name">Organization Name</label>
-                          <select id="organization_name" name="organization_name">
-                              <option value="">Select</option>
-                              @foreach ($organizations as $v)
-                                  <option value="{{ $v->organization_name }}"
-                                      {{ $organization_name == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
-                                  </option>
-                              @endforeach
-                          </select>
-                        </div> --}}
-
-                            {{-- Recruiter Name --}}
-                            {{-- <div class="ss-input-slct-grp mb-3">
-                          <label for="recruiter_name">Recruiter Name</label>
-                          <select id="recruiter_name" name="recruiter_name">
-                              <option value="">Select</option>
-                              @foreach ($recruiters as $v)
-                                  <option value="{{ $v->first_name }} {{ $v->last_name }}"
-                                      data-org="{{ $v->organization_name }}"
-                                      {{ $recruiter_name == $v->first_name . ' ' . $v->last_name ? 'selected' : '' }}>
-                                      {{ $v->first_name }} {{ $v->last_name }}
-                                  </option>
-                              @endforeach
-                          </select>
-                        </div> --}}
 
                             {{-- job type --}}
                             <div class="ss-input-slct-grp mb-3">
@@ -393,24 +339,6 @@
                                 </div>
                                 <!-- Error message display -->
                             </div>
-
-                            <!-- partial -->
-                            <!-- partial:index.partial.html -->
-                            {{-- <div class="ss-price-week-sec">
-                        <label>Assignment Length</label>
-                        <div id="slider4"></div>
-                        </div> --}}
-                            <!-- partial -->
-
-
-                            {{-- <div class="ss-jobtype-dv ss-shift-type-inpy">
-                            <label>Shift type</label>
-                                 <ul class="ks-cboxtags">
-                                    @foreach ($prefered_shifts as $k => $v)
-                                    <li><input type="checkbox" name="shift[]" id="checkboxDay-{{$k}}" value="{{$v->title}}" {{ (in_array($v->title,$shifts)) ? 'checked': ''}}><label for="checkboxDay-{{$k}}">{{$v->title}}</label></li>
-                        @endforeach
-                        </ul>
-                        </div> --}}
 
                             {{-- <input type="hidden" name="terms" value="" id="job_type"> --}}
                             {{-- <input type="hidden" name="shifts" value="" id="shift"> --}}
@@ -669,8 +597,6 @@
 
 
 @section('js')
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-{{-- var isLoggedIn = {{ auth()->guard('frontend')->check() ? 'true' : 'false' }}; --}}
 
 @include("site.explore_jobs_scripts")
 
@@ -678,6 +604,12 @@
 @include('partials.flashMsg')
 
 <script>
+
+    // Clear the form | very bad clearing method
+    function resetForm() {
+        window.location.href = "{{ route('explore-jobs') }}";
+    }
+
     // get cities according to state :
 
     const jobState = document.getElementById('state');
@@ -707,12 +639,11 @@
         });
 
     })
-</script>
 
-<script>
     let terms = []; // Initialize terms as an array to store only values (texts)
 
     document.addEventListener('DOMContentLoaded', () => {
+
         const preselectedTerms = document.getElementById('termsAllValues').value.split('-');
         preselectedTerms.forEach(termValue => {
             if (termValue) {
@@ -720,6 +651,21 @@
             }
         });
         updateTermsList();
+
+        document.querySelectorAll(".job-item").forEach(item => {
+            item.addEventListener("click", function() {
+                const jobData = this.dataset.job;
+                const allusers = this.dataset.users; // Corrected from 'allusers' to 'users'
+                try {
+                    const job = JSON.parse(jobData);
+                    const users = JSON.parse(allusers);
+                    redirectToJobDetails(job, users);
+                } catch (error) {
+                    console.error("Invalid job data:", error);
+                }
+            });
+        });
+
     });
 
     function addTerms(type) {
@@ -754,15 +700,15 @@
 
         terms.forEach(term => {
             termsHtml += `
-      <ul class="row w-100" style="list-style: none;">
-          <li class="col-8">${term}</li>
-          <li class="col-4 text-end">
-              <button type="button" onclick="removeTerm('${term}')">
-                  <img src="{{ URL::asset('frontend/img/delete-img.png') }}" />                    
-              </button>
-          </li>
-      </ul>
-  `;
+                <ul class="row w-100" style="list-style: none;">
+                    <li class="col-8">${term}</li>
+                    <li class="col-4 text-end">
+                        <button type="button" onclick="removeTerm('${term}')">
+                            <img src="{{ URL::asset('frontend/img/delete-img.png') }}" />
+                        </button>
+                    </li>
+                </ul>
+            `;
         });
 
         termsContentDiv.innerHTML = termsHtml;
@@ -790,68 +736,6 @@
             });
         }
     }
-</script>
-
-<script>
-    function resetForm() {
-        window.location.href = "{{ route('explore-jobs') }}";
-    }
-
-    const recruitersName = @json($recruiters); // Recruiters data from the backend
-    const orgSelect = document.getElementById('organization_name');
-    const recruiterSelect = document.getElementById('recruiter_name');
-
-    // Function to populate recruiters based on the selected organization
-    function populateRecruiters(selectedOrg, selectedRecruiter) {
-        // Clear recruiter dropdown
-        recruiterSelect.innerHTML = '<option value="">Select</option>';
-
-        // Filter and add recruiters based on the organization
-        recruitersName.forEach(recruiter => {
-            const recruiterOrg = recruiter.organization_name;
-            if (recruiterOrg === selectedOrg || !selectedOrg) {
-                // Create and append option
-                const option = document.createElement('option');
-                option.value = `${recruiter.first_name} ${recruiter.last_name}`;
-                option.textContent = `${recruiter.first_name} ${recruiter.last_name}`;
-                if (option.value === selectedRecruiter) {
-                    option.selected = true; // Persist selected recruiter
-                }
-                recruiterSelect.appendChild(option);
-            }
-        });
-    }
-
-    // Event listener for organization dropdown change
-    orgSelect.addEventListener('change', function() {
-        const selectedOrg = this.value;
-        populateRecruiters(selectedOrg, recruiterSelect.value);
-    });
-
-    // Populate recruiters on page load (for persistence after form submission)
-    document.addEventListener('DOMContentLoaded', function() {
-        const selectedOrg = orgSelect.value; // Get currently selected organization
-        const selectedRecruiter = recruiterSelect.value; // Get currently selected recruiter
-        populateRecruiters(selectedOrg, selectedRecruiter);
-    });
-</script>
-
-<script>
-    function daysUntilWorkStarts(dateString) {
-        const workStartDate = new Date(dateString);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const differenceInMilliseconds = workStartDate - today;
-        const differenceInDays = Math.ceil(differenceInMilliseconds / (1000 * 60 * 60 * 24));
-        return `Work starts in ${differenceInDays} days`;
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.start-date').forEach(function(element) {
-            const startDate = element.getAttribute('data-start-date');
-            element.textContent = daysUntilWorkStarts(startDate);
-        });
-    });
 
     function collision($div1, $div2) {
         var x1 = $div1.offset().left;
@@ -872,55 +756,10 @@
         var string = reg.exec(href);
         return string ? string[1] : null;
     };
+
     // End url
     // // slider call
     $(document).ready(function() {
-        // $('#slider').slider({
-        //     range: true,
-        //     min: 1000,
-        //     max: 10000,
-        //     step: 1,
-        //     values: [$('#minval').val() ? $('#minval').val() : 3000, $('#maxval').val() ? $('#maxval')
-        //         .val() : 6000
-        //     ],
-
-        //     slide: function(event, ui) {
-
-        //         $('#slider .ui-slider-handle:eq(0) .price-range-min').html('$' + ui.values[0]);
-        //         $('#slider .ui-slider-handle:eq(1) .price-range-max').html('$' + ui.values[1]);
-        //         $('#slider .price-range-both').html('<i>$' + ui.values[0] + ' - $' + ui.values[1] +
-        //             '</i>');
-
-        //         // get values of min and max
-        //         $("#minval").val(ui.values[0]);
-        //         $("#maxval").val(ui.values[1]);
-
-        //         if (ui.values[0] == ui.values[1]) {
-        //             // alert('kir');
-        //             $('#slider .price-range-both i').css('display', 'none');
-        //         } else {
-        //             $('#slider .price-range-both i').css('display', 'inline');
-        //         }
-
-        //         if (collision($('.price-range-min'), $('.price-range-max')) == true) {
-        //             $('#slider .price-range-min, .price-range-max').css('opacity', '0');
-        //             $('#slider .price-range-both').css('display', 'block');
-        //         } else {
-        //             $('#slider .price-range-min, .price-range-max').css('opacity', '1');
-        //             $('#slider .price-range-both').css('display', 'none');
-        //         }
-
-        //     }
-        // });
-
-        // $('#slider .ui-slider-range').append('<span class="price-range-both value"><i>$' + $('#slider').slider(
-        //     'values', 0) + ' - $' + $('#slider').slider('values', 1) + '</i></span>');
-
-        // $('#slider .ui-slider-handle:eq(0)').append('<span class="price-range-min value">$' + $('#slider')
-        //     .slider('values', 0) + '</span>');
-
-        // $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value">$' + $('#slider')
-        //     .slider('values', 1) + '</span>');
 
         $('#slider').slider({
             range: true,
@@ -1065,10 +904,7 @@
             .slider('values', 1) + '</span>');
 
     });
-</script>
 
-
-<script>
     $(document).ready(function() {
         $("#filter_form").submit(function(e) {
             //e.preventDefault();

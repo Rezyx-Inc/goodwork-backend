@@ -18,7 +18,6 @@
 
     function showJobModal(job, users) {
 
-
         // Image paths from Blade
         const locationIcon = @json(asset('frontend/img/location.png'));
         const calendarIcon = @json(asset('frontend/img/calendar.png'));
@@ -843,21 +842,5 @@
         var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
         myModal.show();
     }
-
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll(".job-item").forEach(item => {
-            item.addEventListener("click", function() {
-                const jobData = this.dataset.job;
-                const allusers = this.dataset.users; // Corrected from 'allusers' to 'users'
-                try {
-                    const job = JSON.parse(jobData);
-                    const users = JSON.parse(allusers);
-                    redirectToJobDetails(job, users);
-                } catch (error) {
-                    console.error("Invalid job data:", error);
-                }
-            });
-        });
-    });
 
 </script>
