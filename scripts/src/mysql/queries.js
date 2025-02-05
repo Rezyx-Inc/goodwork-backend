@@ -398,8 +398,8 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
                 is_open = 1;
             }
 
-            if (importData.type != "Non-Clinicial"){
-                importData.type = "Clinical";
+            if (importData.jobType != "Non-Clinicial"){
+                importData.jobType = "Clinical";
             }
 
             var hours_per_week = null, hourlyPay = null;
@@ -464,7 +464,7 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
             hours_per_week.toFixed(0) == existingJob.hours_per_week ? null : changes.hours_per_week = hours_per_week.toFixed(0);
             Number(importData.weeklyrate[0]).toFixed(2) == existingJob.weekly_pay.toFixed(2) ? null : changes.weekly_pay = Number(importData.weeklyrate[0]).toFixed(2);
             importData.description == existingJob.description ? null : changes.description = importData.description;
-            importData.jobType == existingJob.job_type ? null : changes.jobType = importData.jobType;
+            importData.jobType == existingJob.job_type ? null : changes.job_type = importData.jobType;
             importData.license[0] == existingJob.profession ? null : changes.profession = importData.license[0];
             importData.Specialty == existingJob.preferred_specialty ? null : changes.preferred_specialty = importData.Specialty;
             hourlyPay == existingJob.actual_hourly_rate ? null : changes.actual_hourly_rate = hourlyPay;
