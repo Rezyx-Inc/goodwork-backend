@@ -42,11 +42,11 @@
         let askRecruiter = `<a class="ask_recruiter_href" href="{{ route('worker.login') }}" >Ask recruiter</a>`;
 
         // set modal title
-        document.querySelector("#exampleModal .modal-title").innerHTML = `job ID: ${job.job_id}`
+        document.querySelector("#job_details_modal_for_logout_users .modal-title").innerHTML = `job ID: ${job.job_id}`
 
 
         // Set job data in the modal
-        document.querySelector("#exampleModal .modal-body").innerHTML = `
+        document.querySelector("#job_details_modal_for_logout_users .modal-body").innerHTML = `
     <main class="ss-main-body-sec px-1">
         <div class="ss-apply-on-jb-mmn-dv">
             <div class="row">
@@ -839,7 +839,7 @@
 
 
         // Show the modal
-        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+        var myModal = new bootstrap.Modal(document.getElementById('job_details_modal_for_logout_users'));
         myModal.show();
     }
 
