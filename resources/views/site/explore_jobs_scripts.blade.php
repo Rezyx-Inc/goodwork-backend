@@ -959,5 +959,8 @@
              .replace(/>/g, "&gt;")
              .replace(/"/g, "&quot;");
     }
+
+    // TODO:
     // add countOffers and format number for monetary units
+    // Fix event listeners
 </script>

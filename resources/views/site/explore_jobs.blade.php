@@ -933,7 +933,7 @@
                         ajaxindicatorstop();
 
                         addJobCards(data.message);
-                        // Increment skip, reassign the last child and reload the observer
+                        // Increment skip
                         skip+=10;
                     },
                     error: function(resp) {
@@ -946,6 +946,7 @@
                     }
                 });
 
+                // Handle the event listeners
                 document.querySelectorAll(".job-item").forEach(item => {
 
                     item.removeEventListener("click",handleCardClickEvent);
