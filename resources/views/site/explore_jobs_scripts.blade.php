@@ -229,7 +229,7 @@
                                         </li>
                                         <li>
                                              <h6>
-                                                ${(Number(job.weekly_pay) || 0).toFixed(2)}
+                                                $${(Number(job.weekly_pay) || 0).toFixed(2)}
                                             </h6>
                                         </li>
                                     </ul>
