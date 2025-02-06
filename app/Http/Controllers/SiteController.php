@@ -99,18 +99,12 @@ class SiteController extends Controller
 
     // Initialize data array
     $data = [];
-    $data['user'] = auth()->guard('frontend')->user();
     $data['jobSaved'] = new JobSaved();
 
     // Fetch related data
-    $data['organizations'] = User::where('role', 'ORGANIZATION')->get();
-    $data['recruiters'] = User::where('role', 'RECRUITER')->get();
-    $data['facilities'] = Job::where('active', '1')->get();
+    $data['terms_key'] = Keyword::select('id','title')->where(['filter' => 'terms'])->get();
     $data['specialities'] = Speciality::select('full_name')->get();
     $data['professions'] = Profession::select('full_name')->get();
-    $data['terms_key'] = Keyword::where(['filter' => 'terms'])->get();
-    $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
-    $usa = Countries::where(['iso3' => 'USA'])->first();
     $data['us_states'] = State::select('id', 'name')->get();
     
     // Set filter values from the request, use null as the default if not provided
@@ -123,7 +117,7 @@ class SiteController extends Controller
     $data['experience'] = $request->input('experience');
     $data['city'] = $request->input('city');
     $data['state'] = $request->input('state');
-    $data['terms'] = $request->has('terms') ? explode('-', $request->terms) : [];
+    $data['terms'] = $request->input('terms') ? explode('-', $request->terms) : [];
     $data['start_date'] = $request->input('start_date', null);
     $data['end_date'] = $request->input('end_date', null);
     $data['start_date'] = $data['start_date'] ? (new DateTime($data['start_date']))->format('Y-m-d') : null;
@@ -138,8 +132,6 @@ class SiteController extends Controller
     $data['hourly_pay_to'] = $request->input('hourly_pay_to');
     $data['hours_per_week_from'] = $request->input('hours_per_week_from');
     $data['hours_per_week_to'] = $request->input('hours_per_week_to');
-    
-
 
     if (!empty($gwNumber)) {
 
@@ -155,47 +147,6 @@ class SiteController extends Controller
 
       return view('site.explore_jobs', $data);
     }
-
-    $data['organizations_id'] = [];
-    if (!empty($data['organization_name'])) {
-        
-      foreach ($data['organizations'] as $org) {
-
-          // if only organization name is provided
-          if ($org->organization_name == $data['organization_name']) {
-            $data['organizations_id'][] = $org->id;
-          }                
-        }
-        // Apply query filter if organizations_id is not empty
-        if (!empty($data['organizations_id'])) {
-            $ret->whereIn('organization_id', $data['organizations_id']);
-        } else {
-            // no matching organization is found
-            $ret->whereRaw('1 = 0'); // No results will be returned
-        }
-    }
-
-    $data['recruiters_id'] = [];
-    if (!empty($data['recruiter_name'])) {
-        foreach ($data['recruiters'] as $recruiter) {
-            // Combine first and last name for matching
-            $fullName = $recruiter->first_name . ' ' . $recruiter->last_name;
-        
-            // Check if the selected name matches the full name
-            if ($fullName === $data['recruiter_name']) {
-                $data['recruiters_id'][] = $recruiter->id;
-            }
-        }
-      
-        // Apply query filter if recruiters_id is not empty
-        if (!empty($data['recruiters_id'])) {
-            $ret->whereIn('recruiter_id', $data['recruiters_id']);
-        } else {
-            // No matching recruiter found
-            $ret->whereRaw('1 = 0'); // No results will be returned
-        }
-    }
-
 
     if (!empty($data['facilityName'])) {
       $ret->where('facility_name', 'like', $data['facilityName']);
@@ -214,17 +165,14 @@ class SiteController extends Controller
       $ret->where('preferred_specialty', 'like', $data['speciality']);
     }
 
-    if (!empty($data['terms']) && !is_null($request->input('terms')) && is_array($data['terms']) && count($data['terms']) > 0) {
-      $ret->where(function ($query) use ($data) {
-          foreach ($data['terms'] as $term) {
-              $query->orWhere('terms', $term);
-          }
-      });
+    if (!empty($data['terms']) && !is_null($data['terms']) && is_array($data['terms']) && count($data['terms']) > 0) {
+
+      $ret->whereIn('terms', $data['terms']);
     }
-  
   
     if (!empty($data['as_soon_as'])) {
       $ret->where('as_soon_as', '=', $data['as_soon_as']);
+
     } elseif (!empty($data['start_date'])) {
       $ret->where('start_date', '>=', $data['start_date']);
     }
@@ -249,12 +197,11 @@ class SiteController extends Controller
     if (!empty($data['hours_per_week_from'])) {
       $ret->where('hours_per_week', '>=', $data['hours_per_week_from']);
     }
+
     if (!empty($data['hours_per_week_to'])) {
       $ret->where('hours_per_week', '<=', $data['hours_per_week_to']);
     }
     
-
-
     if (isset($request->state)) {
       $state = State::where('name' ,$data['state'])->get();
 
@@ -265,11 +212,34 @@ class SiteController extends Controller
       $ret->where('job_city', 'like', $data['city']);
     }
 
-    $allusers = User::get();
-            $data['allusers'] = $allusers;
+    $allusers = User::select('id', 'role', 'first_name', 'last_name')->get();
+    $data['allusers'] = $allusers;
 
     //return response()->json(['message' =>  $ret->get()]);
-    $data['jobs'] = $ret->get();
+    $skip = $request->input('skip');
+
+    if(!empty($skip)){
+
+      $data['jobs'] = $ret->withCount(['offers as offer_count' => function ($query) {
+        $query->whereColumn('jobs.id', 'offers.job_id');
+      }])->latest()->skip($skip)->take(10)->get();
+
+      $jobSaved = new JobSaved;
+      $data['jobSaved'] = $jobSaved;
+      $data['skip']=$skip;
+
+      unset($data['specialities']);
+      unset($data['professions']);
+      unset($data['us_states']);
+      unset($data['specialities']);
+      unset($data['terms_key']);
+
+      return response()->json(['message' =>  $data]);
+
+    }else{
+
+      $data['jobs'] = $ret->latest()->skip(0)->take(10)->get();
+    }
 
     $jobSaved = new JobSaved;
 
