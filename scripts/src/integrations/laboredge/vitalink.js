@@ -13,7 +13,8 @@ const Logs = require('../../models/Logs');
 var moment = require("moment"); // Used for date-time changes
 
 var _ = require('lodash'); // Used for data manipulation
-var { report } = require('../../set.js')
+var { report } = require('../../set.js');
+const { init } = require("laravel-echo-server");
 
 //Connect to DB
 mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_DATABASE_NAME)
@@ -25,18 +26,22 @@ mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_
     //report("src/crons/laboredge.js error on mongodb connection");
 });
 
-
+// (async function deleteFunc(){
+// 	console.log("Inside delete func");
+// 	const result = await Laboredge.deleteMany({ userType: "RECRUITER" });
+// })();
 // Process laboredge integrations for the first time
 module.exports.init = (async () => {
 
 
+	console.log("Inside init method");
 	var limit = 100; // No. of documents per batch
 	var totalIntegrations = await Laboredge.countDocuments(); //Fetch total no. of documents 
 	var totalPages = Math.ceil(totalIntegrations/limit);
 
 	for( i = 0; i < totalPages; i++ ){
 
-		// console.log("Inside 'for' of init function");
+		console.log("Inside for of init function");
 		// offset the results by i (current page) * limit (100 by default)
 		var offset = i * limit;
 		
@@ -44,12 +49,13 @@ module.exports.init = (async () => {
 		await Laboredge.find({updated: { $exists:false }}).limit(limit).skip(offset)
 		.then( async laboredge => {
 			
+			console.log("Inside Laboredge.find : "+laboredge.length);
 			if(!laboredge){
 				return
 			}
 			for ( let [index,user] of laboredge.entries()){
 				
-				//console.log( "INDEX : ", index,"User ID : ", user.userId)
+				console.log( "INDEX : ", index,"User ID : ", user.userId)
 				
 				// select * from laboredge where user_id = laboredge.userId
 				
@@ -100,17 +106,20 @@ module.exports.init = (async () => {
 				// for job in jobs | insert into jobs (...) values (...)
 				// import_id is job.id not job._id
 
+				for(job of user.importedJobs){
+					await queries.addImportedJob(job)
+				}
 				// Save the updated user in the db
 				await user.save().then(resp => {}).catch(e=>{console.log(e)})
 			}
 		})			
 	}
+	console.log("Jobs saved into the db");
 });
-
 // Update the existing integrations
 module.exports.update = (async () => {
 
-	// console.log("Inside update function");
+	console.log("Inside update function");
 	var limit = 100; // No. of documents per batch
 	var totalIntegrations = await Laboredge.countDocuments();//Fetch total no. of documents
 	var totalPages = Math.ceil(totalIntegrations/limit);
@@ -118,6 +127,7 @@ module.exports.update = (async () => {
 	// console.log("totalPages : "+totalPages);
 	for( i = 0; i < totalPages; i++ ){
 
+		console.log("Inside for of update");
 		// offset the results by i (current page) * limit (100 by default)
 		var offset = i * limit;
 		
@@ -159,6 +169,9 @@ module.exports.update = (async () => {
 					const updatedJobs = await getUpdatedJobs(jobs, user.importedJobs, mysqlResp.user_id);
 					// should be {toClose: [ids only], toAdd: [{},{}], toUpdate:[{},{}]}
 					
+					console.log("ACTUAL JOB",user.importedJobs.length, "UPDATE JOBS",jobs.length)
+					console.log("TO CLOSE", updatedJobs.toClose.length, "TO ADD", updatedJobs.toAdd.length, "UNCHANGED", updatedJobs.unchanged.length, "TO UPDATE", updatedJobs.toUpdate.length)
+
 					for( [ind, item] of user.importedJobs.entries()){
 
 						if ( _.includes(updatedJobs.toClose,item.id) ){
@@ -174,7 +187,8 @@ module.exports.update = (async () => {
 							if(updateItem.id == item.id){
 
 								user.importedJobs[ind] = updateItem;
-								await queries.addImportedJob(updateItem); //update in the bd
+								//await queries.addImportedJob(updateItem); //update in the db
+								await queries.updateImportedJob(updateItem); //update in the db
 							}
 						}
 
@@ -183,12 +197,10 @@ module.exports.update = (async () => {
 					// add new jobs
 					for ( newItem of updatedJobs.toAdd ){
 
+						await queries.addImportedJob(updateItem);
 						user.importedJobs.push(newItem)
 					}
 					
-					console.log("ACTUAL JOB",user.importedJobs.length, "UPDATE JOBS",jobs.length)
-					console.log("TO CLOSE", updatedJobs.toClose.length, "TO ADD", updatedJobs.toAdd.length, "UNCHANGED", updatedJobs.unchanged.length, "TO UPDATE", updatedJobs.toUpdate.length)
-
 					// update updated (timestamp)
 					user.updated = moment().format("YYYY-MM-DD[T]HH:mm:ss");
 
@@ -202,12 +214,13 @@ module.exports.update = (async () => {
 					*/
 
 					// Save
-					//await user.save().then(resp => {}).catch(e=>{console.log(e)})
+					await user.save().then(resp => {}).catch(e=>{console.log(e)})
 				}
 			}
 		})			
 	}
-});
+	console.log("Jobs updated in the db");
+})();
 
 // get professions
 async function getProfession (accessToken, userId){
@@ -403,13 +416,15 @@ module.exports.updateOthers = async () => {
 
 }
 
+
 // get jobs
 async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 
 	// Array to hold the imported jobs
+
 	var importedJobs = [];
 
-	// console.log("Inside getJobs with access token : "+accessToken);
+	console.log("Inside getJobs with access token : "+accessToken);
 	// Headers required for the API call
 	var headers = {
 		'Authorization' : 'Bearer '+accessToken, //error
@@ -498,7 +513,7 @@ async function getUpdatedJobs(newJobs, oldJobs, userId){
 		
 		// Check if OldJobs is in NewJobs --> should be kept		
 		let needle = _.find(oldJobs, ['id', job.id]);
-		
+		// console.log("1. Needle length : "+needle.length+", Needle is : "+needle);
 		if(needle){
 			
 			// check if that OldJobs is the same in NewJobs --> if not, shall be sent to toUpdate
@@ -521,8 +536,10 @@ async function getUpdatedJobs(newJobs, oldJobs, userId){
 	for( job of oldJobs){
 
 		let needle = _.find(newFormatedJobs, ['id', job.id]);
-
+		// console.log("2. Needle length : "+needle.length+", Needle is : "+needle);
+		
 		if(!needle){
+			console.log("Inside not needle block with job id : "+job.id);
 			toClose.push(job.id)
 		}
 	}

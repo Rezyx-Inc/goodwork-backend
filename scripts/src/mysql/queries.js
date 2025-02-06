@@ -123,6 +123,81 @@ module.exports.closeImportedJobs = async function (imported_id) {
     return result;
 };
 
+module.exports.updateImportedJob = async function (importData) {
+    
+    // console.log("Inside update imported job method");
+    var floatReq = "";
+
+    if (
+        importData.floatingReqUnits == "" ||
+        importData.floatingReqUnits == null
+    ) {
+        floatReq = 0;
+    } else {
+        floatReq = 1;
+    }
+
+    //Job description
+    let description =
+        importData.postingId +
+        " " +
+        importData.description +
+        " " +
+        importData.shift;
+
+    let hoursPerShift = importData.scheduledHrs1 / importData.shiftsPerWeek1;
+
+    const query = `UPDATE jobs SET import_id = ?,job_name = ?,description = ?,sign_on_bonus = ?,job_type = ?,start_date = ?,end_date = ?,preferred_shift_duration = ?,is_open = ?,active = ?,is_closed = ?,float_requirement = ?,weeks_shift = ?,hours_per_week = ?,hours_shift = ?,profession = ?,specialty = ?,actual_hourly_rate = ?,as_soon_as = ?,auto_offers = ?,dental = ?,eligible_work_in_us = ?,facility_city = ?,facility_state = ?,four_zero_one_k = ?,health_insaurance = ?,is_hidden = ?,is_resume = ?,on_call = ?,professional_licensure = ?,tax_status = ?,vision = ? WHERE id = ?`;
+
+    const values = [
+        importData.imported_id ?? null, // import_id
+        importData.jobTitle ?? null, // job_name
+        description ?? null, // description
+        importData.signOnBonus ?? null, // sign_on_bonus
+        importData.jobType ?? null, // job_type
+        importData.startDate ?? null, // start_date
+        importData.endDate ?? null, // end_date
+        importData.duration ?? null, // preferred_shift_duration
+        1, // is_open
+        1, // active
+        0, // is_closed
+        floatReq ?? null, // float_requirement
+        importData.shiftsPerWeek1 ?? null, // weeks_shift
+        importData.scheduledHrs1 ?? null, // hours_per_week
+        hoursPerShift ?? null, // hours_shift
+        importData.profession ?? null, // profession
+        importData.specialty ?? null, // specialty
+        importData.hourlyPay ?? null, // actual_hourly_rate
+        0, // as_soon_as
+        0, // auto_offers
+        0, // dental
+        0, // eligible_work_in_us
+        (importData.facility_city != null) ? importData.facility_city : "", // facility_city
+        (importData.facility_state != null) ? importData.facility_state : "", // facility_state
+        0, // four_zero_one_k (401k)
+        0, // health_insurance
+        0, // is_hidden
+        0, // is_resume
+        0, // on_call
+        (importData.professional_licensure != null) 
+        ? importData.professional_licensure : "", // professional_licensure
+        "", // tax_status
+        0, // vision
+        importData.id ?? null // id for WHERE clause (row to update)
+    ];
+
+    // Execute the query using your database library 
+    const results = pool.execute(query, values)
+    .then(([res]) => {
+        // console.log('Update successful:', res);
+        return res;
+    })
+    .catch((error) => {
+        console.error('Error updating record:', error);
+    });
+
+    return results;
+};
 //Function to insert imported jobs into our db
 module.exports.addImportedJob = async function (importData) {
 
@@ -151,10 +226,25 @@ module.exports.addImportedJob = async function (importData) {
 
     let hoursPerShift = importData.scheduledHrs1 / importData.shiftsPerWeek1;
 
+    var is_open=0,is_closed=0,active=0,is_hidden=0;
+    
+    if(importData.jobStatus === "Open"){
+        is_open = 1;
+        active = 1;
+        is_closed = 0;
+        is_hidden=0;
+    }else if(importData.jobStatus === "Closed"){
+        is_open = 0;
+        active = 0;
+        is_closed = 1;
+        is_hidden = 0;
+    }
+
     const [result, fields] = await pool.query(
-        "INSERT INTO jobs (import_id, job_name, description, sign_on_bonus, job_type, start_date, end_date, preferred_shift_duration, is_open, active, is_closed, float_requirement, weeks_shift, hours_per_week, hours_shift, profession, specialty, actual_hourly_rate ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+        "INSERT INTO jobs (id,import_id, job_name, description, sign_on_bonus, job_type, start_date, end_date, preferred_shift_duration, is_open, active, is_closed, float_requirement, weeks_shift, hours_per_week, hours_shift, profession, specialty, actual_hourly_rate, as_soon_as, auto_offers, dental, eligible_work_in_us, facility_city, facility_state, four_zero_one_k, health_insaurance, is_hidden, is_resume, on_call, professional_licensure, tax_status, vision) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
         [
             importData.id,
+            importData.imported_id,
             importData.jobTitle,
             description,
             importData.signOnBonus,
@@ -162,9 +252,9 @@ module.exports.addImportedJob = async function (importData) {
             importData.startDate,
             importData.endDate,
             importData.duration,
-            0,
-            0,
-            0,
+            is_open, //is_open
+            active, //active
+            is_closed, //is_closed
             floatReq,
             importData.shiftsPerWeek1,
             importData.scheduledHrs1,
@@ -172,6 +262,20 @@ module.exports.addImportedJob = async function (importData) {
             importData.profession,
             importData.specialty,
             importData.hourlyPay,
+            0, //as_soon_as
+            0, //auto_offers
+            0, //dental
+            0, //eligible_work_in_us
+            (importData.facility_city != null) ? importData.facility_city : "",
+            (importData.facility_state != null) ? importData.facility_state : "",
+            0, //401k
+            0, //health_insurance
+            is_hidden, //is_hidden
+            0, //is_resume
+            0, //on_call
+            (importData.professional_licensure != null) ? importData.professional_licensure : "",
+            "",//tax_status
+            0, //vision
         ]
     );
 
