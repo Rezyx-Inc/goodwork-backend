@@ -206,7 +206,7 @@
 
             window.Echo.private(PrivateChannelNotification)
                 .listen('NotificationMessage', (event) => {
-                    console.log('from the messages blade:', event);
+                    //console.log('from the messages blade:', event);
                     updateRoomLastMessage(event.sender, event.content);
                     updateLastMessageTime(event.sender, 'Just now');
                     incrementMessageCount(event.sender);
@@ -224,9 +224,11 @@
 
             const urlParams = new URLSearchParams(window.location.search);
             const idRecruiter = urlParams.get('recruiter_id');
+            // WRONG THIS IS THE WORKER NAME
             const namerecruiter = urlParams.get('name');
             const idOrganization = urlParams.get('organization_id');
             if (idRecruiter && namerecruiter && idOrganization) {
+
                 getPrivateMessages(idRecruiter, idOrganization, namerecruiter);
             }
 
@@ -253,7 +255,7 @@
             window.onload = function() {
                 window.Echo.channel('goodwork_database_messages')
                     .listen('NewMessage', (event) => {
-                        console.log('New message:', event.message);
+                        //console.log('New message:', event.message);
                     });
             }
 
@@ -319,7 +321,7 @@
                                     <div onclick="getPrivateMessages('{{ $room['recruiterId'] }}','{{ $room['organizationId'] }}','{{ $room['fullName'] }}')" class="ss-mesg-sml-div">
                                         <ul class="ss-msg-user-ul-dv">
                                             @php
-                                                $organization = App\Models\User::find($room['organizationId']);  
+                                                $organization = App\Models\User::find($room['organizationId']);
                                             @endphp
                                             @if(isset($organization))       
                                                 <img src="{{ isset($organization->image) ? URL::asset('uploads/' . $organization->image) : URL::asset('/frontend/img/profile-icon-img.png') }}"

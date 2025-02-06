@@ -156,6 +156,7 @@ class WorkerController extends Controller
 
             if (isset($recruiter_id)) {
 
+                // TODO ADD THE RECRUITER FULL NAME HEERE
                 $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/checkRecruiter', [
                     'id' => $recruiter_id,
                 ]);
@@ -181,16 +182,21 @@ class WorkerController extends Controller
 
             $distinctFilters = Keyword::distinct()->pluck('filter');
             $allKeywords = [];
+
             foreach ($distinctFilters as $filter) {
                 $keywords = Keyword::where('filter', $filter)->get();
                 $allKeywords[$filter] = $keywords;
             }
+
             $data['allKeywords'] = $allKeywords;
             $data['states'] = State::select('id', 'name')->get();
+
             // $user = auth()->guard('frontend')->user();
             // dd($data["model"]->matchWithWorker()['diploma']['match']);
+
             $data['jobSaved'] = new JobSaved();
             //return $data['requiredFieldsToApply'];
+
             return view('worker::dashboard.details.details', $data);
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Something went wrong');
