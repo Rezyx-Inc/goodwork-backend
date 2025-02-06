@@ -36,16 +36,12 @@
 
     const myForm = document.getElementById('create_job_form');
     const draftJobs = @json($draftJobs);
-    const publishedJobs = @json($publishedJobs);
+    var publishedJobs = @json($publishedJobs);
     const onholdJobs = @json($onholdJobs);
 
 
 // cards toggle
-    function toggleActiveClass(workerUserId, type) {
-
-        var element = document.getElementById(workerUserId);
-        element.classList.add('active');
-
+    function resetToggle(type) {
         var allElements = document.getElementsByClassName(type);
 
         for (var i = 0; i < allElements.length; i++) {
@@ -53,6 +49,15 @@
                 allElements[i].classList.remove('active');
             }
         }
+
+    }
+
+    function toggleActiveClass(workerUserId, type) {
+
+        var element = document.getElementById(workerUserId);
+        element.classList.add('active');
+
+        resetToggle(type);
         if (!element.classList.contains('active')) {
             element.classList.add('active');
         }
@@ -973,7 +978,7 @@
     document.addEventListener('DOMContentLoaded', async function() {
 
         // for job creation in dev mode
-        // fillData();
+         fillData();
 
         // FOR JOB CREATION 
         // get professions according to job type :
@@ -1768,6 +1773,9 @@
 // displaying the form for creating a job 
     function request_job_form_appear() {
 
+        resetToggle('draft-cards');
+        resetToggle('published-cards');
+
         certificate = {};
         vaccinations = {};
         skills = {};
@@ -1786,6 +1794,12 @@
 // redirect to the cooresponding type published jobs | onhold jobs | draft jobs
     function opportunitiesType(type, id = "", formtype) {
 
+        if(type == 'drafts') {
+            resetToggle('draft-cards');
+        }else if (type == 'published') {
+            resetToggle('published-cards');
+        }
+        
         certificate = {};
         vaccinations = {};
         skills = {};
@@ -2329,7 +2343,7 @@
         for (const [key, field] of Object.entries(fields)) {
             const element = document.getElementById(field.id);
             if (!element) continue;
-            if (result[key] === null) {
+            if (result[key] === null || result[key] === undefined) {
                 if (field.type === 'select') {
                     element.value = '';
                 } else if (field.type === 'checkbox') {
@@ -3408,9 +3422,14 @@
 
         if (validateRequiredMultiCheckFieldsToSubmit(slideFields) && validateRequiredFieldsToSubmit(
                 otherSlideFields) && validateFirst()) {
+
             document.getElementById("active").value = true;
             document.getElementById("is_open").value = true;
-            event.target.form.submit();
+            var form = document.getElementById('create_job_form');
+            var routeUrl = "{{ route('addJob.store') }}"; 
+
+            sendForm(routeUrl, form);
+
         }
 
 
@@ -3469,6 +3488,11 @@
             document.getElementById("is_open").value = false;
             let act = document.getElementById("active").value;
 
+            var form = document.getElementById('create_job_form');
+            var routeUrl = "{{ route('addJob.store') }}";
+
+            sendForm(routeUrl, form);
+
             // var jobName = document.getElementById("job_name").value;
             // if (jobName.trim() === '') {
             //     $('.help-block-job_name').text('Enter at least a Work name');
@@ -3478,7 +3502,7 @@
             //     event.target.form.submit();
             // }
 
-            event.target.form.submit();
+            // event.target.form.submit();
 
         });
     });
@@ -3823,7 +3847,11 @@
 
         if (validateRequiredMultiCheckFieldsToSubmitDraft(slideFields) && validateRequiredFieldsToSubmitDraft(
                 otherSlideFields) && validateFirstDraft()) {
-            event.target.form.submit();
+                //event.target.form.submit();
+                var form = document.getElementById('draft_job_form');
+                var routeUrl = "{{ route('addJob.store') }}"; 
+                    
+                sendForm(routeUrl, form);
         }
     });
 
@@ -4282,6 +4310,143 @@
         });
     });
 
-    
+    function sendForm(routeUrl, formElement) {
+        var formData = new FormData(formElement);
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        if (csrfToken) {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                url: routeUrl,
+                type: 'POST',
+                data: formData,
+                processData: false, 
+                contentType: false, 
+                xhrFields: {
+                    withCredentials: true 
+                },
+                dataType: 'json',
+                success: function(result) {
+                    console.log(result);
+                    if (result.success) {
+                        notie.alert({
+                            type: 1,
+                            text: result.message,
+                            time: 7
+                        });
+
+                        if(result.job['is_open'] == true) {
+                            appendJobToPublishedAndDraftCards(result.job, 'published');
+                            opportunitiesType('published', result.job['id'], 'jobdetails');
+                        } else {
+                            appendJobToPublishedAndDraftCards(result.job, 'draft');
+                            opportunitiesType('drafts');
+                            draftJobs.push(result.job);
+                            var element = document.getElementById(result.job['id'] + '_drafts');
+                            editDataJob(element);
+                        }
+                        
+                        toggleActiveClass(result.job['id'] + '_published', 'published-cards');
+
+                        formElement.reset();
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                    notie.alert({
+                        type: 3,
+                        text: 'An error occurred while creating the job.',
+                        time: 7
+                    });
+                }
+            });
+        } else {
+            console.error('CSRF token not found.');
+        }
+
+    }
+
+    function appendJobToPublishedAndDraftCards(job, type) {
+        
+        var publishedOrDraftsCards = null;
+
+        if(type === 'published') {
+             publishedOrDraftsCards = document.getElementById('publishedCards');
+             var publishedJob = document.createElement('div');
+            publishedJob.classList.add('col-12', 'ss-job-prfle-sec', 'published-cards');
+            publishedJob.id = job['id'] + '_published';
+            publishedJob.setAttribute('onclick', "opportunitiesType('published', '" + job['id'] + "', 'jobdetails'), toggleActiveClass('" + job['id'] + "_published', 'published-cards')");
+        } else {
+            publishedOrDraftsCards = document.getElementById('draftCards');
+            var publishedJob = document.createElement('div');
+            publishedJob.classList.add('col-12', 'ss-job-prfle-sec', 'draft-cards');
+            publishedJob.id = job['id'] + '_drafts';
+            let job_id = draftJobs.length;
+            publishedJob.setAttribute('job_id', job_id);
+            publishedJob.setAttribute('onclick', "editDataJob(this), toggleActiveClass('" + job['id'] + "_drafts', 'draft-cards')");
+        }
+
+        var jobType = job['job_type'] === 'Travel' ? 'Travel' : 'Local';
+        var jobTypeClass = job['job_type'] === 'Travel' ? 'travel' : 'local';
+
+        var jobTypeSpan = document.createElement('span');
+        jobTypeSpan.classList.add('job-type', jobTypeClass);
+        jobTypeSpan.textContent = jobType;
+
+        var jobTypeApplied = document.createElement('span');
+        jobTypeApplied.classList.add('job-type-applied');
+        jobTypeApplied.textContent = '0 Applied';
+
+        var jobProfession = document.createElement('h4');
+        jobProfession.textContent = job['profession'] + ' - ' + job['preferred_specialty'];
+
+        var jobName = document.createElement('h6');
+        jobName.textContent = job['job_name'];
+
+        var jobLocation = document.createElement('ul');
+        var jobLocationCity = document.createElement('li');
+        var jobLocationCityLink = document.createElement('a');
+        var jobLocationCityImg = document.createElement('img');
+        jobLocationCityImg.src = '{{ URL::asset('frontend/img/location.png') }}';
+        jobLocationCityLink.appendChild(jobLocationCityImg);
+        jobLocationCityLink.innerHTML += job['job_city'] + ', ' + job['job_state'];
+        jobLocationCity.appendChild(jobLocationCityLink);
+
+        var jobLocationDuration = document.createElement('li');
+        var jobLocationDurationLink = document.createElement('a');
+        var jobLocationDurationImg = document.createElement('img');
+        jobLocationDurationImg.src = '{{ URL::asset('frontend/img/calendar.png') }}';
+        jobLocationDurationLink.appendChild(jobLocationDurationImg);
+        jobLocationDurationLink.innerHTML += job['preferred_assignment_duration'] + ' wks';
+        jobLocationDuration.appendChild(jobLocationDurationLink);
+
+        var jobLocationPay = document.createElement('li');
+        var jobLocationPayLink = document.createElement('a');
+        var jobLocationPayImg = document.createElement('img');
+        jobLocationPayImg.src = '{{ URL::asset('frontend/img/dollarcircle.png') }}';
+        jobLocationPayLink.appendChild(jobLocationPayImg);
+        jobLocationPayLink.innerHTML += job['weekly_pay'] + '/wk';
+        jobLocationPay.appendChild(jobLocationPayLink);
+
+        jobLocation.appendChild(jobLocationCity);
+        jobLocation.appendChild(jobLocationDuration);
+        jobLocation.appendChild(jobLocationPay);
+
+        publishedJob.appendChild(jobTypeSpan);
+        publishedJob.appendChild(jobTypeApplied);
+        publishedJob.appendChild(jobProfession);
+        publishedJob.appendChild(jobName);
+        publishedJob.appendChild(jobLocation);
+
+        var container = publishedOrDraftsCards.querySelector('.ss-account-form-lft-1');
+        if (container) {
+            container.insertBefore(publishedJob, container.children[1]);
+        } else {
+            publishedOrDraftsCards.appendChild(publishedJob);
+        }
+    }
+
 </script>
 

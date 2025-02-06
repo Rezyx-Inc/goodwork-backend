@@ -47,11 +47,11 @@ class OrganizationOpportunitiesController extends Controller
         
         
         // jobs created by orgs or the recuiters id is in $allRecruiters array
-        $draftJobs = Job::where(function($query) use ($organization_id, $ids) { $query->where('organization_id', $organization_id)->where('active', 1)->where('is_open', 0)->where('is_closed', 0)->where('is_hidden', 0)->orWhereIn('recruiter_id', $ids);})->get();
+        $draftJobs = Job::where(function($query) use ($organization_id, $ids) { $query->where('organization_id', $organization_id)->where('active', 1)->where('is_open', 0)->where('is_closed', 0)->where('is_hidden', 0)->orWhereIn('recruiter_id', $ids);})->orderBy('created_at', 'desc')->get();
 
-        $publishedJobs = Job::where(function($query) use ($organization_id, $ids) { $query->where('organization_id', $organization_id)->where('active', 1)->where('is_open', 1)->orWhereIn('recruiter_id', $ids);})->get();
+        $publishedJobs = Job::where(function($query) use ($organization_id, $ids) { $query->where('organization_id', $organization_id)->where('active', 1)->where('is_open', 1)->orWhereIn('recruiter_id', $ids);})->orderBy('created_at', 'desc')->get();
 
-        $onholdJobs = Job::where(function($query) use ($organization_id, $ids) { $query->where('organization_id', $organization_id)->where('is_hidden', 1)->where('is_open', 0)->where('active', 0)->orWhere('is_closed', 1)->orWhereIn('recruiter_id', $ids);})->get();
+        $onholdJobs = Job::where(function($query) use ($organization_id, $ids) { $query->where('organization_id', $organization_id)->where('is_hidden', 1)->where('is_open', 0)->where('active', 0)->orWhere('is_closed', 1)->orWhereIn('recruiter_id', $ids);})->orderBy('created_at', 'desc')->get();
 
         $specialities = Speciality::select('full_name')->get();
         $professions = Profession::select('full_name')->get();
@@ -561,7 +561,7 @@ class OrganizationOpportunitiesController extends Controller
         // }
 
         if ($type == 'drafts') {
-            $jobLists = Job::where(['active' => '1', 'is_open' => '0', 'organization_id' => $organization_id])->get();
+            $jobLists = Job::where(['active' => '1', 'is_open' => '0', 'organization_id' => $organization_id])->orderBy('created_at', 'desc')->get();
             if (0 >= count($jobLists)) {
                 $responseData = [
                     'joblisting' => '<div class="text-center"><span>No Job</span></div>',
@@ -570,7 +570,7 @@ class OrganizationOpportunitiesController extends Controller
                 return response()->json($responseData);
             }
         } elseif ($type == 'hidden') {
-            $jobLists = Job::where(['active' => '0', 'is_open' => '0','is_hidden' => '1', 'organization_id' => $organization_id])->get();
+            $jobLists = Job::where(['active' => '0', 'is_open' => '0','is_hidden' => '1', 'organization_id' => $organization_id])->orderBy('created_at', 'desc')->get();
             if (0 >= count($jobLists)) {
                 $responseData = [
                     'joblisting' => '<div class="text-center"><span>No Job</span></div>',
@@ -579,7 +579,7 @@ class OrganizationOpportunitiesController extends Controller
                 return response()->json($responseData);
             }
         } elseif ($type == 'closed') {
-            $jobLists = Job::where(['active' => '0', 'is_open' => '0','is_closed' => '1', 'organization_id' => $organization_id])->get();
+            $jobLists = Job::where(['active' => '0', 'is_open' => '0','is_closed' => '1', 'organization_id' => $organization_id])->orderBy('created_at', 'desc')->get();
             if (0 >= count($jobLists)) {
                 $responseData = [
                     'joblisting' => '<div class="text-center"><span>No Job</span></div>',
@@ -588,7 +588,7 @@ class OrganizationOpportunitiesController extends Controller
                 return response()->json($responseData);
             }
         } elseif ($type == 'onhold') {
-            $jobLists = Job::where(['active' => '0', 'is_open' => '0', 'is_hidden' => '1' , 'organization_id' => $organization_id])->get();
+            $jobLists = Job::where(['active' => '0', 'is_open' => '0', 'is_hidden' => '1' , 'organization_id' => $organization_id])->orderBy('created_at', 'desc')->get();
             if (0 >= count($jobLists)) {
                 $responseData = [
                     'joblisting' => '<div class="text-center"><span>No Job</span></div>',
@@ -598,7 +598,7 @@ class OrganizationOpportunitiesController extends Controller
             }
         } else {
 
-            $jobLists = Job::where(['active' => '1', 'is_open'=> '1', 'is_hidden' => '0', 'is_closed' => '0', 'organization_id' => $organization_id, 'is_open' => '1'])->get();
+            $jobLists = Job::where(['active' => '1', 'is_open'=> '1', 'is_hidden' => '0', 'is_closed' => '0', 'organization_id' => $organization_id, 'is_open' => '1'])->orderBy('created_at', 'desc')->get();
             //return $jobLists;
             if (0 >= count($jobLists)) {
                 $responseData = [
@@ -681,22 +681,26 @@ class OrganizationOpportunitiesController extends Controller
             $jobdetails = Job::select('jobs.*')
                 ->where(['jobs.id' => $request->id])
                 ->where('organization_id', $organization_id)
+                ->orderBy('created_at', 'desc')
                 ->first();
         } else {
             if ($type == 'drafts') {
                 $jobdetails = Job::select('jobs.*')
                     ->where(['jobs.active' => '1', 'jobs.is_open' => '0'])
                     ->where('organization_id', $organization_id)
+                    ->orderBy('created_at', 'desc')
                     ->first();
             } elseif ($type == 'hidden') {
                 $jobdetails = Job::select('jobs.*')
                     ->where(['jobs.is_hidden' => '1', 'jobs.active' => '0', 'jobs.is_open' => '0'])
                     ->where('organization_id', $organization_id)
+                    ->orderBy('created_at', 'desc')
                     ->first();
             } elseif ($type == 'closed') {
                 $jobdetails = Job::select('jobs.*')
                     ->where(['jobs.is_closed' => '1', 'jobs.active' => '0', 'jobs.is_open' => '0'])
                     ->where('organization_id', $organization_id)
+                    ->orderBy('created_at', 'desc')
                     ->first();
             } elseif ($type == 'onhold') {
                 $jobdetails = Job::select('jobs.*')
@@ -704,12 +708,14 @@ class OrganizationOpportunitiesController extends Controller
                     ->where(['jobs.active' => '0'])
                     ->where(['jobs.is_hidden' => '1'])
                     ->where('organization_id', $organization_id)
+                    ->orderBy('created_at', 'desc')
                     ->first();
             } else {
 
                 $jobdetails = Job::select('jobs.*')
                     ->where(['jobs.active' => '1', 'jobs.is_hidden' => '0', 'jobs.is_closed' => '0', 'jobs.is_open' => '1'])
                     ->where('organization_id', $organization_id)
+                    ->orderBy('created_at', 'desc')
                     ->first();
             }
         }

@@ -795,7 +795,16 @@ class OrganizationController extends Controller
             //return response()->json(['success' => true, 'message' => 'Job added successfully!']);
 
             // Redirect back to the add job form with a success message
-            return redirect()->route('organization-opportunities-manager')->with('success', 'Job added successfully!');
+            // return redirect()->route('organization-opportunities-manager')->with('success', 'Job added successfully!');
+            $message = '';
+            if ($is_open == 'true') {
+                $message = 'Job added successfully!';
+            } else {
+                $message = 'Job saved as draft!';
+            }
+            //return redirect()->route('recruiter-opportunities-manager')->with('success', $message);
+            $job = Job::where('id', $job->id)->first();
+            return response()->json(['success' => true, 'message' => $message, 'job' => $job]);
 
             // return response()->json(['success' => true, 'message' => 'Job added successfully!']);
         } catch (QueryException $e) {
