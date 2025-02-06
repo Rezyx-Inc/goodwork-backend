@@ -931,11 +931,19 @@
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        ajaxindicatorstop();
 
+                        console.log(" HERE IS THE DATA", data.message)
                         addJobCards(data.message);
                         // Increment skip
                         skip+=10;
+
+                        // Handle the event listeners
+                        document.querySelectorAll(".job-item").forEach(item => {
+
+                            item.removeEventListener("click",handleCardClickEvent);
+                            item.removeEventListener("click",handleCardClickEvent, true);
+                            item.addEventListener("click", handleCardClickEvent);
+                        });
                     },
                     error: function(resp) {
 
@@ -947,13 +955,7 @@
                     }
                 });
 
-                // Handle the event listeners
-                document.querySelectorAll(".job-item").forEach(item => {
 
-                    item.removeEventListener("click",handleCardClickEvent);
-                    item.removeEventListener("click",handleCardClickEvent, true);
-                    item.addEventListener("click", handleCardClickEvent);
-                });
 
                 return
             }

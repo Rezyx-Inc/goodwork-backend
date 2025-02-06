@@ -863,7 +863,7 @@
                         newCard += '</ul>'+
                     '</div>'+
                     '<p class="col-2 text-center" style="padding-right:20px;">'+
-                        '<span>+'+job.offerCount+' Applied</span>'+
+                        '<span>+'+job.offer_count+' Applied</span>'+
                     '</p>'+
                 '</div>'+
                 '<div class="row">'+
@@ -916,19 +916,19 @@
                             if (job.actual_hourly_rate){
                                 newCard +='<li>'+
                                     '<img class="icon_cards" src="{{ URL::asset('frontend/img/dollarcircle.png') }}">'+
-                                    job.actual_hourly_rate+'/hr'+
+                                    Math.trunc(job.actual_hourly_rate).toLocaleString('en-US')+'/hr'+
                                 '</li>';
                             }
                             if (job.weekly_pay){
                                 newCard +='<li>'+
                                     '<img class="icon_cards" src="{{ URL::asset('frontend/img/dollarcircle.png') }}">'+
-                                    job.weekly_pay+'/wk'+
+                                    Math.trunc(job.weekly_pay).toLocaleString('en-US')+'/wk'+
                                 '</li>';
                             }
                             if (job.weekly_pay){
                                 newCard +='<li style="font-weight: 600;">'+
                                     '<img class="icon_cards" src="{{ URL::asset('frontend/img/dollarcircle.png') }}">'+
-                                    (job.weekly_pay * 4 * 12)+'/yr'+
+                                    Math.trunc((job.weekly_pay * 4 * 12)).toLocaleString('en-US')+'/yr'+
                                 '</li>';
                             }
                         newCard +='</ul>'+
@@ -951,16 +951,4 @@
             $('#job-item-container').append(newCard);
         }
     }
-
-    function escapeHtml(unsafe) {
-        return unsafe
-             .replace(/&/g, "&amp;")
-             .replace(/</g, "&lt;")
-             .replace(/>/g, "&gt;")
-             .replace(/"/g, "&quot;");
-    }
-
-    // TODO:
-    // add countOffers and format number for monetary units
-    // Fix event listeners
 </script>

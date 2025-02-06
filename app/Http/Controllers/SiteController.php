@@ -220,7 +220,10 @@ class SiteController extends Controller
 
     if(!empty($skip)){
 
-      $data['jobs'] = $ret->latest()->skip($skip)->take(10)->get();
+      $data['jobs'] = $ret->withCount(['offers as offer_count' => function ($query) {
+        $query->whereColumn('jobs.id', 'offers.job_id');
+      }])->latest()->skip($skip)->take(10)->get();
+
       $jobSaved = new JobSaved;
       $data['jobSaved'] = $jobSaved;
       $data['skip']=$skip;
