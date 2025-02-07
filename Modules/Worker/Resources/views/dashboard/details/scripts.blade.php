@@ -2,7 +2,7 @@
     <script type="text/javascript" src="{{ URL::asset('frontend/vendor/mask/jquery.mask.min.js') }}"></script>
 
     <script>
-        let all_files = [];
+        var all_files = [];
         let userMatch = @json($matches);
         let workerMatch = [];
         for (let key in userMatch) {
@@ -158,7 +158,7 @@
                     }),
                     success: function(resp) {
 
-                        let jsonResp = resp.data;
+                        let jsonResp = JSON.parse(resp);
                         all_files = jsonResp;
                         files = jsonResp;
                         resolve(
@@ -407,7 +407,10 @@
             if (description) {
                 var descriptionText = description.innerText;
                 if (descriptionText.length > 100) {
-                    description.innerText = '{!! $model->description !!}';
+                    @php
+                        $desc = preg_replace('/\s+/', '', $model->description);
+                    @endphp
+                    description.innerText = '{!! $desc !!}';
                     var readMore = document.getElementById('read-more');
                     var readLess = document.getElementById('read-less');
 
@@ -450,6 +453,7 @@
         }
     </script>
     <script>
+
         var dataToSend = {};
         var EmrStr = '';
         var requiredFieldsToApply = @json($requiredFieldsToApply);
@@ -751,6 +755,7 @@
         }
 
         async function collect_data(event, type) {
+
             event.preventDefault();
             // targiting the input form and collectiong data
 
@@ -849,6 +854,7 @@
             } else {
                 element = $('#' + inputName).find('p[data-name="' + inputName + '"]');
             }
+
             switch (type) {
                 case 'input':
                 case 'input_number':
@@ -882,7 +888,7 @@
                     // if (inputName == 'references') {
                     //     display_uploaded_reference_files(element, 2);
                     // } else if (inputName == 'certification') {
-                    display_uploaded_certification_files(element, inputName);
+                    display_uploaded_certification_files(element, inputName, all_files);
                     // }
 
                     break;
@@ -928,12 +934,11 @@
         }
 
         // display uploaded certification files
-        function display_uploaded_certification_files(element, type) {
+        function display_uploaded_certification_files(element, type, all_files) {
             // filter worker_files by type
             worker_files = all_files.filter(file => file.type == type);
 
             let text = element.data('title');
-            // console.log("*****************************element", element, "type", type, " =>text : ", text);
             if (worker_files.length > 0) {
                 text = worker_files.length + ' File(s) Uploaded';
             }
@@ -955,7 +960,6 @@
             if (inputName == 'certification') {
                 // if job_certification_displayname does not have any element then return undefined to avoid colorizing the area
                 if ( job_certification_displayname?.length == null || job_certification_displayname?.length == 0 || ( job_certification_displayname?.length == 1 && job_certification_displayname[0] == '')) {
-                    console.log('job_certification_displayname', job_certification_displayname);
                     return undefined;
                 }
                 const is_job_certif_exist_in_worker_files = job_certification_displayname.every(element =>
@@ -1041,6 +1045,7 @@
         }
 
         async function get_all_files_displayName_by_type(type) {
+
             let files = worker_files?.filter(file => file.type == type);
             let displayNames = files?.map(file => file.displayName);
             worker_files_displayname_by_type = displayNames;
@@ -1327,16 +1332,75 @@
             );
         }
 
+        // auto-save script
+        
+        const baseDuration = 30;
+        let countdown = baseDuration;
+        let intervalId = null;
+        let isTabActive = true;
 
-        // update nurse information change every 50 seconds
-        setInterval(() => {
-            update_nurse_information(dataToSend);
-        }, 5000);
+        function startSavingWithCountdown() {
+            console.log("Auto-saving enabled");
+            updateCountdown();
+        }
 
-        // Save on page exit
+        function updateCountdown() {
+            if (intervalId) clearInterval(intervalId);
+
+            const autoSaveMessage = document.getElementById('autoSaveMessage');
+            const progressBar = document.getElementById('progressBar');
+
+            intervalId = setInterval(() => {
+                if (!isTabActive) return;
+
+                countdown--;
+                progressBar.style.width = (countdown / baseDuration) * 100 + "%";
+
+                if (countdown <= 0) {
+                    clearInterval(intervalId);
+                    intervalId = null; 
+                    autoSaveMessage.innerHTML = "Saving...";
+                    progressBar.style.width = "0%";
+                    update_nurse_information(dataToSend);
+
+                    // Restart the countdown after saving
+                    setTimeout(() => {
+                        countdown = baseDuration;
+                        autoSaveMessage.innerHTML = ``;
+                        // Reset progress bar
+                        progressBar.style.width = "100%"; 
+                        updateCountdown();
+                    }, 2000);
+                }
+            }, 1000);
+        }
+
+        // Pause & resume countdown based on tab visibility
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                isTabActive = true;
+                if (!intervalId) updateCountdown();
+            } else {
+                isTabActive = false;
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+        });
+
+        // Save before the user exits the page
         window.addEventListener('beforeunload', function() {
-            // update nurse information change before exit
             update_nurse_information(dataToSend);
         });
+
+        // Start saving when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            startSavingWithCountdown();
+        });
+
+        // Manual Save Function (Immediate Save & Resets Timer)
+        function manualSave() {
+            // Forces countdown to reach zero
+            countdown = 1;
+        }
     </script>
 @stop

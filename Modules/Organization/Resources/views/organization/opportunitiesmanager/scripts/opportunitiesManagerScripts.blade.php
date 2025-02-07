@@ -32,13 +32,10 @@
 
     const requiredToSubmit = @json($requiredFieldsToSubmit);
 
-    console.log('requiredToSubmit', requiredToSubmit);
-
     const myForm = document.getElementById('create_job_form');
     const draftJobs = @json($draftJobs);
     const publishedJobs = @json($publishedJobs);
     const onholdJobs = @json($onholdJobs);
-
 
 // cards toggle
     function toggleActiveClass(workerUserId, type) {
@@ -61,9 +58,190 @@
         $('.helper').text('');
     }
 </script>
+{{-- Infinite scroll --}}
+<script>
 
+
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+    // Add an intersect Observer for infinite scroll
+
+    var draftObserverContainer = document.querySelector('#draftObserverContainer');
+    var publishedObserverContainer = document.querySelector('#publishedObserverContainer');
+    var onholdObserverContainer = document.querySelector('#onholdObserverContainer');
+
+    var counter = {{$counter}};
+
+    var draftObserver = new window.IntersectionObserver(([entry]) => {
+
+        // Only observe intersections
+        if (entry.isIntersecting) {
+            skip > 0 ? null : 0;
+
+            loadMoreJobs(skip, 'draft');
+            skip+=20;
+            return
+        }
+
+    }, {
+      root: null,
+      threshold: 0.5,
+    });
+
+    var publishedObserver = new window.IntersectionObserver(([entry]) => {
+
+        // Only observe intersections
+        if (entry.isIntersecting) {
+            skip > 0 ? null : 0;
+
+            loadMoreJobs(skip, 'published');
+            skip+=20;
+            return
+        }
+
+    }, {
+      root: null,
+      threshold: 0.5,
+    });
+
+    var onholdObserver = new window.IntersectionObserver(([entry]) => {
+
+        // Only observe intersections
+        if (entry.isIntersecting) {
+            skip > 0 ? null : 0;
+
+            loadMoreJobs(skip, 'onhold');
+            skip+=20;
+            return
+        }
+
+    }, {
+      root: null,
+      threshold: 0.5,
+    });
+
+    // Observe
+    draftObserver.observe(draftObserverContainer);
+    publishedObserver.observe(publishedObserverContainer);
+    onholdObserver.observe(onholdObserverContainer);
+
+    function loadMoreJobs(skip, type){
+
+        $.ajax({
+
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+
+            type: 'POST',
+            url: "{{ url('organization/load-more-jobs') }}",
+            data: {skip:skip},
+            dataType: 'json',
+            success: function(data) {
+
+                pushCards(data.message, type);
+
+            },
+            error: function(error) {
+
+                console.log("Load more jobs", error);
+            }
+
+        });
+    }
+
+    function pushCards(jobData, type){
+
+        if(type == 'draft'){
+
+            for (let job of jobData.draftJobs){
+
+                draftJobs.push(job);
+                var escapedJob = JSON.stringify(job).replaceAll("\"", "'");
+                var jobCard = `<div class="col-12 ss-job-prfle-sec draft-cards" onclick="editDataJob(this),toggleActiveClass('`+job.id+`_drafts','draft-cards')"`+
+                ` job_id="`+counter+`"`+
+                ` id="`+job.id+`_drafts">`+
+                `<h4>`+job.profession+` - `+job.preferred_specialty+`</h4>`+
+                `<h6>`+job.job_name+`</h6>`+
+                `<ul>
+                    <li><a href="#"><img
+                                src=" {{ URL::asset('frontend/img/location.png') }}">
+                            ${ job.job_city }, ${ job.job_state }</a></li>
+                    <li><a href="#"><img
+                                src="{{ URL::asset('frontend/img/calendar.png') }}">
+                            ${ job.preferred_assignment_duration }
+                            wks</a></li>
+                    <li><a href="#"><img
+                                src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
+                            ${ job.weekly_pay }/wk</a></li>
+                </ul>`;
+
+                $('#infiniteDraft').append(jobCard);
+                counter++;
+            }
+
+        }else if(type == 'published'){
+
+            for (let job of jobData.publishedJobs){
+
+                publishedJobs.push(job);
+
+                var escapedJob = JSON.stringify(job).replaceAll("\"", "'");
+                var jobCard = `<div class="col-12 ss-job-prfle-sec published-cards" onclick="opportunitiesType('published','`+job.id+`','jobdetails'),toggleActiveClass('`+job.id+`_published','published-cards')"`+
+                ` id="`+job.id+`_published">`+
+                `<p><span> {{ $applyCount[$key] }} Applied</span></p>`+
+                `<h4>`+job.profession+` - `+job.preferred_specialty+`</h4>`+
+                `<h6>`+job.job_name+`</h6>`+
+                `<ul>
+                    <li><a href="#"><img
+                                src=" {{ URL::asset('frontend/img/location.png') }}">
+                            ${ job.job_city }, ${ job.job_state }</a></li>
+                    <li><a href="#"><img
+                                src="{{ URL::asset('frontend/img/calendar.png') }}">
+                            ${ job.preferred_assignment_duration }
+                            wks</a></li>
+                    <li><a href="#"><img
+                                src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
+                            ${ job.weekly_pay }/wk</a></li>
+                </ul>`;
+
+                $('#infinitePublished').append(jobCard);
+
+            }
+
+        }else if(type == 'onhold'){
+
+            for (let job of jobData.onholdJobs){
+
+                onholdJobs.push(job);
+
+                var escapedJob = JSON.stringify(job).replaceAll("\"", "'");
+                var jobCard = `<div class="col-12 ss-job-prfle-sec onhold-cards" onclick="opportunitiesType('onhold','`+job.id+`','jobdetails'),toggleActiveClass('`+job.id+`_onhold','onhold-cards')"`+
+                ` id="`+job.id+`_onhold">`+
+                `<h4>`+job.profession+` - `+job.preferred_specialty+`</h4>`+
+                `<h6>`+job.job_name+`</h6>`+
+                `<ul>
+                    <li><a href="#"><img
+                                src=" {{ URL::asset('frontend/img/location.png') }}">
+                            ${ job.job_city }, ${ job.job_state }</a></li>
+                    <li><a href="#"><img
+                                src="{{ URL::asset('frontend/img/calendar.png') }}">
+                            ${ job.preferred_assignment_duration }
+                            wks</a></li>
+                    <li><a href="#"><img
+                                src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
+                            ${ job.weekly_pay }/wk</a></li>
+                </ul>`;
+
+                $('#infiniteOnhold').append(jobCard);
+            }
+
+        }
+
+    }
+</script>
 {{-- script managing certification --}}
 <script>
+
     function addcertifications(type) {
         var id;
         var idtitle;
@@ -87,7 +265,7 @@
         } else {
             if (!certificate.hasOwnProperty(id.val())) {
 
-                console.log(id.val());
+                //console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
@@ -108,7 +286,7 @@
         var str = '';
 
         for (const key in certificate) {
-            console.log(certificate);
+            //console.log(certificate);
 
             let certificatename = "";
             @php
@@ -184,7 +362,7 @@
         } else {
             if (!holiday.hasOwnProperty(id.val())) {
 
-                console.log(id.val());
+                //console.log(id.val());
 
                 // var select = document.getElementById(idtitle);
                 // var selectedOption = select.options[select.selectedIndex];
@@ -207,7 +385,7 @@
         var str = '';
 
         for (const key in holiday) {
-            console.log(holiday);
+            //console.log(holiday);
 
             let holidayname = "";
             let allspcldata = '{!! $allKeywordsJSON !!}';
@@ -234,7 +412,7 @@
 
 
     function remove_holiday(obj, key) {
-        console.log(holiday[$(obj).data('key')]);
+        //console.log(holiday[$(obj).data('key')]);
         if (holiday.hasOwnProperty($(obj).data('key'))) {
             delete holiday[$(obj).data('key')];
 
@@ -282,7 +460,7 @@
             });
         } else {
             if (!vaccinations.hasOwnProperty(id.val())) {
-                console.log(id.val());
+                //console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
@@ -298,10 +476,10 @@
 
     function list_vaccinations() {
         var str = '';
-        console.log(vaccinations);
+        //console.log(vaccinations);
 
         for (const key in vaccinations) {
-            console.log(vaccinations);
+            //console.log(vaccinations);
 
             let vaccinationsname = "";
             @php
@@ -373,7 +551,7 @@
             });
         } else {
             if (!skills.hasOwnProperty(id.val())) {
-                console.log(id.val());
+                //console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
@@ -389,16 +567,16 @@
 
     function list_skills() {
         var str = '';
-        console.log('fomr skiiiils', skills);
+        //console.log('fomr skiiiils', skills);
 
         for (const key in skills) {
-            console.log('skills', skills);
+            //console.log('skills', skills);
 
 
             let skillsname = "";
             let allspcldata = @json($allKeywords['Speciality']);
 
-            console.log('allspcldata', allspcldata);
+            //console.log('allspcldata', allspcldata);
 
             if (skills.hasOwnProperty(key)) {
                 var data = allspcldata;
@@ -464,7 +642,7 @@
             });
         } else {
             if (!shifttimeofday.hasOwnProperty(id.val())) {
-                console.log(id.val());
+                //console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
@@ -472,7 +650,7 @@
 
                 shifttimeofday[id.val()] = optionText;
                 shifttimeofdayStr = Object.values(shifttimeofday).join(', ');
-                console.log('shifttimeofdayStr', shifttimeofdayStr);
+                //console.log('shifttimeofdayStr', shifttimeofdayStr);
                 id.val('');
                 list_shifttimeofday();
             }
@@ -481,10 +659,10 @@
 
     function list_shifttimeofday() {
         var str = '';
-        console.log(shifttimeofday);
+        //console.log(shifttimeofday);
 
         for (const key in shifttimeofday) {
-            console.log(shifttimeofday);
+            //console.log(shifttimeofday);
 
             let shifttimeofdayname = "";
             @php
@@ -555,7 +733,7 @@
             });
         } else {
             if (!benefits.hasOwnProperty(id.val())) {
-                console.log(id.val());
+                //console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
@@ -563,7 +741,7 @@
 
                 benefits[id.val()] = optionText;
                 benefitsStr = Object.values(benefits).join(', ');
-                console.log('benefitsStr', benefitsStr);
+                //console.log('benefitsStr', benefitsStr);
                 id.val('');
                 list_benefits();
             }
@@ -572,10 +750,10 @@
 
     function list_benefits() {
         var str = '';
-        console.log(benefits);
+        //console.log(benefits);
 
         for (const key in benefits) {
-            console.log(benefits);
+            //console.log(benefits);
 
             let benefitsname = "";
             @php
@@ -646,7 +824,7 @@
             });
         } else {
             if (!professional_licensure.hasOwnProperty(id.val())) {
-                console.log(id.val());
+                //console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
@@ -654,7 +832,7 @@
 
                 professional_licensure[id.val()] = optionText;
                 professional_licensureStr = Object.values(professional_licensure).join(', ');
-                console.log('professional_licensureStr', professional_licensureStr);
+                //console.log('professional_licensureStr', professional_licensureStr);
                 id.val('');
                 list_professional_licensure();
             }
@@ -663,10 +841,10 @@
 
     function list_professional_licensure() {
         var str = '';
-        console.log(professional_licensure);
+        //console.log(professional_licensure);
 
         for (const key in professional_licensure) {
-            console.log(professional_licensure);
+            //console.log(professional_licensure);
 
             let professional_licensurename = "";
             @php
@@ -739,7 +917,7 @@
             });
         } else {
             if (!Emr.hasOwnProperty(id.val())) {
-                console.log(id.val());
+                //console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
@@ -747,7 +925,7 @@
 
                 Emr[id.val()] = optionText;
                 EmrStr = Object.values(Emr).join(', ');
-                console.log('EmrStr', EmrStr);
+                //console.log('EmrStr', EmrStr);
                 id.val('');
                 list_Emr();
             }
@@ -756,10 +934,10 @@
 
     function list_Emr() {
         var str = '';
-        console.log(Emr);
+        //console.log(Emr);
 
         for (const key in Emr) {
-            console.log(Emr);
+            //console.log(Emr);
 
             let Emrname = "";
             @php
@@ -831,7 +1009,7 @@
             });
         } else {
             if (!nurse_classification.hasOwnProperty(id.val())) {
-                console.log(id.val());
+                //console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
@@ -839,7 +1017,7 @@
 
                 nurse_classification[id.val()] = optionText;
                 nurse_classificationStr = Object.values(nurse_classification).join(', ');
-                console.log('nurse_classificationStr', nurse_classificationStr);
+                //console.log('nurse_classificationStr', nurse_classificationStr);
                 id.val('');
                 list_nurse_classification();
             }
@@ -848,10 +1026,10 @@
 
     function list_nurse_classification() {
         var str = '';
-        console.log(nurse_classification);
+        //console.log(nurse_classification);
 
         for (const key in nurse_classification) {
-            console.log(nurse_classification);
+            //console.log(nurse_classification);
 
             let nurse_classificationname = "";
             @php
@@ -1785,7 +1963,7 @@
 
 // redirect to the cooresponding type published jobs | onhold jobs | draft jobs
     function opportunitiesType(type, id = "", formtype) {
-
+        skip = 20;
         certificate = {};
         vaccinations = {};
         skills = {};
@@ -2060,7 +2238,6 @@
         element.classList.add("active");
 
         var result = draftJobs[jobId];
-        console.log('result', result);
 
         const fields = {
             'id': {
@@ -2487,10 +2664,10 @@
         // list shift time of day
 
         var shifttimeofdayresult = result['preferred_shift_duration'];
-        console.log("sift time of day : ", shifttimeofdayresult);
+        //console.log("sift time of day : ", shifttimeofdayresult);
         // shifttimeofday is a string use trim to check if it is empty
         if (shifttimeofdayresult !== null) {
-            console.log('triiiiiiimed');
+
             shifttimeofdayresult = shifttimeofdayresult.split(', ');
 
             shifttimeofdayresult.forEach(function(item) {
@@ -2868,7 +3045,7 @@
                             }
 
                         } else if (field.type === 'radio') {
-                            console.log('radio', result[key]);
+
                             if (result[key] === 'Accept Pending') {
                                 document.getElementById('professional_state_licensure_pendingEdit')
                                     .checked = true;
@@ -2989,10 +3166,10 @@
                     // list shift time of day
 
                     var shifttimeofdayresult = result['preferred_shift_duration'];
-                    console.log("sift time of day : ", shifttimeofdayresult);
+                    //console.log("sift time of day : ", shifttimeofdayresult);
                     // shifttimeofday is a string use trim to check if it is empty
                     if (shifttimeofdayresult !== null) {
-                        console.log('triiiiiiimed');
+
                         shifttimeofdayresult = shifttimeofdayresult.split(', ');
 
                         shifttimeofdayresult.forEach(function(item) {
@@ -3279,10 +3456,10 @@
 
                 const elementStr = element;
                 const elementValue = window[elementStr];
-                console.log('from multiselectcheckvalidation : ', elementValue);
+                //console.log('from multiselectcheckvalidation : ', elementValue);
 
                 if (Object.keys(elementValue).length === 0) {
-                    console.log('from first check : ', elementValue);
+                    //console.log('from first check : ', elementValue);
                     const htmlElement = document.getElementById(element);
                     const collapseElement = htmlElement.closest('.collapse');
                     if(collapseElement){
@@ -3292,7 +3469,7 @@
                     $(`.help-block-${element}`).addClass('text-danger');
                     access = false;
                 } else {
-                    console.log('from first check : ', elementValue);
+                    //console.log('from first check : ', elementValue);
                     $(`.help-block-${element}`).text('');
                 }
 
@@ -3664,13 +3841,11 @@
                 const elementHtml = document.getElementById(element + 'Draft');
                 const elementValue = elementHtml.value;
                 if (elementValue.trim() === '') {
-                    console.log('element clicked');
+
                     const collapseElement = elementHtml.closest('.collapse');
                     if (collapseElement){
                         collapseElement.classList.add('show');
                     }
-                    console.log('colapseElement', collapseElement);
-                    console.log('element', element);
 
                     $(`.help-block-${element}Draft`).text(`This field is required`);
                     $(`.help-block-${element}Draft`).addClass('text-danger');
@@ -3698,10 +3873,10 @@
 
                 const elementStr = element;
                 const elementValue = window[elementStr];
-                console.log(elementValue);
+
 
                 if (Object.keys(elementValue).length === 0) {
-                    console.log('from first check : ', elementValue);
+
                     const htmlElement = document.getElementById(element);
                     const collapseElement = htmlElement.closest('.collapse');
                     if (collapseElement){
@@ -4101,7 +4276,7 @@
 
                 const elementStr = element;
                 const elementValue = window[elementStr];
-                console.log(elementValue);
+
 
                 if (Object.keys(elementValue).length === 0) {
                     $(`.help-block-${element}Edit`).text(`This field is required`);

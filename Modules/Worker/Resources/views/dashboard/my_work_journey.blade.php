@@ -80,7 +80,7 @@
 
                 <div class="ss-jb-apply-on-disc-txt">
                     <h5>Description</h5>
-                    <p>{{ $model->description }}<a href="#">Read More</a></p>
+                    <p>{!! $model->description !!}<a href="#">Read More</a></p>
                 </div>
 
 
@@ -814,7 +814,7 @@
 
                 <div class="ss-jb-apply-on-disc-txt">
                     <h5>Description</h5>
-                    <p>{{ $model->description }}<a href="#">Read More</a></p>
+                    <p>{!! $model->description !!}<a href="#">Read More</a></p>
                 </div>
 
 
@@ -1551,7 +1551,7 @@
 
                 <div class="ss-jb-apply-on-disc-txt">
                     <h5>Description</h5>
-                    <p>{{ $model->description }}<a href="#">Read More</a></p>
+                    <p>{!! $model->description !!}<a href="#">Read More</a></p>
                 </div>
 
 
@@ -2293,7 +2293,7 @@
 
                 <div class="ss-jb-apply-on-disc-txt">
                     <h5>Description</h5>
-                    <p>{{ $model->description }}<a href="#">Read More</a></p>
+                    <p>{!! $model->description !!}<a href="#">Read More</a></p>
                 </div>
 
 
@@ -3032,7 +3032,7 @@
 
                 <div class="ss-jb-apply-on-disc-txt">
                     <h5>Description</h5>
-                    <p>{{ $model->description }}<a href="#">Read More</a></p>
+                    <p>{!! $model->description !!}<a href="#">Read More</a></p>
                 </div>
 
 

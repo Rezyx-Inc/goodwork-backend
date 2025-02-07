@@ -246,7 +246,7 @@ class OrganizationController extends Controller
             ->first();
 
         if ($worker) {
-            $nameworker = $user->fullName;
+            $nameworker = $worker->fullName;
         } else {
             // Handle the case where no user is found
             $nameworker = 'Default Name';
@@ -759,7 +759,7 @@ class OrganizationController extends Controller
                 $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
                 $job->organization_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
                 $job->total_organization_amount = ($job->preferred_assignment_duration * $job->organization_weekly_amount) + ($job->sign_on_bonus + $job->completion_bonus);
-                $job->goodwork_weekly_amount = ($job->organization_weekly_amount) * 0.05;
+                $job->goodwork_weekly_amount = ($job->organization_weekly_amount) * 0.08;
                 $job->total_goodwork_amount = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
                 $job->total_contract_amount = $job->total_goodwork_amount + $job->total_organization_amount;
                 
@@ -1091,7 +1091,7 @@ class OrganizationController extends Controller
             $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
             $job->organization_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
             $job->total_organization_amount = ($job->preferred_assignment_duration * $job->organization_weekly_amount) + ($job->sign_on_bonus + $job->completion_bonus);
-            $job->goodwork_weekly_amount = ($job->organization_weekly_amount) * 0.05;
+            $job->goodwork_weekly_amount = ($job->organization_weekly_amount) * 0.08;
             $job->total_goodwork_amount = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
             $job->total_contract_amount = $job->total_goodwork_amount + $job->total_organization_amount;
             

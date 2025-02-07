@@ -21,11 +21,6 @@
             <div class="col-lg-3">
                 <div class="ss-foot-scl-sec">
                     <h4>Contact Information</h4>
-                    <ul class="ss-fot-env-sec">
-                        <li><img src="{{ URL::asset('landing/img/footer-env-icon.png') }}" /></li>
-                        <li><a href="mailto:info@goodwork.world">info@goodwork.world</a></li>
-                    </ul>
-
                     <ul class="ss-fot-scl-link">
                         <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
                         <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>

@@ -44,7 +44,7 @@
 
 
 
-                        <!----------------jobs applay view details--------------->
+                        <!----------------jobs apply view details--------------->
 
                         <div class="ss-job-apply-on-view-detls-mn-dv">
                             <div class="ss-job-apply-on-tx-bx-hed-dv">
@@ -92,7 +92,7 @@
 
                             <div class="ss-jb-apply-on-disc-txt">
                                 <h5>Description</h5>
-                                <p>{{ $model->description }}<a href="#">Read More</a></p>
+                                <p>{!! $model->description !!}<a href="#">Read More</a></p>
                             </div>
 
 
