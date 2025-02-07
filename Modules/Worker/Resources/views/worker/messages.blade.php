@@ -255,7 +255,7 @@
             window.onload = function() {
                 window.Echo.channel('goodwork_database_messages')
                     .listen('NewMessage', (event) => {
-                        //console.log('New message:', event.message);
+                        console.log('New message:', event.message);
                     });
             }
 

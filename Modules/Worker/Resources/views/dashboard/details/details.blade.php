@@ -2002,14 +2002,14 @@
                                             </li>
                                             <li>
                                                 <span>Your Classification</span>
-                                                <p class="profile_info_text" data-target="multi_select"
-                                                    data-title="What EMRs have you used?"
-                                                    data-filter="nurseClassification" data-name="worker_classification"
+                                                <p class="profile_info_text" data-target="dropdown"
+                                                    data-title="Classifications you'll work as ?"
+                                                    data-filter="nurseClassification" data-name="nurse_classification"
                                                     onclick="open_modal(this)">
-                                                    @if (!!$nurse->worker_classification)
-                                                        {{ $nurse->worker_classification }}
+                                                    @if (!!$nurse->nurse_classification)
+                                                        {{ $nurse->nurse_classification }}
                                                     @else
-                                                        What's your file cabinet ID?
+                                                        Classifications you'll work as ?
                                                     @endif
                                                 </p>
                                             </li>

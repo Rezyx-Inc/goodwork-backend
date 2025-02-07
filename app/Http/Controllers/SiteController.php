@@ -209,7 +209,7 @@ class SiteController extends Controller
     }
 
     if (isset($request->city)) {
-      $ret->where('job_city', 'like', $data['city']);
+      $ret->where('job_city', '=', $data['city']);
     }
 
     $allusers = User::select('id', 'role', 'first_name', 'last_name', 'organization_name', 'image')->get();
@@ -220,9 +220,13 @@ class SiteController extends Controller
 
     if(!empty($skip) && $skip > 0){
 
-      $data['jobs'] = $ret->withCount(['offers as offer_count' => function ($query) {
-        $query->whereColumn('jobs.id', 'offers.job_id');
-      }])->orderBy('id','desc')->skip($skip)->take(10)->get();
+      $data['jobs'] = $ret->orderBy('id','desc')->skip($skip)->take(10)->get();
+
+      foreach ($data['jobs'] as $key => $value) {
+
+        $userapplied = Offer::where('job_id', $value->id)->count();
+        $data['jobs'][$key]['offer_count'] = $userapplied;
+      }
 
       $jobSaved = new JobSaved;
       $data['jobSaved'] = $jobSaved;
