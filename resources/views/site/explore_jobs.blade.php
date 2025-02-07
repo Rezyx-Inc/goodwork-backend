@@ -566,12 +566,12 @@
     </div>
 
 
-    <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="job_details_modal_for_logout_users" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <h5  id="exampleModalLabel">job ID: <span class="modal-title" style="color: #b5649e; font-weight: bold;"></span></h5>
                     <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
