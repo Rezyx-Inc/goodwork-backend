@@ -218,7 +218,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    $${(Number(job.actual_hourly_rate) || 0).toFixed(0)}
+                                                    ${job.actual_hourly_rate ? `$${(Number(job.actual_hourly_rate) || 0).toFixed(0)}` : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -228,7 +228,7 @@
                                             </li>
                                             <li>
                                                  <h6>
-                                                    $${(Number(job.weekly_pay) || 0).toFixed(0)}
+                                                    ${job.weekly_pay ? `$${(Number(job.weekly_pay) || 0).toFixed(0)}` : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -238,7 +238,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.hours_per_week}
+                                                    ${job.hours_per_week ? (Number(job.hours_per_week) || 0).toFixed(0) : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
