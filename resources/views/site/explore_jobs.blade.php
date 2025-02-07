@@ -932,7 +932,6 @@
                     dataType: 'json',
                     success: function(data) {
 
-                        console.log(" HERE IS THE DATA", data.message)
                         addJobCards(data.message);
                         // Increment skip
                         skip+=10;
