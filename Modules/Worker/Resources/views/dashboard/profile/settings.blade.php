@@ -49,15 +49,20 @@
 
     .progress-bar {
         height: 100%;
-        background: #b5649e;
+        background: #42d611!important;
         transition: width 1s linear;
     }
 
     .manualSave {
-        color: #b5649e;
+        color: #1d4112!important;
         cursor: pointer;
         display: block;
         margin-top: 5px;
+    }
+    
+    .manualSave:hover {
+        font-size: 16px;
+        transition: 0.3s;
     }
 
 </style>
