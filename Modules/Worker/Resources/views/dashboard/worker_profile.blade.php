@@ -9,6 +9,7 @@
             return !empty($value) && $value != 0 ? (fmod($value, 1) == 0 ? intval($value) : $value) : null;
         };
     @endphp
+
     <!--Main layout-->
     <main style="padding-top: 130px; padding-bottom: 100px;" class="ss-main-body-sec">
         <div class="container">
@@ -107,7 +108,7 @@
 
             <div class="ss-my-profile--basic-mn-sec">
                 <div class="row">
-                    {{-- ---------------------------------------------------------- Profile settings Form ---------------------------------------------------------- --}}
+
                     <div class=" profile_setting">
                         <div class="ss-pers-info-form-mn-dv" style="width: 100%;">
 
@@ -119,8 +120,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- ---------------------------------------------------------- End Profile settings Form ---------------------------------------------------------- --}}
-                    {{-- ---------------------------------------------------------- Account settings Form ---------------------------------------------------------- --}}
 
                     <div class="account_setting d-none">
                         <div class="ss-pers-info-form-mn-dv">
@@ -132,52 +131,14 @@
                                 <!-- slide Account Setting -->
                                 <div class="page slide-page">
                                     <div class="row justify-content-center">
-                                        {{-- Email Information --}}
-                                        {{-- <div class="ss-form-group col-11">
-                                            <label>New Email</label>
-                                            <input type="text" name="newEmail" id="newEmail"
-                                                placeholder="Please enter your new Email">
-                                        </div>
-                                        <button type="button" class="mt-3 col-11 w-50 ss-prsnl-save-btn rounded-5"
-                                            id="sendOTPforVerifyEmail">
-                                            Send OTP
-                                        </button>
-                                        <span class="help-block-email"></span> --}}
 
-                                        {{-- OTP for new email --}}
-                                        {{-- <div class="ss-form-group col-7 d-flex align-items-center">
-                                            <label class="me-3">OTP:</label>
-                                            <ul class="ss-otp-v-ul">
-                                                <li><input class="otp-input" type="text" name="otp1"
-                                                        oninput="digitValidate(this)" onkeyup="tabChange(1)"
-                                                        maxlength="1"></li>
-                                                <li><input class="otp-input" type="text" name="otp2"
-                                                        oninput="digitValidate(this)" onkeyup="tabChange(2)"
-                                                        maxlength="1"></li>
-                                                <li><input class="otp-input" type="text" name="otp3"
-                                                        oninput="digitValidate(this)" onkeyup="tabChange(3)"
-                                                        maxlength="1"></li>
-                                                <li><input class="otp-input" type="text" name="otp4"
-                                                        oninput="digitValidate(this)" onkeyup="tabChange(4)"
-                                                        maxlength="1"></li>
-                                            </ul>
-
-                                        </div>
-                                        <span class="help-block-otp"></span>
-
-                                        <div
-                                            class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                            <button type="button" class="col-12 ss-prsnl-save-btn"
-                                                id="SaveAccountInformation" style="display:none;">Save</button>
-                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                    {{-- ---------------------------------------------------------- End Account settings  ---------------------------------------------------------- --}}
-                    {{-- ----------------------------------------------------------  Bonus Area -------------------------------------------------------------------- --}}
+
                     <div class=" bonus_transfers d-none">
                         <div class="ss-pers-info-form-mn-dv">
                             <div class="ss-persnl-frm-hed">
@@ -258,8 +219,7 @@
 
                         </div>
                     </div>
-                    {{-- ----------------------------------------------------------  End Bonus Area -------------------------------------------------------------------- --}}
-                    {{-- ----------------------------------------------------------  Support Area -------------------------------------------------------------------- --}}
+
                     <div class=" support_info d-none">
                         <div class="ss-pers-info-form-mn-dv" style="width:100%">
                             <div class="ss-persnl-frm-hed">
@@ -278,9 +238,7 @@
 
                         </div>
                     </div>
-                    {{-- ------------------------------------------------------- End Support Area -------------------------------------------------------------------- --}}
 
-                    {{-- ------------------------------------------------------- Disable account area -------------------------------------------------------------------- --}}
                     <div class=" disable_account d-none">
                         <div class="ss-pers-info-form-mn-dv" style="width:100%">
                             <div class="ss-persnl-frm-hed">
@@ -318,14 +276,14 @@
 
                         </div>
                     </div>
-                    {{-- ------------------------------------------------------- Disable account area -------------------------------------------------------------------- --}}
+
                 </div>
     </main>
+
 @stop
 
-@section('js')
-
     <script type="text/javascript">
+
         let tabChange = function(val) {
             let inputs = document.querySelectorAll('.otp-input'); // Select all OTP input fields
             let saveButton = document.getElementById('SaveAccountInformation'); // Save button element
@@ -343,10 +301,54 @@
         let digitValidate = function(ele) {
             ele.value = ele.value.replace(/[^0-9]/g, ""); // Allow only digits
         };
+
+        // this functions to display profile setting / account setting forms
+        function AccountSettingDisplay() {
+            $('.profile_setting').addClass('d-none');
+            $('.account_setting').removeClass('d-none');
+            $('.bonus_transfers').addClass('d-none');
+            $('.disable_account').addClass('d-none');
+        }
+
+        function ProfileIinformationDisplay() {
+
+            console.log("Fired");
+            $('.account_setting').addClass('d-none');
+            $('.profile_setting').removeClass('d-none');
+            $('.bonus_transfers').addClass('d-none');
+            $('.support_info').addClass('d-none');
+            $('.disable_account').addClass('d-none');
+
+        }
+
+        function BonusTransfersDisplay() {
+            $('.account_setting').addClass('d-none');
+            $('.profile_setting').addClass('d-none');
+            $('.bonus_transfers').removeClass('d-none');
+            $('.support_info').addClass('d-none');
+            $('.disable_account').addClass('d-none');
+        }
+
+        function SupportDisplay() {
+            $('.account_setting').addClass('d-none');
+            $('.profile_setting').addClass('d-none');
+            $('.bonus_transfers').addClass('d-none');
+            $('.support_info').removeClass('d-none');
+            $('.disable_account').addClass('d-none');
+        }
+
+        function DisactivateAccountDisplay() {
+            $('.account_setting').addClass('d-none');
+            $('.profile_setting').addClass('d-none');
+            $('.bonus_transfers').addClass('d-none');
+            $('.support_info').addClass('d-none');
+            $('.disable_account').removeClass('d-none');
+        }
     </script>
 
     {{-- get elements - prevent defaults behaviors  --}}
-    <script>
+    <script type="text/javascript">
+
         // slide control
         const progress = document.getElementById("progress");
         // end slide control
@@ -419,11 +421,11 @@
         const infoType = document.getElementById("information_type");
         // end change info type title
 
-        if (city.value == '') {
+        if (city && city.value == '') {
             document.querySelector('.help-city').classList.remove('d-none');
         }
 
-        if (worker_facility_city.value == '') {
+        if (worker_facility_city && worker_facility_city.value == '') {
             document.querySelector('.help-block-worker_facility_city').classList.remove('d-none');
         }
 
@@ -431,7 +433,7 @@
     </script>
 
     {{-- js for multiselect --}}
-    <script>
+    <script type="module">
         var selectedFiles = [];
         var selectedValues = [];
         var selectedTypeFile = '';
@@ -494,7 +496,7 @@
             });
         }
         document.addEventListener('DOMContentLoaded', function() {
-
+            console.log("DOM LOAD")
             // options from the combobox
             const filesSelected = document.querySelectorAll('.files-upload');
 
@@ -773,7 +775,7 @@
     </script>
     {{-- end js for multiselect --}}
 
-    <script type="text/javascript">
+    <script type="module">
         // loding states cities docs on page load
         @php
             $worker_id = $worker->id;
@@ -799,7 +801,7 @@
                     try {
                         // Try to manually parse the response as JSON
                         data = JSON.parse(resp);
-                        console.log(data);
+                        console.log("DOCS =====================>",data);
                     } catch (e) {
                         // If parsing fails, assume resp is already a JavaScript object
                         data = resp;
@@ -918,6 +920,8 @@
         }
 
         $(document).ready(function() {
+
+            console.log("SHOULD BE FIRED")
             if (@json($type == 'profile')) {
                 ProfileIinformationDisplay();
 
@@ -971,41 +975,6 @@
                 $('.help-block-last_name').text('');
             }
 
-            // if ((!regexPhone.test(mobile)) && (mobile.value === '')) {
-            //     $('.help-block-mobile').text('Please enter a mobile number');
-            //     $('.help-block-mobile').addClass('text-danger');
-            //     isValid = false;
-            // }else{
-            //     $('.help-block-mobile').text('');
-            // }
-            // if (address.value === '') {
-            //     $('.help-block-address').text('Please enter an address');
-            //     $('.help-block-address').addClass('text-danger');
-            //     isValid = false;
-            // } else{
-            //     $('.help-block-address').text('');
-            // }
-            // if (city.value === '') {
-            //     $('.help-block-city').text('Please enter a city');
-            //     $('.help-block-city').addClass('text-danger');
-            //     isValid = false;
-            // } else{
-            //     $('.help-block-city').text('');
-            // }
-            // if (state.value === '') {
-            //     $('.help-block-state').text('Please enter a state');
-            //     $('.help-block-state').addClass('text-danger');
-            //     isValid = false;
-            // }   else{
-            //     $('.help-block-state').text('');
-            // }
-            // if (zip_code.value === '') {
-            //     $('.help-block-zip_code').text('Please enter a zip code');
-            //     $('.help-block-zip_code').addClass('text-danger');
-            //     isValid = false;
-            // }   else{
-            //     $('.help-block-zip_code').text('');
-            // }
             return isValid;
         }
         // end validation basic information
@@ -1437,354 +1406,7 @@
 
         // end account disactivating
 
-        /*
-        // creating a stripe account
-        
-        AddStripeAccount.addEventListener("click", function(event) {
-            $('#loading_disableOption').removeClass('d-none');
-            $('#disactivate_account').addClass('d-none');
-            event.preventDefault();
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '/worker/add-stripe-account',
-                type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    access: true
-                }),
-                success: function(resp) {
-                    //console.log(resp);
-                    if (resp.status) {
-                        notie.alert({
-                            type: 'success',
-                            text: '<i class="fa fa-check"></i> Account created succefuly',
-                            time: 5
-                        });
-                        $('#loading_disableOption').addClass('d-none');
-                        $('#disactivate_account').removeClass('d-none');
-                        //console.log(resp);
-                        window.location.href = resp.account_link;
-                    }
-                },
-                error: function(resp) {
-                    //console.log(resp);
-                    notie.alert({
-                        type: 'error',
-                        text: resp,
-                        time: 5
-                    });
-                }
-            });
-        });
 
-        // end creating stripe account
-
-        // start redirecting to login stripe link
-
-        AccessToStripeAccount.addEventListener("click", function(event) {
-            $('#loading_disableOption').removeClass('d-none');
-            $('#disactivate_account').addClass('d-none');
-            event.preventDefault();
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '/worker/login-to-stripe-account',
-                type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    access: true
-                }),
-                success: function(resp) {
-                    //console.log(resp);
-                    if (resp.status) {
-                        notie.alert({
-                            type: 'success',
-                            text: '<i class="fa fa-check"></i> Redirecting',
-                            time: 2
-                        });
-                        $('#loading_disableOption').addClass('d-none');
-                        $('#disactivate_account').removeClass('d-none');
-                        window.location.href = resp.login_link;
-                    }
-                },
-                error: function(resp) {
-                    //console.log(resp);
-                    notie.alert({
-                        type: 'error',
-                        text: resp,
-                        time: 5
-                    });
-                }
-            });
-        });
-
-
-        // end redirecting to login stripe link
-
-        */
-
-        // --------------------------- end Profile Setting area  ---------------------------- //
-
-        // --------------------------- Account Setting Area --------------------------------- //
-
-        // inputs account settings
-
-        //const new_mobile = document.querySelector('input[name="new_mobile"]');
-        // const email = document.querySelector('input[name="newEmail"]');
-        // var inputs = [];
-
-        // // account setting validation here
-
-        // function validateAccountSettingInformation() {
-        //     //$('.help-block-new_mobile').text('');
-        //     $('.help-block-validation').text('');
-        //     $('.help-block-email').text('');
-        //     let isValid = true;
-        //     // Create an array of all inputs
-        //     inputs = [email];
-
-
-
-        //     // Check if all inputs are empty
-        //     const allEmpty = inputs.every(input => input.value.trim() === '');
-
-        //     // If all inputs are empty, show an error
-        //     if (allEmpty) {
-        //         $('.help-block-validation').text('Please fill at least one field');
-        //         $('.help-block-validation').addClass('text-danger');
-        //         isValid = false;
-        //     }
-
-        //     // Email validation
-        //     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        //     if (!emailRegex.test(email.value)) {
-        //         $('.help-block-email').text('Please enter a valid email');
-        //         $('.help-block-email').addClass('text-danger');
-        //         isValid = false;
-        //     }
-
-        //     return isValid;
-        // }
-        // end account setting validation
-
-
-        // send request to update here
-        // const SaveAccountInformation = document.getElementById('SaveAccountInformation');
-        // SaveAccountInformation.addEventListener("click", function(event) {
-        //     event.preventDefault();
-        //     if (!validateAccountSettingInformation()) {
-        //         return;
-        //     }
-
-        //     // clear form data from empty values
-        //     const formData = new FormData();
-        //     inputs.forEach(input => {
-        //         if (input.value.trim() !== '') {
-        //             formData.append(input.name, input.value);
-        //         }
-        //     });
-
-        //     $.ajaxSetup({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         }
-        //     });
-        //     $.ajax({
-        //         url: '/worker/update-worker-account-setting',
-        //         type: 'POST',
-        //         processData: false,
-        //         contentType: false,
-        //         data: formData,
-        //         success: function(resp) {
-        //             //console.log(resp);
-        //             if (resp.status) {
-        //                 notie.alert({
-        //                     type: 'success',
-        //                     text: '<i class="fa fa-check"></i> ' + resp.message,
-        //                     time: 5
-        //                 });
-
-        //             } else {
-        //                 notie.alert({
-        //                     type: 'error',
-        //                     text: '<i class="fa fa-check"></i> ' + resp.message,
-        //                     time: 5
-        //                 });
-        //             }
-        //         },
-        //         error: function(resp) {
-        //             notie.alert({
-        //                 type: 'error',
-        //                 text: '<i class="fa fa-check"></i> Please try again later !',
-        //                 time: 5
-        //             });
-        //         }
-        //     });
-
-
-        // });
-
-        // send otp button
-        // const sendOTPButton = document.getElementById('sendOTPforVerifyEmail');
-        // sendOTPButton.addEventListener('click', function(e) {
-        //     e.preventDefault();
-        //     if (!validateAccountSettingInformation()) {
-        //         return;
-        //     }
-
-        //     let email = document.getElementById('newEmail').value;
-
-        //     let data = {
-        //         email: email
-        //     };
-        //     $.ajax({
-        //         url: '/worker/send-otp-worker',
-        //         type: 'POST',
-        //         data: data,
-        //         success: function(resp) {
-        //             console.log(resp);
-        //             if (resp.status) {
-        //                 notie.alert({
-        //                     type: 'success',
-        //                     text: '<i class="fa fa-check"></i> ' + resp.message,
-        //                     time: 5
-        //                 });
-        //             } else {
-        //                 notie.alert({
-        //                     type: 'error',
-        //                     text: '<i class="fa fa-check"></i> ' + resp.message,
-        //                     time: 5
-        //                 });
-        //             }
-        //         },
-        //         error: function(resp) {
-        //             notie.alert({
-        //                 type: 'error',
-        //                 text: '<i class="fa fa-check"></i> Please try again later !',
-        //                 time: 5
-        //             });
-        //         }
-        //     });
-
-        // })
-
-        // function ValidateOTP() {
-        //     let inputs = document.querySelectorAll('.otp-input');
-        //     let otp = Array.from(inputs).map(input => input.value).join('');
-        //     let isValid = true;
-        //     if (otp === '') {
-        //         $('.help-block-otp').text('Please enter the OTP');
-        //         $('.help-block-otp').addClass('text-danger');
-        //         isValid = false;
-        //     } else if (otp.length < inputs.length) {
-        //         $('.help-block-otp').text('Please complete the OTP');
-        //         $('.help-block-otp').addClass('text-danger');
-        //         isValid = false;
-        //     } else {
-        //         $('.help-block-otp').text('');
-        //         $('.help-block-otp').removeClass('text-danger');
-        //     }
-
-        //     return isValid;
-        // }
-        // // Verify the OTP and update the email
-        // const saveButtonForVerifyEmail = document.getElementById('SaveAccountInformation');
-        // saveButtonForVerifyEmail.addEventListener("click", function(event) {
-        //     event.preventDefault();
-
-        //     if (!ValidateOTP()) {
-        //         return;
-        //     }
-
-        //     let inputs = document.querySelectorAll('.otp-input');
-        //     let otp = Array.from(inputs).map(input => input.value).join('');
-        //     let email = document.getElementById('newEmail').value;
-
-        //     let data = {
-        //         otp: otp,
-        //         email: email
-        //     };
-
-        //     $.ajax({
-        //         url: '/worker/update-email-worker',
-        //         type: 'POST',
-        //         data: data,
-        //         success: function(resp) {
-        //             console.log(resp);
-        //             if (resp.status) {
-        //                 notie.alert({
-        //                     type: 'success',
-        //                     text: '<i class="fa fa-check"></i> ' + resp.message,
-        //                     time: 5
-        //                 });
-        //             } else {
-        //                 notie.alert({
-        //                     type: 'error',
-        //                     text: '<i class="fa fa-times"></i> ' + resp.message,
-        //                     time: 5
-        //                 });
-        //             }
-        //         },
-        //         error: function() {
-        //             notie.alert({
-        //                 type: 'error',
-        //                 text: '<i class="fa fa-times"></i> Please try again later!',
-        //                 time: 5
-        //             });
-        //         }
-        //     });
-        // });
-
-
-        // this functions to display profile setting / account setting forms
-        function AccountSettingDisplay() {
-            $('.profile_setting').addClass('d-none');
-            $('.account_setting').removeClass('d-none');
-            $('.bonus_transfers').addClass('d-none');
-            $('.disable_account').addClass('d-none');
-        }
-
-        function ProfileIinformationDisplay() {
-            $('.account_setting').addClass('d-none');
-            $('.profile_setting').removeClass('d-none');
-            $('.bonus_transfers').addClass('d-none');
-            $('.support_info').addClass('d-none');
-            $('.disable_account').addClass('d-none');
-
-        }
-
-        function BonusTransfersDisplay() {
-            $('.account_setting').addClass('d-none');
-            $('.profile_setting').addClass('d-none');
-            $('.bonus_transfers').removeClass('d-none');
-            $('.support_info').addClass('d-none');
-            $('.disable_account').addClass('d-none');
-        }
-
-        function SupportDisplay() {
-            $('.account_setting').addClass('d-none');
-            $('.profile_setting').addClass('d-none');
-            $('.bonus_transfers').addClass('d-none');
-            $('.support_info').removeClass('d-none');
-            $('.disable_account').addClass('d-none');
-        }
-
-        function DisactivateAccountDisplay() {
-            $('.account_setting').addClass('d-none');
-            $('.profile_setting').addClass('d-none');
-            $('.bonus_transfers').addClass('d-none');
-            $('.support_info').addClass('d-none');
-            $('.disable_account').removeClass('d-none');
-        }
 
         function loadFile(event) {
             var image = document.getElementById("output");
@@ -1966,7 +1588,7 @@
             });
         }
     </script>
-@stop
+
 
 <style>
     .file-name {
