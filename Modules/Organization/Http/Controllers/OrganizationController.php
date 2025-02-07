@@ -246,7 +246,7 @@ class OrganizationController extends Controller
             ->first();
 
         if ($worker) {
-            $nameworker = $user->fullName;
+            $nameworker = $worker->fullName;
         } else {
             // Handle the case where no user is found
             $nameworker = 'Default Name';

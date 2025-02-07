@@ -8,10 +8,11 @@
 
         let id = @json($id);
         var PrivateChannelNotification = 'private-notification.' + id;
+
         // Listen for Message Notification messages event
         window.Echo.private(PrivateChannelNotification)
             .listen('NotificationMessage', (event) => {
-                console.log('from the messages blade:', event);
+                //console.log('from the messages blade:', event);
                 let room_last_messages = document.getElementById('room_' + event.sender);
                 if (room_last_messages) {
                     if (event.content.length > 16) {
@@ -352,17 +353,17 @@
         // Listen for NewMessage event on the goodwork_database_messages channel : PUBLIC MESSAGES
         window.Echo.channel('goodwork_database_messages')
             .listen('NewMessage', (event) => {
-                console.log('New message:', event.message);
+                //console.log('New message:', event.message);
             });
     }
 
 
 
     function sendMessage(type) {
-        console.log(type);
+
         let id = @json($id);
         PrivateChannel = 'private-chat.' + idOrganization_Global + '.' + idRecruiter_Global + '.' + id;
-        console.log(PrivateChannel);
+
         let messageInput = document.getElementById('messageEnvoye');
         let message = messageInput.value;
 
@@ -403,7 +404,6 @@
             contentType: false, // tell jQuery not to set contentType
             success: function() {
                 document.getElementById('messageEnvoye').value = "";
-                console.log('message envoyé');
             }
         });
     }

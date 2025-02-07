@@ -154,26 +154,6 @@
 @section('js')
 
     <script type="text/javascript">
-        let tabChange = function(val) {
-            let inputs = document.querySelectorAll('.otp-input'); // Select all OTP input fields
-            let saveButton = document.getElementById('SaveAccountInformation'); // Save button element
-            if (inputs[val - 1].value !== "") {
-                if (val < inputs.length) {
-                    inputs[val].focus(); // Move to the next input
-                }
-            } else if (inputs[val - 1].value === "" && val > 1) {
-                inputs[val - 2].focus(); // Move to the previous input
-            }
-            // Check if all inputs are filled
-            let allFilled = Array.from(inputs).every(input => input.value !== "");
-            saveButton.style.display = allFilled ? "block" : "none"; // Show or hide the Save button
-        };
-        let digitValidate = function(ele) {
-            ele.value = ele.value.replace(/[^0-9]/g, ""); // Allow only digits
-        };
-    </script>
-
-    <script type="text/javascript">
 
         const email = document.querySelector('input[name="newEmail"]');
         var inputs = [];
