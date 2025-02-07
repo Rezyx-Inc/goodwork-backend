@@ -32,7 +32,8 @@
         const userRole = creator ? creator.role : 'Unknown';
         
         // image
-        const recruiterImage = (creator && creator.image) ? creator.image : 'default-image.png';        
+        const recruiterImage = (creator && creator.image) ? creator.image : null; 
+        const defaultImage = "frontend/img/account-img.png";       
         
         // org name
         const org = users.find(user => user.id === job.organization_id);
@@ -132,7 +133,7 @@
                                             <p>${userRole}</p>
                                         </li>
                                         <li>
-                                            <img width="50px" height="50px" src="${userProfilePath}/${recruiterImage}" onerror="this.onerror=null;this.src='default-image.png';" />
+                                            <img width="50px" height="50px" src="${recruiterImage ? `${userProfilePath}/${recruiterImage}` : 'frontend/img/account-img.png'}" onerror="this.src='default-image.png';" />   
                                             ${fullName}
                                         </li>
                                     </ul>
