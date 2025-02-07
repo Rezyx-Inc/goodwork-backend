@@ -911,7 +911,7 @@
             .slider('values', 1) + '</span>');
 
         // Add an intersect Observer for infinite scroll
-        var skip = 0;
+        var skip = 10;
         var el = document.querySelector('#loadTrigger');
 
         var observer = new window.IntersectionObserver(([entry]) => {
@@ -927,7 +927,7 @@
                     }
                 });
                 $.ajax({
-                    url: full_path + "explore-jobs?skip=100",
+                    url: full_path + "explore-jobs?skip="+skip,
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
