@@ -137,13 +137,8 @@ module.exports.updateImportedJob = async function (importData) {
         floatReq = 1;
     }
 
-    //Job description
-    let description =
-        importData.postingId +
-        " " +
-        importData.description +
-        " " +
-        importData.shift;
+    //Job description -- don't update
+    let description = importData.description;
 
     let hoursPerShift = importData.scheduledHrs1 / importData.shiftsPerWeek1;
 

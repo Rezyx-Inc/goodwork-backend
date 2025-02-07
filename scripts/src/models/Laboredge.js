@@ -24,8 +24,8 @@ const laboredgeSchema = mongoose.Schema({
     },
     professions: [ //Profession details of the user
         {
-            professionId: {
-                type: Number,
+            mappedProfession: {
+                type: String,
                 required: false,
             },
             profession: {
@@ -36,8 +36,8 @@ const laboredgeSchema = mongoose.Schema({
     ],
     specialties: [ //Specialisations of the user
         {
-            specialtyId: {
-                type: Number,
+            mappedSpecialty: {
+                type: String,
                 required: false,
             },
             specialty: {
@@ -46,172 +46,10 @@ const laboredgeSchema = mongoose.Schema({
             },
         },
     ],
-    states: [ //State details of work
-        {
-            stateId: {
-                type: Number,
-                required: false,
-            },
-            stateCode: {
-                type: String,
-                required: false,
-            },
-            stateName: {
-                type: String,
-                required: false,
-            },
-        },
-    ],
-    countries: [ //Country details of work
-        {
-            countryId: {
-                type: Number,
-                required: false,
-            },
-            countryCode: {
-                type: String,
-                required: false,
-            },
-            countryName: {
-                type: String,
-                required: false,
-            },
-        },
-    ],
-    importedJobs: [ //Posted job details(Get info)
-        {
-            id: {
-                type: Number,
-                required: false,
-            },
-            jobTitle: {
-                type: mongoose.Mixed,
-                required: false,
-            },
-            postingId: {
-                type: mongoose.Mixed,
-                required: false,
-            },
-            description: { //Job description
-                type: String,
-                required: false,
-            },
-            signOnBonus: {
-                type: mongoose.Mixed,
-                required: false,
-            },
-            jobType: {
-                type: String,
-                required: false,
-            },
-            startDate: {
-                type: String,
-                required: false,
-            },
-            endDate: {
-                type: String,
-                required: false,
-            },
-            duration: {
-                type: Number,
-                required: false,
-            },
-            durationType: {
-                type: String,
-                required: false,
-            },
-            jobStatus: { //Status of the job (Applied till Onboarded)
-                type: String,
-                required: false,
-            },
-            floatingReqUnits: {
-                type: String,
-                required: false,
-            },
-            shiftsPerWeek1: {
-                type: Number,
-                required: false,
-            },
-            scheduledHrs1: {
-                type: Number,
-                required: false,
-            },
-            shift: {
-                type: String,
-                required: false,
-            },
-            professionId: {
-                type: Number,
-                required: false,
-            },
-            specialtyId: {
-                type: Number,
-                required: false,
-            },
-            hourlyPay: {
-                type: Number,
-                required: false,
-            },
-            rates: [
-                {
-                    billRateCodeId: {
-                        type: String,
-                        required: false,
-                    },
-                    billRateCode: {
-                        type: String,
-                        required: false,
-                    },
-                    rate: {
-                        type: Number,
-                        required: false,
-                    },
-                },
-                {
-                    billRateCodeId: {
-                        type: String,
-                        required: false,
-                    },
-                    billRateCode: {
-                        type: String,
-                        required: false,
-                    },
-                    rate: {
-                        type: Number,
-                        required: false,
-                    },
-                },
-                {
-                    billRateCodeId: {
-                        type: String,
-                        required: false,
-                    },
-                    billRateCode: {
-                        type: String,
-                        required: false,
-                    },
-                    rate: {
-                        type: Number,
-                        required: false,
-                    },
-                },
-                {
-                    billRateCodeId: {
-                        type: String,
-                        required: false,
-                    },
-                    billRateCode: {
-                        type: String,
-                        required: false,
-                    },
-                    rate: {
-                        type: Number,
-                        required: false,
-                    },
-                },
-            ],
-        },
-    ],
+    importedJobs: { //Posted job details(Get info)
+        type: Array,
+        required: false,
+    },
 });
 
 //Connect to integrations db

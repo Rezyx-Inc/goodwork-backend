@@ -99,18 +99,21 @@ module.exports.init = (async () => {
 				user.updated = moment().format("YYYY-MM-DD[T]HH:mm:ss");
 
 				// Get and update Jobs
-				const jobs = await getJobs(accessToken, mysqlResp.user_id, false, false)
+				const jobs = await getJobs(accessToken, mysqlResp.user_id, false, false); 
 				user.importedJobs = jobs;
+
+				// Save the updated user in the db
+				await user.save().then(resp => {}).catch(e=>{console.log(e)});
 
 				// Send jobs to mysql
 				// for job in jobs | insert into jobs (...) values (...)
-				// import_id is job.id not job._id
+				// import_id is job.postingId not job._id
+				// 
 
 				for(job of user.importedJobs){
 					await queries.addImportedJob(job)
 				}
-				// Save the updated user in the db
-				await user.save().then(resp => {}).catch(e=>{console.log(e)})
+				
 			}
 		})			
 	}
@@ -163,8 +166,9 @@ module.exports.update = (async () => {
 					var accessToken = await connectNexus(mysqlResp);
 					
 					// Get Jobs from the laboredge API
-					const jobs = await getJobs(accessToken, mysqlResp.user_id, true, user.updated)
+					const jobs = await getJobs(accessToken, mysqlResp.user_id, true, user.updated);
 
+					
 					// Check which job has changed
 					const updatedJobs = await getUpdatedJobs(jobs, user.importedJobs, mysqlResp.user_id);
 					// should be {toClose: [ids only], toAdd: [{},{}], toUpdate:[{},{}]}
@@ -222,12 +226,14 @@ module.exports.update = (async () => {
 	console.log("Jobs updated in the db");
 })();
 
+//Check for new specialties and professions and map them, save them
+// Check for different job types
 // get professions
 async function getProfession (accessToken, userId){
 
 	// Array to hold active professions
 	var activeProfession = [];
-
+	var count = 0;
 	//Headers required for the api call
 	var headers = {
 		'Authorization' : 'Bearer '+accessToken,
@@ -243,19 +249,22 @@ async function getProfession (accessToken, userId){
 		for( profession of data){
 		
 			if(profession.active){
-				activeProfession.push({profession: profession.name, professionId: profession.id})
+				count++;
+				console.log("Name : "+profession.name);
+				activeProfession.push({profession: profession.name, professionId: profession.id});
 			}
 		}
 
+		console.log("count : "+count);
 	}catch(e){
 	
 		//log in case of API call failure
-		log("Unable to fetch for total records from Nexus.", e.message, userId)
+		log("Unable to fetch for total records from Nexus.", e.message, userId);
 	
 	}
 
-	return activeProfession
-}
+	return activeProfession;
+};
 
 // get specialties
 async function getSpecialties (accessToken, userId){
@@ -277,17 +286,21 @@ async function getSpecialties (accessToken, userId){
 	}catch(e){
 	
 		//log in case of API call failure
-		log("Unable to fetch for total records from Nexus.", e.message, userId)
+		log("Unable to fetch for total records from Nexus.", e.message, userId);
 	
 	}
 
+	var count = 0;
 	for( specialty of data){
-		if(profession.active){
-			activeSpecialty.push({specialty: specialty.name, specialtyId: specialty.id})
+		if(specialty.active){
+			count++;
+			//console.log("Specialty Name : "+specialty.name);
+			//activeSpecialty.push({specialty: specialty.name, specialtyId: specialty.id})
+			activeSpecialty.push(specialty.name);
 		}
 	}
-	
-	return activeSpecialty
+	console.log("Count : "+count);
+	return activeSpecialty;
 }
 
 // get states
@@ -422,6 +435,8 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 
 	// Array to hold the imported jobs
 
+	//isUpdate is false -- get only open jobs
+	//true -- get jobs other than open
 	var importedJobs = [];
 
 	console.log("Inside getJobs with access token : "+accessToken);
@@ -432,19 +447,23 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 	};
 	
 	// set the params for the first query
-	var params = {
-	    jobStatusCode: "OPEN",
-		//"pagingDetails":{"start":0}, required field, rest are optional
-	    pagingDetails:{
-	        start:0,
-	        maxRowsToFetch:100 
-    	}
-	};
+	var params = {};
+	// {
+	//     //jobStatusCode: "OPEN", //removed
+	// 	pagingDetails:{
+	//         start:0,
+	//         maxRowsToFetch:100 
+    // 	}
+	// };
 
 
 	if(isUpdate){
-		//params.dateModifiedStart = lastUpdate;
-		//params.dateModifiedEnd = moment().format("YYYY-MM-DD[T]HH:mm:ss");
+		params.pagingDetails.start = 0;
+		params.dateModifiedStart = lastUpdate; //moment.format - one hour
+		params.dateModifiedEnd = moment().format("YYYY-MM-DD[T]HH:mm:ss");
+	}else{
+		params.jobStatusCode = "OPEN";
+		params.pagingDetails.start = 0;
 	}
 
 	// Get the total amount of records
@@ -469,7 +488,7 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 
 				for( entries of res.data.records ){
 					
-					importedJobs.push(entries);
+						importedJobs.push(entries);
 				}
 				
 				// Increment
