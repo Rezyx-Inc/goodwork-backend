@@ -218,11 +218,11 @@ class SiteController extends Controller
     //return response()->json(['message' =>  $ret->get()]);
     $skip = $request->input('skip');
 
-    if(!empty($skip)){
+    if(!empty($skip) && $skip > 0){
 
       $data['jobs'] = $ret->withCount(['offers as offer_count' => function ($query) {
         $query->whereColumn('jobs.id', 'offers.job_id');
-      }])->latest()->skip($skip)->take(10)->get();
+      }])->orderBy('id','desc')->skip($skip)->take(10)->get();
 
       $jobSaved = new JobSaved;
       $data['jobSaved'] = $jobSaved;
@@ -238,7 +238,7 @@ class SiteController extends Controller
 
     }else{
 
-      $data['jobs'] = $ret->latest()->skip(0)->take(10)->get();
+      $data['jobs'] = $ret->orderBy('id','desc')->skip(0)->take(10)->get();
     }
 
     $jobSaved = new JobSaved;
