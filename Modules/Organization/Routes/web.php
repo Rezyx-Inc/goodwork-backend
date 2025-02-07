@@ -30,6 +30,8 @@ Route::prefix('organization')->group(function () {
         Route::post('organization-send-job-offer', ['uses' => 'OrganizationApplicationController@sendJobOffer', 'as' => 'organization-send-job-offer']);
 
         Route::get('organization-opportunities-manager', ['uses' => 'OrganizationOpportunitiesController@index', 'as' => 'organization-opportunities-manager']);
+        Route::post('load-more-jobs', ['uses' => 'OrganizationOpportunitiesController@load_more_jobs', 'as' => 'organization-opportunities-manager-load-more-jobs']);
+
         Route::get('organization-create-opportunity', ['uses' => 'OrganizationOpportunitiesController@create', 'as' => 'organization-create-opportunity']);
         Route::post('organization-create-opportunity/{check_type}', ['uses' => 'OrganizationOpportunitiesController@hide_job', 'as' => 'organization-create-opportunity-store']);
         Route::post('get-job-listing', ['uses' => 'OrganizationOpportunitiesController@getJobListing', 'as' => 'organization-get-job-listing']);
