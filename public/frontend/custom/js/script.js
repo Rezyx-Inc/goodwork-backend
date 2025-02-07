@@ -658,13 +658,13 @@ function update_nurse_information(data_to_send, notify = false)
         data: data_to_send,
         success: function (resp) {
             ajaxindicatorstop();
-            if (notify && resp.success) {
-                notie.alert({
-                    type: 'success',
-                    text: '<i class="fa fa-check"></i> Data Saved.',
-                    time: 2
-                });
-            }
+            // if (notify && resp.success) {
+            //     notie.alert({
+            //         type: 'success',
+            //         text: '<i class="fa fa-check"></i> Data Saved.',
+            //         time: 2
+            //     });
+            // }
         },
         error: function (resp) {
             ajaxindicatorstop();
