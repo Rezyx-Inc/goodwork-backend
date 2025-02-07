@@ -22,18 +22,18 @@
         const locationIcon = @json(asset('frontend/img/location.png'));
         const calendarIcon = @json(asset('frontend/img/calendar.png'));
         const dollarIcon = @json(asset('frontend/img/dollarcircle.png'));
-
-        // Default recruiter image if not provided
-        const recruiterImage = (job.recruiter && job.recruiter.image) ? job.recruiter.image : 'default-image.png';
-
+        
         // Path for profile images
-        const userProfilePath = @json(asset('images/nurses/profile/'));
-
+        const userProfilePath = @json(asset('uploads/'));
+        
         // full name
-        const creator = users.find(user => user.id === job.created_by);
+        const creator = users.find(user => user.id === job.recruiter_id || user.id === job.organization_id);
         const fullName = creator ? creator.first_name + ' ' + creator.last_name : 'Unknown';
         const userRole = creator ? creator.role : 'Unknown';
-
+        
+        // image
+        const recruiterImage = (creator && creator.image) ? creator.image : 'default-image.png';        
+        
         // org name
         const org = users.find(user => user.id === job.organization_id);
         const orgrName = org ? org.organization_name : 'Unknown';

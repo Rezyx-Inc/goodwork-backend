@@ -212,7 +212,7 @@ class SiteController extends Controller
       $ret->where('job_city', 'like', $data['city']);
     }
 
-    $allusers = User::select('id', 'role', 'first_name', 'last_name', 'organization_name')->get();
+    $allusers = User::select('id', 'role', 'first_name', 'last_name', 'organization_name', 'image')->get();
     $data['allusers'] = $allusers;
 
     //return response()->json(['message' =>  $ret->get()]);
