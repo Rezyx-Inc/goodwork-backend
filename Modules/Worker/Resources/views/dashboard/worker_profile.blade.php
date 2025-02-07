@@ -312,7 +312,6 @@
 
         function ProfileIinformationDisplay() {
 
-            console.log("Fired");
             $('.account_setting').addClass('d-none');
             $('.profile_setting').removeClass('d-none');
             $('.bonus_transfers').addClass('d-none');
@@ -344,103 +343,6 @@
             $('.support_info').addClass('d-none');
             $('.disable_account').removeClass('d-none');
         }
-    </script>
-
-    {{-- get elements - prevent defaults behaviors  --}}
-    <script type="text/javascript">
-
-        // slide control
-        const progress = document.getElementById("progress");
-        // end slide control
-
-        // inputs
-        // Basic Info
-        const first_name = document.querySelector('input[name="first_name"]');
-        const last_name = document.querySelector('input[name="last_name"]');
-        const mobile = document.querySelector('input[name="mobile"]');
-        const address = document.querySelector('input[name="address"]');
-        const city = document.querySelector('select[name="city"]');
-        const state = document.querySelector('select[name="state"]');
-        const zip_code = document.querySelector('input[name="zip_code"]');
-        // Professional Info
-        const profession = document.querySelector('select[name="profession"]');
-        const specialty = document.querySelector('select[name="specialty"]');
-        const terms = document.querySelector('select[name="terms"]');
-        const worker_job_type = document.querySelector('select[name="worker_job_type"]');
-        const block_scheduling = document.querySelector('select[name="block_scheduling"]');
-        const float_requirement = document.querySelector('select[name="float_requirement"]');
-        const facility_shift_cancelation_policy = document.querySelector(
-            'select[name="facility_shift_cancelation_policy"]');
-        const contract_termination_policy = document.querySelector('input[name="contract_termination_policy"]');
-        const traveler_distance_from_facility = document.querySelector('input[name="distance_from_your_home"]');
-        const clinical_setting = document.querySelector('input[name="clinical_setting_you_prefer"]');
-        const Patient_ratio = document.querySelector('input[name="worker_patient_ratio"]');
-        const emr = document.querySelector('select[name="worker_emr"]');
-        const Unit = document.querySelector('input[name="worker_unit"]');
-        const scrub_color = document.querySelector('input[name="worker_scrub_color"]');
-        const rto = document.querySelector('select[name="rto"]');
-        const shift_of_day = document.querySelector('select[name="worker_shift_time_of_day"]');
-        const hours_shift = document.querySelector('input[name="worker_hours_shift"]');
-        const preferred_assignment_duration = document.querySelector('input[name="worker_weeks_assignment"]');
-        const weeks_shift = document.querySelector('input[name="worker_shifts_week"]');
-        const worker_experience = document.querySelector('input[name="worker_experience"]');
-        const worker_eligible_work_in_us = document.querySelector('select[name="worker_eligible_work_in_us"]');
-        const nursing_license_state = document.querySelector('select[name="nursing_license_state"]');
-        const worker_facility_city = document.querySelector('input[name="worker_facility_city"]');
-        const worker_facility_state = document.querySelector('select[name="worker_facility_state"]');
-        const worker_start_date = document.querySelector('input[name="worker_start_date"]');
-        const worker_guaranteed_hours = document.querySelector('input[name="worker_guaranteed_hours"]');
-        const worker_sign_on_bonus = document.querySelector('input[name="worker_sign_on_bonus"]');
-        const worker_completion_bonus = document.querySelector('input[name="worker_completion_bonus"]');
-        const worker_extension_bonus = document.querySelector('input[name="worker_extension_bonus"]');
-        const worker_other_bonus = document.querySelector('input[name="worker_other_bonus"]');
-        const worker_four_zero_one_k = document.querySelector('select[name="worker_four_zero_one_k"]');
-        const worker_health_insurance = document.querySelector('select[name="worker_health_insurance"]');
-        const worker_dental = document.querySelector('select[name="worker_dental"]');
-        const worker_vision = document.querySelector('select[name="worker_vision"]');
-        const worker_overtime_rate = document.querySelector('input[name="worker_overtime_rate"]');
-        const worker_holiday = document.querySelector('input[name="worker_holiday"]');
-        const worker_on_call_check = document.querySelector('select[name="worker_on_call_check"]');
-        const worker_on_call = document.querySelector('input[name="worker_on_call"]');
-        const worker_call_back = document.querySelector('input[name="worker_call_back"]');
-        const worker_orientation_rate = document.querySelector('input[name="worker_orientation_rate"]');
-        const worker_benefits = document.querySelector('select[name="worker_benefits"]');
-        const nurse_classification = document.querySelector('select[name="nurse_classification"]');
-        // Document Management
-        const file = document.getElementById('document_file');
-        // bonus transfer
-        const full_name_payment = document.querySelector('input[name="full_name_payment"]');
-        const address_payment = document.querySelector('input[name="address_payment"]');
-        const email_payment = document.querySelector('input[name="email_payment"]');
-        const bank_name_payment = document.querySelector('input[name="bank_name_payment"]');
-        const routing_number_payment = document.querySelector('input[name="routing_number_payment"]');
-        const bank_account_payment_number = document.querySelector('input[name="bank_account_payment_number"]');
-        const phone_number_payment = document.querySelector('input[name="phone_number_payment"]');
-        // end inputs
-        // change info type title
-        const infoType = document.getElementById("information_type");
-        // end change info type title
-
-        if (city && city.value == '') {
-            document.querySelector('.help-city').classList.remove('d-none');
-        }
-
-        if (worker_facility_city && worker_facility_city.value == '') {
-            document.querySelector('.help-block-worker_facility_city').classList.remove('d-none');
-        }
-
-        // end next and prev buttons
-    </script>
-
-    {{-- js for multiselect --}}
-    <script type="module">
-        var selectedFiles = [];
-        var selectedValues = [];
-        var selectedTypeFile = '';
-
-        function open_file(obj) {
-            $(obj).parent().find('input[type="file"]').click();
-        }
 
         function open_modal(obj) {
             let name, title, modal, form, target;
@@ -471,7 +373,7 @@
             removeAllCheckBox();
             const inputsId = obj.value;
             selectedTypeFile = inputsId;
-            console.log(inputsId);
+
             //removing d-none class
             document.getElementById(inputsId).classList.remove('d-none');
         }
@@ -488,91 +390,6 @@
                     document.getElementById(InputsDiv).classList.add('d-none');
             });
         }
-
-        function closeModal() {
-            let buttons = document.querySelectorAll('.btn-close');
-            buttons.forEach(button => {
-                button.click();
-            });
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log("DOM LOAD")
-            // options from the combobox
-            const filesSelected = document.querySelectorAll('.files-upload');
-
-            // give hight to filesNamesArea
-            const types = ['vaccinations', 'certificate', 'nursing_license_state', 'skills_checklists'];
-
-
-            filesSelected.forEach((fileInput) => {
-                fileInput.addEventListener('change', function() {
-                    if (!types.includes(selectedTypeFile)) {
-                        if (this.files.length > 0) {
-                            const file = this.files[0];
-                            var fileName = file.name;
-                            if (fileName.length > 20) {
-                                fileName = fileName.substring(0, 20) + '...';
-                            }
-                            const fileDiv = document.createElement('div');
-                            fileDiv.classList.add('file-name', 'row', 'col-12');
-                            const fileSpan = document.createElement('span');
-                            fileSpan.classList.add('col-11');
-                            const fileText = document.createTextNode(fileName);
-                            fileSpan.appendChild(fileText);
-                            fileDiv.appendChild(fileSpan);
-                            const removeIcon = document.createElement('i');
-                            removeIcon.classList.add('fa', 'fa-times', 'remove-file', 'col-1');
-                            removeIcon.addEventListener('click', function() {
-                                fileDiv.remove();
-                                fileInput.value = '';
-                            });
-                            fileDiv.appendChild(removeIcon);
-
-                            const filesNamesArea = this.closest('.container-multiselect');
-
-                            filesNamesArea.appendChild(fileDiv);
-                        }
-                    }
-                });
-
-            });
-
-
-            const items = document.querySelectorAll('.list-items .item');
-            //store selected file values
-
-            items.forEach((item, index) => {
-                item.addEventListener('click', (event) => {
-                    const uploadInput = item.nextElementSibling;
-                    //console.log('this is the next sibling : ', uploadInput)
-                    if (uploadInput) {
-                        // class 'checked' check
-                        if (item.classList.contains('checked')) {
-                            uploadInput.click();
-                            uploadInput.addEventListener('change', function() {
-                                if (this.files.length > 0) {
-                                    // Handling file selection
-                                    const file = this.files[0];
-                                    selectedFiles.push(file.name);
-                                    //console.log(selectedFiles);
-                                }
-                            }, {
-                                once: true //avoid multiple registrations
-                            });
-                        } else {
-                            const index = selectedFiles.indexOf(uploadInput.files[0].name);
-                            if (index > -1) {
-                                selectedFiles.splice(index, 1);
-                            }
-                            //console.log(selectedFiles);
-
-                        }
-                    }
-                });
-            });
-
-
-        });
 
         function removeAllCheckBox() {
             const items = document.querySelectorAll('.list-items .item');
@@ -735,6 +552,200 @@
             removeAllCheckBox();
 
         }
+
+        function open_file(obj) {
+            $(obj).parent().find('input[type="file"]').click();
+        }
+
+        function closeModal() {
+            let buttons = document.querySelectorAll('.btn-close');
+            buttons.forEach(button => {
+                button.click();
+            });
+        }
+    </script>
+
+    {{-- get elements - prevent defaults behaviors  --}}
+    <script type="text/javascript">
+
+        // slide control
+        const progress = document.getElementById("progress");
+        // end slide control
+
+        // inputs
+        // Basic Info
+        const first_name = document.querySelector('input[name="first_name"]');
+        const last_name = document.querySelector('input[name="last_name"]');
+        const mobile = document.querySelector('input[name="mobile"]');
+        const address = document.querySelector('input[name="address"]');
+        const city = document.querySelector('select[name="city"]');
+        const state = document.querySelector('select[name="state"]');
+        const zip_code = document.querySelector('input[name="zip_code"]');
+        // Professional Info
+        const profession = document.querySelector('select[name="profession"]');
+        const specialty = document.querySelector('select[name="specialty"]');
+        const terms = document.querySelector('select[name="terms"]');
+        const worker_job_type = document.querySelector('select[name="worker_job_type"]');
+        const block_scheduling = document.querySelector('select[name="block_scheduling"]');
+        const float_requirement = document.querySelector('select[name="float_requirement"]');
+        const facility_shift_cancelation_policy = document.querySelector(
+            'select[name="facility_shift_cancelation_policy"]');
+        const contract_termination_policy = document.querySelector('input[name="contract_termination_policy"]');
+        const traveler_distance_from_facility = document.querySelector('input[name="distance_from_your_home"]');
+        const clinical_setting = document.querySelector('input[name="clinical_setting_you_prefer"]');
+        const Patient_ratio = document.querySelector('input[name="worker_patient_ratio"]');
+        const emr = document.querySelector('select[name="worker_emr"]');
+        const Unit = document.querySelector('input[name="worker_unit"]');
+        const scrub_color = document.querySelector('input[name="worker_scrub_color"]');
+        const rto = document.querySelector('select[name="rto"]');
+        const shift_of_day = document.querySelector('select[name="worker_shift_time_of_day"]');
+        const hours_shift = document.querySelector('input[name="worker_hours_shift"]');
+        const preferred_assignment_duration = document.querySelector('input[name="worker_weeks_assignment"]');
+        const weeks_shift = document.querySelector('input[name="worker_shifts_week"]');
+        const worker_experience = document.querySelector('input[name="worker_experience"]');
+        const worker_eligible_work_in_us = document.querySelector('select[name="worker_eligible_work_in_us"]');
+        const nursing_license_state = document.querySelector('select[name="nursing_license_state"]');
+        const worker_facility_city = document.querySelector('input[name="worker_facility_city"]');
+        const worker_facility_state = document.querySelector('select[name="worker_facility_state"]');
+        const worker_start_date = document.querySelector('input[name="worker_start_date"]');
+        const worker_guaranteed_hours = document.querySelector('input[name="worker_guaranteed_hours"]');
+        const worker_sign_on_bonus = document.querySelector('input[name="worker_sign_on_bonus"]');
+        const worker_completion_bonus = document.querySelector('input[name="worker_completion_bonus"]');
+        const worker_extension_bonus = document.querySelector('input[name="worker_extension_bonus"]');
+        const worker_other_bonus = document.querySelector('input[name="worker_other_bonus"]');
+        const worker_four_zero_one_k = document.querySelector('select[name="worker_four_zero_one_k"]');
+        const worker_health_insurance = document.querySelector('select[name="worker_health_insurance"]');
+        const worker_dental = document.querySelector('select[name="worker_dental"]');
+        const worker_vision = document.querySelector('select[name="worker_vision"]');
+        const worker_overtime_rate = document.querySelector('input[name="worker_overtime_rate"]');
+        const worker_holiday = document.querySelector('input[name="worker_holiday"]');
+        const worker_on_call_check = document.querySelector('select[name="worker_on_call_check"]');
+        const worker_on_call = document.querySelector('input[name="worker_on_call"]');
+        const worker_call_back = document.querySelector('input[name="worker_call_back"]');
+        const worker_orientation_rate = document.querySelector('input[name="worker_orientation_rate"]');
+        const worker_benefits = document.querySelector('select[name="worker_benefits"]');
+        const nurse_classification = document.querySelector('select[name="nurse_classification"]');
+        // Document Management
+        const file = document.getElementById('document_file');
+        // bonus transfer
+        const full_name_payment = document.querySelector('input[name="full_name_payment"]');
+        const address_payment = document.querySelector('input[name="address_payment"]');
+        const email_payment = document.querySelector('input[name="email_payment"]');
+        const bank_name_payment = document.querySelector('input[name="bank_name_payment"]');
+        const routing_number_payment = document.querySelector('input[name="routing_number_payment"]');
+        const bank_account_payment_number = document.querySelector('input[name="bank_account_payment_number"]');
+        const phone_number_payment = document.querySelector('input[name="phone_number_payment"]');
+        // end inputs
+        // change info type title
+        const infoType = document.getElementById("information_type");
+        // end change info type title
+
+        if (city && city.value == '') {
+            document.querySelector('.help-city').classList.remove('d-none');
+        }
+
+        if (worker_facility_city && worker_facility_city.value == '') {
+            document.querySelector('.help-block-worker_facility_city').classList.remove('d-none');
+        }
+
+        // end next and prev buttons
+    </script>
+
+    {{-- js for multiselect --}}
+    <script type="module">
+        var selectedFiles = [];
+        var selectedValues = [];
+        var selectedTypeFile = '';
+
+        function open_file(obj) {
+            $(obj).parent().find('input[type="file"]').click();
+        }
+
+        function closeModal() {
+            let buttons = document.querySelectorAll('.btn-close');
+            buttons.forEach(button => {
+                button.click();
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // options from the combobox
+            const filesSelected = document.querySelectorAll('.files-upload');
+
+            // give hight to filesNamesArea
+            const types = ['vaccinations', 'certificate', 'nursing_license_state', 'skills_checklists'];
+
+
+            filesSelected.forEach((fileInput) => {
+                fileInput.addEventListener('change', function() {
+                    if (!types.includes(selectedTypeFile)) {
+                        if (this.files.length > 0) {
+                            const file = this.files[0];
+                            var fileName = file.name;
+                            if (fileName.length > 20) {
+                                fileName = fileName.substring(0, 20) + '...';
+                            }
+                            const fileDiv = document.createElement('div');
+                            fileDiv.classList.add('file-name', 'row', 'col-12');
+                            const fileSpan = document.createElement('span');
+                            fileSpan.classList.add('col-11');
+                            const fileText = document.createTextNode(fileName);
+                            fileSpan.appendChild(fileText);
+                            fileDiv.appendChild(fileSpan);
+                            const removeIcon = document.createElement('i');
+                            removeIcon.classList.add('fa', 'fa-times', 'remove-file', 'col-1');
+                            removeIcon.addEventListener('click', function() {
+                                fileDiv.remove();
+                                fileInput.value = '';
+                            });
+                            fileDiv.appendChild(removeIcon);
+
+                            const filesNamesArea = this.closest('.container-multiselect');
+
+                            filesNamesArea.appendChild(fileDiv);
+                        }
+                    }
+                });
+
+            });
+
+
+            const items = document.querySelectorAll('.list-items .item');
+            //store selected file values
+
+            items.forEach((item, index) => {
+                item.addEventListener('click', (event) => {
+                    const uploadInput = item.nextElementSibling;
+                    //console.log('this is the next sibling : ', uploadInput)
+                    if (uploadInput) {
+                        // class 'checked' check
+                        if (item.classList.contains('checked')) {
+                            uploadInput.click();
+                            uploadInput.addEventListener('change', function() {
+                                if (this.files.length > 0) {
+                                    // Handling file selection
+                                    const file = this.files[0];
+                                    selectedFiles.push(file.name);
+                                    //console.log(selectedFiles);
+                                }
+                            }, {
+                                once: true //avoid multiple registrations
+                            });
+                        } else {
+                            const index = selectedFiles.indexOf(uploadInput.files[0].name);
+                            if (index > -1) {
+                                selectedFiles.splice(index, 1);
+                            }
+                            //console.log(selectedFiles);
+
+                        }
+                    }
+                });
+            });
+
+
+        });
+
 
         const selectBtn = document.querySelectorAll(".select-btn"),
 
@@ -921,7 +932,6 @@
 
         $(document).ready(function() {
 
-            console.log("SHOULD BE FIRED")
             if (@json($type == 'profile')) {
                 ProfileIinformationDisplay();
 
