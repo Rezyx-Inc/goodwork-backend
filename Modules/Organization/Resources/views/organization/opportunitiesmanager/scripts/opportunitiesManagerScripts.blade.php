@@ -186,8 +186,7 @@
                 publishedJobs.push(job);
 
                 var escapedJob = JSON.stringify(job).replaceAll("\"", "'");
-                var jobCard = `<div class="col-12 ss-job-prfle-sec published-cards" onclick="editDataJob(this),toggleActiveClass('`+job.id+`published','published-cards')"`+
-                ` job_id="`+counter+`"`+
+                var jobCard = `<div class="col-12 ss-job-prfle-sec published-cards" onclick="opportunitiesType('published','`+job.id+`','jobdetails'),toggleActiveClass('`+job.id+`_published','published-cards')"`+
                 ` id="`+job.id+`_published">`+
                 `<p><span> {{ $applyCount[$key] }} Applied</span></p>`+
                 `<h4>`+job.profession+` - `+job.preferred_specialty+`</h4>`+
@@ -206,7 +205,7 @@
                 </ul>`;
 
                 $('#infinitePublished').append(jobCard);
-                counter++;
+
             }
 
         }else if(type == 'onhold'){
@@ -216,8 +215,7 @@
                 onholdJobs.push(job);
 
                 var escapedJob = JSON.stringify(job).replaceAll("\"", "'");
-                var jobCard = `<div class="col-12 ss-job-prfle-sec onhold-cards" onclick="editDataJob(this),toggleActiveClass('`+job.id+`_onhold','onhold-cards')"`+
-                ` job_id="`+counter+`"`+
+                var jobCard = `<div class="col-12 ss-job-prfle-sec onhold-cards" onclick="opportunitiesType('onhold','`+job.id+`','jobdetails'),toggleActiveClass('`+job.id+`_onhold','onhold-cards')"`+
                 ` id="`+job.id+`_onhold">`+
                 `<h4>`+job.profession+` - `+job.preferred_specialty+`</h4>`+
                 `<h6>`+job.job_name+`</h6>`+
@@ -235,7 +233,6 @@
                 </ul>`;
 
                 $('#infiniteOnhold').append(jobCard);
-                counter++;
             }
 
         }
