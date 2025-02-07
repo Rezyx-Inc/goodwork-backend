@@ -620,24 +620,20 @@
 
     {{-- EMR --}}
     <div class="ss-form-group">
-        <label>EMR</label>
-        <select name="worker_emr" class="emr mb-3" id="emr">
-            <option value="" {{ empty($worker->worker_emr) ? 'selected' : '' }} disabled hidden>
-                What EMRs have you used?
-            </option>
-            @if (isset($allKeywords['EMR']))
-                @foreach ($allKeywords['EMR'] as $value)
-                    <option value="{{ $value->id }}"
-                        {{ !empty($worker->worker_emr) && $worker->worker_emr == $value->id ? 'selected' : '' }}>
-                        {{ $value->title }}
-                    </option>
-                @endforeach
-            @endif
-        </select>
+        @include('worker::components.custom_multiple_select_input', [
+            'id' => 'worker_emr',
+            'label' => 'EMR',
+            'placeholder' => 'What EMRs have you used?',
+            'name' => 'worker_emr',
+            'options' => $allKeywords['EMR'],
+            'option_attribute' => 'title',
+            'selected' => old('worker_emr', $worker->worker_emr),
+        ])
+
     </div>
     <span class="help-block-worker_emr"></span>
-    {{-- End EMR --}}
-
+    {{-- end EMR --}}
+    
     {{-- Unit --}}
     <div class="ss-form-group">
         <label>Unit</label>

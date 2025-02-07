@@ -149,6 +149,35 @@
         </div>
     </div>
 
+        
+  {{-- Emr Modal --}}
+    <div class="modal fade ss-jb-dtl-pops-mn-dv" id="worker_emr_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="ss-pop-cls-vbtn">
+                    <button type="button" class="btn-close" data-target="#worker_emr_modal" onclick="close_modal(this)"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body mt-3">
+                    {{-- Emr --}}
+                    <div class="ss-form-group">
+                        @include('worker::components.custom_multiple_select_input', [
+                            'id' => 'worker_emr',
+                            'label' => 'EMR',
+                            'placeholder' => 'What EMRs have you used?',
+                            'name' => 'worker_emr',
+                            'options' => $allKeywords['EMR'],
+                            'option_attribute' => 'title',
+                            'selected' => old('worker_emr', $nurse->worker_emr),
+                            'onChange' => 'multi_select_change',
+                        ])
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
     {{-- city Modal --}}
     {{-- <div class="modal fade ss-jb-dtl-pops-mn-dv" id="city_modal" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

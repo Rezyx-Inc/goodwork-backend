@@ -1958,14 +1958,13 @@
                                         </li>
                                         <li>
                                             <span>Your EMR</span>
-                                            <p class="profile_info_text" data-target="multi_select"
+                                            <p class="profile_info_text" data-target="worker_emr"
                                                 data-title="What EMRs have you used?" data-filter="EMR"
-                                                data-name="worker_emr" onclick="open_modal(this)">
+                                                data-name="worker_emr" onclick="open_multiselect_modal(this)">
                                                 @if (!!$nurse->worker_emr)
-                                                    {{ $nurse->worker_emr }}
+                                                    {{ truncateText($nurse->worker_emr) }}
                                                 @else
-                                                    What
-                                                    EMRs have you used?
+                                                    What EMRs have you used?
                                                 @endif
                                             </p>
                                         </li>
@@ -2431,16 +2430,20 @@
 
     .progress-bar {
         height: 100%;
-        background: #b5649e;
+        background: #42d611!important;
         transition: width 1s linear;
     }
 
     .manualSave {
-        color: #b5649e;
+        color: #1d4112!important;
         cursor: pointer;
         display: block;
         margin-top: 5px;
     }
-
+    
+    .manualSave:hover {
+        font-size: 16px;
+        transition: 0.3s;
+    }
 
 </style>
