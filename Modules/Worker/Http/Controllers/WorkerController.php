@@ -161,21 +161,18 @@ class WorkerController extends Controller
                     'id' => $recruiter_id,
                 ]);
                 $requiredFields = $requiredFields->json();
-
-                if ($requiredFields['success'] && isset($requiredFields[0]) && isset($requiredFields[0]['preferences']['requiredToApply'])) {
-
-                    $requiredFieldsToApply = $requiredFields[0]['preferences']['requiredToApply'];
+                if ($requiredFields['success'] && isset($requiredFields['data']['org'][0]) && isset($requiredFields['data']['org'][0]['preferences']['requiredToApply'])) {
+                    $requiredFieldsToApply = $requiredFields['data']['org'][0]['preferences']['requiredToApply'];
                     $data['requiredFieldsToApply'] = $requiredFieldsToApply;
                 }
             } else {
-
                 $organization_id = $data['model']->organization_id;
                 $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/get-preferences', [
                     'id' => $organization_id,
                 ]);
-                $requiredFields = $requiredFields->json();
-                if ($requiredFields['success'] && isset($requiredFields['requiredToApply'])) {
-                    $requiredFieldsToApply = $requiredFields['requiredToApply'];
+                $requiredFields = $requiredFields->json();                
+                if ($requiredFields['success'] && isset($requiredFields['data']) && isset($requiredFields['data']['requiredToApply'])) {
+                    $requiredFieldsToApply = $requiredFields['data']['requiredToApply'];
                     $data['requiredFieldsToApply'] = $requiredFieldsToApply;
                 }
             }
