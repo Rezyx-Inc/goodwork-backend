@@ -15,7 +15,7 @@
             </p>
             <p>
                 You can log in using your email address at 
-                <a href= "{{ $data['url'] }}recruiter/login" target="_blank" style="color: blue;">Goodwork Recruiter login page.</a>
+                <a href= "{{ $data['url'] }}/recruiter/login" target="_blank" style="color: blue;">Goodwork Recruiter login page.</a>
             </p>
             <p>We look forward to working with you!</p>
             <div>
