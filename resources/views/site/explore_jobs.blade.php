@@ -911,7 +911,7 @@
             .slider('values', 1) + '</span>');
 
         // Add an intersect Observer for infinite scroll
-        var skip = 0;
+        var skip = 10;
         var el = document.querySelector('#loadTrigger');
 
         var observer = new window.IntersectionObserver(([entry]) => {
