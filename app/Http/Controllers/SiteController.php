@@ -133,6 +133,9 @@ class SiteController extends Controller
     $data['hours_per_week_from'] = $request->input('hours_per_week_from');
     $data['hours_per_week_to'] = $request->input('hours_per_week_to');
 
+    $allusers = User::select('id', 'role', 'first_name', 'last_name')->get();
+    $data['allusers'] = $allusers;
+
     if (!empty($gwNumber)) {
 
       if (str_starts_with($gwNumber, 'GWJ')) {
@@ -209,20 +212,21 @@ class SiteController extends Controller
     }
 
     if (isset($request->city)) {
-      $ret->where('job_city', 'like', $data['city']);
+      $ret->where('job_city', '=', $data['city']);
     }
-
-    $allusers = User::select('id', 'role', 'first_name', 'last_name')->get();
-    $data['allusers'] = $allusers;
 
     //return response()->json(['message' =>  $ret->get()]);
     $skip = $request->input('skip');
 
     if(!empty($skip) && $skip > 0){
 
-      $data['jobs'] = $ret->withCount(['offers as offer_count' => function ($query) {
-        $query->whereColumn('jobs.id', 'offers.job_id');
-      }])->orderBy('id','desc')->skip($skip)->take(10)->get();
+      $data['jobs'] = $ret->orderBy('id','desc')->skip($skip)->take(10)->get();
+
+      foreach ($data['jobs'] as $key => $value) {
+
+        $userapplied = Offer::where('job_id', $value->id)->count();
+        $data['jobs'][$key]['offer_count'] = $userapplied;
+      }
 
       $jobSaved = new JobSaved;
       $data['jobSaved'] = $jobSaved;

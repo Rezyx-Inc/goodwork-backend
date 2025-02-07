@@ -606,6 +606,7 @@
 
     // Clear the form | very bad clearing method
     function resetForm() {
+
         window.location.href = "{{ route('explore-jobs') }}";
     }
 
@@ -640,17 +641,20 @@
     })
 
     $("#filter_form").submit(function(e) {
+
         //e.preventDefault();
         // Clear previous error message
         $('#gwError').hide().text('');
         // Get the value of the gw input
         var gwValue = $('#gw').val();
 
-        const categoriesString = selectedCategories.map(function() {
+        /*const categoriesString = selectedCategories.map(function() {
             return $(this).val();
         }).get().join('-');
+
         // Set the categoriesString as the value of the hidden input field
-        $("#job_type").val(categoriesString);
+        $("#job_type").val(categoriesString);*/
+
         // $(this).find("input[name='terms[]']").remove();
         // Change the value of the profession select to the text of the selected option
         const professionSelect = $("select[name='profession']");
@@ -914,12 +918,15 @@
         var skip = 10;
         var el = document.querySelector('#loadTrigger');
 
-        var observer = new window.IntersectionObserver(([entry]) => {
+        var urlParams = new URLSearchParams(window.location.search);
+        urlParams.delete('skip')
+
+        observer = new window.IntersectionObserver(([entry]) => {
 
             // Only observe intersections
             if (entry.isIntersecting) {
                 skip > 0 ? null : 0;
-
+                urlParams.append('skip', skip);
                 //Do the Ajax call
                 $.ajaxSetup({
                     headers: {
@@ -927,7 +934,7 @@
                     }
                 });
                 $.ajax({
-                    url: full_path + "explore-jobs?skip="+skip,
+                    url: full_path + "explore-jobs?"+urlParams.toString(),
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
@@ -965,7 +972,9 @@
         });
 
         // Observe
-        observer.observe(el);
+        var jobsLength = {{ count($jobs) }};
+
+        jobsLength > 10 ? observer.observe(el):null;
 
         document.querySelectorAll(".job-item").forEach(item => {
 
