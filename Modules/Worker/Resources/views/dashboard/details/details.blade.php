@@ -286,7 +286,7 @@
                                             <span>Your Terms</span>
 
                                             <p class="profile_info_text" data-target="terms"
-                                                data-title="What kind of termsal are you?" data-name="terms"
+                                                data-title="Your Terms !" data-name="terms"
                                                 onclick="open_multiselect_modal(this)">
 
                                                 @if (!!$nurse->terms)
