@@ -927,7 +927,7 @@
                     }
                 });
                 $.ajax({
-                    url: full_path + "explore-jobs?skip=100",
+                    url: full_path + "explore-jobs?skip="+skip,
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
