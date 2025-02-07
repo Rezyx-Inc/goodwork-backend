@@ -52,7 +52,7 @@
 
                         <!-- DRAFT CARDS -->
                         <div class="col-lg-5 d-none" id="draftCards">
-                            <div class="ss-account-form-lft-1">
+                            <div class="ss-account-form-lft-1" id="infiniteDraft">
                                 <h5 class="mb-4 text-capitalize">Draft</h5>
 
                                 @php $counter = 0 @endphp
@@ -79,15 +79,20 @@
                                     </div>
                                     @php $counter++ @endphp
                                 @endforeach
+
+                            </div>
+                            @if (count($draftJobs) == 0)
                                 <div id="job-list-draft">
                                 </div>
-                            </div>
+                            @else
+                                <div id="draftObserverContainer"></div>
+                            @endif
                         </div>
                         <!-- END DRAFT CARDS -->
 
                         <!-- PUBLISHED CARDS -->
                         <div class="col-lg-5 d-none" id="publishedCards">
-                            <div class="ss-account-form-lft-1">
+                            <div class="ss-account-form-lft-1" id="infinitePublished">
                                 <h5 class="mb-4 text-capitalize">Published</h5>
                                 @php $counter = 0 @endphp
                                 @foreach ($publishedJobs as $key => $value)
@@ -100,7 +105,7 @@
                                         toggleActiveClass('{{$value->id}}_published','published-cards')
                                         "
                                         >
-                                        <p>Travel <span> {{ $applyCount[$key] }} Applied</span></p>
+                                        <p><span> {{ $applyCount[$key] }} Applied</span></p>
                                         <h4>{{ $value->profession }} - {{ $value->preferred_specialty }}</h4>
                                         <h6>{{ $value->job_name }}</h6>
                                         <ul>
@@ -119,17 +124,22 @@
                                     </div>
                                     @php $counter++ @endphp
                                 @endforeach
-                                @if (count($publishedJobs) == 0)
+
+
+                            </div>
+                            @if (count($publishedJobs) == 0)
                                     <div id="job-list-published">
                                     </div>
                                 @endif
-                            </div>
+                            @if (count($publishedJobs) > 0)
+                                <div id="publishedObserverContainer"></div>
+                            @endif
                         </div>
                         <!-- END PUBLISHED CARDS -->
 
                         <!-- ONHOLD CARDS -->
                         <div class="col-lg-5 d-none" id="onholdCards">
-                            <div class="ss-account-form-lft-1">
+                            <div class="ss-account-form-lft-1" id="infiniteOnhold">
                                 <h5 class="mb-4 text-capitalize">On Hold</h5>
                                 @php $counter = 0 @endphp
                                 @foreach ($onholdJobs as $job)
@@ -155,12 +165,16 @@
                                     </div>
                                     @php $counter++ @endphp
                                 @endforeach
-                                @if (count($onholdJobs) == 0)
+
+
+                            </div>
+                            @if (count($onholdJobs) == 0)
                                     <div id="job-list-onhold">
                                     </div>
                                 @endif
-
-                            </div>
+                            @if (count($onholdJobs) > 0)
+                                <div id="onholdObserverContainer"></div>
+                            @endif
                         </div>
                         <!-- END ONHOLD CARDS -->
 

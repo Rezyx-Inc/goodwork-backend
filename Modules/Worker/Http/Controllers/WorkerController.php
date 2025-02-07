@@ -156,41 +156,44 @@ class WorkerController extends Controller
 
             if (isset($recruiter_id)) {
 
+                // TODO ADD THE RECRUITER FULL NAME HEERE
                 $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/checkRecruiter', [
                     'id' => $recruiter_id,
                 ]);
                 $requiredFields = $requiredFields->json();
-
-                if ($requiredFields['success'] && isset($requiredFields[0]) && isset($requiredFields[0]['preferences']['requiredToApply'])) {
-
-                    $requiredFieldsToApply = $requiredFields[0]['preferences']['requiredToApply'];
+                if ($requiredFields['success'] && isset($requiredFields['data']['org'][0]) && isset($requiredFields['data']['org'][0]['preferences']['requiredToApply'])) {
+                    $requiredFieldsToApply = $requiredFields['data']['org'][0]['preferences']['requiredToApply'];
                     $data['requiredFieldsToApply'] = $requiredFieldsToApply;
                 }
             } else {
-
                 $organization_id = $data['model']->organization_id;
                 $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/get-preferences', [
                     'id' => $organization_id,
                 ]);
-                $requiredFields = $requiredFields->json();
-                if ($requiredFields['success'] && isset($requiredFields['requiredToApply'])) {
-                    $requiredFieldsToApply = $requiredFields['requiredToApply'];
+                $requiredFields = $requiredFields->json();                
+                if ($requiredFields['success'] && isset($requiredFields['data']) && isset($requiredFields['data']['requiredToApply'])) {
+                    $requiredFieldsToApply = $requiredFields['data']['requiredToApply'];
                     $data['requiredFieldsToApply'] = $requiredFieldsToApply;
                 }
             }
 
             $distinctFilters = Keyword::distinct()->pluck('filter');
             $allKeywords = [];
+
             foreach ($distinctFilters as $filter) {
                 $keywords = Keyword::where('filter', $filter)->get();
                 $allKeywords[$filter] = $keywords;
             }
+
             $data['allKeywords'] = $allKeywords;
             $data['states'] = State::select('id', 'name')->get();
+
             // $user = auth()->guard('frontend')->user();
             // dd($data["model"]->matchWithWorker()['diploma']['match']);
+
             $data['jobSaved'] = new JobSaved();
             //return $data['requiredFieldsToApply'];
+
             return view('worker::dashboard.details.details', $data);
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Something went wrong');

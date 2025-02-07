@@ -356,7 +356,7 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
         }
 
         const query = await pool.query(
-            "INSERT INTO jobs (professional_licensure, facility_state, facility_city, terms, tax_status, id, organization_id, created_by, job_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, job_type, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+            "INSERT INTO jobs (professional_licensure, facility_state, facility_city, terms, job_type, id, organization_id, created_by, job_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, job_type, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
             [
                 importData.state[0],
                 importData.state[0],
@@ -378,7 +378,7 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
                 hours_per_week.toFixed(0),
                 importData.weeklyrate[0],
                 importData.description,
-                importData.jobType,
+                importData.type,
                 active,
                 is_open,
                 0,
@@ -457,7 +457,7 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
             let recruiterId = await getNextUpRecruiter(ardorOrgId);
 
             const query = await pool.query(
-                "INSERT INTO jobs (created_at, updated_at, professional_licensure, facility_state, facility_city, tax_status, id, organization_id, created_by, job_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, job_type, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate, recruiter_id ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+                "INSERT INTO jobs (created_at, updated_at, professional_licensure, facility_state, facility_city, terms, id, organization_id, created_by, job_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, job_type, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate, recruiter_id, tax_status ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
                 [
                     created_at,
                     updated_at,
@@ -480,14 +480,15 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
                     hours_per_week.toFixed(0),
                     importData.weeklyrate[0],
                     importData.description,
-                    importData.jobType,
+                    importData.type,
                     active,
                     is_open,
                     0,
                     importData.license[0],
                     importData.Specialty,
                     hourlyPay,
-                    recruiterId
+                    recruiterId,
+                    ""
                 ]
             );
 
@@ -507,8 +508,8 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
                 is_open = 1;
             }
 
-            if (importData.type != "Non-Clinicial"){
-                importData.type = "Clinical";
+            if (importData.jobType != "Non-Clinicial"){
+                importData.jobType = "Clinical";
             }
 
             var hours_per_week = null, hourlyPay = null;
@@ -573,7 +574,7 @@ module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, d
             hours_per_week.toFixed(0) == existingJob.hours_per_week ? null : changes.hours_per_week = hours_per_week.toFixed(0);
             Number(importData.weeklyrate[0]).toFixed(2) == existingJob.weekly_pay.toFixed(2) ? null : changes.weekly_pay = Number(importData.weeklyrate[0]).toFixed(2);
             importData.description == existingJob.description ? null : changes.description = importData.description;
-            importData.jobType == existingJob.job_type ? null : changes.jobType = importData.jobType;
+            importData.jobType == existingJob.job_type ? null : changes.job_type = importData.jobType;
             importData.license[0] == existingJob.profession ? null : changes.profession = importData.license[0];
             importData.Specialty == existingJob.preferred_specialty ? null : changes.preferred_specialty = importData.Specialty;
             hourlyPay == existingJob.actual_hourly_rate ? null : changes.actual_hourly_rate = hourlyPay;

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
 <head>
     <script type="text/javascript">
@@ -32,9 +32,11 @@
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     @yield('css')
+
+    <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
 </head>
 <body>
-    <script type="module">
+    <script>
     $(document).ready(function() {
         $.ajaxSetup({
             xhrFields: {
@@ -56,20 +58,15 @@
         @include('worker::partials.worker_header')
         
     </header>
-<!--Main Navigation-->
+    <!--Main Navigation-->
 
-<!--Main layout-->
-@yield('content')
+    <!--Main layout-->
+    @yield('content')
 
-<!-- Option 1: Bootstrap Bundle with Popper -->
-<!-- <script src="{{URL::asset('landing/js/bootstrap.bundle.min.js')}}" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
-<script src="{{URL::asset('landing/js/bootstrap.bundle.min.js')}}" crossorigin="anonymous"></script>
-
-<!--Main layout-->
+    <script src="{{URL::asset('landing/js/bootstrap.bundle.min.js')}}" crossorigin="anonymous"></script>
     <!-- MDB -->
     <script type="text/javascript" src="{{URL::asset('frontend/js/mdb.min.js')}}"></script>
     <script type="text/javascript" src="{{ URL::asset('backend/vendors/confirm/jquery-confirm.min.js') }}" type="text/javascript"></script>
-    {{-- <script type="text/javascript" src="{{ URL::asset('backend/vendors/datatables/jquery.dataTables.min.js') }}" type="text/javascript"></script> --}}
     <script type="text/javascript" src="{{URL::asset('backend/vendors/notie/dist/notie.min.js') }}"></script>
     {{-- CK editor --}}
     <script src="{{URL::asset('backend/vendors/ckeditor/ckeditor.js')}}"></script>
@@ -79,12 +76,14 @@
     <script type="text/javascript" src="{{URL::asset('frontend/js/nav-bar-script.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('frontend/custom/js/profile.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('frontend/custom/js/script.js')}}"></script>
-    
-    @yield('js')
-    @include('partials.flashMsg')
 
     <!-- Bootstrap 4 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+
+    @yield('js')
+    @include('partials.flashMsg')
+
+
 
 </body>
 </html>
