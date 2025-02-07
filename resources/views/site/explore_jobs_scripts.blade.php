@@ -100,18 +100,26 @@
                                 <div class="row">
                                     <div class="col-12 d-flex justify-content-end">
                                         <ul>
-                                            <li>
-                                                <img class="icon_cards" src="frontend/img/dollarcircle.png">
-                                                ${(Number(job.actual_hourly_rate) || 0).toFixed(2)}/hr
-                                            </li>
-                                            <li>
-                                                <img class="icon_cards" src="frontend/img/dollarcircle.png">
-                                                ${(Number(job.weekly_pay) || 0).toFixed(2)}/hr
-                                            </li>
-                                            <li style="font-weight: 600;">
-                                                <img class="icon_cards" src="frontend/img/dollarcircle.png">
-                                                ${(job.weekly_pay * 4 * 12).toFixed(2)}/yr
-                                            </li>
+                                            ${job.actual_hourly_rate && job.actual_hourly_rate !== 0 && job.actual_hourly_rate > 0 && job.actual_hourly_rate !== '' ? `
+                                                    <li>
+                                                        <img class="icon_cards" src="frontend/img/dollarcircle.png">
+                                                        ${(Number(job.actual_hourly_rate) || 0).toFixed(0)}/hr
+                                                    </li>
+                                                ` : ''}
+                                                
+                                            ${job.weekly_pay && job.weekly_pay !== 0 && job.weekly_pay > 0 && job.weekly_pay !== '' ? `
+                                                    <li>
+                                                        <img class="icon_cards" src="frontend/img/dollarcircle.png">
+                                                ${(Number(job.weekly_pay) || 0).toFixed(0)}/hr
+                                                    </li>
+                                                ` : ''}
+
+                                            ${job.weekly_pay && job.weekly_pay !== 0 && job.weekly_pay > 0 && job.weekly_pay !== '' ? `
+                                                    <li>
+                                                        <img class="icon_cards" src="frontend/img/dollarcircle.png">
+                                                ${(job.weekly_pay * 4 * 12).toFixed(0)}/yr
+                                                    </li>
+                                                ` : ''}
                                         </ul>
                                     </div>
                                 </div>
@@ -218,7 +226,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.actual_hourly_rate ? `$${(Number(job.actual_hourly_rate) || 0).toFixed(0)}` : askRecruiter}
+                                                    ${job.actual_hourly_rate && job.actual_hourly_rate !== 0 && job.actual_hourly_rate !== '' && job.actual_hourly_rate > 0 ? `$${(Number(job.actual_hourly_rate) || 0).toFixed(0)}` : "Ask recruiter"}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -228,7 +236,7 @@
                                             </li>
                                             <li>
                                                  <h6>
-                                                    ${job.weekly_pay ? `$${(Number(job.weekly_pay) || 0).toFixed(0)}` : askRecruiter}
+                                                    ${job.weekly_pay && job.weekly_pay !== 0 && job.weekly_pay !== '' && job.weekly_pay > 0  ? `$${(Number(job.weekly_pay) || 0).toFixed(0)}` : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
