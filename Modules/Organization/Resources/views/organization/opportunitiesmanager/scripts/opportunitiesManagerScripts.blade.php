@@ -69,6 +69,8 @@
     var publishedObserverContainer = document.querySelector('#publishedObserverContainer');
     var onholdObserverContainer = document.querySelector('#onholdObserverContainer');
 
+    var counter = {{$counter}};
+
     var draftObserver = new window.IntersectionObserver(([entry]) => {
 
         // Only observe intersections
@@ -156,7 +158,7 @@
                 draftJobs.push(job);
                 var escapedJob = JSON.stringify(job).replaceAll("\"", "'");
                 var jobCard = `<div class="col-12 ss-job-prfle-sec draft-cards" onclick="editDataJob(this),toggleActiveClass('`+job.id+`_drafts','draft-cards')"`+
-                ` job_id="`+{{$counter}}+`"`+
+                ` job_id="`+counter+`"`+
                 ` id="`+job.id+`_drafts">`+
                 `<h4>`+job.profession+` - `+job.preferred_specialty+`</h4>`+
                 `<h6>`+job.job_name+`</h6>`+
@@ -173,9 +175,8 @@
                             ${ job.weekly_pay }/wk</a></li>
                 </ul>`;
 
-                @php $counter++ @endphp
-
                 $('#infiniteDraft').append(jobCard);
+                counter++;
             }
 
         }else if(type == 'published'){
@@ -186,7 +187,7 @@
 
                 var escapedJob = JSON.stringify(job).replaceAll("\"", "'");
                 var jobCard = `<div class="col-12 ss-job-prfle-sec published-cards" onclick="editDataJob(this),toggleActiveClass('`+job.id+`published','published-cards')"`+
-                ` job_id="`+{{$counter}}+`"`+
+                ` job_id="`+counter+`"`+
                 ` id="`+job.id+`_published">`+
                 `<p><span> {{ $applyCount[$key] }} Applied</span></p>`+
                 `<h4>`+job.profession+` - `+job.preferred_specialty+`</h4>`+
@@ -204,9 +205,8 @@
                             ${ job.weekly_pay }/wk</a></li>
                 </ul>`;
 
-                @php $counter++ @endphp
-
                 $('#infinitePublished').append(jobCard);
+                counter++;
             }
 
         }else if(type == 'onhold'){
@@ -217,7 +217,7 @@
 
                 var escapedJob = JSON.stringify(job).replaceAll("\"", "'");
                 var jobCard = `<div class="col-12 ss-job-prfle-sec onhold-cards" onclick="editDataJob(this),toggleActiveClass('`+job.id+`_onhold','onhold-cards')"`+
-                ` job_id="`+{{$counter}}+`"`+
+                ` job_id="`+counter+`"`+
                 ` id="`+job.id+`_onhold">`+
                 `<h4>`+job.profession+` - `+job.preferred_specialty+`</h4>`+
                 `<h6>`+job.job_name+`</h6>`+
@@ -234,9 +234,8 @@
                             ${ job.weekly_pay }/wk</a></li>
                 </ul>`;
 
-                @php $counter++ @endphp
-
                 $('#infiniteOnhold').append(jobCard);
+                counter++;
             }
 
         }
