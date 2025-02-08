@@ -145,8 +145,8 @@
 
 
 <section class="ss-explore-job-mn-sec">
-    <div class="row">
-        <div class="col-md-3 ss-expl-filtr-lft-dv-bx">
+    <div class="row mx-4">
+        <div class="col-lg-5 col-xl-4 col-xxl-3 ss-expl-filtr-lft-dv-bx">
             <div style="padding:40px !important;background-color:#fff8fd !important;">
                 <h4 class="text-center" style="padding-bottom: 10px; font-size: 30px; font-weight: 500;">Filters
                 </h4>
@@ -357,8 +357,8 @@
             </div>
         </div>
 
-
-        <div class="col-md-6">
+        
+        <div class="col-lg-7 col-xl-5 col-xxl-6">
 
             <!-----------jobs profiles---------->
 
@@ -512,7 +512,7 @@
         </div>
 
 
-        <div class="col-md-3">
+        <div class="col-lg-12 mt-lg-3 mt-xl-0 col-xl-3">
             {{-- ads container --}}
             <div class="ads-container">
                 <a href="https://www.bhmediatrack.com/cmp/M15NZ8/2MCHZ8R/?sub1=&sub2=&sub3=" target="_blank">
