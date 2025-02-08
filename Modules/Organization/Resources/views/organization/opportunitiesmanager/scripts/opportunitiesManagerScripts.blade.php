@@ -188,7 +188,7 @@
                 var escapedJob = JSON.stringify(job).replaceAll("\"", "'");
                 var jobCard = `<div class="col-12 ss-job-prfle-sec published-cards" onclick="opportunitiesType('published','`+job.id+`','jobdetails'),toggleActiveClass('`+job.id+`_published','published-cards')"`+
                 ` id="`+job.id+`_published">`+
-                `<p><span> {{ $applyCount[$key] }} Applied</span></p>`+
+                `<p><span> +`+job.applyCount+` Applied</span></p>`+
                 `<h4>`+job.profession+` - `+job.preferred_specialty+`</h4>`+
                 `<h6>`+job.job_name+`</h6>`+
                 `<ul>
