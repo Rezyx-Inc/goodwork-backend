@@ -50,7 +50,7 @@
             width: 100%;
             height: auto;
             /* Adjust height automatically */
-            max-height: 200px;
+            max-height: 80vh;
             /* Limit maximum height */
             object-fit: contain;
             /* Ensure the image fits without cropping */
@@ -113,7 +113,6 @@
             color: #ffffff
         }
     </style>
-
 
 
 
@@ -515,24 +514,11 @@
         <div class="col-md-3">
             {{-- ads container --}}
             <div class="ads-container">
-                <a href="https://www.bhmediatrack.com/cmp/M15NZ8/2MCHZ8R/?sub1=&sub2=&sub3=" target="_blank">
-                    <div class="ad">
-                        <img src="{{ asset('images/debtmd.png') }}" alt="Ad Image" class="ad-image">
-                        <div class="ad-content">
-                            <h2>Become Debt-Free Today</h2>
-                            <ul>
-                                <li>Up to 50% lower monthly payments</li>
-                                <li>Flexible payment plans from 12-48 months</li>
-                                <li>Free consultation and zero up-front fees</li>
-                            </ul>
-                        </div>
-                    </div>
-                </a>
-
+                
                 <a href="https://www.bhmediatrack.com/25S2ZK4/2LWX2H7/?sub1=1&sub2=2&sub3=3" target="_blank">
             
                     <div class="ad">
-                        <img src="{{ asset('images/myPerfectResume.png') }}" alt="Ad Image" class="ad-image">
+                        <img src="{{ asset('images/ads/myPerfectResume.png') }}" alt="Ad Image" class="ad-image">
                         <div class="ad-content">
                             <h2>Get the help you need to land your next gig with a <b>custom resume!</b></h2>
                             <p>
@@ -546,7 +532,7 @@
                 <a href="https://www.bhmediatrack.com/25S2ZK4/6Z7MWN9/?sub1=1&sub2=2&sub3=3"  target="_blank">
                         
                     <div class="ad">
-                        <img src="{{ asset('images/chime.png') }}" alt="Ad Image" class="ad-image">
+                        <img src="{{ asset('images/ads/chime.png') }}" alt="Ad Image" class="ad-image">
                         <div class="ad-content">
                             <h2>
                                 The best way to get up to $500 before payday*
@@ -560,6 +546,12 @@
                     </div>
 
                 </a>
+
+                <a href="https://www.fithortrip.com/BHKX349Z/B47749C/" class="ad" target="_blank">
+                    <img src="{{ asset('images/ads/fithortrip.jpeg') }}" alt="Ad Image" class="ad-image">
+                    
+                </a>
+
             </div>
         </div>
 
@@ -586,7 +578,7 @@
         </div>
     </div>
 
-
+    @include('worker::components.ads_modal')
 
 </section>
 
