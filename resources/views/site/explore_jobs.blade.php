@@ -47,7 +47,7 @@
 
         /* Ad Image */
         .ad-image {
-            width: 100%;
+            width: 90%;
             height: auto;
             /* Adjust height automatically */
             max-height: 80vh;
@@ -67,6 +67,8 @@
 
         .ad-content * {
             font-size: 14px;
+            color: #666666;
+            line-height: 1.5;
         }
 
         .ad-content h2 {
@@ -86,11 +88,6 @@
             padding-left: 20px;
             margin-bottom: 15px;
             text-align: left;
-        }
-
-        .ad-content ul li {
-            color: #666666;
-            line-height: 1.5;
         }
 
         /* Call-to-Action Button */
@@ -524,7 +521,7 @@
                     <a href="{{ $randomAd['link'] }}" target="_blank">
                 
                         <div class="ad">
-                            
+
                             <img src="{{ asset($randomAd['image']) }}" alt="Ad Image" class="ad-image">
 
                             @if($randomAd['content'])
