@@ -124,12 +124,13 @@ class OrganizationOpportunitiesController extends Controller
             foreach ($publishedJobs as $key => $value) {
 
                 $userapplied = Offer::where('job_id', $value->id)->count();
-                $applyCount[$key] = $userapplied;
+                $publishedJobs[$key]['applyCount'] = $userapplied;
+                $resp['applyCount'] = $userapplied;
 
             }
 
-            $resp['publishedJobs'] = $publishedJobs;
             $resp['draftJobs'] = $draftJobs;
+            $resp['publishedJobs'] = $publishedJobs;
             $resp['onholdJobs'] = $onholdJobs;
             $resp['applyCount'] = $applyCount;
 

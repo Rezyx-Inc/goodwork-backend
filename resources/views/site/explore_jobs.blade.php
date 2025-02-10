@@ -974,7 +974,7 @@
         // Observe
         var jobsLength = {{ count($jobs) }};
 
-        jobsLength > 0 ? observer.observe(el):null;
+        jobsLength > 10 ? observer.observe(el):null;
 
         document.querySelectorAll(".job-item").forEach(item => {
 

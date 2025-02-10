@@ -133,6 +133,9 @@ class SiteController extends Controller
     $data['hours_per_week_from'] = $request->input('hours_per_week_from');
     $data['hours_per_week_to'] = $request->input('hours_per_week_to');
 
+    $allusers = User::select('id', 'role', 'first_name', 'last_name')->get();
+    $data['allusers'] = $allusers;
+
     if (!empty($gwNumber)) {
 
       if (str_starts_with($gwNumber, 'GWJ')) {
