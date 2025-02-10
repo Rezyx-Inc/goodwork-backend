@@ -30,12 +30,6 @@ class AdsEnum
     ];
 
     const AD_3 = [
-        'link' => 'https://www.fithortrip.com/BHKX349Z/B47749C/',
-        'image' => 'images/ads/fithortrip.jpeg',
-        'content' => null,
-    ];
-
-    const AD_4 = [
         'link' => 'https://www.bhgtrack.com/25S2ZK4/3DFLFWP/',
         'image' => 'images/ads/self.png',
         'content' => '<h3>Raise your credit score like your landlord raises rent.</h3>
@@ -43,22 +37,32 @@ class AdsEnum
                         <p>No credit card or credit check required.</p>',
     ];
 
-    const AD_5 = [
+    const AD_4 = [
         'link' => 'https://www.bhmediatrack.com/25S2ZK4/6QTNH6P/',
         'image' => 'images/ads/next_day.jpg',
         'content' => '<h3>Request a loan in under 2 minutes!</h3>
                         <p>A fast and easy way to find a loan. <br>From $100 to $40,000</p>',
     ];
 
-    const AD_6 = [
+    const AD_5 = [
         'link' => 'https://www.bhgtrack.com/25S2ZK4/6LP29CP/',
         'image' => 'images/ads/unemployment_benefits_guide.png',
         'content' => '<h3>The Ultimate Unemployment Benefits Guide</h3>
                         <p>✓ Find out how to leverage unemployment<br> ✓ Jobs, Money Assistance and more </br></p>',
     ];
 
-    // end boardwalk ads
+    // end :: boardwalk ads
 
+
+    // from skype
+    const AD_6 = [
+        'link' => 'https://www.fithortrip.com/BHKX349Z/B47749C/',
+        'image' => 'images/ads/fithortrip.jpeg',
+        'content' => null,
+    ];
+
+    
+    // end :: from skype
 
 
     /**
