@@ -133,7 +133,7 @@ class SiteController extends Controller
     $data['hours_per_week_from'] = $request->input('hours_per_week_from');
     $data['hours_per_week_to'] = $request->input('hours_per_week_to');
 
-    $allusers = User::select('id', 'role', 'first_name', 'last_name')->get();
+    $allusers = User::select('id', 'role', 'first_name', 'last_name', 'organization_name', 'image')->get();
     $data['allusers'] = $allusers;
 
     if (!empty($gwNumber)) {
@@ -214,9 +214,6 @@ class SiteController extends Controller
     if (isset($request->city)) {
       $ret->where('job_city', '=', $data['city']);
     }
-
-    $allusers = User::select('id', 'role', 'first_name', 'last_name', 'organization_name', 'image')->get();
-    $data['allusers'] = $allusers;
 
     //return response()->json(['message' =>  $ret->get()]);
     $skip = $request->input('skip');
