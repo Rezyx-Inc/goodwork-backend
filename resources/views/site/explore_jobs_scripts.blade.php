@@ -22,18 +22,19 @@
         const locationIcon = @json(asset('frontend/img/location.png'));
         const calendarIcon = @json(asset('frontend/img/calendar.png'));
         const dollarIcon = @json(asset('frontend/img/dollarcircle.png'));
-
-        // Default recruiter image if not provided
-        const recruiterImage = (job.recruiter && job.recruiter.image) ? job.recruiter.image : 'default-image.png';
-
+        
         // Path for profile images
-        const userProfilePath = @json(asset('images/nurses/profile/'));
-
+        const userProfilePath = @json(asset('uploads/'));
+        
         // full name
-        const creator = users.find(user => user.id === job.created_by);
+        const creator = users.find(user => user.id === job.recruiter_id || user.id === job.organization_id);
         const fullName = creator ? creator.first_name + ' ' + creator.last_name : 'Unknown';
         const userRole = creator ? creator.role : 'Unknown';
-
+        
+        // image
+        const recruiterImage = (creator && creator.image) ? creator.image : null; 
+        const defaultImage = "frontend/img/account-img.png";       
+        
         // org name
         const org = users.find(user => user.id === job.organization_id);
         const orgrName = org ? org.organization_name : 'Unknown';
@@ -42,10 +43,10 @@
         let askRecruiter = `<a class="ask_recruiter_href" href="{{ route('worker.login') }}" >Ask recruiter</a>`;
 
         // set modal title
-        document.querySelector("#exampleModal .modal-title").innerHTML = `job ID: ${job.job_id}`
+        document.querySelector("#job_details_modal_for_logout_users .modal-title").innerHTML = job.job_id
 
         // Set job data in the modal
-        document.querySelector("#exampleModal .modal-body").innerHTML = `
+        document.querySelector("#job_details_modal_for_logout_users .modal-body").innerHTML = `
         <main class="ss-main-body-sec px-1">
             <div class="ss-apply-on-jb-mmn-dv">
                 <div class="row">
@@ -100,18 +101,26 @@
                                 <div class="row">
                                     <div class="col-12 d-flex justify-content-end">
                                         <ul>
-                                            <li>
-                                                <img class="icon_cards" src="frontend/img/dollarcircle.png">
-                                                ${(Number(job.actual_hourly_rate) || 0).toFixed(2)}/hr
-                                            </li>
-                                            <li>
-                                                <img class="icon_cards" src="frontend/img/dollarcircle.png">
-                                                ${(Number(job.weekly_pay) || 0).toFixed(2)}/hr
-                                            </li>
-                                            <li style="font-weight: 600;">
-                                                <img class="icon_cards" src="frontend/img/dollarcircle.png">
-                                                ${(job.weekly_pay * 4 * 12).toFixed(2)}/yr
-                                            </li>
+                                            ${job.actual_hourly_rate && job.actual_hourly_rate !== '' ? `
+                                                    <li>
+                                                        <img class="icon_cards" src="frontend/img/dollarcircle.png">
+                                                        ${(Number(job.actual_hourly_rate) || 0).toFixed(0)}/hr
+                                                    </li>
+                                                ` : ''}
+                                                
+                                            ${job.weekly_pay && job.weekly_pay !== '' ? `
+                                                    <li>
+                                                        <img class="icon_cards" src="frontend/img/dollarcircle.png">
+                                                ${(Number(job.weekly_pay) || 0).toFixed(0)}/hr
+                                                    </li>
+                                                ` : ''}
+
+                                            ${job.weekly_pay && job.weekly_pay !== '' ? `
+                                                    <li>
+                                                        <img class="icon_cards" src="frontend/img/dollarcircle.png">
+                                                ${(job.weekly_pay * 4 * 12).toFixed(0)}/yr
+                                                    </li>
+                                                ` : ''}
                                         </ul>
                                     </div>
                                 </div>
@@ -124,7 +133,7 @@
                                             <p>${userRole}</p>
                                         </li>
                                         <li>
-                                            <img width="50px" height="50px" src="${userProfilePath}/${recruiterImage}" onerror="this.onerror=null;this.src='default-image.png';" />
+                                            <img width="50px" height="50px" src="${recruiterImage ? `${userProfilePath}/${recruiterImage}` : 'frontend/img/account-img.png'}" onerror="this.src='default-image.png';" />   
                                             ${fullName}
                                         </li>
                                     </ul>
@@ -218,7 +227,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    $${job.actual_hourly_rate}
+                                                    ${job.actual_hourly_rate && job.actual_hourly_rate !== '' ? `$${(Number(job.actual_hourly_rate) || 0).toFixed(0)}` : "Ask recruiter"}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -228,7 +237,7 @@
                                             </li>
                                             <li>
                                                  <h6>
-                                                    $${(Number(job.weekly_pay) || 0).toFixed(2)}
+                                                    ${job.weekly_pay &&  job.weekly_pay !== '' ? `$${(Number(job.weekly_pay) || 0).toFixed(0)}` : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -238,7 +247,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.hours_per_week}
+                                                    ${job.hours_per_week && job.hours_per_week !== '' ? (Number(job.hours_per_week) || 0).toFixed(0) : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -249,7 +258,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.job_state}
+                                                    ${job.job_state ? job.job_state : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -259,7 +268,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.job_city}
+                                                    ${job.job_city ? job.job_city : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -298,7 +307,7 @@
                                             </li>
                                             <li>
                                                <h6>
-                                                    ${job.guaranteed_hours ? job.guaranteed_hours.toLocaleString() : askRecruiter}
+                                                    ${job.guaranteed_hours && job.guaranteed_hours !== '' ? (Number(job.guaranteed_hours) || 0).toFixed(0) : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -310,22 +319,22 @@
                                             </li>
                                             <li>
                                                <h6>
-                                                    ${job.hours_shift ? job.hours_shift : askRecruiter}
-                                                    </h6>
-                                                    </li>
-                                                    </ul>
+                                                    ${job.hours_shift && job.hours_shift !== '' ? job.hours_shift : askRecruiter}
+                                                </h6>
+                                            </li>
+                                        </ul>
 
-                                                    <ul class="ss-s-jb-apl-on-inf-txt-ul type_item ss-s-jb-apl-bg-pink">
+                                        <ul class="ss-s-jb-apl-on-inf-txt-ul type_item ss-s-jb-apl-bg-pink">
                                             <li>
                                                 <span>Shifts/Week</span>
 
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.weeks_shift ? job.weeks_shift.toLocaleString() : askRecruiter}
+                                                    ${job.weeks_shift && job.weeks_shift !== '' ? (Number(job.weeks_shift) || 0).toFixed(0) : askRecruiter}
                                                 </h6>
                                             </li>
-                                            </ul>
+                                        </ul>
 
                                         <ul class="ss-s-jb-apl-on-inf-txt-ul type_item ss-s-jb-apl-bg-pink">
                                             <li>
@@ -334,7 +343,7 @@
                                                 </li>
                                             <li>
                                                  <h6>
-                                                    ${job.preferred_assignment_duration ? job.preferred_assignment_duration : askRecruiter}
+                                                    ${job.preferred_assignment_duration && job.preferred_assignment_duration !== '' ? job.preferred_assignment_duration : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -374,7 +383,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.overtime ? job.overtime : askRecruiter}
+                                                    ${job.overtime && job.overtime !== '' ? (Number(job.overtime) || 0).toFixed(0) : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -385,7 +394,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.on_call_rate ? `$${job.on_call_rate}` : askRecruiter}
+                                                    ${job.on_call_rate && job.on_call_rate !== '' ? `$${(Number(job.on_call_rate) || 0).toFixed(0)}`  : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -396,7 +405,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.call_back_rate ? `$${job.call_back_rate}` : askRecruiter}
+                                                    ${job.call_back_rate && job.call_back_rate !== '' ? `$${(Number(job.call_back_rate) || 0).toFixed(0)}` : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -407,7 +416,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.orientation_rate ? job.orientation_rate : askRecruiter}
+                                                    ${job.orientation_rate && job.orientation_rate !== '' ? (Number(job.orientation_rate) || 0).toFixed(0) : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -418,7 +427,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.weekly_non_taxable_amount ? `$${job.weekly_non_taxable_amount}` : askRecruiter}
+                                                    ${job.weekly_non_taxable_amount && job.weekly_non_taxable_amount !== '' ? `$${(Number(job.weekly_non_taxable_amount) || 0).toFixed(0)}` : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -429,7 +438,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.feels_like_per_hour ?  `$${job.feels_like_per_hour}` : askRecruiter}
+                                                    ${job.feels_like_per_hour && job.feels_like_per_hour !== '' ?  `$${(Number(job.feels_like_per_hour) || 0).toFixed(0)}` : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -440,7 +449,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.goodwork_weekly_amount ? `$${job.goodwork_weekly_amount}` : askRecruiter}
+                                                    ${job.goodwork_weekly_amount && job.goodwork_weekly_amount !== '' ? `$${(Number(job.goodwork_weekly_amount) || 0).toFixed(0)}` : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -451,7 +460,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.referral_bonus ? job.referral_bonus : askRecruiter}
+                                                    ${job.referral_bonus && job.referral_bonus !== '' ? (Number(job.referral_bonus) || 0).toFixed(0) : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -462,7 +471,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.sign_on_bonus ? `$${job.sign_on_bonus}` : askRecruiter}
+                                                    ${job.sign_on_bonus && job.sign_on_bonus !== '' ? `$${(Number(job.sign_on_bonus) || 0).toFixed(0)}` : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -473,7 +482,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.extension_bonus ? '$' + job.extension_bonus.toLocaleString() : askRecruiter}
+                                                    ${job.extension_bonus && job.extension_bonus !== '' ? '$' + (Number(job.extension_bonus) || 0).toFixed(0) : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -484,7 +493,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.completion_bonus ? '$' + job.completion_bonus.toLocaleString() : askRecruiter}
+                                                    ${job.completion_bonus && job.completion_bonus !== '' ? '$' + (Number(job.completion_bonus) || 0).toFixed(0) : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -495,7 +504,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.other_bonus ? '$' + job.other_bonus.toLocaleString() : askRecruiter}
+                                                    ${job.other_bonus && job.other_bonus !== '' ? '$' + (Number(job.other_bonus) || 0).toFixed(0) : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -649,7 +658,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.traveler_distance_from_facility ? job.traveler_distance_from_facility : askRecruiter}
+                                                    ${job.traveler_distance_from_facility && job.traveler_distance_from_facility !== ''  ? job.traveler_distance_from_facility : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -705,7 +714,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.preferred_experience ? `${job.preferred_experience} Years Required` : askRecruiter}
+                                                    ${job.preferred_experience && job.preferred_experience !== ''   ? `${job.preferred_experience} Years Required` : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -716,7 +725,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.number_of_references ? `${job.number_of_references} references` : askRecruiter}
+                                                    ${job.number_of_references && job.number_of_references !== '' ? `${job.number_of_references} references` : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -771,7 +780,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                    ${job.Patient_ratio ? job.Patient_ratio.toLocaleString() : askRecruiter}
+                                                    ${job.Patient_ratio && job.Patient_ratio !== '' ? (Number(job.Patient_ratio) || 0).toFixed(0) : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -835,7 +844,7 @@
         `;
 
         // Show the modal
-        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+        var myModal = new bootstrap.Modal(document.getElementById('job_details_modal_for_logout_users'));
 
         myModal.show();
     }
