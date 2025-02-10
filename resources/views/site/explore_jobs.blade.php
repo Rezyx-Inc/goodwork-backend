@@ -895,14 +895,14 @@
         var el = document.querySelector('#loadTrigger');
 
         var urlParams = new URLSearchParams(window.location.search);
-        urlParams.delete('skip')
+        
 
         observer = new window.IntersectionObserver(([entry]) => {
 
             // Only observe intersections
             if (entry.isIntersecting) {
                 skip > 0 ? null : 0;
-                urlParams.append('skip', skip);
+                urlParams.set('skip', skip);
                 //Do the Ajax call
                 $.ajaxSetup({
                     headers: {
@@ -950,7 +950,7 @@
         // Observe
         var jobsLength = {{ count($jobs) }};
 
-        jobsLength > 10 ? observer.observe(el):null;
+        jobsLength >= 10 ? observer.observe(el):null;
 
         document.querySelectorAll(".job-item").forEach(item => {
 
