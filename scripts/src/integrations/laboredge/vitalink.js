@@ -46,7 +46,7 @@ module.exports.init = (async () => {
 		var offset = i * limit;
 		
 		// only find non updated documents AKA recently enabled integrations
-		await Laboredge.find({updated: { $exists:false }}).limit(limit).skip(offset)
+		await Laboredge.find({updated: { $exists:true }}).limit(limit).skip(offset)
 		.then( async laboredge => {
 			
 			console.log("Inside Laboredge.find : "+laboredge.length);
@@ -117,6 +117,8 @@ module.exports.init = (async () => {
 			}
 		})			
 	}
+	// let temp = "Admin Assistant".match(new RegExp("Assistant", 'gi'));
+	// console.log(temp);
 	console.log("Jobs saved into the db");
 });
 // Update the existing integrations
@@ -223,17 +225,35 @@ module.exports.update = (async () => {
 			}
 		})			
 	}
+	
 	console.log("Jobs updated in the db");
-})();
+});
 
 //Check for new specialties and professions and map them, save them
 // Check for different job types
 // get professions
 async function getProfession (accessToken, userId){
 
+	console.log("Inside getProfession");
+	const professions = {
+		"(RN)":"RN",
+		"(CNA)":"CNA",
+		"(CMA":"CMA",
+		"(Tech)":"Tech / Assist",
+		"(Admin Assistant)": "Tech / Assist",
+		"(Therapist)":"Therapy",
+		"(Therapy)":"Therapy",
+		"(Physician)":"Physician",
+		"(PA)":"PA",
+		"(CRNA)":"CRNA",
+		"(CNP)":"NP",
+		"(LVN/LPN)":"LPN / LVN",
+		"(Social Worker)":"Social Work",
+		"(Other)":"Other Clinician"
+	};
 	// Array to hold active professions
 	var activeProfession = [];
-	var count = 0;
+	
 	//Headers required for the api call
 	var headers = {
 		'Authorization' : 'Bearer '+accessToken,
@@ -246,16 +266,19 @@ async function getProfession (accessToken, userId){
 		//API call to fetch professions
 		var { data } = await axios.get("https://api-nexus.laboredge.com:9000/api/api-integration/v1/master/professions", {headers});
 		
-		for( profession of data){
-		
-			if(profession.active){
-				count++;
-				console.log("Name : "+profession.name);
-				activeProfession.push({profession: profession.name, professionId: profession.id});
+			for(profession of data){
+				var mappedProfession = "Others";
+				if(profession.active){
+					for (let [pattern, mappedPro] of Object.entries(professions)) {
+						let proName = profession.name;
+						if (proName.match(new RegExp(pattern, 'gi'))) {
+							mappedProfession = profession.name.match(new RegExp(pattern, 'gi'));
+							break;
+					}
+					activeProfession.push({mappedProfession: mappedProfession, profession: profession.name});
+				}
 			}
 		}
-
-		console.log("count : "+count);
 	}catch(e){
 	
 		//log in case of API call failure
@@ -295,8 +318,8 @@ async function getSpecialties (accessToken, userId){
 		if(specialty.active){
 			count++;
 			//console.log("Specialty Name : "+specialty.name);
-			//activeSpecialty.push({specialty: specialty.name, specialtyId: specialty.id})
-			activeSpecialty.push(specialty.name);
+			activeSpecialty.push({specialty: specialty.name, specialtyId: specialty.id})
+			// activeSpecialty.push(specialty.name);
 		}
 	}
 	console.log("Count : "+count);
@@ -450,20 +473,34 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 	var params = {};
 	// {
 	//     //jobStatusCode: "OPEN", //removed
-	// 	pagingDetails:{
-	//         start:0,
+		// pagingDetails:{
+	    //     start:0,
 	//         maxRowsToFetch:100 
     // 	}
 	// };
 
 
 	if(isUpdate){
-		params.pagingDetails.start = 0;
-		params.dateModifiedStart = lastUpdate; //moment.format - one hour
-		params.dateModifiedEnd = moment().format("YYYY-MM-DD[T]HH:mm:ss");
+		params = {
+			pagingDetails:{
+				start:0
+			},
+			dateModifiedStart: moment().subtract(1, 'hours').format("YYYY-MM-DD[T]HH:mm:ss"),
+			dateModifiedEnd: moment().format("YYYY-MM-DD[T]HH:mm:ss")
+		};
+		// params.pagingDetails.start = 0;
+		// //params.dateModifiedStart = lastUpdate; //moment.format - one hour
+		// params.dateModifiedStart = moment().subtract(1, 'hours').format("YYYY-MM-DD[T]HH:mm:ss");
+		// params.dateModifiedEnd = moment().format("YYYY-MM-DD[T]HH:mm:ss");
 	}else{
-		params.jobStatusCode = "OPEN";
-		params.pagingDetails.start = 0;
+		params = {
+			jobStatusCode : "OPEN",
+			pagingDetails:{
+				start:0
+			}
+		}
+		// params.jobStatusCode = "OPEN";
+		// params.pagingDetails.start = 0;
 	}
 
 	// Get the total amount of records

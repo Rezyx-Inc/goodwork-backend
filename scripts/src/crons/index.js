@@ -12,7 +12,7 @@ var { report } = require("../set.js");
 var ardorHealth = require("../integrations/ardorHealth.js");
 
 // Uncomment to seed accounts
-//vitalink.seed(999);
+// vitalink.seed(0);
 
 //report("Hello from cron")
 //vitalink.update();
