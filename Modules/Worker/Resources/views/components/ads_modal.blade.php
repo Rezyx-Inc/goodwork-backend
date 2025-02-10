@@ -107,27 +107,29 @@
         
         <div class="ads-container">
             
-            {{-- <a href="https://www.fithortrip.com/BHKX349Z/B47749C/" class="ad" target="_blank">
-                <img src="{{ asset('images/ads/fithortrip.jpeg') }}" alt="Ad Image" class="ad-image">
-                
-            </a> --}}
 
 
 
+            @php
+                $ads = \App\Enums\AdsEnum::random();
+            @endphp
+        
+            @foreach($ads as $randomAd)
+
+                <a href="{{ $randomAd['link'] }}" target="_blank">
             
-            <a href="https://www.bhmediatrack.com/25S2ZK4/2LWX2H7/?sub1=1&sub2=2&sub3=3" target="_blank">
-            
-                <div class="ad">
-                    <img src="{{ asset('images/ads/myPerfectResume.png') }}" alt="Ad Image" class="ad-image">
-                    <div class="ad-content">
-                        <h2>Get the help you need to land your next gig with a <b>custom resume!</b></h2>
-                        <p>
-                            Our Industry-leading resume tools take your job search from basic to next level.
-                        </p>
+                    <div class="ad">
+                        <img src="{{ asset($randomAd['image']) }}" alt="Ad Image" class="ad-image">
+                        @if($randomAd['content'])
+                            <div class="ad-content">
+                                {!! $randomAd['content'] !!}
+                            </div>
+                        @endif
                     </div>
-                </div>
 
-            </a>
+                </a>
+            @endforeach
+
 
         </div>
     </div>

@@ -63,18 +63,19 @@
         .ad-content {
             padding: 20px;
             text-align: center;
-            /* Center-align all text */
+        }
+
+        .ad-content * {
+            font-size: 14px;
         }
 
         .ad-content h2 {
-            font-size: 18px;
             font-weight: 600;
             margin-bottom: 10px;
             color: #333333;
         }
 
         .ad-content p {
-            font-size: 14px;
             color: #666666;
             line-height: 1.5;
             margin-bottom: 15px;
@@ -88,7 +89,6 @@
         }
 
         .ad-content ul li {
-            font-size: 14px;
             color: #666666;
             line-height: 1.5;
         }
@@ -514,43 +514,30 @@
         <div class="col-md-3">
             {{-- ads container --}}
             <div class="ads-container">
-                
-                <a href="https://www.bhmediatrack.com/25S2ZK4/2LWX2H7/?sub1=1&sub2=2&sub3=3" target="_blank">
+
+                @php
+                    $ads = \App\Enums\AdsEnum::random(3);
+                @endphp
             
-                    <div class="ad">
-                        <img src="{{ asset('images/ads/myPerfectResume.png') }}" alt="Ad Image" class="ad-image">
-                        <div class="ad-content">
-                            <h2>Get the help you need to land your next gig with a <b>custom resume!</b></h2>
-                            <p>
-                                Our Industry-leading resume tools take your job search from basic to next level.
-                            </p>
+                @foreach($ads as $randomAd)
+
+                    <a href="{{ $randomAd['link'] }}" target="_blank">
+                
+                        <div class="ad">
+                            
+                            <img src="{{ asset($randomAd['image']) }}" alt="Ad Image" class="ad-image">
+
+                            @if($randomAd['content'])
+                                <div class="ad-content">
+                                    {!! $randomAd['content'] !!}
+                                </div>
+                            @endif
+
                         </div>
-                    </div>
 
-                </a>
+                    </a>
 
-                <a href="https://www.bhmediatrack.com/25S2ZK4/6Z7MWN9/?sub1=1&sub2=2&sub3=3"  target="_blank">
-                        
-                    <div class="ad">
-                        <img src="{{ asset('images/ads/chime.png') }}" alt="Ad Image" class="ad-image">
-                        <div class="ad-content">
-                            <h2>
-                                The best way to get up to $500 before payday*
-                            </h2>
-                            <ul>
-                                <li>No interest*</li>
-                                <li>No credit check</li>
-                                <li>No mandatory fees</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </a>
-
-                <a href="https://www.fithortrip.com/BHKX349Z/B47749C/" class="ad" target="_blank">
-                    <img src="{{ asset('images/ads/fithortrip.jpeg') }}" alt="Ad Image" class="ad-image">
-                    
-                </a>
+                @endforeach
 
             </div>
         </div>
