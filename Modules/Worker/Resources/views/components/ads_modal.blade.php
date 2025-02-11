@@ -66,6 +66,7 @@
         height: auto;
         border-radius: 8px;
         margin-right: 20px;
+        max-height: 70vh;
     }
 
     #adPopup .ad-content {
