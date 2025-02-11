@@ -68,7 +68,7 @@ module.exports.init = (async () => {
 				var mysqlResp = await queries.getLaboredgeLogin(user.userId);
 				mysqlResp = mysqlResp[0];
 
-				console.log("Mysql resp : "+mysqlResp.user_id);
+				// console.log("Mysql resp : "+mysqlResp);
 				// Get the accessToken
 				var accessToken = await connectNexus(mysqlResp);
 
@@ -112,7 +112,7 @@ module.exports.init = (async () => {
 	}
 	
 	// console.log("Jobs saved into the db");
-});
+})();
 // Update the existing integrations
 module.exports.update = (async () => {
 
