@@ -222,7 +222,7 @@ module.exports.addImportedJob = async function (importData) {
     let hoursPerShift = importData.scheduledHrs1 / importData.shiftsPerWeek1;
 
     var is_open=0,is_closed=0,active=0,is_hidden=0;
-    
+
     if(importData.jobStatus === "Open"){
         is_open = 1;
         active = 1;
@@ -234,6 +234,17 @@ module.exports.addImportedJob = async function (importData) {
         is_closed = 1;
         is_hidden = 0;
     }
+
+    if(!(importData.id  && importData.imported_id  && importData.jobTitle  &&
+        description  && importData.signOnBonus  && importData.jobType  &&
+        importData.startDate  && importData.endDate  && importData.duration  &&
+        importData.shiftsPerWeek1  && importData.scheduledHrs1  && hoursPerShift  &&
+        importData.profession  && importData.specialty  && importData.hourlyPay)){
+            is_open = 0;
+            active = 1;
+            is_closed = 0;
+            is_hidden = 0;
+        }
 
     const [result, fields] = await pool.query(
         "INSERT INTO jobs (id,import_id, job_name, description, sign_on_bonus, job_type, start_date, end_date, preferred_shift_duration, is_open, active, is_closed, float_requirement, weeks_shift, hours_per_week, hours_shift, profession, specialty, actual_hourly_rate, as_soon_as, auto_offers, dental, eligible_work_in_us, facility_city, facility_state, four_zero_one_k, health_insaurance, is_hidden, is_resume, on_call, professional_licensure, tax_status, vision) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",

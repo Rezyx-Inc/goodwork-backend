@@ -26,30 +26,27 @@ mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_
     //report("src/crons/laboredge.js error on mongodb connection");
 });
 
-// (async function deleteFunc(){
-// 	console.log("Inside delete func");
-// 	const result = await Laboredge.deleteMany({ userType: "RECRUITER" });
-// })();
+
 // Process laboredge integrations for the first time
 module.exports.init = (async () => {
 
 
-	console.log("Inside init method");
+	// console.log("Inside init method");
 	var limit = 100; // No. of documents per batch
 	var totalIntegrations = await Laboredge.countDocuments(); //Fetch total no. of documents 
 	var totalPages = Math.ceil(totalIntegrations/limit);
 
 	for( i = 0; i < totalPages; i++ ){
 
-		console.log("Inside for of init function");
+		// console.log("Inside for of init function");
 		// offset the results by i (current page) * limit (100 by default)
 		var offset = i * limit;
 		
 		// only find non updated documents AKA recently enabled integrations
-		await Laboredge.find({updated: { $exists:true }}).limit(limit).skip(offset)
+		await Laboredge.find({updated: { $exists:false }}).limit(limit).skip(offset)
 		.then( async laboredge => {
 			
-			console.log("Inside Laboredge.find : "+laboredge.length);
+			// console.log("Inside Laboredge.find : "+laboredge.length);
 			if(!laboredge){
 				return
 			}
@@ -68,21 +65,17 @@ module.exports.init = (async () => {
 				// 	le_client_id:"nexus"
 				// }
 				
-				const mysqlResp = {
-					user_id:"UWU445837",
-					le_password:"API_VITALINK_GOODWORK_12262024",
-					le_username:"api_vitalink_goodwork",
-					le_organization_code:"vitalink",
-					le_client_id:"nexus"
-				}
+				var mysqlResp = await queries.getLaboredgeLogin(user.userId);
+				mysqlResp = mysqlResp[0];
 
+				console.log("Mysql resp : "+mysqlResp.user_id);
 				// Get the accessToken
 				var accessToken = await connectNexus(mysqlResp);
 
 				// Get and update professions
 				const professions = await getProfession(accessToken, mysqlResp.user_id)
 				user.professions = professions;
-				
+
 				// Get and update specialties
 				const specialties = await getSpecialties(accessToken, mysqlResp.user_id)
 				user.specialties = specialties;
@@ -117,9 +110,8 @@ module.exports.init = (async () => {
 			}
 		})			
 	}
-	// let temp = "Admin Assistant".match(new RegExp("Assistant", 'gi'));
-	// console.log(temp);
-	console.log("Jobs saved into the db");
+	
+	// console.log("Jobs saved into the db");
 });
 // Update the existing integrations
 module.exports.update = (async () => {
@@ -132,7 +124,7 @@ module.exports.update = (async () => {
 	// console.log("totalPages : "+totalPages);
 	for( i = 0; i < totalPages; i++ ){
 
-		console.log("Inside for of update");
+		// console.log("Inside for of update");
 		// offset the results by i (current page) * limit (100 by default)
 		var offset = i * limit;
 		
@@ -236,20 +228,20 @@ async function getProfession (accessToken, userId){
 
 	console.log("Inside getProfession");
 	const professions = {
-		"(RN)":"RN",
-		"(CNA)":"CNA",
-		"(CMA":"CMA",
+		"(RN)": "RN",
+		"(CNA)": "CNA",
+		"(CMA)": "CMA",
 		"(Tech)":"Tech / Assist",
 		"(Admin Assistant)": "Tech / Assist",
-		"(Therapist)":"Therapy",
-		"(Therapy)":"Therapy",
-		"(Physician)":"Physician",
-		"(PA)":"PA",
-		"(CRNA)":"CRNA",
-		"(CNP)":"NP",
-		"(LVN/LPN)":"LPN / LVN",
-		"(Social Worker)":"Social Work",
-		"(Other)":"Other Clinician"
+		"(Therapist)": "Therapy",
+		"(Therapy)": "Therapy",
+		"(Physician)": "Physician",
+		"(PA)": "PA",
+		"(CRNA)": "CRNA",
+		"(CNP)": "NP",
+		"(LVN/LPN)": "LPN / LVN",
+		"(Social Worker)": "Social Work",
+		"(Other)": "Other Clinician"
 	};
 	// Array to hold active professions
 	var activeProfession = [];
@@ -267,18 +259,17 @@ async function getProfession (accessToken, userId){
 		var { data } = await axios.get("https://api-nexus.laboredge.com:9000/api/api-integration/v1/master/professions", {headers});
 		
 			for(profession of data){
-				var mappedProfession = "Others";
 				if(profession.active){
+					var mappedProfession = "";
 					for (let [pattern, mappedPro] of Object.entries(professions)) {
-						let proName = profession.name;
-						if (proName.match(new RegExp(pattern, 'gi'))) {
-							mappedProfession = profession.name.match(new RegExp(pattern, 'gi'));
+						if (profession.name.match(new RegExp(pattern, 'gi'))) {
+							mappedProfession = mappedPro;
 							break;
+						}
 					}
 					activeProfession.push({mappedProfession: mappedProfession, profession: profession.name});
 				}
 			}
-		}
 	}catch(e){
 	
 		//log in case of API call failure
@@ -292,6 +283,95 @@ async function getProfession (accessToken, userId){
 // get specialties
 async function getSpecialties (accessToken, userId){
 
+	const specialtyMap = {
+		"(Admin)": "Administrative",
+		"(Administrator)": "Administrative",
+		"(Ambulatory)": "Ambulatory Care",
+		"(Blood Drawls)": "Phlebotomist",
+		"(Bone Marrow Oncology)": "Bone Marrow Transplant",
+		"(Burn Unit)": "Burn ICU",
+		"(Cardiac)": "Cardiology",
+		"(Cardio)": "Cardiology",
+		"(Cardio/Pulmonary)": "[Cardiology, Pulmonology]",
+		"(Case Manager)": "Case Management",
+		"(Cath Lab)": "Cardiac Cath Lab",
+		"(CCU)": "CCU - Coronary Care",
+		"(Chemotherapy)": "Hematology & Oncology",
+		"(Corrections)": "Correctional",
+		"(CT)": "CT Technologist",
+		"(Diagnostics Radiology)": "Radiology",
+		"(Dietitian)": "RDCD Dietitian",
+		"(Director)": "Director of Nursing",
+		"(EP Lab)": "Electrophysiology Lab",
+		"(ER)": "ED - Emergency Department",
+		"(ER - Peds)": "Pediatrics ER - Emergency Room",
+		"(Fetal)": "Maternal - Newborn",
+		"(Flight)": "Flight Nurse or Critical Care Flight Nurse",
+		"(Flu Clinic)": "Vaccination",
+		"(General)": "General Surgery",
+		"(GI)": "Gastroenterology",
+		"(Hand)": "Orthopedics",
+		"(ICU)": "ICU - Intensive Care Unit",
+		"(Infection Prevention)": "Infection Control",
+		"(Inpatient)": "In-Patient",
+		"(Interventional)": "Interventional Radiology",
+		"(IR)": "Interventional Radiology",
+		"(L&D)": "Labor and Delivery",
+		"(LMSW)": "Licensed Clinical Social Worker",
+		"(LSW)": "Licensed Clinical Social Worker",
+		"(LTC)": "Long Term Care",
+		"(Med Surg / Tele)": "Med Surg / Telemetry",
+		"(MICU)": "MICU - Medical Intensive Care Unit",
+		"(Mother/Baby)": "Maternal - Newborn",
+		"(MRI/Rad Tech Float)": "[Radiology Technician, MRI Technologist]",
+		"(Neuro)": "Neurology",
+		"(NICU)": "NICU - Neonatal Intensive Care",
+		"(Nuclear Med Tech)": "Nuclear Medicine Technologist",
+		"(OB)": "Obstetrics / Gynecology",
+		"(OB/GYN)": "Obstetrics / Gynecology",
+		"(Observation Unit)": "DOU - Direct Observation Unit",
+		"(Occupational Therapy)": "Occupational Therapist",
+		"(Oncology)": "Hematology & Oncology",
+		"(Oncology/Hematology)": "Hematology & Oncology",
+		"(Oncology - Peds)": "Pediatric Hematology / Oncology",
+		"(Open Heart)": "Cardiovascular/Cardiothoracic Surgery",
+		"(OR)": "OR - Operating Room",
+		"(OR Pedes)": "Pediatrics OR - Operating Room",
+		"(Ortho)": "Orthopedics",
+		"(Outpatient)": "Outpatient Surgery",
+		"(PACU)": "PACU - Post Anesthetic Care",
+		"(Patient Transport)": "Transport",
+		"(PCT)": "Patient Care Tech",
+		"(PCU)": "PCU - Progressive Care Unit",
+		"(Pedes)": "Pediatrics",
+		"(PEDES)": "Pediatrics",
+		"(Physical Therapy)": "Physical Therapist",
+		"(PICU)": "PICU - Pediatric Intensive Care",
+		"(Postpartum)": "Post Partum",
+		"(Pre-Op)": "Preoperative",
+		"(Psyche)": "Psychiatry",
+		"(Radiation Therapy)": "Radiation Therapist",
+		"(Rehab)": "Rehabilitation",
+		"(Rehab Acute)": "Rehabilitation",
+		"(Respiratory)": "Respiratory Therapist",
+		"(RNFA)": "Registered Nurse First Assistant (RNFA)",
+		"(SICU)": "SICU - Surgical Intensive Care",
+		"(Skilled Nursing)": "Skilled Nursing Facility",
+		"(SNF)": "Skilled Nursing Facility",
+		"(Speech-Language Pathologist)": "Speech Language Pathologist",
+		"(Step-Down)": "Stepdown",
+		"(Sterile Products)": "Sterile Processing Technician",
+		"(Supervisor)": "House Supervisor",
+		"(Surgical ICU)": "SICU - Surgical Intensive Care",
+		"(Surgical Technology)": "Surgical Technologist",
+		"(Technologist)": "Medical Technologist",
+		"(Tele)": "Telemetry",
+		"(Tele Neuro)": "Telemetry Neuro",
+		"(Trauma)": "Trauma ICU",
+		"(Vaccines and Immunizations)": "Vaccination",
+		"(Vascular)": "Vascular Technologist",
+		"(X-Ray)": "X-Ray Technician"
+};
 	//Array to hold active specialties
 	var activeSpecialty = [];
 
@@ -313,16 +393,18 @@ async function getSpecialties (accessToken, userId){
 	
 	}
 
-	var count = 0;
 	for( specialty of data){
 		if(specialty.active){
-			count++;
-			//console.log("Specialty Name : "+specialty.name);
-			activeSpecialty.push({specialty: specialty.name, specialtyId: specialty.id})
-			// activeSpecialty.push(specialty.name);
+			var specName = "";
+			for (let [pattern, mappedSpecialty] of Object.entries(specialtyMap)) {
+				if(specialty.name.match(new RegExp(pattern, 'gi'))){
+					specName = mappedSpecialty;
+					break;
+				}
+			}
+			activeSpecialty.push({mappedSpecialty: specName, specialty: specialty.name});
 		}
 	}
-	console.log("Count : "+count);
 	return activeSpecialty;
 }
 
