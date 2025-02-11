@@ -26,8 +26,8 @@
                                     <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
                                     <button class="ss-fliter-btn" type="submit">Filter</button>
                                 </div>
-                               
-                               
+
+
                                 {{-- Organization Name --}}
                                 {{-- <div class="ss-input-slct-grp">
                                     <label for="organization_name">Organization Name</label>
@@ -56,7 +56,7 @@
                                     </select>
                                 </div> --}}
 
-                                
+
                                 <div class="ss-input-slct-grp">
                                     <label for="cars">Job Type</label>
                                     <select name="job_type">
@@ -113,12 +113,12 @@
                                         @endforeach
                                     </select>
                                 </div>
-                    
+
                                 <div class="ss-form-group col-md-12">
                                     <label> State </label>
                                     <select name="state" id="state">
                                         @if (!empty($state))
-                                            <option value="" selected>{{$state}}</option>
+                                            <option value="" selected>{{ $state }}</option>
                                         @else
                                             <option value="" disabled selected hidden>Select a State</option>
                                         @endif
@@ -153,13 +153,14 @@
                                                 <select class="m-0" id="termsSelect">
                                                     <option value="">Select Terms</option>
                                                     @foreach ($terms_key as $term)
-                                                        <option value="{{ $term->id }}" 
+                                                        <option value="{{ $term->id }}"
                                                             {{ in_array($term->id, $terms) ? 'selected' : '' }}>
                                                             {{ $term->title }}
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                                <input type="hidden" id="termsAllValues" name="terms" value="{{ implode('-', $terms) }}">
+                                                <input type="hidden" id="termsAllValues" name="terms"
+                                                    value="{{ implode('-', $terms) }}">
                                             </div>
                                         </li>
                                         <li>
@@ -174,21 +175,21 @@
                                         <span class="helper help-block-terms"></span>
                                     </div>
                                 </div>
-                                
-                          
+
+
                                 <div class="ss-form-group col-md-12" style="margin: 20px 0px;">
                                     <div class="row">
                                         <div class="row col-lg-12 col-sm-12 col-md-12 col-xs-12"
                                             style="display: flex; justify-content: end; align-items:center;">
                                             <input type="hidden" name="as_soon_as" value="0">
-                                            <input id="as_soon_as" name="as_soon_as" value="1" type="checkbox" 
-                                                {{ $as_soon_as  ? "checked" : ""}}
-                                                style="box-shadow:none; width:auto;" class="col-2">
+                                            <input id="as_soon_as" name="as_soon_as" value="1" type="checkbox"
+                                                {{ $as_soon_as ? 'checked' : '' }} style="box-shadow:none; width:auto;"
+                                                class="col-2">
                                             <label class="col-10">
                                                 As soon As possible
                                             </label>
                                         </div>
-                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" >
+                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                                             <label>Start Date</label>
                                             <input type="date" value="{{ $start_date }}" name="start_date"
                                                 placeholder="Start Date">
@@ -232,7 +233,8 @@
                                         <input type="text" id="gw" class="gw" name="gw"
                                             placeholder="Search by Job ID" value="{{ request('gw') }}">
                                     </div>
-                                    <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;"></div>
+                                    <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;">
+                                    </div>
                                     <!-- Error message display -->
                                 </div>
                                 <!-- partial -->
@@ -253,7 +255,7 @@
                                   </ul>
                                 </div> --}}
 
-                                
+
                                 {{-- <input type="hidden" name="terms" value="" id="job_type"> --}}
                                 {{-- <input type="hidden" name="shifts" value="" id="shift"> --}}
                                 <input type="hidden" name="weekly_pay_from" value="{{ $weekly_pay_from }}"
@@ -448,12 +450,12 @@
         const recruitersName = @json($recruiters); // Recruiters data from the backend
         const orgSelect = document.getElementById('organization_name');
         const recruiterSelect = document.getElementById('recruiter_name');
-    
+
         // Function to populate recruiters based on the selected organization
         function populateRecruiters(selectedOrg, selectedRecruiter) {
             // Clear recruiter dropdown
             recruiterSelect.innerHTML = '<option value="">Select</option>';
-    
+
             // Filter and add recruiters based on the organization
             recruitersName.forEach(recruiter => {
                 const recruiterOrg = recruiter.organization_name;
@@ -469,23 +471,23 @@
                 }
             });
         }
-    
+
         // Event listener for organization dropdown change
-        orgSelect.addEventListener('change', function () {
+        orgSelect.addEventListener('change', function() {
             const selectedOrg = this.value;
             populateRecruiters(selectedOrg, recruiterSelect.value);
         });
-    
+
         // Populate recruiters on page load (for persistence after form submission)
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const selectedOrg = orgSelect.value; // Get currently selected organization
             const selectedRecruiter = recruiterSelect.value; // Get currently selected recruiter
             populateRecruiters(selectedOrg, selectedRecruiter);
         });
     </script>
-    
-    
-    
+
+
+
     <script>
         // get cities according to state :
 
@@ -516,12 +518,11 @@
             });
 
         })
-
     </script>
 
 
     <script>
-                let terms = []; // Initialize terms as an array to store only values (texts)
+        let terms = []; // Initialize terms as an array to store only values (texts)
 
         document.addEventListener('DOMContentLoaded', () => {
             const preselectedTerms = document.getElementById('termsAllValues').value.split('-');
@@ -536,7 +537,7 @@
         function addTerms(type) {
             const selectElement = document.getElementById('termsSelect');
             const selectedValue = selectElement.options[selectElement.selectedIndex].text; // Get the text
-        
+
             if (!selectedValue || selectedValue === 'Select Terms') {
                 notie.alert({
                     type: 'error',
@@ -545,7 +546,7 @@
                 });
                 return;
             }
-        
+
             if (!terms.includes(selectedValue)) {
                 terms.push(selectedValue); // Add the text value to the array
                 selectElement.value = ''; // Clear selection
@@ -562,7 +563,7 @@
         function updateTermsList() {
             const termsContentDiv = document.querySelector('.terms-content');
             let termsHtml = '';
-        
+
             terms.forEach(term => {
                 termsHtml += `
                     <ul class="row w-100" style="list-style: none;">
@@ -575,9 +576,9 @@
                     </ul>
                 `;
             });
-        
+
             termsContentDiv.innerHTML = termsHtml;
-        
+
             // Update the hidden input field with the selected terms (joined by '-')
             document.getElementById('termsAllValues').value = terms.join('-');
         }
@@ -587,7 +588,7 @@
             if (index > -1) {
                 terms.splice(index, 1);
                 updateTermsList();
-            
+
                 notie.alert({
                     type: 'success',
                     text: '<i class="fa fa-check"></i> Term removed successfully.',
@@ -601,16 +602,14 @@
                 });
             }
         }
-
     </script>
-    
-    <script>
 
+    <script>
         function resetForm() {
             window.location.href = "{{ route('worker.explore') }}";
         }
 
-        
+
 
         function redirectToJobDetails(id) {
             window.location.href = `job/${id}/details`;
@@ -702,44 +701,48 @@
             //     .slider('values', 1) + '</span>');
 
             $('#slider').slider({
-    range: true,
-    min: 1000,
-    max: 10000,
-    step: 1,
-    values: [
-        $('#minval').val() ? parseInt($('#minval').val()) : 1000, 
-        $('#maxval').val() ? parseInt($('#maxval').val()) : 10000
-    ],
-    slide: function (event, ui) {
-        $('#slider .ui-slider-handle:eq(0) .price-range-min').html('$' + ui.values[0]);
-        $('#slider .ui-slider-handle:eq(1) .price-range-max').html('$' + ui.values[1]);
-        $('#slider .price-range-both').html('<i>$' + ui.values[0] + ' - $' + ui.values[1] + '</i>');
+                range: true,
+                min: 1000,
+                max: 10000,
+                step: 1,
+                values: [
+                    $('#minval').val() ? parseInt($('#minval').val()) : 1000,
+                    $('#maxval').val() ? parseInt($('#maxval').val()) : 10000
+                ],
+                slide: function(event, ui) {
+                    $('#slider .ui-slider-handle:eq(0) .price-range-min').html('$' + ui.values[0]);
+                    $('#slider .ui-slider-handle:eq(1) .price-range-max').html('$' + ui.values[1]);
+                    $('#slider .price-range-both').html('<i>$' + ui.values[0] + ' - $' + ui.values[1] +
+                        '</i>');
 
-        // Update hidden inputs
-        $("#minval").val(ui.values[0]);
-        $("#maxval").val(ui.values[1]);
+                    // Update hidden inputs
+                    $("#minval").val(ui.values[0]);
+                    $("#maxval").val(ui.values[1]);
 
-        // UI adjustments
-        if (ui.values[0] == ui.values[1]) {
-            $('#slider .price-range-both i').css('display', 'none');
-        } else {
-            $('#slider .price-range-both i').css('display', 'inline');
-        }
+                    // UI adjustments
+                    if (ui.values[0] == ui.values[1]) {
+                        $('#slider .price-range-both i').css('display', 'none');
+                    } else {
+                        $('#slider .price-range-both i').css('display', 'inline');
+                    }
 
-        if (collision($('.price-range-min'), $('.price-range-max')) == true) {
-            $('#slider .price-range-min, .price-range-max').css('opacity', '0');
-            $('#slider .price-range-both').css('display', 'block');
-        } else {
-            $('#slider .price-range-min, .price-range-max').css('opacity', '1');
-            $('#slider .price-range-both').css('display', 'none');
-        }
-    }
-});
+                    if (collision($('.price-range-min'), $('.price-range-max')) == true) {
+                        $('#slider .price-range-min, .price-range-max').css('opacity', '0');
+                        $('#slider .price-range-both').css('display', 'block');
+                    } else {
+                        $('#slider .price-range-min, .price-range-max').css('opacity', '1');
+                        $('#slider .price-range-both').css('display', 'none');
+                    }
+                }
+            });
 
-// Add dynamic price ranges
-$('#slider .ui-slider-range').append('<span class="price-range-both value"><i>$' + $('#slider').slider('values', 0) + ' - $' + $('#slider').slider('values', 1) + '</i></span>');
-$('#slider .ui-slider-handle:eq(0)').append('<span class="price-range-min value">$' + $('#slider').slider('values', 0) + '</span>');
-$('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value">$' + $('#slider').slider('values', 1) + '</span>');
+            // Add dynamic price ranges
+            $('#slider .ui-slider-range').append('<span class="price-range-both value"><i>$' + $('#slider').slider(
+                'values', 0) + ' - $' + $('#slider').slider('values', 1) + '</i></span>');
+            $('#slider .ui-slider-handle:eq(0)').append('<span class="price-range-min value">$' + $('#slider')
+                .slider('values', 0) + '</span>');
+            $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value">$' + $('#slider')
+                .slider('values', 1) + '</span>');
 
 
 
@@ -839,6 +842,99 @@ $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value"
             $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3')
                 .slider('values', 1) + '</span>');
 
+            // Add an intersect Observer for infinite scroll
+            var skip = 10;
+            var el = document.querySelector('#loadTrigger');
+
+            var urlParams = new URLSearchParams(window.location.search);
+
+
+            observer = new window.IntersectionObserver(([entry]) => {
+
+                // Only observe intersections
+                if (entry.isIntersecting) {
+                    skip > 0 ? null : 0;
+                    urlParams.set('skip', skip);
+                    //Do the Ajax call
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: full_path + "explore-jobs?" + urlParams.toString(),
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+
+                            addJobCards(data.message);
+                            // Increment skip
+                            skip += 10;
+
+                            // Handle the event listeners
+                            document.querySelectorAll(".job-item").forEach(item => {
+
+                                item.removeEventListener("click", handleCardClickEvent);
+                                item.removeEventListener("click", handleCardClickEvent,
+                                    true);
+                                item.addEventListener("click", handleCardClickEvent);
+                            });
+                        },
+                        error: function(resp) {
+
+                            notie.alert({
+                                type: 'error',
+                                text: '<i class="fa fa-check"></i> Oops ! Can\'t load more jobs ! Please try later.',
+                                time: 5
+                            });
+                        }
+                    });
+
+
+
+                    return
+                }
+
+            }, {
+                root: null,
+                threshold: 0.5,
+            });
+
+            // Observe
+            var jobsLength = {{ count($jobs) }};
+
+            jobsLength >= 10 ? observer.observe(el) : null;
+
+            document.querySelectorAll(".job-item").forEach(item => {
+
+                item.addEventListener("click", function() {
+                    const jobData = this.dataset.job;
+                    const allusers = this.dataset.users; // Corrected from 'allusers' to 'users'
+                    try {
+                        const job = JSON.parse(jobData);
+                        const users = JSON.parse(allusers);
+                        redirectToJobDetails(job, users);
+                    } catch (error) {
+                        console.error("Invalid job data:", error);
+                    }
+                });
+            });
+
+            function handleCardClickEvent() {
+                var jobData = this.dataset.job;
+                var allusers = this.dataset.users; // Corrected from 'allusers' to 'users'
+
+                jobData = JSON.parse(jobData.replaceAll("'", "\""));
+                allusers = JSON.parse(allusers.replaceAll("'", "\""));
+
+                try {
+                    const job = jobData;
+                    const users = allusers;
+                    redirectToJobDetails(job, users);
+                } catch (error) {
+                    console.error("Invalid job data:", error);
+                }
+            }
         });
     </script>
 
@@ -901,24 +997,24 @@ $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value"
             });
         });
     </script>
-    
+
     <style>
         .value {
             left: 0%;
         }
 
         .btn.first-collapse,
-    .btn.first-collapse:hover,
-    .btn.first-collapse:focus,
-    .btn.first-collapse:active {
-        background-color: #fff8fd;
-        color: rgb(65, 41, 57);
-        font-size: 14px;
-        font-family: 'Neue Kabel';
-        font-style: normal;
-        width: 100%;
-        background: #FFEEEF;
-    }
+        .btn.first-collapse:hover,
+        .btn.first-collapse:focus,
+        .btn.first-collapse:active {
+            background-color: #fff8fd;
+            color: rgb(65, 41, 57);
+            font-size: 14px;
+            font-family: 'Neue Kabel';
+            font-style: normal;
+            width: 100%;
+            background: #FFEEEF;
+        }
     </style>
 
 @stop
