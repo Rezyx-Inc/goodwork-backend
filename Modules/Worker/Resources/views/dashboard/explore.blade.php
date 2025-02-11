@@ -283,9 +283,10 @@
 
                         <div class="ss-dash-profile-jb-mn-dv">
 
-                            <div class="ss-dash-profile-4-bx-dv">
+                            <div class="ss-dash-profile-4-bx-dv" id="job-item-container">
                                 @forelse($jobs as $j)
-                                    <div class="ss-job-prfle-sec" onclick="redirectToJobDetails(`{{ $j->id }}`)">
+                                    <div class="ss-job-prfle-sec job-item" data-id="{{ $j->id }}"
+                                        data-job="{{ $j->id }}">
                                         {{-- row 1 --}}
                                         <div class="row">
                                             <div class="col-10">
@@ -433,6 +434,7 @@
                                     </div>
                                 @endforelse
                             </div>
+                            <div id="loadTrigger"></div>
                         </div>
                     </div>
                 </div>
@@ -611,9 +613,7 @@
 
 
 
-        function redirectToJobDetails(id) {
-            window.location.href = `job/${id}/details`;
-        }
+
 
         function daysUntilWorkStarts(dateString) {
             const workStartDate = new Date(dateString);
@@ -908,12 +908,14 @@
             document.querySelectorAll(".job-item").forEach(item => {
 
                 item.addEventListener("click", function() {
-                    const jobData = this.dataset.job;
-                    const allusers = this.dataset.users; // Corrected from 'allusers' to 'users'
+
+                    const job_id = this.dataset.job;
                     try {
-                        const job = JSON.parse(jobData);
-                        const users = JSON.parse(allusers);
-                        redirectToJobDetails(job, users);
+                        console.log(job_id);
+
+                        // redirectToJobDetails(job_id);
+                        window.location.href = `job/${job_id}/details`;
+
                     } catch (error) {
                         console.error("Invalid job data:", error);
                     }
@@ -921,16 +923,12 @@
             });
 
             function handleCardClickEvent() {
-                var jobData = this.dataset.job;
-                var allusers = this.dataset.users; // Corrected from 'allusers' to 'users'
-
-                jobData = JSON.parse(jobData.replaceAll("'", "\""));
-                allusers = JSON.parse(allusers.replaceAll("'", "\""));
+                var job_id = this.dataset.job;
 
                 try {
-                    const job = jobData;
-                    const users = allusers;
-                    redirectToJobDetails(job, users);
+                    console.log('gg');
+
+                    window.location.href = `job/${id}/details`;                
                 } catch (error) {
                     console.error("Invalid job data:", error);
                 }
