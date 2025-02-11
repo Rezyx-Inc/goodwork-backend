@@ -689,3 +689,18 @@ module.exports.updateRecruiterId = async function (orgId){
 
     return existingJobs.length;
 }
+
+// =================================================================================== //
+
+// Ceipal Methods
+
+// get Ceipal Credentials
+module.exports.getCeipalCredentials = async function (userId) {
+
+    const [result, fields] = await pool.query(
+        "SELECT * from ceipal WHERE user_id=?;",
+        [userId]
+    );
+
+    return result;
+};

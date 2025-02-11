@@ -4,6 +4,7 @@ require("dotenv").config();
 //import all required libraries and/or modules
 var cron = require("node-cron"); // Used to schedule cron jobs
 var { vitalink } = require("../integrations/laboredge");
+var { expedientRN } = require("../integrations/ceipal");
 var { report } = require("../set.js");
 
 //var gsheet = require("../gSheet/index.js").main;
