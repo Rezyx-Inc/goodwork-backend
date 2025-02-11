@@ -82,18 +82,18 @@
                                     </div>
                                     <div class="col-5 d-flex justify-content-end">
                                         <ul>
-                                            <li>
-                                                <a href="#">
-                                                    <img class="icon_cards" src="${calendarIcon}">
-                                                    ${job.preferred_assignment_duration} wks
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <img class="icon_cards" src="${calendarIcon}">
-                                                    ${job.hours_per_week} hrs/wk
-                                                </a>
-                                            </li>
+                                            ${job.preferred_assignment_duration && job.preferred_assignment_duration !== '' ? `
+                                                    <li>
+                                                        <img class="icon_cards" src="${calendarIcon}"">
+                                                        ${job.preferred_assignment_duration} wks
+                                                    </li>
+                                                ` : ''}
+                                            ${job.hours_per_week && job.hours_per_week !== '' ? `
+                                                    <li>
+                                                        <img class="icon_cards" src="${calendarIcon}">
+                                                        ${job.hours_per_week} hrs/wk
+                                                    </li>
+                                                ` : ''}
                                         </ul>
                                     </div>
                                 </div>
@@ -156,18 +156,20 @@
                                         </li>
                                         <li>
                                             <h6>Type</h6>
-                                            <p>${job.job_type}</p>
+                                            <p>${job.job_type ? job.job_type : askRecruiter}</p>
                                         </li>
                                         <li>
                                             <h6>Terms</h6>
-                                            <p>${job.terms}</p>
+                                            <p>${job.terms ? job.terms : askRecruiter}</p>
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="ss-jb-apply-on-disc-txt">
+                                ${job.description ? 
+                                `<div class="ss-jb-apply-on-disc-txt">
                                     <h5>Description</h5>
                                     <p id="job_description">${job.description}</p>
-                                </div>
+                                </div>` 
+                                : ''}
 
 
 
@@ -187,7 +189,7 @@
                                             </li>
                                             <li>
                                                 <h6>
-                                                  ${job.job_type}
+                                                  ${job.job_type ? job.job_type : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -197,7 +199,7 @@
                                             </li>
                                             <li>
                                                  <h6>
-                                                   ${job.terms}
+                                                   ${job.terms ? job.terms : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -207,7 +209,7 @@
                                             </li>
                                             <li>
                                                  <h6>
-                                                   ${job.profession}
+                                                   ${job.profession ? job.profession : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
@@ -217,7 +219,7 @@
                                             </li>
                                             <li>
                                                  <h6>
-                                                   ${job.preferred_specialty}
+                                                   ${job.preferred_specialty ? job.preferred_specialty : askRecruiter}
                                                 </h6>
                                             </li>
                                         </ul>
