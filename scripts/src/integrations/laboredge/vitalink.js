@@ -112,7 +112,7 @@ module.exports.init = (async () => {
 	}
 	
 	// console.log("Jobs saved into the db");
-})();
+});
 // Update the existing integrations
 module.exports.update = (async () => {
 
@@ -221,8 +221,6 @@ module.exports.update = (async () => {
 	console.log("Jobs updated in the db");
 });
 
-//Check for new specialties and professions and map them, save them
-// Check for different job types
 // get professions
 async function getProfession (accessToken, userId){
 
