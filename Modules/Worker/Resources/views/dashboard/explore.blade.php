@@ -701,11 +701,14 @@
 
                 // Only observe intersections
                 if (entry.isIntersecting) {
-                    console.log(skip)
+
                     skip > 0 ? null : 0;
 
+                    // fix this
                     let params = {
                         skip: skip,
+                        speciality: document.getElementById("speciality").value,
+                        profession: $("select[name='profession']").val(),
                     };
 
                     //Do the Ajax call
@@ -722,18 +725,11 @@
                         data: params,
                         success: function(data) {
 
-                            //addJobCards(data.message);
+                            addJobCards(data.message);
+
                             // Increment skip
                             skip += 10;
 
-                            // Handle the event listeners
-                            document.querySelectorAll(".job-item").forEach(item => {
-
-                                item.removeEventListener("click", handleCardClickEvent);
-                                item.removeEventListener("click", handleCardClickEvent,
-                                    true);
-                                item.addEventListener("click", handleCardClickEvent);
-                            });
                         },
                         error: function(resp) {
 
@@ -758,37 +754,8 @@
             // Observe
             var jobsLength = {{ count($jobs) }};
 
-            jobsLength >= 10 ? observer.observe(el) : null;
+            jobLength % 10 == 0 ? observer.observe(el) : null;
 
-            document.querySelectorAll(".job-item").forEach(item => {
-
-                item.addEventListener("click", function() {
-
-                    const job_id = this.dataset.job;
-                    try {
-                        console.log(job_id);
-                        
-                        window.location.href = `job/${job_id}/details`;
-
-                    } catch (error) {
-                        console.error("Invalid job data:", error);
-                    }
-                });
-            });
-
-            function handleCardClickEvent() {
-
-                var job_id = this.dataset.job;
-
-                try {
-
-                    window.location.href = `job/${id}/details`;
-
-                } catch (error) {
-
-                    console.error("Invalid job data:", error);
-                }
-            }
         });
     </script>
 

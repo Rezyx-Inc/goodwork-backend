@@ -415,7 +415,7 @@ class WorkerDashboardController extends Controller
     // Set filter values from the request, use null as the default if not provided
     $data['job_id'] = $request->input('gw', null);
     $data['profession'] = $request->input('profession');
-    $data['speciality'] = $request->input('speciality');
+    $data['specialty'] = $request->input('specialty');
     $data['city'] = $request->input('city');
     $data['state'] = $request->input('state');
     $data['terms'] = $request->has('terms') ? explode('-', $request->terms) : [];
@@ -456,8 +456,8 @@ class WorkerDashboardController extends Controller
       $ret->where('profession', '=', $data['profession']);
     }
 
-    if (!empty($data['speciality'])) {
-      $ret->where('preferred_specialty', '=', $data['speciality']);
+    if (!empty($data['specialty'])) {
+      $ret->where('preferred_specialty', '=', $data['specialty']);
     }
 
     if (!empty($data['terms']) && !is_null($request->input('terms')) && is_array($data['terms']) && count($data['terms']) > 0) {
