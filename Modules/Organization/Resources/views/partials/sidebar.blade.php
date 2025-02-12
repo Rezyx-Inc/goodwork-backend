@@ -5,8 +5,9 @@ $user = auth()->guard('organization')->user();
 
     <div class="ss-side-user-ul">
         <ul>
-
-            <li><img src="{{URL::asset('frontend/img/logo.png')}}" /></li>
+            <a href="{{ route('/') }}">
+                <img src="{{ URL::asset('frontend/img/logo.png') }}" />
+            </a>
         </ul>
     </div>
     <div class="position-sticky ss-das-side-menu-sec">
