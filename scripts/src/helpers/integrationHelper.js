@@ -25,7 +25,11 @@ const OrganizationsSchema = mongoose.Schema({
 
 module.exports.getNextUpRecruiter = async function (orgId){
 
-    const organizationsDB = await mongoose.connect(process.env.MONGODB_FILES_URI + process.env.MONGODB_ORGANIZATIONS_DATABASE_NAME);
+    let organizationsDB = mongoose.connection;
+    if (mongoose.connection.readyState === 0) {
+        organizationsDB = mongoose.connect(process.env.MONGODB_FILES_URI + process.env.MONGODB_ORGANIZATIONS_DATABASE_NAME);
+    }
+    // const organizationsDB = await mongoose.connect(process.env.MONGODB_FILES_URI + process.env.MONGODB_ORGANIZATIONS_DATABASE_NAME);
     const Organizations = await organizationsDB.model('Organizations', OrganizationsSchema);
 
     try {

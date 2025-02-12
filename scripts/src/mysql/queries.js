@@ -123,7 +123,7 @@ module.exports.closeImportedJobs = async function (imported_id) {
     return result;
 };
 
-module.exports.updateLaboredgeJobs = async function (importData) {
+module.exports.updateLaboredgeJobs = async function (importData, orgId) {
     
     // console.log("Inside update imported job method");
     var floatReq = "";
@@ -142,10 +142,19 @@ module.exports.updateLaboredgeJobs = async function (importData) {
 
     let hoursPerShift = importData.scheduledHrs1 / importData.shiftsPerWeek1;
 
-    const query = `UPDATE jobs SET import_id = ?,job_name = ?,description = ?,sign_on_bonus = ?,job_type = ?,start_date = ?,end_date = ?,preferred_shift_duration = ?,is_open = ?,active = ?,is_closed = ?,float_requirement = ?,weeks_shift = ?,hours_per_week = ?,hours_shift = ?,profession = ?,specialty = ?,actual_hourly_rate = ?,as_soon_as = ?,auto_offers = ?,dental = ?,eligible_work_in_us = ?,facility_city = ?,facility_state = ?,four_zero_one_k = ?,health_insaurance = ?,is_hidden = ?,is_resume = ?,on_call = ?,professional_licensure = ?,tax_status = ?,vision = ? WHERE id = ?`;
+    // add weekly pay(week1Gross),
+    const query = `UPDATE jobs 
+    SET job_name = ?,description = ?,sign_on_bonus = ?,job_type = ?,start_date = ?,
+    end_date = ?,preferred_shift_duration = ?,is_open = ?,active = ?,is_closed = ?,
+    float_requirement = ?,weeks_shift = ?,hours_per_week = ?,hours_shift = ?,profession = ?,
+    specialty = ?,actual_hourly_rate = ?,as_soon_as = ?,auto_offers = ?,dental = ?,eligible_work_in_us = ?,
+    facility_city = ?,facility_state = ?,four_zero_one_k = ?,health_insaurance = ?,is_hidden = ?,is_resume = ?,
+    on_call = ?,professional_licensure = ?,tax_status = ?,vision = ? 
+    WHERE job_id = ? AND organization_id = ?;`;
+
+    console.log("Job id : ", importData.id,hoursPerShift,orgId);
 
     const values = [
-        importData.imported_id ?? null, // import_id
         importData.jobTitle ?? null, // job_name
         description ?? null, // description
         importData.signOnBonus ?? null, // sign_on_bonus
@@ -157,7 +166,7 @@ module.exports.updateLaboredgeJobs = async function (importData) {
         1, // active
         0, // is_closed
         floatReq ?? null, // float_requirement
-        importData.shiftsPerWeek1 ?? null, // weeks_shift
+        importData.shiftsPerWeek1.toFixed(2) ?? null, // weeks_shift
         importData.scheduledHrs1 ?? null, // hours_per_week
         hoursPerShift ?? null, // hours_shift
         importData.profession ?? null, // profession
@@ -178,20 +187,20 @@ module.exports.updateLaboredgeJobs = async function (importData) {
         ? importData.professional_licensure : "", // professional_licensure
         "", // tax_status
         0, // vision
-        importData.id ?? null // id for WHERE clause (row to update)
+        importData.id.toString(), // id for WHERE clause (row to update)
+        orgId
     ];
 
     // Execute the query using your database library 
-    const results = pool.execute(query, values)
-    .then(([res]) => {
-        // console.log('Update successful:', res);
-        return res;
-    })
-    .catch((error) => {
-        console.error('Error updating record:', error);
-    });
+    try{
+        const results = await pool.execute(query, values);
+        console.log("Updated");
+        return results;
+    }catch(err){
+        console.log("Unknown error",err);
+    }
 
-    return results;
+    return false;
 };
 //Function to insert imported jobs into our db
 module.exports.addImportedJob = async function (importData) {
@@ -203,6 +212,11 @@ module.exports.addImportedJob = async function (importData) {
     }
 	let id = await getNewJobId(pool);
 
+    // var recruiterId = getNextUpRecruiter(importData.organization_id);
+
+    // if(!recruiterId){
+    //     recruiterId = importData.organization_id;
+    // }
 	var floatReq = "";
 
 	if (
@@ -240,7 +254,7 @@ module.exports.addImportedJob = async function (importData) {
     	is_hidden=0;
 	}
 	const [result, fields] = await pool.query(
-    	"INSERT INTO jobs (professional_licensure, facility_state, facility_city, terms, job_type, id, organization_id, created_by, job_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate, tax_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+    	"INSERT INTO jobs (professional_licensure, facility_state, facility_city, terms, job_type, id, organization_id, created_by, job_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate, recruiter_id, tax_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
     	[
             (importData.professional_licensure != null) ? importData.professional_licensure : "",
             (importData.facility_state != null) ? importData.facility_state : "",
@@ -268,6 +282,7 @@ module.exports.addImportedJob = async function (importData) {
             importData.profession,
             importData.preferred_specialty,
             importData.hourlyPay,
+            (getNextUpRecruiter(importData.organization_id) ?? importData.organization_id).toString(),
             ""
     	]
 	);

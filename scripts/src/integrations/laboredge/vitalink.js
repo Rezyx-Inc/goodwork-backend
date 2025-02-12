@@ -105,17 +105,18 @@ module.exports.update = (async () => {
     	// Get Jobs from the laboredge API
     	const jobs = await getJobs(accessToken, mysqlResp.user_id, true, vitalinkMongo.updated);
 
+		if(jobs.length == 0){
+			console.log("Returning as there are no jobs to update");
+			return ;
+		}
+
     	// Check which job has changed
     	const updatedJobs = await getUpdatedJobs(jobs, vitalinkMongo.importedJobs, mysqlResp.user_id);
 
     	console.log("ACTUAL JOB",vitalinkMongo.importedJobs.length, "UPDATE JOBS",jobs.length)
     	console.log("TO CLOSE", updatedJobs.toClose.length, "TO ADD", updatedJobs.toAdd.length, "UNCHANGED", updatedJobs.unchanged.length, "TO UPDATE", updatedJobs.toUpdate.length)
 
-
-		if(jobs.length == 0){
-			console.log("Returning as there are no jobs to update");
-			return ;
-		}
+		var count = 0;
 
     	for( [ind, item] of vitalinkMongo.importedJobs.entries()){
 
@@ -130,14 +131,20 @@ module.exports.update = (async () => {
         	for ( updateItem of updatedJobs.toUpdate ){
 
             	if(updateItem.id == item.id){
-
-                	await queries.updateLaboredgeJobs(updateItem); //update in the db
+					
+					// console.log("Update Item : ", updateItem);
+					
+                	let result = await queries.updateLaboredgeJobs(updateItem, vitalinkOrgId); //update in the db
+					if(!result){
+						count++;
+					}
                 	vitalinkMongo.importedJobs[ind] = updateItem;
             	}
         	}
 
     	}
 
+		console.log("Jobs updated: ",count);
     	// add new jobs
     	for ( newItem of updatedJobs.toAdd ){
 
@@ -488,16 +495,16 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 	
 	// set the params for the first query
 	var params = {};
-	let dateModifiedStart = moment().subtract(1, 'hours').format("YYYY-MM-DD[T]HH:mm:ss"),dateModifiedEnd = moment().format("YYYY-MM-DD[T]HH:mm:ss")
+	let dateModifiedStart = moment().subtract(7, 'days').format("YYYY-MM-DD[T]HH:mm:ss"),dateModifiedEnd = moment().format("YYYY-MM-DD[T]HH:mm:ss")
 	if(isUpdate){
 		params = {
 			pagingDetails:{
 				start:0
 			},
-			dateModifiedStart,
-			dateModifiedEnd,
-			dateCreatedStart: dateModifiedStart,
-			dateCreatedEnd: dateModifiedEnd
+			dateModifiedStart: "2025-01-01T11:52:45",
+			dateModifiedEnd: dateModifiedEnd
+			// dateCreatedStart: dateModifiedStart,
+			// dateCreatedEnd: dateModifiedEnd
 		};
 	}else{
 		params = {
