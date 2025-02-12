@@ -912,8 +912,7 @@
                     const job_id = this.dataset.job;
                     try {
                         console.log(job_id);
-
-                        // redirectToJobDetails(job_id);
+                        
                         window.location.href = `job/${job_id}/details`;
 
                     } catch (error) {
@@ -926,8 +925,6 @@
                 var job_id = this.dataset.job;
 
                 try {
-                    console.log('gg');
-
                     window.location.href = `job/${id}/details`;                
                 } catch (error) {
                     console.error("Invalid job data:", error);

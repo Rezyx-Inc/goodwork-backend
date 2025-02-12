@@ -578,7 +578,34 @@ class WorkerDashboardController extends Controller
     }
 
     //return response()->json(['message' =>  $ret->get()]);
-    $data['jobs'] = $ret->get();
+    $skip = $request->input('skip');
+
+    if(!empty($skip) && $skip > 0){
+
+      $data['jobs'] = $ret->orderBy('id','desc')->skip($skip)->take(10)->get();
+
+      foreach ($data['jobs'] as $key => $value) {
+
+        $userapplied = Offer::where('job_id', $value->id)->count();
+        $data['jobs'][$key]['offer_count'] = $userapplied;
+      }
+
+      $jobSaved = new JobSaved;
+      $data['jobSaved'] = $jobSaved;
+      $data['skip']=$skip;
+
+      unset($data['specialities']);
+      unset($data['professions']);
+      unset($data['us_states']);
+      unset($data['specialities']);
+      unset($data['terms_key']);
+
+      return response()->json(['message' =>  $data]);
+
+    }else{
+
+      $data['jobs'] = $ret->orderBy('id','desc')->skip(0)->take(10)->get();
+    }
 
     $jobSaved = new JobSaved;
 
