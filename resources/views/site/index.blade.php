@@ -6,7 +6,7 @@
     <section class="ss-hm-banner-sec">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-12 col-md-6 col-lg-5">
                     <div class="ss-hm-banner-txt-bx">
                         <h2>Are you ready to be a person, not just an application?</h2>
                         <p>Goodwork is designed to facilitate positive, honest interactions between employers and
@@ -21,7 +21,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6">
+                <div class="col-12 col-md-6 col-lg-5">
                     <div class="ss-hm-baner-img-dv">
                         <ul class="ss-ban-top-map-txt">
                             <li><img src="{{ URL::asset('landing/img/banner-map-icon.png') }}" /></li>
@@ -29,7 +29,7 @@
                                 <h5>Los Angeles, CA</h5>
                             </li>
                         </ul>
-                        <img src="{{ URL::asset('landing/img/banner-image.png') }}" />
+                        <img src="{{ URL::asset('landing/img/banner-image.png') }}" class="banner-bg-img" />
 
                         <ul class="ss-ban-top-map-txt2">
                             <li><img src="{{ URL::asset('landing/img/banner-map-icon.png') }}" /></li>
@@ -42,6 +42,14 @@
 
 
                 </div>
+
+                <div class="col-lg-2 d-none d-lg-block">
+                    
+                    {{-- ads container --}}
+                    @include('worker::components.side_ads', ['nbr' => 3])
+
+                </div>
+
             </div>
         </div>
     </section>
@@ -287,6 +295,14 @@
                     @endguest
                 </div>
             </div>
+        </div>
+    </section>
+    <section>
+        <div class="row d-md-block d-lg-none">
+                
+            {{-- ads container --}}
+            @include('worker::components.horizontal_ads', ['nbr' => 1])
+
         </div>
     </section>
 @stop
