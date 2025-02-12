@@ -56,7 +56,7 @@
             margin-right: 20px; /* Space between image and text */
         }
 
-        .ad-content {
+        .content-ad-content {
             flex: 1;
         }
 
@@ -107,7 +107,7 @@
             <a href="https://www.bhmediatrack.com/cmp/M15NZ8/2MCHZ8R/?sub1=&sub2=&sub3=" target="_blank">
                 <div class="ad">
                     <img src="{{ asset('images/debtmd.png') }}" alt="Ad Image" class="ad-image">
-                    <div class="ad-content">
+                    <div class="content-ad-content">
                         <h2>Become Debt-Free Today</h2>
                         <ul>
                             <li>Up to 50% lower monthly payments</li>
@@ -122,7 +122,7 @@
             
                 <div class="ad">
                     <img src="{{ asset('images/myPerfectResume.png') }}" alt="Ad Image" class="ad-image">
-                    <div class="ad-content">
+                    <div class="content-ad-content">
                         <h2>Get the help you need to land your next gig with a <b>custom resume!</b></h2>
                         <p>
                             Our Industry-leading resume tools take your job search from basic to next level.
@@ -136,7 +136,7 @@
                     
                 <div class="ad">
                     <img src="{{ asset('images/chime.png') }}" alt="Ad Image" class="ad-image">
-                    <div class="ad-content">
+                    <div class="content-ad-content">
                         <h2>
                             The best way to get up to $500 before payday*
                         </h2>
