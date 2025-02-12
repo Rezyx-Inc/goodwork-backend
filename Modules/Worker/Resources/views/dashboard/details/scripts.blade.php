@@ -751,6 +751,12 @@
                     match = undefined;
             }
 
+            if (workerMatch[workerField] && workerMatch[workerField].match != undefined) {
+                workerMatch[workerField].match = match;
+            }
+
+            console.log("====> matchWithWorker", match);
+
             return match;
         }
 
@@ -1105,11 +1111,11 @@
                     }
                 } else {
                     let fieldValue = dataToSend[requiredField];
-                    if (fieldValue == null && workerMatch[requiredField].match == false) {
+                    if (!fieldValue || workerMatch[requiredField].match == false) {
 
                         notie.alert({
                             type: 'error',
-                            text: '<i class="fa fa-exclamation-triangle"></i> Please fill the required fields',
+                            text: '<i class="fa fa-exclamation-triangle"></i> Please fill the required fields' ,
                             time: 3
                         });
                         access = false;
@@ -1118,6 +1124,9 @@
 
                 }
             };
+            console.log('requiredFieldsToApply:', requiredFieldsToApply);
+            console.log('workerMatch:', workerMatch);
+            console.log("dataToSend:", dataToSend);
             if (access == false) {
                 return false;
             }
@@ -1147,7 +1156,7 @@
                 console.error('Failed to get files:', error);
             }
 
-            apply_on_jobs(obj, worked_bfore);
+            // apply_on_jobs(obj, worked_bfore);
 
         }
         let matches;
@@ -1253,15 +1262,16 @@
             let matchCount = 0;
             var job = @json($model);
 
+            let field = workerField;
             if (job_attr_mapping[workerField]) {
-                workerField = job_attr_mapping[workerField];
+                field = job_attr_mapping[workerField];
             }
 
-            if ( !job[workerField] || job[workerField] == null || job[workerField] == '' ) {
+            if ( !job[field] || job[field] == null || job[field] == '' ) {
                 return undefined;
             }
 
-            let job_vals = job[workerField]?.split(', ');
+            let job_vals = job[field]?.split(', ');
             let nurse_vals = InsertedValue ? InsertedValue.split(', ') : [];
 
             
@@ -1272,6 +1282,10 @@
             if (!!matches && matches.length > 0) {
                 match = true;
                 matchCount = matches.length;
+            }
+
+            if (workerMatch[workerField] && workerMatch[workerField].match != undefined) {
+                workerMatch[workerField].match = match;
             }
             
             return match;
