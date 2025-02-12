@@ -423,7 +423,7 @@
 
                             <div class="row">
 
-                                <div class="col-6 col-md-6 col-lg-3">
+                                <div class="col-7 col-md-6 col-lg-3">
                                     <ul>
                                         @if (isset($j->preferred_shift_duration))
                                             <li>
@@ -453,7 +453,7 @@
                                     </ul>
                                 </div>
 
-                                <div class="col-6 col-md-6 col-lg-5 d-flex justify-content-end justify-content-lg-start">
+                                <div class="col-5 col-md-6 col-lg-5 d-flex justify-content-end justify-content-lg-start">
                                     <ul>
                                         @if (isset($j->actual_hourly_rate))
                                             <li><img class="icon_cards"

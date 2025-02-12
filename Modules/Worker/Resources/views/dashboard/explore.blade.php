@@ -286,7 +286,10 @@
                                     <div class="ss-job-prfle-sec" onclick="redirectToJobDetails(`{{ $j->id }}`)">
                                         {{-- row 1 --}}
                                         <div class="row">
-                                            <div class="col-10">
+                                            <p class="col-12 text-end d-md-none" style="padding-right:20px;">
+                                                <span>+{{ $j->getOfferCount() }} Applied</span>
+                                            </p>
+                                            <div class="col-12 col-md-10">                                                
                                                 <ul>
                                                     @if (isset($j->profession))
                                                         <li><a href="#"><svg style="vertical-align: sub;"
@@ -302,17 +305,11 @@
                                                     @endif
                                                 </ul>
                                             </div>
-                                            <p class="col-2 text-center" style="padding-right:20px;">
+                                            <p class="d-none d-md-block col-md-2 text-center" style="padding-right:20px;">
                                                 <span>+{{ $j->getOfferCount() }} Applied</span>
                                             </p>
                                         </div>
                                         {{-- row 2 --}}
-                                        <div class="row">
-                                            {{-- <div class="col-3"><ul><li><a href="{{route('worker_job-details',['id'=>$j->id])}}"><img class="icon_cards" src="{{URL::asset('frontend/img/job.png')}}"> {{$j->job_name}}</a></li>
-                                              </ul>
-                                            </div> --}}
-                                        </div>
-                                        {{-- row 3 --}}
                                         <div class="row">
                                             <div class="col-7">
                                                 <ul>
@@ -338,11 +335,11 @@
                                                     @endif
                                             </div>
                                         </div>
-                                        {{-- row 4 --}}
+                                        {{-- row 3 --}}
 
                                         <div class="row">
 
-                                            <div class="col-4">
+                                            <div class="col-7 col-md-6 col-lg-3">
                                                 <ul>
                                                     @if (isset($j->preferred_shift_duration))
                                                         <li>
@@ -372,7 +369,7 @@
                                                 </ul>
                                             </div>
 
-                                            <div class="col-8 d-flex justify-content-end">
+                                            <div class="col-5 col-md-6 col-lg-5 d-flex justify-content-end justify-content-lg-start">
                                                 <ul>
                                                     @if (isset($j->actual_hourly_rate))
                                                         <li><img class="icon_cards"
@@ -380,11 +377,15 @@
                                                             {{ number_format($j->actual_hourly_rate) }}/hr
                                                         </li>
                                                     @endif
+                                                </ul>
+                                            </div>
+                                            <div class="col-12 col-md-12 col-lg-4 d-flex justify-content-end">
+                                                <ul>
                                                     @if (isset($j->weekly_pay))
-                                                        <li><img class="icon_cards"
-                                                                src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                            {{ number_format($j->weekly_pay) }}/wk
-                                                        </li>
+                                                    <li><img class="icon_cards"
+                                                            src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
+                                                        {{ number_format($j->weekly_pay) }}/wk
+                                                    </li>
                                                     @endif
                                                     @if (isset($j->weekly_pay))
                                                         <li style="font-weight: 600;"><img class="icon_cards"
