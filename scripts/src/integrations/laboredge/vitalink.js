@@ -16,6 +16,7 @@ var _ = require('lodash'); // Used for data manipulation
 var { report } = require('../../set.js');
 const { init } = require("laravel-echo-server");
 
+var vitalinkOrgId = "UWU445837";
 //Connect to DB
 mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_DATABASE_NAME)
 .then(() => {
@@ -30,196 +31,143 @@ mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_
 // Process laboredge integrations for the first time
 module.exports.init = (async () => {
 
-
 	// console.log("Inside init method");
-	var limit = 100; // No. of documents per batch
-	var totalIntegrations = await Laboredge.countDocuments(); //Fetch total no. of documents 
-	var totalPages = Math.ceil(totalIntegrations/limit);
-
-	for( i = 0; i < totalPages; i++ ){
-
-		// console.log("Inside for of init function");
-		// offset the results by i (current page) * limit (100 by default)
-		var offset = i * limit;
-		
-		// only find non updated documents AKA recently enabled integrations
-		await Laboredge.find({updated: { $exists:false }}).limit(limit).skip(offset)
-		.then( async laboredge => {
-			
-			// console.log("Inside Laboredge.find : "+laboredge.length);
-			if(!laboredge){
-				return
-			}
-			for ( let [index,user] of laboredge.entries()){
+		try{
 				
-				console.log( "INDEX : ", index,"User ID : ", user.userId)
+			// 	console.log( "INDEX : ", index,"User ID : ", user.userId)
 				
-				// select * from laboredge where user_id = laboredge.userId
+			// 	// select * from laboredge where user_id = laboredge.userId
 				
-				// WARNING : uses real data - mimic a normal mysql response
-				// const mysqlResp = {
-				// 	user_id:"UWU445837",
-				// 	le_password:"Newemp1!",
-				// 	le_username:"kirsten@qualityclinicians.com",
-				// 	le_organization_code:"Quality",
-				// 	le_client_id:"nexus"
-				// }
-				
-				var mysqlResp = await queries.getLaboredgeLogin(user.userId);
-				mysqlResp = mysqlResp[0];
-
-				// console.log("Mysql resp : "+mysqlResp);
-				// Get the accessToken
-				var accessToken = await connectNexus(mysqlResp);
-
-				// Get and update professions
-				const professions = await getProfession(accessToken, mysqlResp.user_id)
-				user.professions = professions;
-
-				// Get and update specialties
-				const specialties = await getSpecialties(accessToken, mysqlResp.user_id)
-				user.specialties = specialties;
-
-				// Get and update States
-				const states = await getStates(accessToken, mysqlResp.user_id)
-				user.states = states;
-
-				// Get and update Countries
-				const countries = await getCountries(accessToken, mysqlResp.user_id)
-				user.countries = countries;
-
-				// update updated with new Date().toLocaleString()
-				user.updated = moment().format("YYYY-MM-DD[T]HH:mm:ss");
-
-				// Get and update Jobs
-				const jobs = await getJobs(accessToken, mysqlResp.user_id, false, false); 
-				user.importedJobs = jobs;
-
-				// Save the updated user in the db
-				await user.save().then(resp => {}).catch(e=>{console.log(e)});
-
-				// Send jobs to mysql
-				// for job in jobs | insert into jobs (...) values (...)
-				// import_id is job.postingId not job._id
-				// 
-
-				for(job of user.importedJobs){
-					await queries.addImportedJob(job)
-				}
-				
-			}
-		})			
-	}
+			var mysqlResp = await queries.getLaboredgeLogin(vitalinkOrgId) // Get login details from the db
+			var vitalinkMongo = await Laboredge.find({userId: vitalinkOrgId});
 	
-	// console.log("Jobs saved into the db");
+			// var mysqlResp = await queries.getLaboredgeLogin(user.userId);
+			mysqlResp = mysqlResp[0];
+
+			// console.log("Mysql resp : "+mysqlResp);
+			// Get the accessToken
+			var accessToken = await connectNexus(mysqlResp);
+
+			// Get and update professions
+			const professions = await getProfession(accessToken, mysqlResp.user_id)
+			vitalinkMongo.professions = professions;
+
+			// Get and update specialties
+			const specialties = await getSpecialties(accessToken, mysqlResp.user_id)
+			vitalinkMongo.specialties = specialties;
+
+			// Get and update States
+			const states = await getStates(accessToken, mysqlResp.user_id)
+			vitalinkMongo.states = states;
+
+			// Get and update Countries
+			const countries = await getCountries(accessToken, mysqlResp.user_id)
+			vitalinkMongo.countries = countries;
+
+			// update updated with new Date().toLocaleString()
+			vitalinkMongo.updated = moment().format("YYYY-MM-DD[T]HH:mm:ss");
+
+			// Get and update Jobs
+			const jobs = await getJobs(accessToken, mysqlResp.user_id, false, false); 
+			vitalinkMongo.importedJobs = jobs;
+
+			vitalinkMongo.initiated = 1;
+			// Save the updated vitalinkMongo in the db
+			await vitalinkMongo.save().then(resp => {}).catch(e=>{console.log(e)});
+
+			// Send jobs to mysql
+			// for job in jobs | insert into jobs (...) values (...)
+			// import_id is job.postingId not job._id
+			// 
+
+			for(job of vitalinkMongo.importedJobs){
+				await queries.addImportedJob(job)
+			}
+		}catch(e){
+			console.log("Unknown error", e);
+		}
+
+	//Once executed, set mysql.initiated to true
+	console.log("Jobs saved into the db");
 });
+
+//Helper function to have round-robin for recruiter updates
+
+//trim init
+//remove comments
+
 // Update the existing integrations
 module.exports.update = (async () => {
 
-	console.log("Inside update function");
-	var limit = 100; // No. of documents per batch
-	var totalIntegrations = await Laboredge.countDocuments();//Fetch total no. of documents
-	var totalPages = Math.ceil(totalIntegrations/limit);
+	try{
 
-	// console.log("totalPages : "+totalPages);
-	for( i = 0; i < totalPages; i++ ){
+    	var mysqlResp = await queries.getLaboredgeLogin(vitalinkOrgId) // Get login details from the db
+    	var vitalinkMongo = await Laboredge.find({userId: vitalinkOrgId});
 
-		// console.log("Inside for of update");
-		// offset the results by i (current page) * limit (100 by default)
-		var offset = i * limit;
-		
-		// only find updated documents AKA Initialised integrations
-		await Laboredge.find({updated: { $exists:true }}, {'_id':0, 'importedJobs._id':0, 'importedJobs.rates._id':0}).limit(limit).skip(offset)
+		console.log("Vitalink Mongo : ", vitalinkMongo);
+    	// flatten the array
+    	mysqlResp = mysqlResp[0];
 
-		.then( async laboredge => {
-			
-			// this error should trigger a notification somewhere
-			if(!laboredge){
-				process.exit(1)
-			}
+    	// Get the accessToken
+    	var accessToken = await connectNexus(mysqlResp);
 
-			for ( let [index,user] of laboredge.entries()){
-				
-				console.log( "INDEX : ", index,"User ID : ", user.userId, "_id:", user._id)
-				
-				var mysqlResp = await queries.getLaboredgeLogin(user.userId) // Get login details from the db
-				
-				// Not required, but better be safe
-				if(mysqlResp.length == 0){
-					console.log("no integration")
-					continue
-				}
-				
-				// flatten the array
-				mysqlResp = mysqlResp[0];
+    	// Get Jobs from the laboredge API
+    	const jobs = await getJobs(accessToken, mysqlResp.user_id, true, vitalinkMongo.updated);
 
-				// Since we get everyone, better be safe again
-				if( mysqlResp.initiated == false){
+    	// Check which job has changed
+    	const updatedJobs = await getUpdatedJobs(jobs, vitalinkMongo.importedJobs, mysqlResp.user_id);
 
-					// Get the accessToken
-					var accessToken = await connectNexus(mysqlResp);
-					
-					// Get Jobs from the laboredge API
-					const jobs = await getJobs(accessToken, mysqlResp.user_id, true, user.updated);
+    	console.log("ACTUAL JOB",vitalinkMongo.importedJobs.length, "UPDATE JOBS",jobs.length)
+    	console.log("TO CLOSE", updatedJobs.toClose.length, "TO ADD", updatedJobs.toAdd.length, "UNCHANGED", updatedJobs.unchanged.length, "TO UPDATE", updatedJobs.toUpdate.length)
 
-					
-					// Check which job has changed
-					const updatedJobs = await getUpdatedJobs(jobs, user.importedJobs, mysqlResp.user_id);
-					// should be {toClose: [ids only], toAdd: [{},{}], toUpdate:[{},{}]}
-					
-					console.log("ACTUAL JOB",user.importedJobs.length, "UPDATE JOBS",jobs.length)
-					console.log("TO CLOSE", updatedJobs.toClose.length, "TO ADD", updatedJobs.toAdd.length, "UNCHANGED", updatedJobs.unchanged.length, "TO UPDATE", updatedJobs.toUpdate.length)
 
-					for( [ind, item] of user.importedJobs.entries()){
+		if(jobs.length == 0){
+			return ;
+		}
+		//return
 
-						if ( _.includes(updatedJobs.toClose,item.id) ){
+		// exit when there is nothing to update
+		// Check why there's nothing to update and everything is set to 'closed'
+    	for( [ind, item] of vitalinkMongo.importedJobs.entries()){
 
-							user.importedJobs[ind].jobStatus = "Closed"; // Mark job status as closed
-							let closingJob = await queries.closeImportedJobs(user.importedJobs[ind].id); // Update in the db
-							continue
-						}
+        	if ( _.includes(updatedJobs.toClose,item.id) ){
 
-						// Not closed, so update
-						for ( updateItem of updatedJobs.toUpdate ){
+            	vitalinkMongo.importedJobs[ind].jobStatus = "Closed"; // Mark job status as closed
+            	let closingJob = await queries.closeImportedJobs(vitalinkMongo.importedJobs[ind].id); // Update in the db
+            	continue
+        	}
 
-							if(updateItem.id == item.id){
+        	// Not closed, so update
+        	for ( updateItem of updatedJobs.toUpdate ){
 
-								user.importedJobs[ind] = updateItem;
-								//await queries.addImportedJob(updateItem); //update in the db
-								await queries.updateImportedJob(updateItem); //update in the db
-							}
-						}
+            	if(updateItem.id == item.id){
 
-					}
+                	await queries.updateLaboredgeJobs(updateItem); //update in the db
+                	vitalinkMongo.importedJobs[ind] = updateItem;
+            	}
+        	}
 
-					// add new jobs
-					for ( newItem of updatedJobs.toAdd ){
+    	}
 
-						await queries.addImportedJob(updateItem);
-						user.importedJobs.push(newItem)
-					}
-					
-					// update updated (timestamp)
-					user.updated = moment().format("YYYY-MM-DD[T]HH:mm:ss");
+    	// add new jobs
+    	for ( newItem of updatedJobs.toAdd ){
 
-					/*
-					// Get Jobs - mysql
-					// use the updatedJobs response to apply the same changes as above
+        	await queries.addImportedJob(updateItem);
+        	vitalinkMongo.importedJobs.push(newItem)
+    	}
 
-					// select user_id,import_id from jobs where user_id= mysqlResp.user_id AND import_id NOT NULL
-					// apply the changes from updatedJobs
+    	// update updated (timestamp)
+    	vitalinkMongo.updated = moment().format("YYYY-MM-DD[T]HH:mm:ss");
 
-					*/
+    	// Save
+    	await vitalinkMongo.save().then(resp => {}).catch(e=>{console.log(e)})
 
-					// Save
-					await user.save().then(resp => {}).catch(e=>{console.log(e)})
-				}
-			}
-		})			
+	}catch(e){
+    	console.log("Unknown error", e);
 	}
-	
+
 	console.log("Jobs updated in the db");
-});
+})();
 
 // get professions
 async function getProfession (accessToken, userId){
@@ -551,27 +499,17 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 	
 	// set the params for the first query
 	var params = {};
-	// {
-	//     //jobStatusCode: "OPEN", //removed
-		// pagingDetails:{
-	    //     start:0,
-	//         maxRowsToFetch:100 
-    // 	}
-	// };
-
-
+	let dateModifiedStart = moment().subtract(1, 'hours').format("YYYY-MM-DD[T]HH:mm:ss"),dateModifiedEnd = moment().format("YYYY-MM-DD[T]HH:mm:ss")
 	if(isUpdate){
 		params = {
 			pagingDetails:{
 				start:0
 			},
-			dateModifiedStart: moment().subtract(1, 'hours').format("YYYY-MM-DD[T]HH:mm:ss"),
-			dateModifiedEnd: moment().format("YYYY-MM-DD[T]HH:mm:ss")
+			dateModifiedStart,
+			dateModifiedEnd,
+			dateCreatedStart: dateModifiedStart,
+			dateCreatedEnd: dateModifiedEnd
 		};
-		// params.pagingDetails.start = 0;
-		// //params.dateModifiedStart = lastUpdate; //moment.format - one hour
-		// params.dateModifiedStart = moment().subtract(1, 'hours').format("YYYY-MM-DD[T]HH:mm:ss");
-		// params.dateModifiedEnd = moment().format("YYYY-MM-DD[T]HH:mm:ss");
 	}else{
 		params = {
 			jobStatusCode : "OPEN",
@@ -579,16 +517,16 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 				start:0
 			}
 		}
-		// params.jobStatusCode = "OPEN";
-		// params.pagingDetails.start = 0;
 	}
 
+	console.log("Params :", params);
 	// Get the total amount of records
 	try{
 
 		var { data } = await axios.post("https://api-nexus.laboredge.com:9000/api/job-service/v1/ats/external/jobs/search", params, {headers});
 
-		// console.log("Len of data : "+data.count);
+		console.log("Len of data : "+data.count);
+
 		if( data.count > 100 ){
 
 			for(; params.pagingDetails.start < data.count ;){
@@ -737,7 +675,7 @@ module.exports.seed = async ( amount ) =>{
 
 			//Creating a Recruiter user profile (manually)
 			var laboredge = {
-				userId: "UWU"+Math.random().toString().slice(2,8),
+				userId: "UWU445837",
 			    userType: "RECRUITER",
 			    created: new Date().toLocaleString(),
 			    logs: [],

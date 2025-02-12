@@ -8,7 +8,7 @@ if(process.env.APP_ENV == "production"){
 	const expedientOrgId = "";
 }
 
-module.exports.init = async (){
+module.exports.init = async () => { 
 
 	let credentials = await queries.getCeipalCredentials(expedientOrgId);
 	let token = await connectCeipal(credentials);
@@ -21,7 +21,7 @@ module.exports.init = async (){
 
 }
 
-module.exports.update = async (){
+module.exports.update = async () => {
 
 }
 

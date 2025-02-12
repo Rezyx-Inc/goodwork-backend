@@ -40,7 +40,7 @@ if (process.env.ENABLE_CRONS === "true") {
     // Check updates every hour
     cron.schedule("0 * * * *", () => {
         console.log("Hourly Checking job updates");
-        ardorHealth.init();
+        // ardorHealth.init();
     //     // vitalink.update();
     //     gsheet();
     });

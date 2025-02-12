@@ -123,7 +123,7 @@ module.exports.closeImportedJobs = async function (imported_id) {
     return result;
 };
 
-module.exports.updateImportedJob = async function (importData) {
+module.exports.updateLaboredgeJobs = async function (importData) {
     
     // console.log("Inside update imported job method");
     var floatReq = "";
@@ -196,97 +196,85 @@ module.exports.updateImportedJob = async function (importData) {
 //Function to insert imported jobs into our db
 module.exports.addImportedJob = async function (importData) {
 
-    if (importData.durationType != "WEEKS") {
-        return false;
+	var is_open=0,is_closed=0,active=0,is_hidden=0,as_soon_as=0;
+
+    if(!importData.startDate){
+        as_soon_as = 1;
     }
+	let id = await getNewJobId(pool);
 
-    var floatReq = "";
+	var floatReq = "";
 
-    if (
-        importData.floatingReqUnits == "" ||
-        importData.floatingReqUnits == null
-    ) {
-        floatReq = 0;
-    } else {
-        floatReq = 1;
-    }
+	if (
+    	importData.floatingReqUnits == "" ||
+    	importData.floatingReqUnits == null
+	) {
+    	floatReq = 0;
+	} else {
+    	floatReq = 1;
+	}
 
-    //Job description
-    let description =
-        importData.postingId +
-        " " +
-        importData.description +
-        " " +
-        importData.shift;
+	let hoursPerShift = importData.scheduledHrs1 / importData.shiftsPerWeek1;
 
-    let hoursPerShift = importData.scheduledHrs1 / importData.shiftsPerWeek1;
+	if(importData.jobStatus === "Open"){
 
-    var is_open=0,is_closed=0,active=0,is_hidden=0;
+    	is_open = 1;
+    	active = 1;
 
-    if(importData.jobStatus === "Open"){
-        is_open = 1;
-        active = 1;
-        is_closed = 0;
-        is_hidden=0;
-    }else if(importData.jobStatus === "Closed"){
-        is_open = 0;
-        active = 0;
-        is_closed = 1;
-        is_hidden = 0;
-    }
+	}else if(importData.jobStatus === "Closed"){
 
-    if(!(importData.id  && importData.imported_id  && importData.jobTitle  &&
-        description  && importData.signOnBonus  && importData.jobType  &&
-        importData.startDate  && importData.endDate  && importData.duration  &&
-        importData.shiftsPerWeek1  && importData.scheduledHrs1  && hoursPerShift  &&
-        importData.profession  && importData.specialty  && importData.hourlyPay)){
-            is_open = 0;
-            active = 1;
-            is_closed = 0;
-            is_hidden = 0;
-        }
+    	is_closed = 1;
+	}
 
-    const [result, fields] = await pool.query(
-        "INSERT INTO jobs (id,import_id, job_name, description, sign_on_bonus, job_type, start_date, end_date, preferred_shift_duration, is_open, active, is_closed, float_requirement, weeks_shift, hours_per_week, hours_shift, profession, specialty, actual_hourly_rate, as_soon_as, auto_offers, dental, eligible_work_in_us, facility_city, facility_state, four_zero_one_k, health_insaurance, is_hidden, is_resume, on_call, professional_licensure, tax_status, vision) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
-        [
-            importData.id,
-            importData.imported_id,
-            importData.jobTitle,
-            description,
-            importData.signOnBonus,
-            importData.jobType,
-            importData.startDate,
-            importData.endDate,
-            importData.duration,
-            is_open, //is_open
-            active, //active
-            is_closed, //is_closed
-            floatReq,
-            importData.shiftsPerWeek1,
-            importData.scheduledHrs1,
-            hoursPerShift,
-            importData.profession,
-            importData.specialty,
-            importData.hourlyPay,
-            0, //as_soon_as
-            0, //auto_offers
-            0, //dental
-            0, //eligible_work_in_us
-            (importData.facility_city != null) ? importData.facility_city : "",
-            (importData.facility_state != null) ? importData.facility_state : "",
-            0, //401k
-            0, //health_insurance
-            is_hidden, //is_hidden
-            0, //is_resume
-            0, //on_call
+	if(!( importData.jobType || importData.startDate || importData.endDate ||  importData.duration  || importData.shiftsPerWeek1  ||  importData.scheduledHrs1  ||  hoursPerShift  || importData.profession  || importData.specialty  ||  importData.hourlyPay )){
+
+        	is_open = 1;
+        	active = 0;
+        	is_closed = 0;
+	}
+
+	if (importData.durationType != "WEEKS") {
+    	is_open=1;
+    	is_closed=0;
+    	active=0;
+    	is_hidden=0;
+	}
+	const [result, fields] = await pool.query(
+    	"INSERT INTO jobs (professional_licensure, facility_state, facility_city, terms, job_type, id, organization_id, created_by, job_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate, tax_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+    	[
             (importData.professional_licensure != null) ? importData.professional_licensure : "",
-            "",//tax_status
-            0, //vision
-        ]
-    );
+            (importData.facility_state != null) ? importData.facility_state : "",
+            (importData.facility_city != null) ? importData.facility_city : "",
+            importData.terms,
+            importData.jobType,
+            id,
+            importData.organization_id,
+            importData.created_by,
+        	importData.postingId,
+            importData.jobTitle,
+            importData.job_city,
+            importData.job_state,
+            importData.shiftsPerWeek1,
+            hoursPerShift,
+            importData.preferred_shift_duration,
+            importData.startDate,
+        	importData.endDate,
+            importData.scheduledHrs1,
+            importData.weekly_pay,
+            importData.description,
+            active,
+            is_open,
+            is_closed,
+            importData.profession,
+            importData.preferred_specialty,
+            importData.hourlyPay,
+            ""
+    	]
+	);
 
-    return result;
+	return result;
 };
+
 
 // Query to get specialties
 module.exports.getSpecialties = async function () {
