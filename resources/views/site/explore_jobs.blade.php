@@ -474,7 +474,7 @@
                                         </ul>
                                     </div>
                                 @else
-                                    <div class="col-12 col-md-4 col-lg-5 d-flex justify-content-end justify-content-md-start">
+                                    <div class="col-4 col-lg-5">
                                         <ul>
                                             @if (isset($j->actual_hourly_rate))
                                                 <li><img class="icon_cards"
@@ -484,7 +484,7 @@
                                             @endif
                                         </ul>
                                     </div>
-                                    <div class="col-12 col-md-8 col-lg-7 d-flex justify-content-end">
+                                    <div class="col-8 col-lg-7 d-flex justify-content-end">
                                         <ul>
                                             @if (isset($j->weekly_pay))
                                             <li><img class="icon_cards"
