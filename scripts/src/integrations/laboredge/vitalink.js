@@ -33,15 +33,12 @@ module.exports.init = (async () => {
 
 	// console.log("Inside init method");
 		try{
-				
-			// 	console.log( "INDEX : ", index,"User ID : ", user.userId)
-				
-			// 	// select * from laboredge where user_id = laboredge.userId
-				
+					
 			var mysqlResp = await queries.getLaboredgeLogin(vitalinkOrgId) // Get login details from the db
 			var vitalinkMongo = await Laboredge.find({userId: vitalinkOrgId});
-	
-			// var mysqlResp = await queries.getLaboredgeLogin(user.userId);
+
+			//Flattening the arrays
+			vitalinkMongo = vitalinkMongo[0];
 			mysqlResp = mysqlResp[0];
 
 			// console.log("Mysql resp : "+mysqlResp);
@@ -75,11 +72,6 @@ module.exports.init = (async () => {
 			// Save the updated vitalinkMongo in the db
 			await vitalinkMongo.save().then(resp => {}).catch(e=>{console.log(e)});
 
-			// Send jobs to mysql
-			// for job in jobs | insert into jobs (...) values (...)
-			// import_id is job.postingId not job._id
-			// 
-
 			for(job of vitalinkMongo.importedJobs){
 				await queries.addImportedJob(job)
 			}
@@ -93,9 +85,6 @@ module.exports.init = (async () => {
 
 //Helper function to have round-robin for recruiter updates
 
-//trim init
-//remove comments
-
 // Update the existing integrations
 module.exports.update = (async () => {
 
@@ -105,8 +94,10 @@ module.exports.update = (async () => {
     	var vitalinkMongo = await Laboredge.find({userId: vitalinkOrgId});
 
 		console.log("Vitalink Mongo : ", vitalinkMongo);
+
     	// flatten the array
-    	mysqlResp = mysqlResp[0];
+    	vitalinkMongo = vitalinkMongo[0];
+		mysqlResp = mysqlResp[0];
 
     	// Get the accessToken
     	var accessToken = await connectNexus(mysqlResp);
@@ -122,12 +113,10 @@ module.exports.update = (async () => {
 
 
 		if(jobs.length == 0){
+			console.log("Returning as there are no jobs to update");
 			return ;
 		}
-		//return
 
-		// exit when there is nothing to update
-		// Check why there's nothing to update and everything is set to 'closed'
     	for( [ind, item] of vitalinkMongo.importedJobs.entries()){
 
         	if ( _.includes(updatedJobs.toClose,item.id) ){
@@ -167,7 +156,7 @@ module.exports.update = (async () => {
 	}
 
 	console.log("Jobs updated in the db");
-})();
+});
 
 // get professions
 async function getProfession (accessToken, userId){
@@ -613,7 +602,7 @@ async function getUpdatedJobs(newJobs, oldJobs, userId){
 		// console.log("2. Needle length : "+needle.length+", Needle is : "+needle);
 		
 		if(!needle){
-			console.log("Inside not needle block with job id : "+job.id);
+			console.log("Inside not needle block with job id : ",job.id," , old id : ", needle);
 			toClose.push(job.id)
 		}
 	}
