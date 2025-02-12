@@ -69,7 +69,7 @@
         max-height: 70vh;
     }
 
-    #adPopup .ad-content {
+    #adPopup .content-ad-content {
         flex: 1;
     }
 
@@ -104,7 +104,7 @@
             max-width: 100%;
         }
 
-        #adPopup .ad-content {
+        #adPopup .content-ad-content {
             text-align: center;
         }
     }
@@ -124,7 +124,7 @@
             <div class="ad">
                 <img src="{{ asset($randomAd['image']) }}" alt="Ad Image" class="ad-image">
                 @if($randomAd['content'])
-                <div class="ad-content">
+                <div class="content-ad-content">
                     {!! $randomAd['content'] !!}
                 </div>
                 @endif

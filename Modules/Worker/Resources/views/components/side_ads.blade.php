@@ -40,30 +40,30 @@
     }
 
     /* Ad Content */
-    .ad-content {
+    .content-ad-content {
         padding: 20px;
         text-align: center;
     }
 
-    .ad-content * {
+    .content-ad-content * {
         font-size: 14px;
         color: #666666;
         line-height: 1.5;
     }
 
-    .ad-content h2 {
+    .content-ad-content h2 {
         font-weight: 600;
         margin-bottom: 10px;
         color: #333333;
     }
 
-    .ad-content p {
+    .content-ad-content p {
         color: #666666;
         line-height: 1.5;
         margin-bottom: 15px;
     }
 
-    .ad-content ul {
+    .content-ad-content ul {
         list-style-type: disc;
         padding-left: 20px;
         margin-bottom: 15px;
@@ -110,7 +110,7 @@
                 <img src="{{ asset($randomAd['image']) }}" alt="Ad Image" class="ad-image">
 
                 @if($randomAd['content'])
-                    <div class="ad-content">
+                    <div class="content-ad-content">
                         {!! $randomAd['content'] !!}
                     </div>
                 @endif
