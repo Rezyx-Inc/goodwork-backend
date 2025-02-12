@@ -1124,9 +1124,7 @@
 
                 }
             };
-            console.log('requiredFieldsToApply:', requiredFieldsToApply);
-            console.log('workerMatch:', workerMatch);
-            console.log("dataToSend:", dataToSend);
+            
             if (access == false) {
                 return false;
             }
@@ -1156,7 +1154,7 @@
                 console.error('Failed to get files:', error);
             }
 
-            // apply_on_jobs(obj, worked_bfore);
+            apply_on_jobs(obj, worked_bfore);
 
         }
         let matches;
