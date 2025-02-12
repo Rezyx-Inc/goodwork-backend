@@ -550,7 +550,6 @@ class WorkerDashboardController extends Controller
       unset($data['specialities']);
       unset($data['professions']);
       unset($data['us_states']);
-      unset($data['specialities']);
       unset($data['terms_key']);
 
       return response()->json(['message' =>  $data]);
