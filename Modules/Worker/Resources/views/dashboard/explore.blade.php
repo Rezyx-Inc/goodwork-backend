@@ -230,7 +230,7 @@
 
                             <div class="ss-dash-profile-4-bx-dv" id="job-item-container">
                                 @forelse($jobs as $j)
-                                    <div class="ss-job-prfle-sec job-item" data-id="{{ $j->id }}"
+                                    <div onclick="redirectToJobDetails(`{{ $j->id }}`)" class="ss-job-prfle-sec job-item" data-id="{{ $j->id }}"
                                         data-job="{{ $j->id }}">
                                         {{-- row 1 --}}
                                         <div class="row">
@@ -744,7 +744,6 @@
 
                             // Increment skip
                             skip += 10;
-
                         },
                         error: function(resp) {
 
@@ -755,8 +754,6 @@
                             });
                         }
                     });
-
-
 
                     return
                 }
@@ -772,6 +769,10 @@
             jobLength % 10 == 0 ? observer.observe(el) : null;
 
         });
+
+        function redirectToJobDetails(id) {
+            window.location.href = `job/${id}/details`;
+        }
     </script>
 
 
