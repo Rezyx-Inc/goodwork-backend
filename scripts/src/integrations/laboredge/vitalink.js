@@ -14,9 +14,9 @@ var moment = require("moment"); // Used for date-time changes
 
 var _ = require('lodash'); // Used for data manipulation
 var { report } = require('../../set.js');
-const { init } = require("laravel-echo-server");
 
-var vitalinkOrgId = "UWU445837";
+var vitalinkOrgId = "GWU000002";
+
 //Connect to DB
 mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_DATABASE_NAME)
 .then(() => {
@@ -34,7 +34,7 @@ module.exports.init = (async () => {
 	// console.log("Inside init method");
 		try{
 					
-			var mysqlResp = await queries.getLaboredgeLogin(vitalinkOrgId) // Get login details from the db
+			var mysqlResp = await queries.getLaboredgeLogin(vitalinkOrgId); // Get login details from the db
 			var vitalinkMongo = await Laboredge.find({userId: vitalinkOrgId});
 
 			//Flattening the arrays
@@ -67,20 +67,27 @@ module.exports.init = (async () => {
 			// Get and update Jobs
 			const jobs = await getJobs(accessToken, mysqlResp.user_id, false, false); 
 			vitalinkMongo.importedJobs = jobs;
-
 			vitalinkMongo.initiated = 1;
+
 			// Save the updated vitalinkMongo in the db
 			await vitalinkMongo.save().then(resp => {}).catch(e=>{console.log(e)});
 
 			for(job of vitalinkMongo.importedJobs){
-				await queries.addImportedJob(job)
+
+				await queries.addImportedJob(job, mysqlResp.user_id)
 			}
+
+			//TODO
+			//Once executed, set mysql.initiated to true
+
 		}catch(e){
+
 			console.log("Unknown error", e);
 		}
 
-	//Once executed, set mysql.initiated to true
 	console.log("Jobs saved into the db");
+
+	return
 });
 
 //Helper function to have round-robin for recruiter updates
@@ -91,9 +98,9 @@ module.exports.update = (async () => {
 	try{
 
     	var mysqlResp = await queries.getLaboredgeLogin(vitalinkOrgId) // Get login details from the db
-    	var vitalinkMongo = await Laboredge.find({userId: vitalinkOrgId});
 
-		console.log("Vitalink Mongo : ", vitalinkMongo);
+    	// Get old jobs -> Swapping for mysql jobs
+    	var vitalinkMongo = await Laboredge.find({userId: vitalinkOrgId});
 
     	// flatten the array
     	vitalinkMongo = vitalinkMongo[0];
@@ -103,7 +110,7 @@ module.exports.update = (async () => {
     	var accessToken = await connectNexus(mysqlResp);
 
     	// Get Jobs from the laboredge API
-    	const jobs = await getJobs(accessToken, mysqlResp.user_id, true, vitalinkMongo.updated);
+    	const jobs = await getJobs(accessToken, mysqlResp.user_id, true, false);
 
 		if(jobs.length == 0){
 			console.log("Returning as there are no jobs to update");
@@ -120,10 +127,13 @@ module.exports.update = (async () => {
 
     	for( [ind, item] of vitalinkMongo.importedJobs.entries()){
 
-        	if ( _.includes(updatedJobs.toClose,item.id) ){
+        	if ( _.includes(updatedJobs.toClose, item.id) ){
 
-            	vitalinkMongo.importedJobs[ind].jobStatus = "Closed"; // Mark job status as closed
-            	let closingJob = await queries.closeImportedJobs(vitalinkMongo.importedJobs[ind].id); // Update in the db
+        		// Update mysql
+            	let closingJob = await queries.closeImportedJobs(item.id, mysqlResp.user_id);
+
+            	// Remove the job from the list
+            	vitalinkMongo.importedJobs.splice(ind, 1);
             	continue
         	}
 
@@ -132,19 +142,19 @@ module.exports.update = (async () => {
 
             	if(updateItem.id == item.id){
 					
-					// console.log("Update Item : ", updateItem);
-					
-                	let result = await queries.updateLaboredgeJobs(updateItem, vitalinkOrgId); //update in the db
+					//update in the db
+                	let result = await queries.updateLaboredgeJobs(updateItem, vitalinkOrgId);
+
 					if(!result){
 						count++;
 					}
+
                 	vitalinkMongo.importedJobs[ind] = updateItem;
             	}
         	}
 
     	}
 
-		console.log("Jobs updated: ",count);
     	// add new jobs
     	for ( newItem of updatedJobs.toAdd ){
 
@@ -163,7 +173,8 @@ module.exports.update = (async () => {
 	}
 
 	console.log("Jobs updated in the db");
-});
+	return
+})();
 
 // get professions
 async function getProfession (accessToken, userId){
@@ -432,19 +443,8 @@ module.exports.updateOthers = async () => {
 				return
 			}
 			for ( let [index,user] of laboredge.entries()){
-				
-				//console.log( "INDEX : ", index,"User ID : ", user.userId)
-				
-				// select * from laboredge where user_id = laboredge.userId
-				
-				// WARNING : uses real data - mimic a normal mysql response
-				const mysqlResp = {
-					user_id:"UWU445837",
-					le_password:"Newemp1!",
-					le_username:"kirsten@qualityclinicians.com",
-					le_organization_code:"Quality",
-					le_client_id:"nexus"
-				}
+
+				var mysqlResp = await queries.getLaboredgeLogin(vitalinkOrgId);
 
 				// Get the accessToken
 				var accessToken = await connectNexus(mysqlResp);
@@ -486,7 +486,6 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 	//true -- get jobs other than open
 	var importedJobs = [];
 
-	console.log("Inside getJobs with access token : "+accessToken);
 	// Headers required for the API call
 	var headers = {
 		'Authorization' : 'Bearer '+accessToken, //error
@@ -495,33 +494,20 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 	
 	// set the params for the first query
 	var params = {};
-	let dateModifiedStart = moment().subtract(7, 'days').format("YYYY-MM-DD[T]HH:mm:ss"),dateModifiedEnd = moment().format("YYYY-MM-DD[T]HH:mm:ss")
-	if(isUpdate){
-		params = {
-			pagingDetails:{
-				start:0
-			},
-			dateModifiedStart: "2025-01-01T11:52:45",
-			dateModifiedEnd: dateModifiedEnd
-			// dateCreatedStart: dateModifiedStart,
-			// dateCreatedEnd: dateModifiedEnd
-		};
-	}else{
-		params = {
-			jobStatusCode : "OPEN",
-			pagingDetails:{
-				start:0
-			}
+
+	let dateModifiedStart = moment().subtract(25, 'days').format("YYYY-MM-DD[T]HH:mm:ss"),dateModifiedEnd = moment().format("YYYY-MM-DD[T]HH:mm:ss")
+
+	params = {
+		jobStatusCode : "OPEN",
+		pagingDetails:{
+			start:0
 		}
 	}
 
-	console.log("Params :", params);
 	// Get the total amount of records
 	try{
 
 		var { data } = await axios.post("https://api-nexus.laboredge.com:9000/api/job-service/v1/ats/external/jobs/search", params, {headers});
-
-		console.log("Len of data : "+data.count);
 
 		if( data.count > 100 ){
 
@@ -533,12 +519,13 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 
 				}catch(e){
 
-					//log in case of API call failure
-					log("Unable to fetch records from nexus. count > 100.", e.message, userId)
+					// TODO
+					//log in case of API call failure => to mongodb
+					console.log("Unable to fetch records from nexus. count > 100.", e.message, userId);
 				}
 
 				for( entries of res.data.records ){
-					
+
 						importedJobs.push(entries);
 				}
 				
@@ -546,8 +533,9 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 				params.pagingDetails.start+=100;
 			}
 		
-		}else if (data.count == 0){ // No job data found in the API
-			
+		}else if (data.count == 0){
+
+			// No job data found in the API
 			console.log("No jobs to load", "data.count is empty", userId);
 		
 		}else{
@@ -564,7 +552,8 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 	}catch(e){
 	
 		//log in case of API call failure
-		console.log("Unable to fetch for total records from Nexus.", e.message, userId)
+		console.log("Unable to fetch for total records from Nexus.", e.message, userId);
+		return false;
 	}
 }
 
@@ -576,10 +565,9 @@ async function getUpdatedJobs(newJobs, oldJobs, userId){
 	// should return {toClose: [ids only], toAdd: [{},{}], toUpdate:[{},{}]
 
 	var toClose = [], toAdd = [], toUpdate = [], unchanged = [];
-	var newFormatedJobs = await formatJobs(newJobs);
 
 	// May need to be optimised
-	for( job of newFormatedJobs ){
+	for( job of newJobs ){
 		
 		// Check if OldJobs is in NewJobs --> should be kept		
 		let needle = _.find(oldJobs, ['id', job.id]);
@@ -605,11 +593,11 @@ async function getUpdatedJobs(newJobs, oldJobs, userId){
 
 	for( job of oldJobs){
 
-		let needle = _.find(newFormatedJobs, ['id', job.id]);
+		let needle = _.find(newJobs, ['id', job.id]);
 		// console.log("2. Needle length : "+needle.length+", Needle is : "+needle);
 		
 		if(!needle){
-			console.log("Inside not needle block with job id : ",job.id," , old id : ", needle);
+			console.log("Inside not needle block with job id : ",job.id," , old id : ", needle, "Status", job.jobStatus);
 			toClose.push(job.id)
 		}
 	}
@@ -671,7 +659,7 @@ module.exports.seed = async ( amount ) =>{
 
 			//Creating a Recruiter user profile (manually)
 			var laboredge = {
-				userId: "UWU445837",
+				userId: "GWU000002",
 			    userType: "RECRUITER",
 			    created: new Date().toLocaleString(),
 			    logs: [],

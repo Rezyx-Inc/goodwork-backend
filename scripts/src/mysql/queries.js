@@ -112,12 +112,24 @@ module.exports.getLaboredgeLogin = async function (userId) {
     return result;
 };
 
+// Queries for Laboredge integration
+module.exports.getLaboredgeJobs = async function (orgId) {
+
+    // We get the published and draft jobs
+    const [result, fields] = await pool.query(
+        "SELECT * from jobs WHERE organization_id=? AND is_open=1;",
+        [orgId]
+    );
+
+    return result;
+};
+
 //(Get Info)
-module.exports.closeImportedJobs = async function (imported_id) {
+module.exports.closeImportedJobs = async function (import_id, orgId) {
 
     const [result, fields] = await pool.query(
-        "UPDATE jobs SET is_open=0, is_closed=1 WHERE import_id=?;",
-        [imported_id]
+        "UPDATE jobs SET is_open=0, is_closed=1 WHERE import_id=? AND organization_id=?;",
+        [import_id, orgId]
     );
 
     return result;
@@ -150,7 +162,7 @@ module.exports.updateLaboredgeJobs = async function (importData, orgId) {
     specialty = ?,actual_hourly_rate = ?,as_soon_as = ?,auto_offers = ?,dental = ?,eligible_work_in_us = ?,
     facility_city = ?,facility_state = ?,four_zero_one_k = ?,health_insaurance = ?,is_hidden = ?,is_resume = ?,
     on_call = ?,professional_licensure = ?,tax_status = ?,vision = ? 
-    WHERE job_id = ? AND organization_id = ?;`;
+    WHERE import_id = ? AND organization_id = ?;`;
 
     console.log("Job id : ", importData.id,hoursPerShift,orgId);
 
@@ -187,7 +199,7 @@ module.exports.updateLaboredgeJobs = async function (importData, orgId) {
         ? importData.professional_licensure : "", // professional_licensure
         "", // tax_status
         0, // vision
-        importData.id.toString(), // id for WHERE clause (row to update)
+        importData.id, // id for WHERE clause (row to update) maps to import_id
         orgId
     ];
 
@@ -202,8 +214,9 @@ module.exports.updateLaboredgeJobs = async function (importData, orgId) {
 
     return false;
 };
+
 //Function to insert imported jobs into our db
-module.exports.addImportedJob = async function (importData) {
+module.exports.addImportedJob = async function (importData, orgId) {
 
 	var is_open=0,is_closed=0,active=0,is_hidden=0,as_soon_as=0;
 
@@ -212,11 +225,8 @@ module.exports.addImportedJob = async function (importData) {
     }
 	let id = await getNewJobId(pool);
 
-    // var recruiterId = getNextUpRecruiter(importData.organization_id);
+    var recruiterId = await getNextUpRecruiter(orgId);
 
-    // if(!recruiterId){
-    //     recruiterId = importData.organization_id;
-    // }
 	var floatReq = "";
 
 	if (
@@ -253,41 +263,55 @@ module.exports.addImportedJob = async function (importData) {
     	active=0;
     	is_hidden=0;
 	}
-	const [result, fields] = await pool.query(
-    	"INSERT INTO jobs (professional_licensure, facility_state, facility_city, terms, job_type, id, organization_id, created_by, job_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate, recruiter_id, tax_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
-    	[
-            (importData.professional_licensure != null) ? importData.professional_licensure : "",
-            (importData.facility_state != null) ? importData.facility_state : "",
-            (importData.facility_city != null) ? importData.facility_city : "",
-            importData.terms,
-            importData.jobType,
-            id,
-            importData.organization_id,
-            importData.created_by,
-        	importData.postingId,
-            importData.jobTitle,
-            importData.clientCity,
-            importData.clientState,
-            importData.shiftsPerWeek1,
-            hoursPerShift,
-            importData.preferred_shift_duration,
-            importData.startDate,
-        	importData.endDate,
-            importData.scheduledHrs1,
-            importData.weeklyPay,
-            importData.description,
-            active,
-            is_open,
-            is_closed,
-            importData.profession,
-            importData.preferred_specialty,
-            importData.hourlyPay,
-            (getNextUpRecruiter(importData.organization_id) ?? importData.organization_id).toString(),
-            ""
-    	]
-	);
 
-	return result;
+    if(!importData.clientCity){
+
+        importData.clientCity = "Missing!";
+    }
+
+    try{
+    	const [result, fields] = await pool.query(
+        	"INSERT INTO jobs (professional_licensure, facility_state, facility_city, terms, job_type, id, organization_id, created_by, job_id, import_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate, recruiter_id, tax_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+        	[
+                (importData.professional_licensure != null) ? importData.professional_licensure : "",
+                importData.clientState,
+                importData.clientCity,
+                importData.terms,
+                importData.jobType,
+                id,
+                orgId,
+                orgId,
+            	importData.postingId,
+                importData.id.toString(),
+                importData.jobTitle,
+                importData.clientCity,
+                importData.clientState,
+                importData.shiftsPerWeek1,
+                hoursPerShift,
+                importData.preferred_shift_duration,
+                importData.startDate,
+            	importData.endDate,
+                importData.scheduledHrs1,
+                importData.weeklyPay,
+                importData.description,
+                active,
+                is_open,
+                is_closed,
+                importData.profession,
+                importData.specialty,
+                importData.hourlyPay,
+                recruiterId,
+                ""
+        	]
+    	);
+
+        return result;
+
+    }catch(e){
+        console.log(e);
+        console.log(importData);
+        return false
+    }
 };
 
 
