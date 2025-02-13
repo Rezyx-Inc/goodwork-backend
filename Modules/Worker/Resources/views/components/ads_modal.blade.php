@@ -135,11 +135,14 @@
 </div>
 
 <script>
-    // Show the popup after 3 seconds
-    setTimeout(() => {
-        document.getElementById('popupOverlay').style.display = 'block';
-        document.getElementById('adPopup').style.display = 'block';
-    }, 3000);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Show the popup after 3 seconds
+        setTimeout(() => {
+            document.getElementById('popupOverlay').style.display = 'block';
+            document.getElementById('adPopup').style.display = 'block';
+        }, 2000);
+    });
 
     // Close popup
     document.getElementById('closePopup').addEventListener('click', () => {
