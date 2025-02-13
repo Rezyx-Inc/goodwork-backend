@@ -705,26 +705,28 @@
 
                     skip > 0 ? null : 0;
 
+
                     // fix this
                     let params = {
                         skip: skip,
-                        specialty: document.getElementById("specialty").value,
-                        profession: $("select[name='profession']").val(),
-                        city: document.getElementById("city").value,
-                        state: document.getElementById("state").value,
-                        terms: $("select[name='terms']").val() ? $("select[name='terms']").val().join('-') : null,
-                        start_date: document.getElementById("start_date").value,
-                        end_date: document.getElementById("end_date").value,
-                        job_type: document.getElementById("job_type").value,
-                        as_soon_as: document.getElementById("as_soon_as").value,
-                        weekly_pay_from: document.getElementById("weekly_pay_from").value,
-                        weekly_pay_to: document.getElementById("weekly_pay_to").value,
-                        hourly_pay_from: document.getElementById("hourly_pay_from").value,
-                        hourly_pay_to: document.getElementById("hourly_pay_to").value,
-                        hours_per_week_from: document.getElementById("hours_per_week_from").value,
-                        hours_per_week_to: document.getElementById("hours_per_week_to").value
+                        specialty: document.getElementById("specialty")?.value || "",
+                        profession: document.querySelector("select[name='profession']")?.value || "",
+                        city: document.getElementById("city")?.value || "",
+                        state: document.getElementById("state")?.value || "",
+                        terms: document.getElementById("termsAllValues")?.value || "",
+                        start_date: document.querySelector("input[name='start_date']")?.value || "",
+                        job_type: document.querySelector("select[name='job_type']")?.value || "",
+                        as_soon_as: document.getElementById("as_soon_as")?.checked ? 1 : 0,
+                        weekly_pay_from: document.getElementById("weekly_pay_from")?.value || "",
+                        weekly_pay_to: document.getElementById("weekly_pay_to")?.value || "",
+                        hourly_pay_from: document.getElementById("hourly_pay_from")?.value || "",
+                        hourly_pay_to: document.getElementById("hourly_pay_to")?.value || "",
+                        hours_per_week_from: document.getElementById("hours_per_week_from")?.value || "",
+                        hours_per_week_to: document.getElementById("hours_per_week_to")?.value || "",
+                        gw: document.getElementById("gw")?.value || "",
                     };
 
+                    
 
                     //Do the Ajax call
                     $.ajaxSetup({
@@ -732,21 +734,21 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
-
+                    
                     $.ajax({
                         url: submitUrl,
                         type: 'POST',
                         dataType: 'json',
                         data: params,
                         success: function(data) {
-
+                            
                             addJobCards(data.message);
-
+                            
                             // Increment skip
                             skip += 10;
                         },
                         error: function(resp) {
-
+                            console.log(resp);
                             notie.alert({
                                 type: 'error',
                                 text: '<i class="fa fa-check"></i> Oops ! Can\'t load more jobs ! Please try later.',
@@ -765,9 +767,8 @@
 
             // Observe
             var jobsLength = {{ count($jobs) }};
-
-            jobLength % 10 == 0 ? observer.observe(el) : null;
-
+            
+            jobsLength >= 10 ? observer.observe(el):null;
         });
 
         function redirectToJobDetails(id) {
