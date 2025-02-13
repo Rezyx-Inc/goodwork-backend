@@ -394,6 +394,7 @@
 @section('js')
 
 @include("worker::dashboard.script_infinite_scroll")
+
     <script>
         // get cities according to state :
         const jobState = document.getElementById('state');
@@ -743,6 +744,7 @@
                         success: function(data) {
                             
                             addJobCards(data.message);
+                            console.log("fff");
                             
                             // Increment skip
                             skip += 10;
