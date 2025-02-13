@@ -744,7 +744,6 @@
                         success: function(data) {
                             
                             addJobCards(data.message);
-                            console.log("fff");
                             
                             // Increment skip
                             skip += 10;
