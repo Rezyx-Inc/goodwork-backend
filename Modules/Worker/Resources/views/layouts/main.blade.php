@@ -10,32 +10,22 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>@yield('mytitle')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- Font Awesome -->
-     <!-- Bootstrap CSS -->
-     <!-- <link href="{{URL::asset('landing/css/bootstrap.min.css')}}" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
-     <link href="{{URL::asset('landing/css/bootstrap.min.css')}}" rel="stylesheet" crossorigin="anonymous">
-     <link rel="stylesheet" href="{{URL::asset('frontend/css/mdb.min.css')}}" />
-    <link rel="stylesheet" href="{{URL::asset('frontend/css/fontawesome_all.css')}}" />
-    {{-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" /> --}}
-    <!-- Google Fonts Roboto --> 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
-    <!-- MDB -->
+
+    <link href="{{URL::asset('landing/css/bootstrap.min.css')}}" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="{{URL::asset('frontend/css/mdb.min.css')}}" />
-    {{-- jquery confirm --}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
     <link href="{{ URL::asset('backend/vendors/confirm/jquery-confirm.min.css') }}" rel="stylesheet">
-    {{-- <link href="{{ URL::asset('backend/vendors/datatables/jquery.dataTables.min.css') }}" rel="stylesheet"> --}}
-    {{-- Notie --}}
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('backend/vendors/notie/dist/notie.css') }}">
-    <!-- Custom styles -->
     <link rel="stylesheet" href="{{URL::asset('frontend/css/style.css')}}" />
-    
-    <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
     @yield('css')
 
-    <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
 </head>
 <body>
+
+    <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
+
     <script>
     $(document).ready(function() {
         $.ajaxSetup({
@@ -50,8 +40,9 @@
             }
         });
     });</script>
-    <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
+
     <script src="{{ asset('js/app.js') }}"></script>
+
     <!--Main Navigation-->
     <header>
         @include('worker::partials.worker_sidebar')
@@ -63,13 +54,17 @@
     <!--Main layout-->
     @yield('content')
 
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    {{-- CK editor --}}
+    <script src="{{URL::asset('backend/vendors/ckeditor/ckeditor.js')}}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+
     <script src="{{URL::asset('landing/js/bootstrap.bundle.min.js')}}" crossorigin="anonymous"></script>
-    <!-- MDB -->
     <script type="text/javascript" src="{{URL::asset('frontend/js/mdb.min.js')}}"></script>
     <script type="text/javascript" src="{{ URL::asset('backend/vendors/confirm/jquery-confirm.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript" src="{{URL::asset('backend/vendors/notie/dist/notie.min.js') }}"></script>
-    {{-- CK editor --}}
-    <script src="{{URL::asset('backend/vendors/ckeditor/ckeditor.js')}}"></script>
     {{-- Jquery Mask --}}
     <script type="text/javascript" src="{{URL::asset('frontend/vendor/mask/jquery.mask.min.js')}}"></script>
     <!-- Custom scripts -->
@@ -77,8 +72,7 @@
     <script type="text/javascript" src="{{URL::asset('frontend/custom/js/profile.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('frontend/custom/js/script.js')}}"></script>
 
-    <!-- Bootstrap 4 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+
 
     @yield('js')
     @include('partials.flashMsg')
