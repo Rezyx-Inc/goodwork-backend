@@ -49,11 +49,11 @@
 
                                 <div class="ss-input-slct-grp">
                                     <label>Specialty</label>
-                                    <select name="speciality" id="speciality">
+                                    <select name="specialty" id="specialty">
                                         <option value="">Select Specialty</option>
                                         @foreach ($specialities as $v)
                                             <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
-                                                {{ $speciality == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
+                                                {{ $specialty == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -393,6 +393,7 @@
 
 @section('js')
 
+@include("worker::dashboard.script_infinite_scroll")
     <script>
         // get cities according to state :
         const jobState = document.getElementById('state');
@@ -707,9 +708,23 @@
                     // fix this
                     let params = {
                         skip: skip,
-                        speciality: document.getElementById("speciality").value,
+                        specialty: document.getElementById("specialty").value,
                         profession: $("select[name='profession']").val(),
+                        city: document.getElementById("city").value,
+                        state: document.getElementById("state").value,
+                        terms: $("select[name='terms']").val() ? $("select[name='terms']").val().join('-') : null,
+                        start_date: document.getElementById("start_date").value,
+                        end_date: document.getElementById("end_date").value,
+                        job_type: document.getElementById("job_type").value,
+                        as_soon_as: document.getElementById("as_soon_as").value,
+                        weekly_pay_from: document.getElementById("weekly_pay_from").value,
+                        weekly_pay_to: document.getElementById("weekly_pay_to").value,
+                        hourly_pay_from: document.getElementById("hourly_pay_from").value,
+                        hourly_pay_to: document.getElementById("hourly_pay_to").value,
+                        hours_per_week_from: document.getElementById("hours_per_week_from").value,
+                        hours_per_week_to: document.getElementById("hours_per_week_to").value
                     };
+
 
                     //Do the Ajax call
                     $.ajaxSetup({
