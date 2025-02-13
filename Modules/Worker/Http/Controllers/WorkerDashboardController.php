@@ -38,6 +38,7 @@ use App\Http\Requests\{UserEditProfile, ChangePasswordRequest, ShippingRequest, 
 /** Models */
 
 use App\Models\{User, Nurse, Follows, NurseReference, Job, Offer, NurseAsset, Keyword, Facility, Availability, Countries, States, Cities, JobSaved, State, OffersLogs};
+use Illuminate\Support\Facades\Log;
 
 define('default_max_step', 5);
 define('min_increment', 1);
@@ -753,7 +754,8 @@ class WorkerDashboardController extends Controller
       DB::rollBack();
       // return err :
       // return new JsonResponse(['success' => false, 'msg' => $e->getMessage()], 500);
-      return response()->json(["success" => false,"message" => "Something went wrong." ] , 500);
+      Log::error( "code: 03050114 :: " . $e->getMessage() );
+      return response()->json(["success" => false,"msg" => "An error occured, please contact the support (code: 03050114)" ] , 500);
     }
   }
 
