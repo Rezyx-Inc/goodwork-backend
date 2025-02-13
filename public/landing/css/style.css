@@ -714,6 +714,10 @@ ul.ss-ban-top-map-txt {
     position: relative;
 }
 
+.ss-hm-baner-img-dv .banner-bg-img {
+    width: -webkit-fill-available;
+}
+
 .ss-hm-banner-sec .row {
     align-items: center;
 }

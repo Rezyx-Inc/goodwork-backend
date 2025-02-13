@@ -19,103 +19,6 @@
     <link rel="stylesheet" href="{{ URL::asset('frontend/css/mdb.min.css') }}" />
     @yield('css')
 
-    <style>
-        /* Ads Container */
-        .ads-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            position: sticky;
-            top: 10px;
-            overflow-y: auto;
-            z-index: 10;
-        }
-
-        .ad {
-            background-color: #ffffff;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .ad:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Ad Image */
-        .ad-image {
-            width: 100%;
-            height: auto;
-            /* Adjust height automatically */
-            max-height: 200px;
-            /* Limit maximum height */
-            object-fit: contain;
-            /* Ensure the image fits without cropping */
-            display: block;
-            margin: 0 auto;
-            /* Center the image horizontally */
-        }
-
-        /* Ad Content */
-        .ad-content {
-            padding: 20px;
-            text-align: center;
-            /* Center-align all text */
-        }
-
-        .ad-content h2 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #333333;
-        }
-
-        .ad-content p {
-            font-size: 14px;
-            color: #666666;
-            line-height: 1.5;
-            margin-bottom: 15px;
-        }
-
-        .ad-content ul {
-            list-style-type: disc;
-            padding-left: 20px;
-            margin-bottom: 15px;
-            text-align: left;
-        }
-
-        .ad-content ul li {
-            font-size: 14px;
-            color: #666666;
-            line-height: 1.5;
-        }
-
-        /* Call-to-Action Button */
-        .cta-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #ffffff;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 14px;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
-        }
-
-        .cta-button:hover {
-            background-color: #0056b3;
-            color: #ffffff
-        }
-    </style>
-
-
-
 
 
 @stop
@@ -145,8 +48,8 @@
 
 
 <section class="ss-explore-job-mn-sec">
-    <div class="row">
-        <div class="col-md-3 ss-expl-filtr-lft-dv-bx">
+    <div class="row mx-3">
+        <div class="col-md-12 col-lg-5 col-xl-4 col-xxl-3 ss-expl-filtr-lft-dv-bx">
             <div style="padding:40px !important;background-color:#fff8fd !important;">
                 <h4 class="text-center" style="padding-bottom: 10px; font-size: 30px; font-weight: 500;">Filters
                 </h4>
@@ -358,7 +261,7 @@
         </div>
 
 
-        <div class="col-md-6">
+        <div class="col-md-8 mt-5 mt-lg-0 col-lg-7 col-xl-5 col-xxl-6">
 
             <!-----------jobs profiles---------->
 
@@ -538,55 +441,11 @@
         </div>
 
 
-        <div class="col-md-3">
+        <div class="col-md-4 mt-5 mt-lg-0 col-lg-12 mt-lg-3 mt-xl-0 col-xl-3">
+
             {{-- ads container --}}
-            <div class="ads-container">
-                <a href="https://www.bhmediatrack.com/cmp/M15NZ8/2MCHZ8R/?sub1=&sub2=&sub3=" target="_blank">
-                    <div class="ad">
-                        <img src="{{ asset('images/debtmd.png') }}" alt="Ad Image" class="ad-image">
-                        <div class="ad-content">
-                            <h2>Become Debt-Free Today</h2>
-                            <ul>
-                                <li>Up to 50% lower monthly payments</li>
-                                <li>Flexible payment plans from 12-48 months</li>
-                                <li>Free consultation and zero up-front fees</li>
-                            </ul>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="https://www.bhmediatrack.com/25S2ZK4/2LWX2H7/?sub1=1&sub2=2&sub3=3" target="_blank">
-            
-                    <div class="ad">
-                        <img src="{{ asset('images/myPerfectResume.png') }}" alt="Ad Image" class="ad-image">
-                        <div class="ad-content">
-                            <h2>Get the help you need to land your next gig with a <b>custom resume!</b></h2>
-                            <p>
-                                Our Industry-leading resume tools take your job search from basic to next level.
-                            </p>
-                        </div>
-                    </div>
-
-                </a>
-
-                <a href="https://www.bhmediatrack.com/25S2ZK4/6Z7MWN9/?sub1=1&sub2=2&sub3=3"  target="_blank">
-                        
-                    <div class="ad">
-                        <img src="{{ asset('images/chime.png') }}" alt="Ad Image" class="ad-image">
-                        <div class="ad-content">
-                            <h2>
-                                The best way to get up to $500 before payday*
-                            </h2>
-                            <ul>
-                                <li>No interest*</li>
-                                <li>No credit check</li>
-                                <li>No mandatory fees</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </a>
-            </div>
+            @include('worker::components.side_ads')
+          
         </div>
 
     </div>
@@ -612,7 +471,7 @@
         </div>
     </div>
 
-
+    @include('worker::components.ads_modal')
 
 </section>
 
