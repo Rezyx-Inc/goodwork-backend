@@ -1245,6 +1245,7 @@ span.ss-reset-btn {
     padding: 15px;
     border-bottom: 5px;
     margin-bottom: 30px;
+    margin-top: 30px;
     border-radius: 10px;
     position: relative;
     background: #fff;
@@ -1271,17 +1272,26 @@ span.ss-reset-btn {
     background: #FFEEEF;
     padding: 5px 11px;
     border-radius: 100px;
-    font-size: 16px;
     display: inline-block;
     font-weight: 500;
     color: #3b71ca;
     height: fit-content;
 }
 
+@media (max-width: 375px) {
+    .ss-job-prfle-sec a, .ss-job-prfle-sec ul li{
+        font-size: 13px;
+    }
+}
+@media (min-width: 375px) {
+    .ss-job-prfle-sec a, .ss-job-prfle-sec ul li{
+        font-size: 16px;
+    }
+}
+
 .ss-job-prfle-sec a {
     background: #FFEEEF;
     border-radius: 100px;
-    font-size: 16px;
     display: inline-block;
     font-weight: 500;
 }

@@ -94,7 +94,7 @@ class SiteController extends Controller
     $gwNumber = $request->input('gw', '');
 
     // Build the query
-    $ret = Job::where('is_open', '1');
+    $ret = Job::where('is_open', '1')->where('active', '1');
 
 
     // Initialize data array
@@ -235,7 +235,6 @@ class SiteController extends Controller
       unset($data['specialities']);
       unset($data['professions']);
       unset($data['us_states']);
-      unset($data['specialities']);
       unset($data['terms_key']);
 
       return response()->json(['message' =>  $data]);
