@@ -74,11 +74,16 @@ module.exports.init = (async () => {
 
 			for(job of vitalinkMongo.importedJobs){
 
-				await queries.addImportedJob(job, mysqlResp.user_id)
-			}
+				job.shift = await formatShifts(job.shiftStartTime1);
+				job.specialty = await formatSpecialties(specialties,job.specialty);
+				job.specialty = (job.specialty == "" ? "Unsupported_Specialty" : job.specialty) ;
 
-			//TODO
-			//Once executed, set mysql.initiated to true
+				job.profession = await formatProfessions(professions,job.profession);
+				job.profession = (job.profession == "" ? "Unsupported_Profession" : job.profession);
+
+				await queries.addImportedJob(job, mysqlResp.user_id);
+				
+			}
 
 		}catch(e){
 
@@ -87,9 +92,52 @@ module.exports.init = (async () => {
 
 	console.log("Jobs saved into the db");
 
-	return
+	return;
 });
 
+async function formatShifts(shift) {
+	const day = ["6:00:00", "7:00:00", "10:00:00"];
+	const night = ["19:00:00", "0:00:00", "18:00:00", "23:00:00", "18:30:00"];
+	const day_night = ["15:00:00", "11:00:00", "14:00:00"];
+
+	// Check if the shift is a Day shift
+    if (day.includes(shift)) {
+        return "Day";
+    }
+
+    // Check if the shift is a Night shift
+    if (night.includes(shift)) {
+        return "Night";
+    }
+
+    // Check if the shift is a Day & Night shift
+    if (day_night.includes(shift)) {
+        return "Day & Night";
+    }
+
+    // If the shift doesn't match any array, return a default value or error message
+    return "Invalid Shift";
+} 
+
+async function formatSpecialties(specialties, specialty){
+
+	for(spec of specialties){
+		if(spec.specialty === specialty)
+			return spec.mappedSpecialty;
+	}
+
+	return "Unsupported_Specialty";
+}
+
+async function formatProfessions(professions, profession){
+
+	for(pro of professions){
+		if(pro.profession === profession)
+			return pro.mappedProfession;
+	}
+
+	return "Unsupported_Profession";
+}
 //Helper function to have round-robin for recruiter updates
 
 // Update the existing integrations
@@ -174,7 +222,7 @@ module.exports.update = (async () => {
 
 	console.log("Jobs updated in the db");
 	return
-})();
+});
 
 // get professions
 async function getProfession (accessToken, userId){

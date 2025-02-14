@@ -218,7 +218,10 @@ module.exports.updateLaboredgeJobs = async function (importData, orgId) {
 //Function to insert imported jobs into our db
 module.exports.addImportedJob = async function (importData, orgId) {
 
-	var is_open=0,is_closed=0,active=0,is_hidden=0,as_soon_as=0;
+    // console.log(importData.shift);
+    var is_open=0,is_closed=0,active=0,is_hidden=0,as_soon_as=0;
+
+    const requiredCertificationsForOnboarding = await formatCertificates(importData.requiredCertificationsForOnboarding);
 
     if(!importData.startDate){
         as_soon_as = 1;
@@ -241,17 +244,13 @@ module.exports.addImportedJob = async function (importData, orgId) {
 	let hoursPerShift = importData.scheduledHrs1 / importData.shiftsPerWeek1;
 
 	if(importData.jobStatus === "Open"){
-
     	is_open = 1;
     	active = 1;
-
 	}else if(importData.jobStatus === "Closed"){
-
     	is_closed = 1;
 	}
 
 	if(!( importData.jobType || importData.startDate || importData.endDate ||  importData.duration  || importData.shiftsPerWeek1  ||  importData.scheduledHrs1  ||  hoursPerShift  || importData.profession  || importData.specialty  ||  importData.hourlyPay )){
-
         	is_open = 1;
         	active = 0;
         	is_closed = 0;
@@ -261,7 +260,6 @@ module.exports.addImportedJob = async function (importData, orgId) {
     	is_open=1;
     	is_closed=0;
     	active=0;
-    	is_hidden=0;
 	}
 
     if(!importData.clientCity){
@@ -269,9 +267,20 @@ module.exports.addImportedJob = async function (importData, orgId) {
         importData.clientCity = "Missing!";
     }
 
+    //Set job to draft
+    if(importData.specialty == "Unsupported_Specialty" || importData.profession == "Unsupported_Profession" || importData.shift == "Invalid Shift"){
+        is_open = 0;
+        active = 1;
+        is_closed = 0;
+    }
+    
     try{
     	const [result, fields] = await pool.query(
-        	"INSERT INTO jobs (professional_licensure, facility_state, facility_city, terms, job_type, id, organization_id, created_by, job_id, import_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, start_date, end_date, hours_per_week, weekly_pay, description, active, is_open, is_closed, profession, preferred_specialty, actual_hourly_rate, recruiter_id, tax_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+        	`INSERT INTO jobs (professional_licensure, facility_state, facility_city, terms, job_type, id, organization_id, 
+             job_id, import_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, 
+            start_date, end_date, hours_per_week, weekly_pay, description, active, is_open, is_closed, profession, 
+            preferred_specialty, actual_hourly_rate, recruiter_id, tax_status, skills, vaccinations,certificate) 
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
         	[
                 (importData.professional_licensure != null) ? importData.professional_licensure : "",
                 importData.clientState,
@@ -280,7 +289,7 @@ module.exports.addImportedJob = async function (importData, orgId) {
                 importData.jobType,
                 id,
                 orgId,
-                orgId,
+                // orgId,
             	importData.postingId,
                 importData.id.toString(),
                 importData.jobTitle,
@@ -288,7 +297,7 @@ module.exports.addImportedJob = async function (importData, orgId) {
                 importData.clientState,
                 importData.shiftsPerWeek1,
                 hoursPerShift,
-                importData.preferred_shift_duration,
+                importData.shift,
                 importData.startDate,
             	importData.endDate,
                 importData.scheduledHrs1,
@@ -301,7 +310,10 @@ module.exports.addImportedJob = async function (importData, orgId) {
                 importData.specialty,
                 importData.hourlyPay,
                 recruiterId,
-                ""
+                "",
+                requiredCertificationsForOnboarding.skills,
+                requiredCertificationsForOnboarding.vaccinations,
+                requiredCertificationsForOnboarding.certificates
         	]
     	);
 
@@ -309,8 +321,7 @@ module.exports.addImportedJob = async function (importData, orgId) {
 
     }catch(e){
         console.log(e);
-        console.log(importData);
-        return false
+        return false;
     }
 };
 
@@ -730,4 +741,101 @@ module.exports.getCeipalCredentials = async function (userId) {
     );
 
     return result;
+};
+
+async function formatCertificates(requiredCertificationsForOnboarding){
+	
+    if(!requiredCertificationsForOnboarding){
+
+        return {};
+    }
+	const certificatesMap = [
+		"BLS",
+		"ACLS",
+		"PALS",
+		"NRP",
+		"NIHSS",
+		"TNCC",
+		"AWHONN",
+		"STABLE",
+		"LA Fire Card",
+		"CMA",
+		"CNA",
+		"ARDMS",
+		"CPI",
+		"NBRC",
+		"RCIS",
+		"Management of Assaultive Behavior",
+		"IV Therapy",
+		"Chemotherapy",
+		"R.R.A",
+		"R.T",
+		"R.T.(MR)(ARRT)",
+		"R.T.(N)(ARRT)",
+		"R.T.(R)(ARRT)",
+		"R.T.(R)(CT)(ARRT)",
+		"R.T.(R)(CT)(MR)(ARRT)",
+		"R.T.(R)(M)(ARRT)",
+		"R.T.(R)(M)(CT)(ARRT)",
+		"R.T.(R)(MR)(ARRT)",
+		"R.T.(R)(N)(ARRT)",
+		"R.T.(R)(T)(ARRT)",
+		"R.T.(S)(ARRT)",
+		"R.T.(T)(ARRT)",
+		"R.T.(VS)(ARRT)",
+		"R.T.(R)(BD)(ARRT)",
+		"R.T.(R)(CI)(ARRT)",
+		"R.T.(CT)(ARRT)",
+		"R.T.(R)(CV)(ARRT)",
+		"R.T.(R)(M)(BS)(ARRT)",
+		"R.T.(R)(M)(QM)(ARRT)",
+		"R.T.(R)(VI)(ARRT)",
+		"R.T.(R)(N)(CT)(ARRT)",
+		"R.T.(R)(T)(CT)(ARRT)"
+	];
+
+	const vaccinationsMap = [
+		"Flu",
+		"COVID",
+		"HepB",
+		"TDAP",
+		"Varicella",
+		"Measles",
+		"Mumps",
+		"Rubella",
+		"HepC",
+		"H1N1",
+		"Meningococcal"
+	];
+
+	const skillsMap = [
+		"Peds",
+		"CVICU",
+		"RN",
+		"Skills",
+		"checklist"
+	];
+
+	let skills = [];
+    let certificates = [];
+    let vaccinations = [];
+
+	for(reqCert of requiredCertificationsForOnboarding){
+        
+		if(skillsMap.includes(reqCert)){
+            
+            skills.push(reqCert);
+        }else if(vaccinationsMap.includes(reqCert)){
+            
+			vaccinations.push(reqCert);
+		}else if(certificatesMap.includes(reqCert)){
+            certificates.push(reqCert);
+        }
+	}
+	
+	return {
+        skills: skills.join(", "),
+		vaccinations: vaccinations.join(", "),
+		certificates: certificates.join(", ")
+    };
 };
