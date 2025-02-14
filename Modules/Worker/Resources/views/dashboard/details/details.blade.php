@@ -182,7 +182,7 @@
                         <div class="ss-job-apply-on-view-detls-mn-dv">
 
                             <!---------------- Header ----------------->
-                            <div class="d-none d-md-block">
+                            <div class="d-none d-sm-block">
                                 <div class="ss-job-apply-on-tx-bx-hed-dv">
 
                                     <ul>
@@ -206,27 +206,22 @@
                                 </div>
                             </div>
                             {{-- mobile --}}
-                            <div class="d-md-none">
-                                <div class="ss-job-apply-on-tx-bx-hed-dv">
-
-                                    <ul>
-                                        <li>
-                                            <p>Recruiter</p>
-                                        </li>
-                                        <li>
-                                            <img width="50px"
-                                                src="{{ $model->recruiter && $model->recruiter->image ? URL::asset('uploads/' . $model->recruiter->image) : URL::asset('/frontend/img/profile-icon-img.png') }}"
-                                                alt="Recruiter Image" loading="lazy" />{{ $model->recruiter->first_name }}
-                                            {{ $model->recruiter->last_name }}
-                                        </li>
-                                    </ul>
-
-                                    <ul>
-                                        <li>
-                                            <span>{{ $model->id }}</span>
-                                            <h6>{{ $model->getOfferCount() }} Applied</h6>
-                                        </li>
-                                    </ul>
+                            <div class="d-sm-none">
+                                <div class="ss-job-apply-on-tx-bx-hed-dv row">
+                                    <div class="col-6">
+                                        <p>Recruiter</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <span>{{ $model->id }}</span>
+                                        <h6>{{ $model->getOfferCount() }} Applied</h6>
+                                    </div>
+                                    <div class="col-12 mt-3 w-100">
+                                        <img width="50px"
+                                        src="{{ $model->recruiter && $model->recruiter->image ? URL::asset('uploads/' . $model->recruiter->image) : URL::asset('/frontend/img/profile-icon-img.png') }}"
+                                        alt="Recruiter Image" loading="lazy" />{{ $model->recruiter->first_name }}
+                                    {{ $model->recruiter->last_name }}
+                                    </div>
+                                    
                                 </div>
                             </div>
                             <div class="ss-jb-aap-on-txt-abt-dv">
