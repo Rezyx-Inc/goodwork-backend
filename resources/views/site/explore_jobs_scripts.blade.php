@@ -92,7 +92,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-12 col-sm-6">
                                         <ul>
                                             <li>
                                                 <a href="#">
@@ -102,7 +102,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-12 col-md-6 d-flex justify-content-end">
+                                    <div class="col-12 col-sm-6 d-flex justify-content-end">
                                         <ul>
                                             ${job.preferred_assignment_duration && job.preferred_assignment_duration !== '' ? `
                                                     <li>
@@ -122,11 +122,13 @@
 
                                 <div class="row">
                                     <div class="col-12 col-md-6">
-                                     <ul>
-                                        <li>
-                                            ${job.preferred_shift_duration && job.preferred_shift_duration !== '' ? job.preferred_shift_duration : ''}
+                                        ${job.preferred_shift_duration && job.preferred_shift_duration !== '' ? `
+                                        <ul>
+                                            <li>
+                                                ${job.preferred_shift_duration}
                                             </li>
-                                            </ul>
+                                        </ul>
+                                        ` : ''}
                                     </div>
 
                                     <div class="col-12 col-md-6 d-flex justify-content-end">
@@ -192,62 +194,62 @@
 
 
                                 <div class="d-none d-md-block">
-                                <div class="ss-jb-aap-on-txt-abt-dv">
-                                    <h5>About Work</h5>
-                                    <ul>
-                                        <li>
-                                            <h6>Organization Name</h6>
-                                            <p>${orgrName}</p>
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <h6>Date Posted</h6>
-                                            <p>${new Date(job.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
-                                        </li>
-                                        <li>
-                                            <h6>Type</h6>
-                                            <p>${job.job_type ? job.job_type : askRecruiter}</p>
-                                        </li>
-                                        <li>
-                                            <h6>Terms</h6>
-                                            <p>${job.terms ? job.terms : askRecruiter}</p>
-                                        </li>
+                                    <div class="ss-jb-aap-on-txt-abt-dv">
+                                        <h5>About Work</h5>
+                                        <ul>
+                                            <li>
+                                                <h6>Organization Name</h6>
+                                                <p>${orgrName}</p>
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <h6>Date Posted</h6>
+                                                <p>${new Date(job.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
+                                            </li>
+                                            <li>
+                                                <h6>Type</h6>
+                                                <p>${job.job_type ? job.job_type : askRecruiter}</p>
+                                            </li>
+                                            <li>
+                                                <h6>Terms</h6>
+                                                <p>${job.terms ? job.terms : askRecruiter}</p>
+                                            </li>
 
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="d-md-none">
-                                <div class="ss-jb-aap-on-txt-abt-dv">
-                                    <h5>About Work</h5>
-                                    <div class="row">
-                                        <div class="col-7">
-                                            <h6>Organization Name</h6>
-                                            <p>${orgrName}</p>
-                                        </div>
-                                        <div class="col-5">
-                                            <h6>Type</h6>
-                                            <p>${job.job_type ? job.job_type : askRecruiter}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="col-7">
-                                            <h6>Date Posted</h6>
-                                            <p>${new Date(job.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
-                                        </div>
-                                        <div class="col-5">
-                                            <h6>Terms</h6>
-                                            <p>${job.terms ? job.terms : askRecruiter}</p>
-                                        </div>
+                                        </ul>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="d-md-none">
+                                    <div class="ss-jb-aap-on-txt-abt-dv">
+                                        <h5>About Work</h5>
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <h6>Organization Name</h6>
+                                                <p>${orgrName}</p>
+                                            </div>
+                                            <div class="col-5">
+                                                <h6>Type</h6>
+                                                <p>${job.job_type ? job.job_type : askRecruiter}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-7">
+                                                <h6>Date Posted</h6>
+                                                <p>${new Date(job.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
+                                            </div>
+                                            <div class="col-5">
+                                                <h6>Terms</h6>
+                                                <p>${job.terms ? job.terms : askRecruiter}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 ${job.description ? 
                                 `<div class="ss-jb-apply-on-disc-txt">
                                     <h5>Description</h5>
                                     <p id="job_description">${job.description}</p>
                                 </div>` 
-                                : ''}
+                                : 'No description available.'}
 
 
 
