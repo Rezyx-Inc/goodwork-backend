@@ -182,6 +182,7 @@
                         <div class="ss-job-apply-on-view-detls-mn-dv">
 
                             <!---------------- Header ----------------->
+                            {{-- Header --}}
                             <div class="d-none d-sm-block">
                                 <div class="ss-job-apply-on-tx-bx-hed-dv">
 
@@ -205,7 +206,6 @@
                                     </ul>
                                 </div>
                             </div>
-                            {{-- mobile --}}
                             <div class="d-sm-none">
                                 <div class="ss-job-apply-on-tx-bx-hed-dv row">
                                     <div class="col-6">
@@ -224,29 +224,59 @@
                                     
                                 </div>
                             </div>
-                            <div class="ss-jb-aap-on-txt-abt-dv">
-                                <h5>About Work</h5>
-                                <ul>
-                                    <li>
-                                        <h6>Organization Name</h6>
-                                        <p>{{ $model->recruiter->organization_name ? $model->recruiter->organization_name : 'Missing information' }}
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <h6>Date Posted</h6>
-                                        <p>{{ Carbon\Carbon::parse($model->created_at)->format('M d') }}</p>
-                                    </li>
-                                    <li>
-                                        <h6>Type</h6>
-                                        <p>{{ $model->job_type }}</p>
-                                    </li>
-                                    <li>
-                                        <h6>Terms</h6>
-                                        <p>{{ $model->terms }}</p>
-                                    </li>
+                            {{-- ( about work ) --}}
+                            <div class="d-none d-md-block">
+                                <div class="ss-jb-aap-on-txt-abt-dv">
+                                    <h5>About Work</h5>
+                                    <ul>
+                                        <li>
+                                            <h6>Organization Name</h6>
+                                            <p>{{ $model->recruiter->organization_name ? $model->recruiter->organization_name : 'Missing information' }}
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <h6>Date Posted</h6>
+                                            <p>{{ Carbon\Carbon::parse($model->created_at)->format('M d') }}</p>
+                                        </li>
+                                        <li>
+                                            <h6>Type</h6>
+                                            <p>{{ $model->job_type }}</p>
+                                        </li>
+                                        <li>
+                                            <h6>Terms</h6>
+                                            <p>{{ $model->terms }}</p>
+                                        </li>
 
-                                </ul>
+                                    </ul>
+                                </div>
                             </div>
+                            <div class="d-md-none">
+                                <div class="ss-jb-aap-on-txt-abt-dv">
+                                    <h5>About Work</h5>
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <h6>Organization Name</h6>
+                                                <p>{{ $model->recruiter->organization_name ? $model->recruiter->organization_name : 'Missing information' }}
+                                                </p>
+                                        </div>
+                                        <div class="col-5">
+                                            <h6>Type</h6>
+                                            <p>{{ $model->job_type }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-7">
+                                            <h6>Date Posted</h6>
+                                            <p>{{ Carbon\Carbon::parse($model->created_at)->format('M d') }}</p>
+                                        </div>
+                                        <div class="col-5">
+                                            <h6>Terms</h6>
+                                            <p>{{ $model->terms }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
 
 
                             <div class="ss-jb-apply-on-disc-txt">
