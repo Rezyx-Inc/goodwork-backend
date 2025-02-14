@@ -76,10 +76,7 @@ module.exports.init = (async () => {
 
 				job.shift = await formatShifts(job.shiftStartTime1);
 				job.specialty = await formatSpecialties(specialties,job.specialty);
-				job.specialty = (job.specialty == "" ? "Unsupported_Specialty" : job.specialty) ;
-
 				job.profession = await formatProfessions(professions,job.profession);
-				job.profession = (job.profession == "" ? "Unsupported_Profession" : job.profession);
 
 				await queries.addImportedJob(job, mysqlResp.user_id);
 				
@@ -93,51 +90,9 @@ module.exports.init = (async () => {
 	console.log("Jobs saved into the db");
 
 	return;
-});
+})();
 
-async function formatShifts(shift) {
-	const day = ["6:00:00", "7:00:00", "10:00:00"];
-	const night = ["19:00:00", "0:00:00", "18:00:00", "23:00:00", "18:30:00"];
-	const day_night = ["15:00:00", "11:00:00", "14:00:00"];
 
-	// Check if the shift is a Day shift
-    if (day.includes(shift)) {
-        return "Day";
-    }
-
-    // Check if the shift is a Night shift
-    if (night.includes(shift)) {
-        return "Night";
-    }
-
-    // Check if the shift is a Day & Night shift
-    if (day_night.includes(shift)) {
-        return "Day & Night";
-    }
-
-    // If the shift doesn't match any array, return a default value or error message
-    return "Invalid Shift";
-} 
-
-async function formatSpecialties(specialties, specialty){
-
-	for(spec of specialties){
-		if(spec.specialty === specialty)
-			return spec.mappedSpecialty;
-	}
-
-	return "Unsupported_Specialty";
-}
-
-async function formatProfessions(professions, profession){
-
-	for(pro of professions){
-		if(pro.profession === profession)
-			return pro.mappedProfession;
-	}
-
-	return "Unsupported_Profession";
-}
 //Helper function to have round-robin for recruiter updates
 
 // Update the existing integrations
@@ -182,7 +137,8 @@ module.exports.update = (async () => {
 
             	// Remove the job from the list
             	vitalinkMongo.importedJobs.splice(ind, 1);
-            	continue
+
+            	continue;
         	}
 
         	// Not closed, so update
@@ -207,7 +163,7 @@ module.exports.update = (async () => {
     	for ( newItem of updatedJobs.toAdd ){
 
         	await queries.addImportedJob(updateItem);
-        	vitalinkMongo.importedJobs.push(newItem)
+        	vitalinkMongo.importedJobs.push(newItem);
     	}
 
     	// update updated (timestamp)
@@ -285,6 +241,7 @@ async function getProfession (accessToken, userId){
 async function getSpecialties (accessToken, userId){
 
 	const specialtyMap = {
+		"(Acute Care)":"Acute Care",
 		"(Admin)": "Administrative",
 		"(Administrator)": "Administrative",
 		"(Ambulatory)": "Ambulatory Care",
@@ -321,6 +278,7 @@ async function getSpecialties (accessToken, userId){
 		"(LMSW)": "Licensed Clinical Social Worker",
 		"(LSW)": "Licensed Clinical Social Worker",
 		"(LTC)": "Long Term Care",
+		"(Med Surg)": "Med Surg",
 		"(Med Surg / Tele)": "Med Surg / Telemetry",
 		"(MICU)": "MICU - Medical Intensive Care Unit",
 		"(Mother/Baby)": "Maternal - Newborn",
@@ -371,7 +329,12 @@ async function getSpecialties (accessToken, userId){
 		"(Trauma)": "Trauma ICU",
 		"(Vaccines and Immunizations)": "Vaccination",
 		"(Vascular)": "Vascular Technologist",
-		"(X-Ray)": "X-Ray Technician"
+		"(X-Ray)": "X-Ray Technician",
+		"(Home Health)":"Home Health",
+		"(Endoscopy)":"Endoscopy",
+		"(Clinic)":"Clinic",
+		"(Infusion)":"Infusion",
+		"(Dialysis)":"Dialysis"
 };
 	//Array to hold active specialties
 	var activeSpecialty = [];
@@ -525,13 +488,10 @@ module.exports.updateOthers = async () => {
 }
 
 
-// get jobs
+// get jobs - Will get all open jobs only
 async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 
 	// Array to hold the imported jobs
-
-	//isUpdate is false -- get only open jobs
-	//true -- get jobs other than open
 	var importedJobs = [];
 
 	// Headers required for the API call
@@ -607,11 +567,7 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 
 async function getUpdatedJobs(newJobs, oldJobs, userId){
 
-	// check if the job ids from mongodb are in the api response, otherwise return them as closed
-	// check if the open jobs are still the same, otherwise update them
-	// check if there are new jobs and add them
 	// should return {toClose: [ids only], toAdd: [{},{}], toUpdate:[{},{}]
-
 	var toClose = [], toAdd = [], toUpdate = [], unchanged = [];
 
 	// May need to be optimised
@@ -653,6 +609,7 @@ async function getUpdatedJobs(newJobs, oldJobs, userId){
 	return {toAdd : toAdd, toUpdate: toUpdate, toClose: toClose, unchanged: unchanged}
 }
 
+// Abandoned
 async function formatJobs(jobs){
 
 	// Array to hold the formatted jobs
@@ -905,6 +862,55 @@ async function connectNexus(credentials){
 	}
 
 	return accessToken;
+}
+
+async function formatShifts(shift) {
+
+	if(shift == null){
+		return "Ask Recruiter"
+	}
+	const [hour] = shift.split(":").map(Number);
+
+    if (hour >= 6 && hour < 12) return "Day";
+    if (hour >= 12 && hour < 18) return "Day & Night";
+    if (hour >= 18 || hour < 6) return "Night";
+
+    // If the shift doesn't match any array, return a default value or error message
+    return "Ask Recruiter";;
+}
+
+async function formatSpecialties(specialties, specialty){
+
+	for(spec of specialties){
+
+		if(spec.specialty === specialty)
+
+			if(spec.mappedSpecialty == ""){
+				return "unmatched_Specialty("+specialty+")";
+			}
+			else{
+				return spec.mappedSpecialty;
+			}
+	}
+
+	return;
+}
+
+async function formatProfessions(professions, profession){
+
+	for(pro of professions){
+
+		if(pro.profession === profession){
+
+			if(pro.mappedProfession == ""){
+				return "unmatched_Profession("+profession+")";
+			}else{
+				return pro.mappedProfession;
+			}
+		}
+	}
+
+	return;
 }
 
 // Random date format and generate
