@@ -3240,13 +3240,17 @@ ul.ss-jb-dtlpop-chck li {
     top: 0;
     overflow-y: auto;
     padding: 1rem;
-  }
-  
-  /* Adjustments for mobile view */
-  @media (max-width: 768px) {
+}
+
+
+.landing-explore .side-ads-container {
+    max-height: 100vh;
+}
+
+/* Adjustments for mobile view */
+@media (max-width: 768px) {
     .side-ads-container {
-        max-height: 50vh;
-        overflow-y: visible;
-        margin-top: 30px;
+        max-height: 75vh;
+        margin-top: 35px;
     }
-  }
+}

@@ -443,7 +443,7 @@
 
         <div class="col-md-4 mt-5 mt-lg-0 col-lg-12 mt-lg-3 mt-xl-0 col-xl-3">
 
-            <div class="side-ads-container">
+            <div class="landing-explore side-ads-container">
 
                 {{-- ads container --}}
                 @include('worker::components.side_ads')
