@@ -378,9 +378,8 @@
                                     <div class="col-4 col-lg-5">
                                         <ul>
                                             @if (isset($j->actual_hourly_rate))
-                                                <li><img class="icon_cards"
-                                                        src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                    {{ number_format($j->actual_hourly_rate) }}/hr
+                                                <li>
+                                                    $ {{ number_format($j->actual_hourly_rate) }}/hr
                                                 </li>
                                             @endif
                                         </ul>
@@ -388,13 +387,11 @@
                                     <div class="col-8 col-lg-7 d-flex justify-content-end">
                                         <ul>
                                             @if (isset($j->weekly_pay))
-                                                <li><img class="icon_cards"
-                                                        src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                    {{ number_format($j->weekly_pay) }}/wk
+                                                <li>
+                                                    $ {{ number_format($j->weekly_pay) }}/wk
                                                 </li>
-                                                <li style="font-weight: 600;"><img class="icon_cards"
-                                                        src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                    {{ number_format($j->weekly_pay * 4 * 12) }}/yr
+                                                <li style="font-weight: 600;">
+                                                    $ {{ number_format($j->weekly_pay * 4 * 12) }}/yr
                                                 </li>
                                             @endif
                                         </ul>
@@ -1055,6 +1052,18 @@
     .ask_recruiter_href:hover {
         color: black;
         text-decoration: underline;
+    }
+
+
+    .job-item li {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .job-item li:hover {
+        white-space: normal; /* Allow wrapping when hovered */
+        overflow: visible;
     }
 </style>
 

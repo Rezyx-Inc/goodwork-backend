@@ -103,22 +103,19 @@
                                         <ul>
                                             ${job.actual_hourly_rate && job.actual_hourly_rate !== '' ? `
                                                     <li>
-                                                        <img class="icon_cards" src="frontend/img/dollarcircle.png">
-                                                        ${(Number(job.actual_hourly_rate) || 0).toFixed(0)}/hr
+                                                        $ ${(Number(job.actual_hourly_rate) || 0).toFixed(0)}/hr
                                                     </li>
                                                 ` : ''}
                                                 
                                             ${job.weekly_pay && job.weekly_pay !== '' ? `
                                                     <li>
-                                                        <img class="icon_cards" src="frontend/img/dollarcircle.png">
-                                                ${(Number(job.weekly_pay) || 0).toFixed(0)}/hr
+                                                        $ ${(Number(job.weekly_pay) || 0).toFixed(0)}/hr
                                                     </li>
                                                 ` : ''}
 
                                             ${job.weekly_pay && job.weekly_pay !== '' ? `
                                                     <li>
-                                                        <img class="icon_cards" src="frontend/img/dollarcircle.png">
-                                                ${(job.weekly_pay * 4 * 12).toFixed(0)}/yr
+                                                        $ ${(job.weekly_pay * 4 * 12).toFixed(0)}/yr
                                                     </li>
                                                 ` : ''}
                                         </ul>
