@@ -56,8 +56,24 @@ module.exports.validateFields = async function (jobData) {
       'benefits': value => typeof value === 'string' || value === null,
       'feels_like_per_hour': value => typeof value === 'string' || value === null,
       'preferred_shift_duration': value => typeof value === 'string' || value === null,
+      'as_soon_as_possible': value => typeof value === 'boolean' || value === null,
+      'job_status_code': value => typeof value === 'string' || value === null,
+      'position_type': value => typeof value === 'string' || value === null,
+      'client_name': value => typeof value === 'string' || value === null,
+      'client_primary_division': value => typeof value === 'string' || value === null,
+      'client_city': value => typeof value === 'string' || value === null,
+      'client_country': value => typeof value === 'string' || value === null,
+      'client_state': value => typeof value === 'string' || value === null,
+      'required_certifications_for_onboarding': value => Array.isArray(value) && value.every(item => typeof item === 'string') || value === null,
+      'required_certifications_for_submittal': value => Array.isArray(value) && value.every(item => typeof item === 'string') || value === null,
+      'non_billable_hours': value => (typeof value === 'number' && !Number.isNaN(value)) || value === null,
+      'billable_hours': value => (typeof value === 'number' && !Number.isNaN(value)) || value === null,
+      'weekly_pay': value => (typeof value === 'number' && !Number.isNaN(value)) || value === null,
+      'hourly_pay_range': value => typeof value === 'string' || value === null,
+      'weekly_pay_range': value => typeof value === 'string' || value === null
     };
 
+    //Iterate through all fields and verify if the are valid
     for (let field in formatValidations) {
       if (!formatValidations[field](jobData[field] || null)) {
         console.log(`Invalid format for field: ${field}`);
@@ -67,6 +83,8 @@ module.exports.validateFields = async function (jobData) {
 
     return true;
   } catch (err) {
+
+    //Log and throw error message
     console.error('Error validating fields:', err);
     throw err;
   }
@@ -76,10 +94,12 @@ module.exports.getNewJobId = async function (pool) {
 
   try {
 
+    //Get job IDs from the db
     const [rows] = await pool.query(
       `SELECT id FROM jobs ORDER BY id DESC LIMIT 1`
     );
 
+    //Check if data is fetched and process
     if (rows.length > 0) {
       const lastId = rows[0].id;
 
@@ -100,6 +120,7 @@ module.exports.getNewJobId = async function (pool) {
 
   } catch (err) {
 
+    //Log and throw error message
     console.error('Error getting new job ID:', err);
     throw err;
   }
@@ -107,8 +128,10 @@ module.exports.getNewJobId = async function (pool) {
 
 module.exports.checkIfSpreadsheetExists = async (auth, organizationId, google) => {
 
+  //Connect to google drive API
   const drive = google.drive({ version: 'v3', headers: { Authorization: `Bearer ${auth}` } });
 
+  //Fetch list of files
   const response = await drive.files.list({
     q: `mimeType='application/vnd.google-apps.spreadsheet' and name contains '${organizationId}'`,
     fields: 'files(id, name)'

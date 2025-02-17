@@ -7,12 +7,14 @@
 
 */
 
+//To read environment variables from the .env file
 require("dotenv").config();
 
-const mongoose = require("mongoose");
-const express = require("express");
-var bodyParser = require("body-parser");
-const cors = require("cors");
+//Import required modules and/or libraries
+const mongoose = require("mongoose"); //To connect to MongoDB
+const express = require("express"); //To build REST API
+var bodyParser = require("body-parser"); // Used to work with HTTP request body
+const cors = require("cors"); // Used for security
 const app = express();
 
 var { report } = require("./src/set.js");

@@ -1,9 +1,11 @@
+//Import all required libraries and/or modules
 const { pool } = require("./mysql.js");
 var _ = require('lodash');
 var moment = require('moment');
 const { validateFields, getNewJobId } = require('../helpers/sheetHelper.js');
-const { getNextUpRecruiter } = require('../helpers/integrationHelper.js');
+const { getNextUpRecruiter, formatCertificates } = require('../helpers/integrationHelper.js');
 
+//Function to get the Stripe Account Id using the user id
 module.exports.getStripeId = async function (userId) {
 
     const [result, fields] = await pool.query(
@@ -14,6 +16,7 @@ module.exports.getStripeId = async function (userId) {
     return result[0];
 };
 
+//Function to update the Stripe Account Id using the stripe id and user id
 module.exports.insertStripeId = async function (stripeId, userId) {
 
     const [result, fields] = await pool.query(
@@ -24,6 +27,7 @@ module.exports.insertStripeId = async function (stripeId, userId) {
     return result;
 };
 
+//Function to check if a particular Stripe Account Id exists in the users
 module.exports.checkStripeId = async function (stripeId) {
 
     const [result, fields] = await pool.query(
@@ -35,6 +39,7 @@ module.exports.checkStripeId = async function (stripeId) {
 };
 
 // Customers
+//Function to update the Stripe Account Id using the stripe id and email
 module.exports.insertCustomerStripeId = async function (stripeId, email) {
 
     const [result, fields] = await pool.query(
@@ -45,6 +50,7 @@ module.exports.insertCustomerStripeId = async function (stripeId, email) {
     return result;
 };
 
+//Function to update the offer status based on offerId
 module.exports.setOfferStatus = async function ( offerId, status, is_payment_done, is_payment_required) {
 
     let query = "UPDATE offers SET status=?";
@@ -63,7 +69,6 @@ module.exports.setOfferStatus = async function ( offerId, status, is_payment_don
 };
 
 //  queries for worker payment
-
 module.exports.getWorkerDetails = async function (workerId) {
 
     const [result, fields] = await pool.query(
@@ -74,6 +79,7 @@ module.exports.getWorkerDetails = async function (workerId) {
     return result;
 };
 
+//Function to get offer details of a worker
 module.exports.getOfferDetails = async function (offerId) {
 
     const [result, fields] = await pool.query(
@@ -84,6 +90,7 @@ module.exports.getOfferDetails = async function (offerId) {
     return result;
 };
 
+//Function to update the Payment status as done (paid)
 module.exports.setWorkerPaymentStatus = async function (offerId) {
 
     const [result, fields] = await pool.query(
@@ -105,22 +112,32 @@ module.exports.getLaboredgeLogin = async function (userId) {
     return result;
 };
 
-module.exports.closeImportedJobs = async function (imported_id) {
+// Queries for Laboredge integration
+module.exports.getLaboredgeJobs = async function (orgId) {
 
+    // We get the published and draft jobs
     const [result, fields] = await pool.query(
-        "UPDATE jobs SET is_open=0, is_closed=1 WHERE import_id=?;",
-        [imported_id]
+        "SELECT * from jobs WHERE organization_id=? AND is_open=1;",
+        [orgId]
     );
 
     return result;
 };
 
-module.exports.addImportedJob = async function (importData) {
+//(Get Info)
+module.exports.closeImportedJobs = async function (import_id, orgId) {
 
-    if (importData.durationType != "WEEKS") {
-        return false;
-    }
+    const [result, fields] = await pool.query(
+        "UPDATE jobs SET is_open=0, is_closed=1 WHERE import_id=? AND organization_id=?;",
+        [import_id, orgId]
+    );
 
+    return result;
+};
+
+module.exports.updateLaboredgeJobs = async function (importData, orgId) {
+    
+    // console.log("Inside update imported job method");
     var floatReq = "";
 
     if (
@@ -132,41 +149,196 @@ module.exports.addImportedJob = async function (importData) {
         floatReq = 1;
     }
 
-    let description =
-        importData.postingId +
-        " " +
-        importData.description +
-        " " +
-        importData.shift;
+    //Job description -- don't update
+    let description = importData.description;
 
     let hoursPerShift = importData.scheduledHrs1 / importData.shiftsPerWeek1;
 
-    const [result, fields] = await pool.query(
-        "INSERT INTO jobs (import_id, job_name, description, sign_on_bonus, job_type, start_date, end_date, preferred_shift_duration, is_open, active, is_closed, float_requirement, weeks_shift, hours_per_week, hours_shift, profession, specialty, actual_hourly_rate ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
-        [
-            importData.id,
-            importData.jobTitle,
-            description,
-            importData.signOnBonus,
-            importData.jobType,
-            importData.startDate,
-            importData.endDate,
-            importData.duration,
-            0,
-            0,
-            0,
-            floatReq,
-            importData.shiftsPerWeek1,
-            importData.scheduledHrs1,
-            hoursPerShift,
-            importData.profession,
-            importData.specialty,
-            importData.hourlyPay,
-        ]
-    );
+    // add weekly pay(week1Gross),
+    const query = `UPDATE jobs 
+    SET job_name = ?,description = ?,sign_on_bonus = ?,job_type = ?,start_date = ?,
+    end_date = ?,preferred_shift_duration = ?,is_open = ?,active = ?,is_closed = ?,
+    float_requirement = ?,weeks_shift = ?,hours_per_week = ?,hours_shift = ?,profession = ?,
+    specialty = ?,actual_hourly_rate = ?,as_soon_as = ?,auto_offers = ?,dental = ?,eligible_work_in_us = ?,
+    facility_city = ?,facility_state = ?,four_zero_one_k = ?,health_insaurance = ?,is_hidden = ?,is_resume = ?,
+    on_call = ?,professional_licensure = ?,tax_status = ?,vision = ? 
+    WHERE import_id = ? AND organization_id = ?;`;
 
-    return result;
+    console.log("Job id : ", importData.id,hoursPerShift,orgId);
+
+    const values = [
+        importData.jobTitle ?? null, // job_name
+        description ?? null, // description
+        importData.signOnBonus ?? null, // sign_on_bonus
+        importData.jobType ?? null, // job_type
+        importData.startDate ?? null, // start_date
+        importData.endDate ?? null, // end_date
+        importData.duration ?? null, // preferred_shift_duration
+        1, // is_open
+        1, // active
+        0, // is_closed
+        floatReq ?? null, // float_requirement
+        importData.shiftsPerWeek1.toFixed(2) ?? null, // weeks_shift
+        importData.scheduledHrs1 ?? null, // hours_per_week
+        hoursPerShift ?? null, // hours_shift
+        importData.profession ?? null, // profession
+        importData.specialty ?? null, // specialty
+        importData.hourlyPay ?? null, // actual_hourly_rate
+        0, // as_soon_as
+        0, // auto_offers
+        0, // dental
+        0, // eligible_work_in_us
+        (importData.facility_city != null) ? importData.facility_city : "", // facility_city
+        (importData.facility_state != null) ? importData.facility_state : "", // facility_state
+        0, // four_zero_one_k (401k)
+        0, // health_insurance
+        0, // is_hidden
+        0, // is_resume
+        0, // on_call
+        (importData.professional_licensure != null) 
+        ? importData.professional_licensure : "", // professional_licensure
+        "", // tax_status
+        0, // vision
+        importData.id, // id for WHERE clause (row to update) maps to import_id
+        orgId
+    ];
+
+    // Execute the query using your database library 
+    try{
+        const results = await pool.execute(query, values);
+        console.log("Updated");
+        return results;
+    }catch(err){
+        console.log("Unknown error",err);
+    }
+
+    return false;
 };
+
+//Function to insert imported jobs into our db
+module.exports.addImportedJob = async function (importData, orgId) {
+
+    var is_open=0,is_closed=0,active=0,is_hidden=0,as_soon_as=0;
+    const requiredCertificationsForOnboarding = await formatCertificates(importData.requiredCertificationsForOnboarding);
+
+    if(!importData.startDate){
+
+        as_soon_as = 1;
+
+    }
+
+	let id = await getNewJobId(pool);
+    var recruiterId = await getNextUpRecruiter(orgId);
+	var floatReq = "";
+
+	if ( importData.floatingReqUnits == "" || importData.floatingReqUnits == null) {
+
+    	floatReq = 0;
+
+	}else {
+
+    	floatReq = 1;
+
+	}
+
+	let hoursPerShift = importData.scheduledHrs1 / importData.shiftsPerWeek1;
+
+	if(importData.jobStatus === "Open"){
+
+    	is_open = 1;
+    	active = 1;
+
+	}else if(importData.jobStatus === "Closed"){
+
+    	is_closed = 1;
+        is_open = 1;
+        active = 1;
+
+	}
+
+	if(!( importData.jobType || importData.startDate || importData.endDate ||  importData.duration  || importData.shiftsPerWeek1  ||  importData.scheduledHrs1  ||  hoursPerShift  || importData.profession  || importData.specialty  ||  importData.hourlyPay )){
+
+        is_open = 0;
+    	active = 1;
+    	is_closed = 0;
+
+	}
+
+	if (importData.durationType != "WEEKS") {
+
+        is_open=0;
+    	is_closed=0;
+    	active=1;
+
+	}
+
+    if(!importData.clientCity){
+
+        importData.clientCity = "Ask Recruiter";
+    }
+
+    //Set job to draft
+    if(importData.specialty.match(/unmatched.*/) || importData.profession.match(/unmatched.*/) || importData.shift.match(/unmatched.*/)){
+
+        is_open = 0;
+        active = 1;
+        is_closed = 0;
+
+    }
+    
+    try{
+
+    	const [result, fields] = await pool.query(
+        	`INSERT INTO jobs (professional_licensure, facility_state, facility_city, terms, job_type, id, organization_id, 
+             job_id, import_id, job_name, job_city, job_state, weeks_shift, hours_shift, preferred_shift_duration, 
+            start_date, end_date, hours_per_week, weekly_pay, description, active, is_open, is_closed, profession, 
+            preferred_specialty, actual_hourly_rate, recruiter_id, tax_status, skills, vaccinations,certificate, preferred_assignment_duration)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
+        	[
+                (importData.professional_licensure != null) ? importData.professional_licensure : "",
+                importData.clientState,
+                importData.clientCity,
+                importData.terms,
+                importData.jobType,
+                id,
+                orgId,
+            	importData.postingId,
+                importData.id.toString(),
+                importData.jobTitle,
+                importData.clientCity,
+                importData.clientState,
+                importData.shiftsPerWeek1,
+                hoursPerShift,
+                importData.shift,
+                importData.startDate,
+            	importData.endDate,
+                importData.scheduledHrs1,
+                importData.weeklyPay,
+                importData.description,
+                active,
+                is_open,
+                is_closed,
+                importData.profession,
+                importData.specialty,
+                importData.hourlyPay,
+                recruiterId,
+                "",
+                requiredCertificationsForOnboarding.skills,
+                requiredCertificationsForOnboarding.vaccinations,
+                requiredCertificationsForOnboarding.certificates,
+                importData.duration
+        	]
+    	);
+
+        return result;
+
+    }catch(e){
+
+        console.log(e);
+        return false;
+    }
+};
+
 
 // Query to get specialties
 module.exports.getSpecialties = async function () {
@@ -188,6 +360,7 @@ module.exports.getNcSpecialties = async function () {
     return result;
 };
 
+//(Get info)
 module.exports.importArdorHealthJobs = async function (ardorOrgId, importData, draft, update) {
 
     // We keep update == false case for the sake of future integrations
@@ -568,3 +741,18 @@ module.exports.updateRecruiterId = async function (orgId){
 
     return existingJobs.length;
 }
+
+// =================================================================================== //
+
+// Ceipal Methods
+
+// get Ceipal Credentials
+module.exports.getCeipalCredentials = async function (userId) {
+
+    const [result, fields] = await pool.query(
+        "SELECT * from ceipal WHERE user_id=?;",
+        [userId]
+    );
+
+    return result;
+};
