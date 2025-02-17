@@ -3232,3 +3232,25 @@ ul.ss-jb-dtlpop-chck li {
     justify-content: center !important;
 }
 
+
+
+.side-ads-container {
+    height: 80vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+    /* padding: 1rem; */
+}
+
+
+.landing-explore.side-ads-container {
+    height: 100vh;
+}
+
+/* Adjustments for mobile view */
+@media (max-width: 768px) {
+    .side-ads-container {
+        max-height: 75vh;
+        margin-top: 35px;
+    }
+}
