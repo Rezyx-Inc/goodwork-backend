@@ -3235,16 +3235,16 @@ ul.ss-jb-dtlpop-chck li {
 
 
 .side-ads-container {
-    max-height: 75vh;
+    height: 80vh;
     position: sticky;
     top: 0;
     overflow-y: auto;
-    padding: 1rem;
+    /* padding: 1rem; */
 }
 
 
-.landing-explore .side-ads-container {
-    max-height: 100vh;
+.landing-explore.side-ads-container {
+    height: 100vh;
 }
 
 /* Adjustments for mobile view */
