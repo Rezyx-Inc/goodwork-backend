@@ -212,7 +212,6 @@ class SiteController extends Controller
       $ret->where('job_city', '=', $data['city']);
     }
 
-    //return response()->json(['message' =>  $ret->get()]);
     $skip = $request->input('skip');
 
     if(!empty($skip) && $skip > 0){
