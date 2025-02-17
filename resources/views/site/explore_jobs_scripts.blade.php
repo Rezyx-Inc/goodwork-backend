@@ -8,15 +8,15 @@
 
     var isLoggedIn = @json(auth()->guard('frontend')->check());
 
-    function redirectToJobDetails(job, users) {
+    function redirectToJobDetails(job) {
         if (isLoggedIn) {
             window.location.href = `worker/job/${job.id}/details`;
         } else {
-            showJobModal(job, users);
+            showJobModal(job);
         }
     }
 
-    function showJobModal(job, users) {
+    function showJobModal(job) {
 
         // Image paths from Blade
         const locationIcon = @json(asset('frontend/img/location.png'));
@@ -26,18 +26,19 @@
         // Path for profile images
         const userProfilePath = @json(asset('uploads/'));
         
+        job = job[0];
+
         // full name
-        const creator = users.find(user => user.id === job.recruiter_id || user.id === job.organization_id);
-        const fullName = creator ? creator.first_name + ' ' + creator.last_name : 'Unknown';
-        const userRole = creator ? creator.role : 'Unknown';
+        let assignedTo = job.recruiter_infos.length == 0 ? job.organization_infos[0] : job.recruiter_infos[0];        
+        const fullName = assignedTo ? assignedTo.first_name + ' ' + assignedTo.last_name : 'Unknown';
+        const userRole = assignedTo ? assignedTo.role : 'Unknown';
         
         // image
-        const recruiterImage = (creator && creator.image) ? creator.image : null; 
+        const recruiterImage = (assignedTo && assignedTo.image) ? assignedTo.image : null; 
         const defaultImage = "frontend/img/account-img.png";       
         
         // org name
-        const org = users.find(user => user.id === job.organization_id);
-        const orgrName = org ? org.organization_name : 'Unknown';
+        const orgrName = job.organization_infos.length == 0 ?  'Unknown' : job.organization_infos[0].organization_name;
 
         // set the set ask recruiter as a link to message
         let askRecruiter = `<a class="ask_recruiter_href" href="{{ route('worker.login') }}" >Ask recruiter</a>`;
@@ -72,11 +73,15 @@
         <main class="ss-main-body-sec px-1">
             <div class="ss-apply-on-jb-mmn-dv">
                 <div class="row">
+
                     <div class="col-lg-12">
                         <div class="ss-apply-on-jb-mmn-dv-box-divs model_content_width">
                             <div class="ss-job-prfle-sec header_content_width">
                                 <div class="row">
-                                    <div class="col-12">
+                                    <p class="col-12 text-end d-md-none" style="padding-right:20px;">
+                                        <span>+${job.offer_count} Applied</span>
+                                    </p>
+                                    <div  class="col-12 col-md-10">
                                         <ul>
                                             <li>
                                                 <a href="#">
@@ -89,9 +94,12 @@
                                             <li><a href="#">${job.preferred_specialty}</a></li>
                                         </ul>
                                     </div>
+                                    <p class="d-none d-md-block col-md-2 text-center" style="padding-right:20px;">
+                                    <span>+{{ $j->getOfferCount() }} Applied</span>
+                                    </p>
                                 </div>
-
                                 <div class="row">
+                                    
                                     <div class="col-12 col-sm-6">
                                         <ul>
                                             <li>
@@ -934,10 +942,9 @@
     function addJobCards(jobs){
 
         for(job of jobs.jobs){
-            var escapedJob = JSON.stringify(job).replaceAll("\"", "'");
-
+            
             var newCard =
-            '<div class="ss-job-prfle-sec job-item" data-users="'+JSON.stringify(jobs.allusers).replaceAll("\"", "'")+'" data-id="'+job.id+'" data-job="'+escapedJob+'">'+
+            '<div class="ss-job-prfle-sec job-item" data-id="'+job.id+'" >'+
                 '<div class="row">'+
                     '<div class="col-10">'+
                         '<ul>';
