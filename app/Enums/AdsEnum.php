@@ -65,57 +65,6 @@ class AdsEnum
     // end :: from skype
 
 
-    // horisontal ads
-    const h_AD_1 = [
-        'link' => 'https://www.fithortrip.com/BHKX349Z/B47749C/',
-        'image' => 'images/ads/horizontal_banner/banner1.jpeg',
-        'content' => null,
-    ];
-
-    const h_AD_2 = [
-        'link' => 'https://www.fithortrip.com/BHKX349Z/B47749C/',
-        'image' => 'images/ads/horizontal_banner/banner2.png',
-        'content' => null,
-    ];
-
-    const h_AD_3 = [
-        'link' => 'https://www.fithortrip.com/BHKX349Z/B47749C/',
-        'image' => 'images/ads/horizontal_banner/banner2.png',
-        'content' => null,
-    ];
-
-    // end :: horisontal ads
-
-
-    // vertical ads
-    const v_AD_1 = [
-        'link' => 'https://www.fithortrip.com/BHKX349Z/B47749C/',
-        'image' => 'images/ads/vertical_banner/banner1.jpeg',
-        'content' => null,
-    ];
-
-    const v_AD_2 = [
-        'link' => 'https://www.fithortrip.com/BHKX349Z/B47749C/',
-        'image' => 'images/ads/vertical_banner/banner2.jpeg',
-        'content' => null,
-    ];
-
-    const v_AD_3 = [
-        'link' => 'https://www.fithortrip.com/BHKX349Z/B47749C/',
-        'image' => 'images/ads/vertical_banner/banner3.png',
-        'content' => null,
-    ];
-
-    const v_AD_4 = [
-        'link' => 'https://www.fithortrip.com/BHKX349Z/B47749C/',
-        'image' => 'images/ads/vertical_banner/banner4.png',
-        'content' => null,
-    ];
-
-    // end :: vertical ads
-
-
-
     /**
      * Get all ads as an array.
      *
@@ -130,62 +79,9 @@ class AdsEnum
             self::AD_4,
             self::AD_5,
             self::AD_6,
-
-            self::h_AD_1,
-            self::h_AD_2,
-            self::h_AD_3,
-
-            self::v_AD_1,
-            self::v_AD_2,
-            self::v_AD_3,
-            self::v_AD_4
             
         ];
     }
-
-    /**
-     * Get standard ads.
-     */
-    public static function standard()
-    {
-        return [
-            self::AD_1,
-            self::AD_2,
-            self::AD_3,
-            self::AD_4,
-            self::AD_5,
-            self::AD_6,
-        ];
-    }
-
-    /**
-     *  get all horizontal ads
-     * 
-     */
-    public static function allHorizontal()
-    {
-        return [
-            self::h_AD_1,
-            self::h_AD_2,
-            self::h_AD_3,
-        ];
-    }
-
-    /**
-     *  get all vertical ads
-     *
-     */
-    public static function allVertical()
-    {
-        return [
-            self::v_AD_1,
-            self::v_AD_2,
-            self::v_AD_3,
-            self::v_AD_4
-        ];
-    }
-
-
 
     /**
      * Get a random ad(s), defaulting to 1 if no number is provided.
@@ -193,20 +89,11 @@ class AdsEnum
      * @param int $numAds
      * @return array
      */
-    public static function random($numAds = 1, $type = 'standard')
+    public static function random($numAds = 1)
     {
-        $numAds = $numAds >= 1 ? $numAds : 1;
-
-        if ($type === 'horizontal') {
-            $ads = self::allHorizontal();
-        } elseif ($type === 'vertical') {
-            $ads = self::allVertical();
-        } else {
-            $ads = self::standard();
-        }
-
+        $ads = self::all();
         $numAds = min($numAds, count($ads));  // Ensure we don't ask for more ads than available
-
+    
         if ($numAds === 1) {
             return [$ads[array_rand($ads)]];
         }

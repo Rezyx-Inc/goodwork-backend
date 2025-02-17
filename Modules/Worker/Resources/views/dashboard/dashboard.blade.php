@@ -31,13 +31,6 @@
     <link rel="stylesheet" href="{{ URL::asset('frontend/css/style.css') }}" />
     <link rel="stylesheet" href="{{ URL::asset('frontend/custom/css/custom.css') }}" />
     @yield('css')
-
-
-    <style>
-        main {
-            padding-bottom: 0px;
-        }
-    </style>
 </head>
 
 <body>
@@ -64,37 +57,43 @@
     <!-- MDB -->
     <main style="padding-top: 170px" class="ss-main-body-sec">
         <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-9">
+            <!--------Ghraph area------->
+            {{-- <div class="ss-home-graph-main-sec">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ss-home-graph-div1">
+                            <img src="{{URL::asset('frontend/img/home-graph-1.png')}}" />
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="ss-home-graph-div2">
+                            <img src="{{URL::asset('frontend/img/home-graph-2.png')}}" />
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="ss-home-graph-div3">
+                            <img src="{{URL::asset('frontend/img/home-graph-3.png')}}" />
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
+            <div class="row mb-5">
+                <div class="col-md-12">
                     <div class="w-75 ss-job-prfle-sec m-auto p-5">
                         <h3 class="ss-color-pink font-weight-bold">Application stages</h3>
                         <canvas id="recruiterStats"></canvas>
                     </div>
                 </div>
-
-                <div class="col-12 col-md-3">
-                    <div class="side-ads-container">
-                        <div id="promenade"></div>
-
-                        <script>
-                            (function(cfg) {
-                                var script = document.createElement('script');
-                                script.async = true;
-                                script.src = 'https://api.boardwalk.marketing/promenade/loader/?pid=' + cfg.pid + '&role=' + cfg.role;
-                                document.head.appendChild(script);
-                                window.boardwalk = cfg;
-                            }({
-                                pid: '23d64e3b-185b-442b-b6d7-75839d66e308',
-                                role: 'path',
-                                root: 'promenade',
-                                stylesheets: ['https://cdn1.boardwalk.marketing/css/pathcss-light-column-list.css'],
-                            }))
-                        </script>
-                    </div>
+                {{-- <div class="col-md-8">
                 </div>
+                <div class="col-md-4">
+                    <div class="ss-rec-start-rec-div-sec">
+                        <h6>Start Posting Your Job Request</h6>
+                        <a href="{{ route('recruiter-application') }}"><img src="{{URL::asset('recruiter/assets/images/plus-icon.png')}}" /></a>
+                    </div>
+                </div> --}}
             </div>
         </div>
-
     </main>
 
     <script type="text/javascript" src="{{ URL::asset('frontend/js/mdb.min.js') }}"></script>

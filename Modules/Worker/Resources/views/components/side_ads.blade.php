@@ -98,7 +98,7 @@
 
     @php
         $nbr = $nbr ?? 3;
-        $ads = \App\Enums\AdsEnum::random( $nbr );
+        $ads = \App\Enums\AdsEnum::random(3);
     @endphp
 
     @foreach($ads as $randomAd)

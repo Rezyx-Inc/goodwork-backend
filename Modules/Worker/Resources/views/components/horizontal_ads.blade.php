@@ -83,7 +83,7 @@
 
     @php
         $nbr = $nbr ?? 1;
-        $ads = \App\Enums\AdsEnum::random($nbr, 'horizontal');
+        $ads = \App\Enums\AdsEnum::random($nbr);
     @endphp
 
     @foreach ($ads as $randomAd)
