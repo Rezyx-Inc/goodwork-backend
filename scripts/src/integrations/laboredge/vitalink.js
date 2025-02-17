@@ -199,61 +199,60 @@ module.exports.update = (async () => {
 });
 
 // get professions
-async function getProfession (accessToken, userId){
+async function getProfession(accessToken, userId) {
 
-	console.log("Inside getProfession");
-	const professions = {
-		"(RN)": "RN",
-		"(CNA)": "CNA",
-		"(CMA)": "CMA",
-		"(Tech)":"Tech / Assist",
-		"(Admin Assistant)": "Tech / Assist",
-		"(Therapist)": "Therapy",
-		"(Therapy)": "Therapy",
-		"(Physician)": "Physician",
-		"(PA)": "PA",
-		"(CRNA)": "CRNA",
-		"(CNP)": "NP",
-		"(LVN/LPN)": "LPN / LVN",
-		"(Social Worker)": "Social Work",
-		"(Other)": "Other Clinician"
-	};
-	// Array to hold active professions
-	var activeProfession = [];
-	
-	//Headers required for the api call
-	var headers = {
-		'Authorization' : 'Bearer '+accessToken,
-		'Content-Type': 'application/json'
-	};
-	
-	// Get the total amount of records
-	try{
-		
-		//API call to fetch professions
-		var { data } = await axios.get("https://api-nexus.laboredge.com:9000/api/api-integration/v1/master/professions", {headers});
-		
-			for(profession of data){
-				if(profession.active){
-					var mappedProfession = "";
-					for (let [pattern, mappedPro] of Object.entries(professions)) {
-						if (profession.name.match(new RegExp(pattern, 'gi'))) {
-							mappedProfession = mappedPro;
-							break;
-						}
-					}
-					activeProfession.push({mappedProfession: mappedProfession, profession: profession.name});
-				}
-			}
-	}catch(e){
-	
-		//log in case of API call failure
-		log("Unable to fetch for total records from Nexus.", e.message, userId);
-	
-	}
+    const professions = {
+        "RN": "RN",
+        "CNA": "CNA",
+        "CMA": "CMA",
+        "Tech": "Tech / Assist",
+        "Admin Assistant": "Tech / Assist",
+        "Therapist": "Therapy",
+        "Therapy": "Therapy",
+        "Physician": "Physician",
+        "PA": "PA",
+        "CRNA": "CRNA",
+        "CNP": "NP",
+        "LVN/LPN": "LPN / LVN",
+        "Social Worker": "Social Work",
+        "Other": "Other Clinician"
+    };
 
-	return activeProfession;
-};
+    let activeProfession = [];
+    const headers = {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+    };
+
+    try {
+
+        const { data } = await axios.get( "https://api-nexus.laboredge.com:9000/api/api-integration/v1/master/professions", { headers } );
+
+        for (const profession of data) {
+
+            if (!profession.active) continue;
+
+            // Try to find a mapped profession, case-insensitive
+            const mappedProfession = Object.entries(professions).find(
+
+                ([pattern]) => new RegExp(`^${pattern}$`, "i").test(profession.name)
+
+            )?.[1] || "";
+
+            activeProfession.push({
+                mappedProfession,
+                profession: profession.name
+            });
+        }
+
+    } catch (e) {
+        console.error("Error fetching professions:", e.message);
+        log("Unable to fetch professions from Nexus.", e.message, userId);
+    }
+
+    return activeProfession;
+}
+
 
 // get specialties
 async function getSpecialties (accessToken, userId){
