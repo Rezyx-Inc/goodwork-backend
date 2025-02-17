@@ -320,6 +320,7 @@
                                                         src="{{ URL::asset('frontend/img/calendar.png') }}">
                                                     {{ $j->hours_per_week }} hrs/wk</a></li>
                                         @endif
+                                    </ul>
                                 </div>
                             </div>
                             {{-- row 3 --}}
@@ -353,9 +354,8 @@
                                                 {{ $j->preferred_shift_duration }}
                                             </li>
                                             @if (isset($j->actual_hourly_rate))
-                                                <li><img class="icon_cards"
-                                                        src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                    {{ number_format($j->actual_hourly_rate) }}/hr
+                                                <li>
+                                                    ${{ number_format($j->actual_hourly_rate) }}/hr
                                                 </li>
                                             @endif
                                         </ul>
@@ -363,15 +363,13 @@
                                     <div class="col-12 col-md-6 col-lg-6 d-flex justify-content-end">
                                         <ul>
                                             @if (isset($j->weekly_pay))
-                                            <li><img class="icon_cards"
-                                                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                {{ number_format($j->weekly_pay) }}/wk
+                                            <li>
+                                                ${{ number_format($j->weekly_pay) }}/wk
                                             </li>
                                             @endif
                                             @if (isset($j->weekly_pay))
-                                                <li style="font-weight: 600;"><img class="icon_cards"
-                                                        src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                    {{ number_format($j->weekly_pay * 4 * 12) }}/yr
+                                                <li style="font-weight: 600;">
+                                                    ${{ number_format($j->weekly_pay * 4 * 12) }}/yr
                                                 </li>
                                             @endif
                                         </ul>

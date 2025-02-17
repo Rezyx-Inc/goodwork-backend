@@ -913,7 +913,7 @@
                                 }
                                 newCard += job.preferred_shift_duration +'</li>';
                                 if(job.actual_hourly_rate){
-                                    newCard += '<li><img class="icon_cards" src="frontend/img/dollarcircle.png"> '+ job.actual_hourly_rate +'/hr</li>';
+                                    newCard += '<li>$ '+ job.actual_hourly_rate +'/hr</li>';
                                 }
                             newCard += '</ul>'+
                         '</div>';
@@ -921,8 +921,8 @@
                     newCard += '<div class="col-12 col-md-6 col-lg-6 d-flex justify-content-end">'+
                         '<ul>';
                         if(job.weekly_pay){
-                            newCard += '<li><img class="icon_cards" src="frontend/img/dollarcircle.png"> '+ job.weekly_pay +'/wk</li>';
-                            newCard += '<li style="font-weight: 600;"><img class="icon_cards" src="frontend/img/dollarcircle.png"> '+ (job.weekly_pay * 4 * 12) +'/yr</li>';
+                            newCard += '<li>$ '+ job.weekly_pay +'/wk</li>';
+                            newCard += '<li style="font-weight: 600;">$ '+ (job.weekly_pay * 4 * 12) +'/yr</li>';
                         }
                         newCard += '</ul>'+
                     '</div>'+
