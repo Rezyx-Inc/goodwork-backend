@@ -12,16 +12,6 @@ var { report } = require("../set.js");
 
 var ardorHealth = require("../integrations/ardorHealth.js");
 
-// Uncomment to seed accounts
-// vitalink.seed(0);
-
-//report("Hello from cron")
-//vitalink.update();
-// (async () => {
-//     console.log("Exec imm");
-//     await gSheetAuth(true);
-// })();
-
 if (process.env.ENABLE_CRONS === "true") {
     console.log("Starting integrations cron jobs.");
 
@@ -39,10 +29,11 @@ if (process.env.ENABLE_CRONS === "true") {
 
     // Check updates every hour
     cron.schedule("0 * * * *", () => {
+
         console.log("Hourly Checking job updates");
         // ardorHealth.init();
-    //     // vitalink.update();
-    //     gsheet();
+        vitalink.update();
+
     });
 
     // Check other updates every day at 1 am

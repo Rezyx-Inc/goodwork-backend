@@ -15,7 +15,16 @@ var moment = require("moment"); // Used for date-time changes
 var _ = require('lodash'); // Used for data manipulation
 var { report } = require('../../set.js');
 
-var vitalinkOrgId = "GWU000002";
+if(process.env.APP_ENV == "production"){
+
+	//var vitalinkOrgId = "GWU000002";
+	return
+
+}else{
+
+	var vitalinkOrgId = "GWU000002";
+}
+
 
 //Connect to DB
 mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_DATABASE_NAME)
@@ -90,7 +99,7 @@ module.exports.init = (async () => {
 	console.log("Jobs saved into the db");
 
 	return;
-})();
+});
 
 
 //Helper function to have round-robin for recruiter updates
@@ -146,6 +155,10 @@ module.exports.update = (async () => {
 
             	if(updateItem.id == item.id){
 					
+					updateItem.shift = await formatShifts(updateItem.shiftStartTime1);
+					updateItem.specialty = await formatSpecialties(specialties,updateItem.specialty);
+					updateItem.profession = await formatProfessions(professions,updateItem.profession);
+
 					//update in the db
                 	let result = await queries.updateLaboredgeJobs(updateItem, vitalinkOrgId);
 
@@ -162,7 +175,12 @@ module.exports.update = (async () => {
     	// add new jobs
     	for ( newItem of updatedJobs.toAdd ){
 
-        	await queries.addImportedJob(updateItem);
+    		newItem.shift = await formatShifts(newItem.shiftStartTime1);
+			newItem.specialty = await formatSpecialties(specialties,newItem.specialty);
+			newItem.profession = await formatProfessions(professions,newItem.profession);
+
+
+        	await queries.addImportedJob(newItem);
         	vitalinkMongo.importedJobs.push(newItem);
     	}
 
