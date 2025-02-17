@@ -390,12 +390,10 @@
                                     <div class="col-8 col-lg-7 d-flex justify-content-end">
                                         <ul>
                                             @if (isset($j->weekly_pay))
-                                            <li><img class="icon_cards"
-                                                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                {{ number_format($j->weekly_pay) }}/wk
-                                            </li>
-                                            @endif
-                                            @if (isset($j->weekly_pay))
+                                                <li><img class="icon_cards"
+                                                        src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
+                                                    {{ number_format($j->weekly_pay) }}/wk
+                                                </li>
                                                 <li style="font-weight: 600;"><img class="icon_cards"
                                                         src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
                                                     {{ number_format($j->weekly_pay * 4 * 12) }}/yr

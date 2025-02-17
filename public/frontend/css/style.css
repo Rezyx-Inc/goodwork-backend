@@ -1278,12 +1278,12 @@ span.ss-reset-btn {
     height: fit-content;
 }
 
-@media (max-width: 375px) {
+@media (max-width: 425px) {
     .ss-job-prfle-sec a, .ss-job-prfle-sec ul li{
         font-size: 13px;
     }
 }
-@media (min-width: 375px) {
+@media (min-width: 425px) {
     .ss-job-prfle-sec a, .ss-job-prfle-sec ul li{
         font-size: 16px;
     }
