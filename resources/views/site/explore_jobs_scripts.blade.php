@@ -46,28 +46,6 @@
         // set modal title
         document.querySelector("#job_details_modal_for_logout_users .modal-title").innerHTML = job.job_id
 
-        {/* } ${($job->preferred_shift_duration === '5x8 Days' || $job->preferred_shift_duration == '4x10 Days') ? `
-                                            <svg style="vertical-align: bottom;"
-                                                xmlns="http://www.w3.org/2000/svg" width="25"
-                                                height="25" fill="currentColor"
-                                                class="bi bi-brightness-alt-high-fill"
-                                                viewBox="0 0 16 16">
-                                                <path
-                                                    d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3m8 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5m-13.5.5a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1zm11.157-6.157a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.9 2.121a.5.5 0 0 0 .707-.707L3.05 5.343a.5.5 0 1 0-.707.707zM8 7a4 4 0 0 0-4 4 .5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5 4 4 0 0 0-4-4" />
-                                            </svg>`
-                                        : ($job->preferred_shift_duration === '3x12 Nights or Days') ? `
-                                            <svg style="vertical-align: text-bottom;"
-                                                xmlns="http://www.w3.org/2000/svg" width="20"
-                                                height="16" fill="currentColor"
-                                                class="bi bi-moon-stars" viewBox="0 0 16 16">
-                                                <path
-                                                    d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286" />
-                                                <path
-                                                    d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z" />
-                                            </svg> ` 
-                                        : ''}
-        */}
-
         // Set job data in the modal
         document.querySelector("#job_details_modal_for_logout_users .modal-body").innerHTML = `
         <main class="ss-main-body-sec px-1">
@@ -1026,29 +1004,29 @@
                         '</div>';
                         if(job.actual_hourly_rate){
                             newCard += '<div class="infos_like_ul">'+
-                                '$'+ job.actual_hourly_rate +'/hr'+
+                                '$'+ numberWithCommas(job.actual_hourly_rate) +'/hr'+
                             '</div>';
                         }
                     newCard += '</div>'+
                     '<div class="col-12 mt-3 mt-md-0 col-md-6 col-lg-6 d-flex justify-content-between justify-content-md-end">'+
                         (job.weekly_pay ? 
                             '<div class="infos_like_ul">'+
-                                '$'+ job.weekly_pay +'/wk'+
+                                '$'+ numberWithCommas(job.weekly_pay.toFixed(0)) +'/wk'+
                             '</div>' : '') +
                         (job.weekly_pay ? 
                             '<div class="infos_like_ul" style="font-weight: 600;">'+
-                                '$'+ (job.weekly_pay * 4 * 12) +'/yr'+
+                                '$'+ numberWithCommas((job.weekly_pay * 4 * 12).toFixed(0)) +'/yr'+
                             '</div>' : '') +
                     '</div>';
                 } else {
                     newCard += '<div class="col-12 d-flex justify-content-end">'+
                         '<ul>';
                         if(job.actual_hourly_rate){
-                            newCard += '<li>$ '+ job.actual_hourly_rate +'/hr</li>';
+                            newCard += '<li>$ '+ numberWithCommas(job.actual_hourly_rate) +'/hr</li>';
                         }
                         if(job.weekly_pay){
-                            newCard += '<li>$ '+ job.weekly_pay +'/wk</li>';
-                            newCard += '<li style="font-weight: 600;">$ '+ (job.weekly_pay * 4 * 12) +'/yr</li>';
+                            newCard += '<li>$ '+ numberWithCommas(job.weekly_pay.toFixed(0)) +'/wk</li>';
+                            newCard += '<li style="font-weight: 600;">$ '+ numberWithCommas((job.weekly_pay * 4 * 12).toFixed(0)) +'/yr</li>';
                         }
                         newCard += '</ul>'+
                     '</div>';
@@ -1071,5 +1049,9 @@
 
             $('#job-item-container').append(newCard);
         }
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 </script>
