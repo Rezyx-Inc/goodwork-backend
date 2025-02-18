@@ -1337,7 +1337,7 @@ span.ss-reset-btn {
 
 
 .ss-dash-profile-jb-mn-dv {
-    width: 88%;
+    width: 100%;
     margin: auto;
 }
 
@@ -2542,7 +2542,7 @@ border-radius: 100px;
     align-items: center;
 }
 
-.ss-job-apply-on-tx-bx-hed-dv p {
+.ss-job-apply-on-tx-bx-hed-dv p, .mobile_header p {
     color: #006BC9;
     font-size: 14px;
     padding-bottom: 5px;
