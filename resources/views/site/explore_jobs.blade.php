@@ -475,7 +475,7 @@
         </div>
     </div>
 
-    @include('worker::components.ads_modal')
+    {{-- @include('worker::components.ads_modal') --}}
 
 </section>
 
