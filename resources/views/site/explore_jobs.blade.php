@@ -862,8 +862,8 @@
 
                     let id = this.dataset.id;
                     let job = jobs.filter(job => job.id == id);
-                    
-                    redirectToJobDetails(job);
+
+                    redirectToJobDetails(job[0]);
 
                 } catch (error) {
                     console.error("Invalid job data:", error);
@@ -877,8 +877,8 @@
                 
                 let id = this.dataset.id;
                 let job = jobs.filter(job => job.id == id);
-                
-                redirectToJobDetails(job);
+;
+                redirectToJobDetails(job[0]);
 
             } catch (error) {
                 console.error("Invalid job data:", error);

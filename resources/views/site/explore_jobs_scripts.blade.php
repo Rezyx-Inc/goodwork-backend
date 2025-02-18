@@ -12,7 +12,7 @@
         if (isLoggedIn) {
             window.location.href = `worker/job/${job.id}/details`;
         } else {
-            showJobModal(job);
+            showJobModal([job]);
         }
     }
 
