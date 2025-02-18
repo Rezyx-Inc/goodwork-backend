@@ -110,7 +110,7 @@
                                                     value="{{ implode('-', $terms) }}">
                                         {{-- </li>
                                         <li> --}}
-                                            <div class="ss-prsn-frm-plu-div ms-2 ms-md-5">
+                                            <div class="ss-prsn-frm-plu-div ms-2 ms-xxl-4">
                                                 <a href="javascript:void(0)" onclick="addTerms('from_add')">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                                 </a>
@@ -340,17 +340,13 @@
                                                         @endif
                                                 </div>
                                             @else
-                                                <div class="col-12 col-sm-4 col-lg-5">
+                                                <div class="col-12 d-flex justify-content-end">
                                                     <ul>
                                                         @if (isset($j->actual_hourly_rate))
                                                             <li>
                                                                 $ {{ number_format($j->actual_hourly_rate) }}/hr
                                                             </li>
                                                         @endif
-                                                    </ul>
-                                                </div>
-                                                <div class="col-12 col-sm-8 col-lg-7 d-flex justify-content-end">
-                                                    <ul>
                                                         @if (isset($j->weekly_pay))
                                                             <li>
                                                                 $ {{ number_format($j->weekly_pay) }}/wk
@@ -367,16 +363,16 @@
 
 
                                         {{-- row 5 --}}
-                                        <div class="row w-100">
+                                        <div class="row w-100 d-flex justify-content-between align-items-center">
                                             {{-- <div class="col-6"><h5>Recently Added</h5></div> --}}
 
-                                            <div class="col-6 d-flex justify-content-start">
+                                            <div class="col-6">
                                                 @if ($j->as_soon_as == true)
                                                     <p class="col-12" style="padding-bottom: 0px; padding-top: 8px;">
                                                         As soon as possible</p>
                                                 @endif
                                             </div>
-                                            <div class="col-6 d-flex justify-content-end">
+                                            <div class="col-6 ">
                                                 @if ($j->urgency == 'Auto Offer' || $j->as_soon_as == true)
                                                     <p class="col-2 text-center"
                                                         style="padding-bottom: 0px; padding-top: 8px;">Urgent</p>
