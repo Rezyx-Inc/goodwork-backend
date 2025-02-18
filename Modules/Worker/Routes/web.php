@@ -12,11 +12,11 @@
 */
 
 Route::prefix('worker')->group(function () {
+
     Route::get('/', 'WorkerController@index');
 
-    Route::fallback(function () {
-        return redirect('/');
-    });
+    // Handle fallback
+    Route::fallback(['uses'=> 'WorkerController@fallback']);
 
     Route::middleware(['user_not_logged_in'])->group(function () {
         Route::get('/login', ['uses' => 'WorkerAuthController@get_login', 'as' => 'worker.login']);

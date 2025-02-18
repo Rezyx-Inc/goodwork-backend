@@ -133,9 +133,6 @@ class SiteController extends Controller
     $data['hours_per_week_from'] = $request->input('hours_per_week_from');
     $data['hours_per_week_to'] = $request->input('hours_per_week_to');
 
-    $allusers = User::select('id', 'role', 'first_name', 'last_name', 'organization_name', 'image')->get();
-    $data['allusers'] = $allusers;
-
     if (!empty($gwNumber)) {
 
       if (str_starts_with($gwNumber, 'GWJ')) {
@@ -215,7 +212,6 @@ class SiteController extends Controller
       $ret->where('job_city', '=', $data['city']);
     }
 
-    //return response()->json(['message' =>  $ret->get()]);
     $skip = $request->input('skip');
 
     if(!empty($skip) && $skip > 0){
@@ -226,6 +222,15 @@ class SiteController extends Controller
 
         $userapplied = Offer::where('job_id', $value->id)->count();
         $data['jobs'][$key]['offer_count'] = $userapplied;
+      }
+
+      foreach ($data['jobs'] as $key => $value) {
+
+        $organization_infos = User::select('organization_name','first_name','last_name','image', 'role')->where('id', $value->organization_id)->get();
+        $recruiter_infos = User::select('first_name','last_name','image', 'role')->where('id', $value->recruiter_id)->get();
+
+        $data['jobs'][$key]['organization_infos'] = $organization_infos;
+        $data['jobs'][$key]['recruiter_infos'] = $recruiter_infos;
       }
 
       $jobSaved = new JobSaved;
@@ -242,6 +247,21 @@ class SiteController extends Controller
     }else{
 
       $data['jobs'] = $ret->orderBy('id','desc')->skip(0)->take(10)->get();
+
+      foreach ($data['jobs'] as $key => $value) {
+
+        $userapplied = Offer::where('job_id', $value->id)->count();
+        $data['jobs'][$key]['offer_count'] = $userapplied;
+      }
+      
+      foreach ($data['jobs'] as $key => $value) {
+
+        $organization_infos = User::select('organization_name','first_name','last_name','image','role')->where('id', $value->organization_id)->get();
+        $recruiter_infos = User::select('first_name','last_name','image','role')->where('id', $value->recruiter_id)->get();
+
+        $data['jobs'][$key]['organization_infos'] = $organization_infos;
+        $data['jobs'][$key]['recruiter_infos'] = $recruiter_infos;
+      }
     }
 
     $jobSaved = new JobSaved;
