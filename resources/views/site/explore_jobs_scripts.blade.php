@@ -77,12 +77,12 @@
                     <div class="col-lg-12">
                         <div class="ss-apply-on-jb-mmn-dv-box-divs model_content_width">
                             <div class="ss-job-prfle-sec header_content_width">
-                                <div class="row">
-                                    <p class="col-12 text-end d-md-none" style="padding-right:20px;">
+                                <div class="row d-flex align-items-center">
+                                    <p class="col-12 text-end d-sm-none" style="padding-right:20px;">
                                         <span>+${job.offer_count} Applied</span>
                                     </p>
-                                    <div  class="col-12 col-md-10">
-                                        <ul>
+                                    <div class="col-12 d-flex justify-content-between justify-content-sm-start col-sm-10">
+                                        <div class="infos_like_ul">
                                             <li>
                                                 <a href="#">
                                                     <svg style="vertical-align: sub;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
@@ -91,16 +91,18 @@
                                                     ${job.profession}
                                                 </a>
                                             </li>
+                                            </div>
+                                            <div class="infos_like_ul">
                                             <li><a href="#">${job.preferred_specialty}</a></li>
-                                        </ul>
+                                            </div>
                                     </div>
-                                    <p class="d-none d-md-block col-md-2 text-center" style="padding-right:20px;">
-                                    <span>+{{ $j->getOfferCount() }} Applied</span>
+                                   <p class="d-none d-sm-block col-sm-2 text-center" style="padding-right:20px;">
+                                        <span>+${job.offer_count} Applied</span>
                                     </p>
                                 </div>
-                                <div class="row">
-                                    
-                                    <div class="col-12 col-sm-6">
+
+                                <div class="row mt-2 mt-md-0 d-flex align-items-center">
+                                    <div class="col-7">
                                         <ul>
                                             <li>
                                                 <a href="#">
@@ -110,12 +112,12 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-12 col-sm-6 d-flex justify-content-end">
+                                    <div class="col-5 d-flex justify-content-end">
                                         <ul>
-                                            ${job.preferred_assignment_duration && job.preferred_assignment_duration !== '' ? `
+                                            ${job.preferred_assignment_duration && job.preferred_assignment_duration !== '' && job.terms && job.terms === 'Contract' ? `
                                                     <li>
                                                         <img class="icon_cards" src="${calendarIcon}"">
-                                                        ${job.preferred_assignment_duration} wks
+                                                        ${job.preferred_assignment_duration} wks / assignment
                                                     </li>
                                                 ` : ''}
                                             ${job.hours_per_week && job.hours_per_week !== '' ? `
@@ -128,25 +130,22 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
+                                <div class="row d-flex align-items-center">
+                                    ${job.preferred_shift_duration && job.preferred_shift_duration !== '' ? `
                                     <div class="col-12 col-md-6">
-                                        ${job.preferred_shift_duration && job.preferred_shift_duration !== '' ? `
                                         <ul>
                                             <li>
                                                 ${job.preferred_shift_duration}
                                             </li>
-                                        </ul>
-                                        ` : ''}
-                                    </div>
-
-                                    <div class="col-12 col-md-6 d-flex justify-content-end">
-                                        <ul>
-                                            ${job.actual_hourly_rate && job.actual_hourly_rate !== '' ? `
+                                             ${job.actual_hourly_rate && job.actual_hourly_rate !== '' ? `
                                                     <li>
                                                         $ ${(Number(job.actual_hourly_rate) || 0).toFixed(0)}/hr
                                                     </li>
                                                 ` : ''}
-                                                
+                                        </ul>
+                                    </div>
+                                    <div class="col-12 col-md-6 d-flex justify-content-end">
+                                        <ul> 
                                             ${job.weekly_pay && job.weekly_pay !== '' ? `
                                                     <li>
                                                         $ ${(Number(job.weekly_pay) || 0).toFixed(0)}/hr
@@ -160,6 +159,30 @@
                                                 ` : ''}
                                         </ul>
                                     </div>
+                                        ` : 
+                                        `
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <ul>
+                                            ${job.actual_hourly_rate && job.actual_hourly_rate !== '' ? `
+                                                    <li>
+                                                        $ ${(Number(job.actual_hourly_rate) || 0).toFixed(0)}/hr
+                                                    </li>
+                                                ` : ''}
+                                                
+                                            ${job.weekly_pay && job.weekly_pay !== '' ? `
+                                                    <li>
+                                                        $ ${(Number(job.weekly_pay) || 0).toFixed(0)}/wk
+                                                    </li>
+                                                ` : ''}
+
+                                            ${job.weekly_pay && job.weekly_pay !== '' ? `
+                                                    <li>
+                                                        $ ${(job.weekly_pay * 4 * 12).toFixed(0)}/yr
+                                                    </li>
+                                                ` : ''}
+                                        </ul>
+                                    </div>
+                                    `}
                                 </div>
                             </div>
 

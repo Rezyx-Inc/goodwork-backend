@@ -278,10 +278,10 @@
                         <div class="ss-job-prfle-sec job-item" data-id="{{ $j->id }}">
                             {{-- row 1 --}}
                             <div class="row d-flex align-items-center">
-                                <p class="col-12 text-end d-sm-none" style="padding-right:20px;">
+                                <p class="col-12 text-end d-lg-none" style="padding-right:20px;">
                                     <span>+{{ $j->getOfferCount() }} Applied</span>
                                 </p>
-                                <div class="col-12 d-flex justify-content-between justify-content-sm-start col-sm-10">
+                                <div class="col-12 d-flex justify-content-between justify-content-lg-start col-lg-10">
                                     <div class="infos_like_ul">
                                         @if (isset($j->profession))
                                             <li><a href="#"><svg style="vertical-align: sub;"
@@ -299,7 +299,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <p class="d-none d-sm-block col-sm-2 text-center" style="padding-right:20px;">
+                                <p class="d-none d-lg-block col-lg-2 text-center" style="padding-right:20px;">
                                     <span>+{{ $j->getOfferCount() }} Applied</span>
                                 </p>
                             </div>
@@ -377,17 +377,13 @@
                                             @endif
                                     </div>
                                 @else
-                                    <div class="col-12 col-sm-4 col-lg-5">
+                                    <div class="col-12 d-flex justify-content-end">
                                         <ul>
                                             @if (isset($j->actual_hourly_rate))
                                                 <li>
                                                     $ {{ number_format($j->actual_hourly_rate) }}/hr
                                                 </li>
                                             @endif
-                                        </ul>
-                                    </div>
-                                    <div class="col-12 col-sm-8 col-lg-7 d-flex justify-content-end">
-                                        <ul>
                                             @if (isset($j->weekly_pay))
                                                 <li>
                                                     $ {{ number_format($j->weekly_pay) }}/wk
