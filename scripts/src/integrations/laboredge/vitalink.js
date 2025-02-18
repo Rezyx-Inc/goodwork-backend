@@ -17,7 +17,7 @@ var { report } = require('../../set.js');
 
 if(process.env.APP_ENV == "production"){
 
-	//var vitalinkOrgId = "GWU000002";
+	var vitalinkOrgId = "GWU000032";
 	return
 
 }else{

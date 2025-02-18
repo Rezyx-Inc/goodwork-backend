@@ -15,7 +15,7 @@ class LaboredgeSeeder extends Seeder
     {
         $credentials = [
             [
-                "UWU445837",
+                "GWU000032",
                 'API_VITALINK_GOODWORK_12262024',
                 'api_vitalink_goodwork',
                 'vitalink',
