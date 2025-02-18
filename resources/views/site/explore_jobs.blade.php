@@ -275,8 +275,7 @@
 
                 <div class="ss-dash-profile-4-bx-dv" id="job-item-container">
                     @forelse($jobs as $j)
-                        <div class="ss-job-prfle-sec job-item" data-users="{{ $allusers }}"
-                            data-id="{{ $j->id }}" data-job="{{ json_encode($j) }}">
+                        <div class="ss-job-prfle-sec job-item" data-id="{{ $j->id }}">
                             {{-- row 1 --}}
                             <div class="row d-flex align-items-center">
                                 <p class="col-12 text-end d-sm-none" style="padding-right:20px;">
@@ -790,16 +789,11 @@
         });
 
         $('#slider3 .ui-slider-range').append('<span class="price-range-both-3 value"></span>');
+        $('#slider3 .ui-slider-handle:eq(0)').append('<span class="price-range-min-3 value">' + $('#slider3').slider('values', 0) + '</span>');
+        $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3').slider('values', 1) + '</span>');
+        $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3').slider('values', 1) + '</span>');
 
-        $('#slider3 .ui-slider-handle:eq(0)').append('<span class="price-range-min-3 value">' + $('#slider3')
-            .slider('values', 0) + '</span>');
-
-        $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3')
-            .slider('values', 1) + '</span>');
-
-        $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3')
-            .slider('values', 1) + '</span>');
-
+        
         // Add an intersect Observer for infinite scroll
         var skip = 10;
         var el = document.querySelector('#loadTrigger');
@@ -825,6 +819,7 @@
                     dataType: 'json',
                     success: function(data) {
 
+                        jobs.push(...data.message.jobs);
                         addJobCards(data.message);
                         // Increment skip
                         skip+=10;
@@ -836,6 +831,7 @@
                             item.removeEventListener("click",handleCardClickEvent, true);
                             item.addEventListener("click", handleCardClickEvent);
                         });
+                        
                     },
                     error: function(resp) {
 
@@ -846,8 +842,6 @@
                         });
                     }
                 });
-
-
 
                 return
             }
@@ -862,15 +856,19 @@
 
         jobsLength >= 10 ? observer.observe(el):null;
 
+        var jobs = @JSON($jobs);        
+
         document.querySelectorAll(".job-item").forEach(item => {
 
             item.addEventListener("click", function() {
-                const jobData = this.dataset.job;
-                const allusers = this.dataset.users; // Corrected from 'allusers' to 'users'
+
                 try {
-                    const job = JSON.parse(jobData);
-                    const users = JSON.parse(allusers);
-                    redirectToJobDetails(job, users);
+
+                    let id = this.dataset.id;
+                    let job = jobs.filter(job => job.id == id);
+                    
+                    redirectToJobDetails(job);
+
                 } catch (error) {
                     console.error("Invalid job data:", error);
                 }
@@ -878,16 +876,14 @@
         });
 
         function handleCardClickEvent(){
-            var jobData = this.dataset.job;
-            var allusers = this.dataset.users; // Corrected from 'allusers' to 'users'
-
-            jobData = JSON.parse(jobData.replaceAll("'", "\""));
-            allusers= JSON.parse(allusers.replaceAll("'", "\""));
-
+            
             try {
-                const job = jobData;
-                const users = allusers;
-                redirectToJobDetails(job, users);
+                
+                let id = this.dataset.id;
+                let job = jobs.filter(job => job.id == id);
+                
+                redirectToJobDetails(job);
+
             } catch (error) {
                 console.error("Invalid job data:", error);
             }
