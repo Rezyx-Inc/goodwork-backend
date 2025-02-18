@@ -199,161 +199,161 @@ module.exports.update = (async () => {
 });
 
 // get professions
-async function getProfession (accessToken, userId){
+async function getProfession(accessToken, userId) {
 
-	console.log("Inside getProfession");
-	const professions = {
-		"(RN)": "RN",
-		"(CNA)": "CNA",
-		"(CMA)": "CMA",
-		"(Tech)":"Tech / Assist",
-		"(Admin Assistant)": "Tech / Assist",
-		"(Therapist)": "Therapy",
-		"(Therapy)": "Therapy",
-		"(Physician)": "Physician",
-		"(PA)": "PA",
-		"(CRNA)": "CRNA",
-		"(CNP)": "NP",
-		"(LVN/LPN)": "LPN / LVN",
-		"(Social Worker)": "Social Work",
-		"(Other)": "Other Clinician"
-	};
-	// Array to hold active professions
-	var activeProfession = [];
-	
-	//Headers required for the api call
-	var headers = {
-		'Authorization' : 'Bearer '+accessToken,
-		'Content-Type': 'application/json'
-	};
-	
-	// Get the total amount of records
-	try{
-		
-		//API call to fetch professions
-		var { data } = await axios.get("https://api-nexus.laboredge.com:9000/api/api-integration/v1/master/professions", {headers});
-		
-			for(profession of data){
-				if(profession.active){
-					var mappedProfession = "";
-					for (let [pattern, mappedPro] of Object.entries(professions)) {
-						if (profession.name.match(new RegExp(pattern, 'gi'))) {
-							mappedProfession = mappedPro;
-							break;
-						}
-					}
-					activeProfession.push({mappedProfession: mappedProfession, profession: profession.name});
-				}
-			}
-	}catch(e){
-	
-		//log in case of API call failure
-		log("Unable to fetch for total records from Nexus.", e.message, userId);
-	
-	}
+    const professions = {
+        "RN": "RN",
+        "CNA": "CNA",
+        "CMA": "CMA",
+        "Tech": "Tech / Assist",
+        "Admin Assistant": "Tech / Assist",
+        "Therapist": "Therapy",
+        "Therapy": "Therapy",
+        "Physician": "Physician",
+        "PA": "PA",
+        "CRNA": "CRNA",
+        "CNP": "NP",
+        "LVN/LPN": "LPN / LVN",
+        "Social Worker": "Social Work",
+        "Other": "Other Clinician"
+    };
 
-	return activeProfession;
-};
+    let activeProfession = [];
+    const headers = {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+    };
+
+    try {
+
+        const { data } = await axios.get( "https://api-nexus.laboredge.com:9000/api/api-integration/v1/master/professions", { headers } );
+
+        for (const profession of data) {
+
+            if (!profession.active) continue;
+
+            // Try to find a mapped profession, case-insensitive
+            const mappedProfession = Object.entries(professions).find(
+
+                ([pattern]) => new RegExp(`^${pattern}$`, "i").test(profession.name)
+
+            )?.[1] || "";
+
+            activeProfession.push({
+                mappedProfession,
+                profession: profession.name
+            });
+        }
+
+    } catch (e) {
+        console.error("Error fetching professions:", e.message);
+        log("Unable to fetch professions from Nexus.", e.message, userId);
+    }
+
+    return activeProfession;
+}
+
 
 // get specialties
 async function getSpecialties (accessToken, userId){
 
 	const specialtyMap = {
-		"(Acute Care)":"Acute Care",
-		"(Admin)": "Administrative",
-		"(Administrator)": "Administrative",
-		"(Ambulatory)": "Ambulatory Care",
-		"(Blood Drawls)": "Phlebotomist",
-		"(Bone Marrow Oncology)": "Bone Marrow Transplant",
-		"(Burn Unit)": "Burn ICU",
-		"(Cardiac)": "Cardiology",
-		"(Cardio)": "Cardiology",
-		"(Cardio/Pulmonary)": "[Cardiology, Pulmonology]",
-		"(Case Manager)": "Case Management",
-		"(Cath Lab)": "Cardiac Cath Lab",
-		"(CCU)": "CCU - Coronary Care",
-		"(Chemotherapy)": "Hematology & Oncology",
-		"(Corrections)": "Correctional",
-		"(CT)": "CT Technologist",
-		"(Diagnostics Radiology)": "Radiology",
-		"(Dietitian)": "RDCD Dietitian",
-		"(Director)": "Director of Nursing",
-		"(EP Lab)": "Electrophysiology Lab",
-		"(ER)": "ED - Emergency Department",
-		"(ER - Peds)": "Pediatrics ER - Emergency Room",
-		"(Fetal)": "Maternal - Newborn",
-		"(Flight)": "Flight Nurse or Critical Care Flight Nurse",
-		"(Flu Clinic)": "Vaccination",
-		"(General)": "General Surgery",
-		"(GI)": "Gastroenterology",
-		"(Hand)": "Orthopedics",
-		"(ICU)": "ICU - Intensive Care Unit",
-		"(Infection Prevention)": "Infection Control",
-		"(Inpatient)": "In-Patient",
-		"(Interventional)": "Interventional Radiology",
-		"(IR)": "Interventional Radiology",
-		"(L&D)": "Labor and Delivery",
-		"(LMSW)": "Licensed Clinical Social Worker",
-		"(LSW)": "Licensed Clinical Social Worker",
-		"(LTC)": "Long Term Care",
-		"(Med Surg)": "Med Surg",
-		"(Med Surg / Tele)": "Med Surg / Telemetry",
-		"(MICU)": "MICU - Medical Intensive Care Unit",
-		"(Mother/Baby)": "Maternal - Newborn",
-		"(MRI/Rad Tech Float)": "[Radiology Technician, MRI Technologist]",
-		"(Neuro)": "Neurology",
-		"(NICU)": "NICU - Neonatal Intensive Care",
-		"(Nuclear Med Tech)": "Nuclear Medicine Technologist",
-		"(OB)": "Obstetrics / Gynecology",
-		"(OB/GYN)": "Obstetrics / Gynecology",
-		"(Observation Unit)": "DOU - Direct Observation Unit",
-		"(Occupational Therapy)": "Occupational Therapist",
-		"(Oncology)": "Hematology & Oncology",
-		"(Oncology/Hematology)": "Hematology & Oncology",
-		"(Oncology - Peds)": "Pediatric Hematology / Oncology",
-		"(Open Heart)": "Cardiovascular/Cardiothoracic Surgery",
-		"(OR)": "OR - Operating Room",
-		"(OR Pedes)": "Pediatrics OR - Operating Room",
-		"(Ortho)": "Orthopedics",
-		"(Outpatient)": "Outpatient Surgery",
-		"(PACU)": "PACU - Post Anesthetic Care",
-		"(Patient Transport)": "Transport",
-		"(PCT)": "Patient Care Tech",
-		"(PCU)": "PCU - Progressive Care Unit",
-		"(Pedes)": "Pediatrics",
-		"(PEDES)": "Pediatrics",
-		"(Physical Therapy)": "Physical Therapist",
-		"(PICU)": "PICU - Pediatric Intensive Care",
-		"(Postpartum)": "Post Partum",
-		"(Pre-Op)": "Preoperative",
-		"(Psyche)": "Psychiatry",
-		"(Radiation Therapy)": "Radiation Therapist",
-		"(Rehab)": "Rehabilitation",
-		"(Rehab Acute)": "Rehabilitation",
-		"(Respiratory)": "Respiratory Therapist",
-		"(RNFA)": "Registered Nurse First Assistant (RNFA)",
-		"(SICU)": "SICU - Surgical Intensive Care",
-		"(Skilled Nursing)": "Skilled Nursing Facility",
-		"(SNF)": "Skilled Nursing Facility",
-		"(Speech-Language Pathologist)": "Speech Language Pathologist",
-		"(Step-Down)": "Stepdown",
-		"(Sterile Products)": "Sterile Processing Technician",
-		"(Supervisor)": "House Supervisor",
-		"(Surgical ICU)": "SICU - Surgical Intensive Care",
-		"(Surgical Technology)": "Surgical Technologist",
-		"(Technologist)": "Medical Technologist",
-		"(Tele)": "Telemetry",
-		"(Tele Neuro)": "Telemetry Neuro",
-		"(Trauma)": "Trauma ICU",
-		"(Vaccines and Immunizations)": "Vaccination",
-		"(Vascular)": "Vascular Technologist",
-		"(X-Ray)": "X-Ray Technician",
-		"(Home Health)":"Home Health",
-		"(Endoscopy)":"Endoscopy",
-		"(Clinic)":"Clinic",
-		"(Infusion)":"Infusion",
-		"(Dialysis)":"Dialysis"
-};
+		"Acute Care": "Acute Care",
+	  	"Admin": "Administrative",
+	  	"Administrator": "Administrative",
+	  	"Ambulatory": "Ambulatory Care",
+	  	"Blood Drawls": "Phlebotomist",
+	  	"Bone Marrow Oncology": "Bone Marrow Transplant",
+	  	"Burn Unit": "Burn ICU",
+	  	"Cardiac": "Cardiology",
+	  	"Cardio": "Cardiology",
+	  	"Cardio/Pulmonary": "[Cardiology, Pulmonology]",
+	  	"Case Manager": "Case Management",
+	  	"Cath Lab": "Cardiac Cath Lab",
+	  	"CCU": "CCU - Coronary Care",
+	  	"Chemotherapy": "Hematology & Oncology",
+	  	"Corrections": "Correctional",
+	  	"CT": "CT Technologist",
+	  	"Diagnostics Radiology": "Radiology",
+	  	"Dietitian": "RDCD Dietitian",
+	  	"Director": "Director of Nursing",
+	  	"EP Lab": "Electrophysiology Lab",
+	  	"ER": "ED - Emergency Department",
+	  	"ER - Peds": "Pediatrics ER - Emergency Room",
+	  	"Fetal": "Maternal - Newborn",
+	  	"Flight": "Flight Nurse or Critical Care Flight Nurse",
+	  	"Flu Clinic": "Vaccination",
+	  	"General": "General Surgery",
+	  	"GI": "Gastroenterology",
+	  	"Hand": "Orthopedics",
+	  	"ICU": "ICU - Intensive Care Unit",
+	  	"Infection Prevention": "Infection Control",
+	  	"Inpatient": "In-Patient",
+	  	"Interventional": "Interventional Radiology",
+	  	"IR": "Interventional Radiology",
+	  	"L&D": "Labor and Delivery",
+	  	"LMSW": "Licensed Clinical Social Worker",
+	  	"LSW": "Licensed Clinical Social Worker",
+	  	"LTC": "Long Term Care",
+	  	"Med Surg": "Med Surg",
+	  	"Med Surg / Tele": "Med Surg / Telemetry",
+	  	"MICU": "MICU - Medical Intensive Care Unit",
+	  	"Mother/Baby": "Maternal - Newborn",
+	  	"MRI/Rad Tech Float": "[Radiology Technician, MRI Technologist]",
+	  	"Neuro": "Neurology",
+	  	"NICU": "NICU - Neonatal Intensive Care",
+	  	"Nuclear Med Tech": "Nuclear Medicine Technologist",
+	  	"OB": "Obstetrics / Gynecology",
+	  	"OB/GYN": "Obstetrics / Gynecology",
+	  	"Observation Unit": "DOU - Direct Observation Unit",
+	  	"Occupational Therapy": "Occupational Therapist",
+	  	"Oncology": "Hematology & Oncology",
+	  	"Oncology/Hematology": "Hematology & Oncology",
+	  	"Oncology - Peds": "Pediatric Hematology / Oncology",
+	  	"Open Heart": "Cardiovascular/Cardiothoracic Surgery",
+	  	"OR": "OR - Operating Room",
+	  	"OR Pedes": "Pediatrics OR - Operating Room",
+	  	"Ortho": "Orthopedics",
+	  	"Outpatient": "Outpatient Surgery",
+	  	"PACU": "PACU - Post Anesthetic Care",
+	  	"Patient Transport": "Transport",
+	  	"PCT": "Patient Care Tech",
+	  	"PCU": "PCU - Progressive Care Unit",
+	  	"Pedes": "Pediatrics",
+	  	"PEDES": "Pediatrics",
+	  	"Physical Therapy": "Physical Therapist",
+	  	"PICU": "PICU - Pediatric Intensive Care",
+	  	"Postpartum": "Post Partum",
+	  	"Pre-Op": "Preoperative",
+	  	"Psyche": "Psychiatry",
+	  	"Radiation Therapy": "Radiation Therapist",
+	  	"Rehab": "Rehabilitation",
+	  	"Rehab Acute": "Rehabilitation",
+	  	"Respiratory": "Respiratory Therapist",
+	  	"RNFA": "Registered Nurse First Assistant (RNFA)",
+	  	"SICU": "SICU - Surgical Intensive Care",
+	  	"Skilled Nursing": "Skilled Nursing Facility",
+	  	"SNF": "Skilled Nursing Facility",
+	  	"Speech-Language Pathologist": "Speech Language Pathologist",
+	  	"Step-Down": "Stepdown",
+	  	"Sterile Products": "Sterile Processing Technician",
+	  	"Supervisor": "House Supervisor",
+	  	"Surgical ICU": "SICU - Surgical Intensive Care",
+	  	"Surgical Technology": "Surgical Technologist",
+	  	"Technologist": "Medical Technologist",
+	  	"Tele": "Telemetry",
+	  	"Tele Neuro": "Telemetry Neuro",
+	  	"Trauma": "Trauma ICU",
+	  	"Vaccines and Immunizations": "Vaccination",
+	  	"Vascular": "Vascular Technologist",
+	  	"X-Ray": "X-Ray Technician",
+	  	"Home Health": "Home Health",
+	  	"Endoscopy": "Endoscopy",
+	  	"Clinic": "Clinic",
+	  	"Infusion": "Infusion",
+	  	"Dialysis": "Dialysis"
+	};
+
 	//Array to hold active specialties
 	var activeSpecialty = [];
 
@@ -376,13 +376,19 @@ async function getSpecialties (accessToken, userId){
 	}
 
 	for( specialty of data){
+
 		if(specialty.active){
+
 			var specName = "";
+
 			for (let [pattern, mappedSpecialty] of Object.entries(specialtyMap)) {
-				if(specialty.name.match(new RegExp(pattern, 'gi'))){
-					specName = mappedSpecialty;
-					break;
-				}
+
+			    if (new RegExp(`^${pattern}$`, "i").test(specialty.name)) {
+
+			    	console.log(specialty.name, mappedSpecialty)
+			        specName = mappedSpecialty;
+			        break;
+			    }
 			}
 			activeSpecialty.push({mappedSpecialty: specName, specialty: specialty.name});
 		}
