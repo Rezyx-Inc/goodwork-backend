@@ -55,8 +55,8 @@
                 </h4>
                 <!---form--->
                 <form method="get" action="{{ route('explore-jobs') }}" id="filter_form">
-                   <div class="d-none d-lg-block ">
-                    <div class="ss-fliter-btn-dv " style="display: flex; justify-content: space-between;">
+                   <div class="d-none d-lg-block">
+                    <div class="ss-fliter-btn-dv" style="display: flex; justify-content: space-between;">
                         <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
                         <button class="ss-fliter-btn" type="submit">Filter</button>
                     </div>
@@ -158,30 +158,30 @@
                     <div class="ss-form-group ss-prsnl-frm-terms mb-3">
                         <label>Terms</label>
                         <div class="ss-speilty-exprnc-add-list terms-content"></div>
-                        <ul style="align-items: flex-start; list-style: none;">
-                            <li class="row w-100 p-0 m-0">
-                                <div class="ps-0">
-                                    <select class="m-0" id="termsSelect">
-                                        <option value="">Select Terms</option>
-                                        @foreach ($terms_key as $term)
-                                            <option value="{{ $term->id }}"
-                                                {{ in_array($term->id, $terms) ? 'selected' : '' }}>
-                                                {{ $term->title }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <input type="hidden" id="termsAllValues" name="terms"
-                                        value="{{ implode('-', $terms) }}">
+                        {{-- <ul style="align-items: flex-start; list-style: none;"> --}}
+                            {{-- <div class="row w-100 p-0 m-0"> --}}
+                                <div class="d-flex align-items-center justify-content-between ">
+                                        <select class="m-0" id="termsSelect">
+                                            <option value="">Select Terms</option>
+                                            @foreach ($terms_key as $term)
+                                                <option value="{{ $term->id }}"
+                                                    {{ in_array($term->id, $terms) ? 'selected' : '' }}>
+                                                    {{ $term->title }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <input type="hidden" id="termsAllValues" name="terms"
+                                            value="{{ implode('-', $terms) }}">
+                                {{-- </div>
+                                <div> --}}
+                                    <div class="ss-prsn-frm-plu-div ms-5">
+                                        <a href="javascript:void(0)" onclick="addTerms('from_add')">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
                                 </div>
-                            </li>
-                            <li>
-                                <div class="ss-prsn-frm-plu-div">
-                                    <a href="javascript:void(0)" onclick="addTerms('from_add')">
-                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
+                            {{-- </div> --}}
+                        {{-- </ul> --}}
                         <div>
                             <span class="helper help-block-terms"></span>
                         </div>
@@ -928,6 +928,7 @@
     .ss-prsnl-frm-terms .terms-content ul li:nth-child(2) {
         width: 40%;
     }
+
 
     .ss-prsn-frm-plu-div i {
         background: #3d2c39;
