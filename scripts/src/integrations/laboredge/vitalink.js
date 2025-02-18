@@ -17,14 +17,12 @@ var { report } = require('../../set.js');
 
 if(process.env.APP_ENV == "production"){
 
-	//var vitalinkOrgId = "GWU000002";
-	return
+	var vitalinkOrgId = "GWU000032";
 
 }else{
 
 	var vitalinkOrgId = "GWU000002";
 }
-
 
 //Connect to DB
 mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_DATABASE_NAME)
@@ -35,6 +33,7 @@ mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_
     console.error('Error connecting to MongoDB:', error);
     //report("src/crons/laboredge.js error on mongodb connection");
 });
+
 
 
 // Process laboredge integrations for the first time
