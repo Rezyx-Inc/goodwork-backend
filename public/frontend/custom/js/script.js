@@ -580,11 +580,6 @@ function apply_on_jobs(obj,worked_at_facility_before,reload_page = true)
         success: function (resp) {
             ajaxindicatorstop();
             if (resp.success) {
-                notie.alert({
-                    type: 'success',
-                    text: '<i class="fa fa-check"></i> ' + resp.msg,
-                    time: 3
-                });
 
                 // On success: Remove both buttons
                 applyButton.remove();
