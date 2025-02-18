@@ -852,8 +852,8 @@
 
         jobsLength >= 10 ? observer.observe(el):null;
 
-        var jobs = @JSON($jobs);        
-
+        var jobs = @JSON($jobs);
+        
         document.querySelectorAll(".job-item").forEach(item => {
 
             item.addEventListener("click", function() {
