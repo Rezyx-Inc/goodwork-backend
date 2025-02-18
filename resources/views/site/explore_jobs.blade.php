@@ -55,10 +55,12 @@
                 </h4>
                 <!---form--->
                 <form method="get" action="{{ route('explore-jobs') }}" id="filter_form">
-                    <div class="ss-fliter-btn-dv" style="display: flex; justify-content: space-between;">
+                   <div class="d-none d-lg-block ">
+                    <div class="ss-fliter-btn-dv " style="display: flex; justify-content: space-between;">
                         <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
                         <button class="ss-fliter-btn" type="submit">Filter</button>
                     </div>
+                   </div>
 
                     {{-- job type --}}
                     <div class="ss-input-slct-grp mb-3">
@@ -230,7 +232,7 @@
                     </div>
 
                     {{-- job id --}}
-                    <div class="ss-input-slct-grp job_id mt-5 mb-3">
+                    <div class="ss-input-slct-grp job_id mt-lg-5 mb-3">
                         <label for="cars">Job ID</label>
                         <div class="form-outline">
                             <input type="text" id="gw" class="gw" name="gw"
@@ -256,6 +258,10 @@
                         id="hpw_maxval">
                     {{-- <input type="hidden" name="assignment_from" value="{{$assignment_from}}" id="al_minval">
                 <input type="hidden" name="assignment_to" value="{{$assignment_to}}" id="al_maxval"> --}}
+                <div class="ss-fliter-btn-dv d-lg-none w-100 d-flex justify-content-between">
+                    <span class="reset_mobile_mode" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
+                    <button class="ss-fliter-btn" type="submit">Filter</button>
+                </div>
                 </form>
             </div>
         </div>
@@ -272,12 +278,12 @@
                         <div class="ss-job-prfle-sec job-item" data-users="{{ $allusers }}"
                             data-id="{{ $j->id }}" data-job="{{ json_encode($j) }}">
                             {{-- row 1 --}}
-                            <div class="row">
-                                <p class="col-12 text-end d-md-none" style="padding-right:20px;">
+                            <div class="row d-flex align-items-center">
+                                <p class="col-12 text-end d-sm-none" style="padding-right:20px;">
                                     <span>+{{ $j->getOfferCount() }} Applied</span>
                                 </p>
-                                <div class="col-12 col-md-10">
-                                    <ul>
+                                <div class="col-12 d-flex justify-content-between justify-content-sm-start col-sm-10">
+                                    <div class="infos_like_ul">
                                         @if (isset($j->profession))
                                             <li><a href="#"><svg style="vertical-align: sub;"
                                                         xmlns="http://www.w3.org/2000/svg" width="16"
@@ -287,17 +293,19 @@
                                                             d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
                                                     </svg> {{ $j->profession }}</a></li>
                                         @endif
+                                    </div>
+                                    <div class="infos_like_ul">
                                         @if (isset($j->preferred_specialty))
                                             <li><a href="#"> {{ $j->preferred_specialty }}</a></li>
                                         @endif
-                                    </ul>
+                                    </div>
                                 </div>
-                                <p class="d-none d-md-block col-md-2 text-center" style="padding-right:20px;">
+                                <p class="d-none d-sm-block col-sm-2 text-center" style="padding-right:20px;">
                                     <span>+{{ $j->getOfferCount() }} Applied</span>
                                 </p>
                             </div>
                             {{-- row 2 --}}
-                            <div class="row">
+                            <div class="row mt-2 mt-md-0 d-flex align-items-center">
                                 <div class="col-7">
                                     <ul>
                                         @if (isset($j->job_city) && isset($j->job_state))
@@ -325,12 +333,10 @@
                             </div>
                             {{-- row 3 --}}
 
-                            <div class="row">
-
+                            <div class="row d-flex align-items-center">
                                 @if (isset($j->preferred_shift_duration))
-                                    <div class="col-12 col-md-6 col-lg-6">
-                                        <ul>
-                                            <li>
+                                    <div class="col-12 col-md-6 col-lg-6 d-flex justify-content-between justify-content-md-start ">
+                                            <div class="infos_like_ul">
                                                 @if ($j->preferred_shift_duration == '5x8 Days' || $j->preferred_shift_duration == '4x10 Days')
                                                     <svg style="vertical-align: bottom;"
                                                         xmlns="http://www.w3.org/2000/svg" width="25"
@@ -352,30 +358,27 @@
                                                     </svg>
                                                 @endif
                                                 {{ $j->preferred_shift_duration }}
-                                            </li>
+                                            </div>
                                             @if (isset($j->actual_hourly_rate))
-                                                <li>
+                                                <div class="infos_like_ul">
                                                     ${{ number_format($j->actual_hourly_rate) }}/hr
-                                                </li>
+                                                </div>
                                             @endif
-                                        </ul>
                                     </div>
-                                    <div class="col-12 col-md-6 col-lg-6 d-flex justify-content-end">
-                                        <ul>
+                                    <div class="col-12 mt-3 mt-md-0 col-md-6 col-lg-6 d-flex justify-content-between justify-content-md-end">
                                             @if (isset($j->weekly_pay))
-                                            <li>
+                                            <div class="infos_like_ul">
                                                 ${{ number_format($j->weekly_pay) }}/wk
-                                            </li>
+                                            </div>
                                             @endif
                                             @if (isset($j->weekly_pay))
-                                                <li style="font-weight: 600;">
+                                                <div class="infos_like_ul" style="font-weight: 600;">
                                                     ${{ number_format($j->weekly_pay * 4 * 12) }}/yr
-                                                </li>
+                                                </div>
                                             @endif
-                                        </ul>
                                     </div>
                                 @else
-                                    <div class="col-4 col-lg-5">
+                                    <div class="col-12 col-sm-4 col-lg-5">
                                         <ul>
                                             @if (isset($j->actual_hourly_rate))
                                                 <li>
@@ -384,7 +387,7 @@
                                             @endif
                                         </ul>
                                     </div>
-                                    <div class="col-8 col-lg-7 d-flex justify-content-end">
+                                    <div class="col-12 col-sm-8 col-lg-7 d-flex justify-content-end">
                                         <ul>
                                             @if (isset($j->weekly_pay))
                                                 <li>
@@ -396,6 +399,7 @@
                                             @endif
                                         </ul>
                                     </div>
+                                    
                                 @endif
                                 </div>
 
@@ -1055,16 +1059,7 @@
     }
 
 
-    .job-item li {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
 
-    .job-item li:hover {
-        white-space: normal; /* Allow wrapping when hovered */
-        overflow: visible;
-    }
 </style>
 
 @stop
