@@ -19,103 +19,6 @@
     <link rel="stylesheet" href="{{ URL::asset('frontend/css/mdb.min.css') }}" />
     @yield('css')
 
-    <style>
-        /* Ads Container */
-        .ads-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            position: sticky;
-            top: 10px;
-            overflow-y: auto;
-            z-index: 10;
-        }
-
-        .ad {
-            background-color: #ffffff;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .ad:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Ad Image */
-        .ad-image {
-            width: 100%;
-            height: auto;
-            /* Adjust height automatically */
-            max-height: 200px;
-            /* Limit maximum height */
-            object-fit: contain;
-            /* Ensure the image fits without cropping */
-            display: block;
-            margin: 0 auto;
-            /* Center the image horizontally */
-        }
-
-        /* Ad Content */
-        .ad-content {
-            padding: 20px;
-            text-align: center;
-            /* Center-align all text */
-        }
-
-        .ad-content h2 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #333333;
-        }
-
-        .ad-content p {
-            font-size: 14px;
-            color: #666666;
-            line-height: 1.5;
-            margin-bottom: 15px;
-        }
-
-        .ad-content ul {
-            list-style-type: disc;
-            padding-left: 20px;
-            margin-bottom: 15px;
-            text-align: left;
-        }
-
-        .ad-content ul li {
-            font-size: 14px;
-            color: #666666;
-            line-height: 1.5;
-        }
-
-        /* Call-to-Action Button */
-        .cta-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #ffffff;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 14px;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
-        }
-
-        .cta-button:hover {
-            background-color: #0056b3;
-            color: #ffffff
-        }
-    </style>
-
-
-
 
 
 @stop
@@ -145,17 +48,19 @@
 
 
 <section class="ss-explore-job-mn-sec">
-    <div class="row">
-        <div class="col-md-3 ss-expl-filtr-lft-dv-bx">
+    <div class="row mx-3">
+        <div class="col-md-12 col-lg-5 col-xl-4 col-xxl-3 ss-expl-filtr-lft-dv-bx">
             <div style="padding:40px !important;background-color:#fff8fd !important;">
                 <h4 class="text-center" style="padding-bottom: 10px; font-size: 30px; font-weight: 500;">Filters
                 </h4>
                 <!---form--->
                 <form method="get" action="{{ route('explore-jobs') }}" id="filter_form">
+                   <div class="d-none d-lg-block">
                     <div class="ss-fliter-btn-dv" style="display: flex; justify-content: space-between;">
                         <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
                         <button class="ss-fliter-btn" type="submit">Filter</button>
                     </div>
+                   </div>
 
                     {{-- job type --}}
                     <div class="ss-input-slct-grp mb-3">
@@ -253,30 +158,30 @@
                     <div class="ss-form-group ss-prsnl-frm-terms mb-3">
                         <label>Terms</label>
                         <div class="ss-speilty-exprnc-add-list terms-content"></div>
-                        <ul style="align-items: flex-start; list-style: none;">
-                            <li class="row w-100 p-0 m-0">
-                                <div class="ps-0">
-                                    <select class="m-0" id="termsSelect">
-                                        <option value="">Select Terms</option>
-                                        @foreach ($terms_key as $term)
-                                            <option value="{{ $term->id }}"
-                                                {{ in_array($term->id, $terms) ? 'selected' : '' }}>
-                                                {{ $term->title }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <input type="hidden" id="termsAllValues" name="terms"
-                                        value="{{ implode('-', $terms) }}">
+                        {{-- <ul style="align-items: flex-start; list-style: none;"> --}}
+                            {{-- <div class="row w-100 p-0 m-0"> --}}
+                                <div class="d-flex align-items-center justify-content-between ">
+                                        <select class="m-0" id="termsSelect">
+                                            <option value="">Select Terms</option>
+                                            @foreach ($terms_key as $term)
+                                                <option value="{{ $term->id }}"
+                                                    {{ in_array($term->id, $terms) ? 'selected' : '' }}>
+                                                    {{ $term->title }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <input type="hidden" id="termsAllValues" name="terms"
+                                            value="{{ implode('-', $terms) }}">
+                                {{-- </div>
+                                <div> --}}
+                                    <div class="ss-prsn-frm-plu-div ms-5">
+                                        <a href="javascript:void(0)" onclick="addTerms('from_add')">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
                                 </div>
-                            </li>
-                            <li>
-                                <div class="ss-prsn-frm-plu-div">
-                                    <a href="javascript:void(0)" onclick="addTerms('from_add')">
-                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
+                            {{-- </div> --}}
+                        {{-- </ul> --}}
                         <div>
                             <span class="helper help-block-terms"></span>
                         </div>
@@ -327,7 +232,7 @@
                     </div>
 
                     {{-- job id --}}
-                    <div class="ss-input-slct-grp job_id mt-5 mb-3">
+                    <div class="ss-input-slct-grp job_id mt-lg-5 mb-3">
                         <label for="cars">Job ID</label>
                         <div class="form-outline">
                             <input type="text" id="gw" class="gw" name="gw"
@@ -353,12 +258,16 @@
                         id="hpw_maxval">
                     {{-- <input type="hidden" name="assignment_from" value="{{$assignment_from}}" id="al_minval">
                 <input type="hidden" name="assignment_to" value="{{$assignment_to}}" id="al_maxval"> --}}
+                <div class="ss-fliter-btn-dv d-lg-none w-100 d-flex justify-content-between">
+                    <span class="reset_mobile_mode" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
+                    <button class="ss-fliter-btn" type="submit">Filter</button>
+                </div>
                 </form>
             </div>
         </div>
 
 
-        <div class="col-md-6">
+        <div class="col-md-8 mt-4 mt-lg-0 col-lg-7 col-xl-5 col-xxl-6">
 
             <!-----------jobs profiles---------->
 
@@ -366,12 +275,14 @@
 
                 <div class="ss-dash-profile-4-bx-dv" id="job-item-container">
                     @forelse($jobs as $j)
-                        <div class="ss-job-prfle-sec job-item" data-users="{{ $allusers }}"
-                            data-id="{{ $j->id }}" data-job="{{ json_encode($j) }}">
+                        <div class="ss-job-prfle-sec job-item" data-id="{{ $j->id }}">
                             {{-- row 1 --}}
-                            <div class="row">
-                                <div class="col-10">
-                                    <ul>
+                            <div class="row d-flex align-items-center">
+                                <p class="col-12 text-end d-lg-none" style="padding-right:20px;">
+                                    <span>+{{ $j->getOfferCount() }} Applied</span>
+                                </p>
+                                <div class="col-12 d-flex justify-content-between justify-content-lg-start col-lg-10">
+                                    <div class="infos_like_ul">
                                         @if (isset($j->profession))
                                             <li><a href="#"><svg style="vertical-align: sub;"
                                                         xmlns="http://www.w3.org/2000/svg" width="16"
@@ -381,20 +292,19 @@
                                                             d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
                                                     </svg> {{ $j->profession }}</a></li>
                                         @endif
+                                    </div>
+                                    <div class="infos_like_ul">
                                         @if (isset($j->preferred_specialty))
                                             <li><a href="#"> {{ $j->preferred_specialty }}</a></li>
                                         @endif
-                                    </ul>
+                                    </div>
                                 </div>
-                                <p class="col-2 text-center" style="padding-right:20px;">
+                                <p class="d-none d-lg-block col-lg-2 text-center" style="padding-right:20px;">
                                     <span>+{{ $j->getOfferCount() }} Applied</span>
                                 </p>
                             </div>
                             {{-- row 2 --}}
-                            <div class="row">
-                            </div>
-                            {{-- row 3 --}}
-                            <div class="row">
+                            <div class="row mt-2 mt-md-0 d-flex align-items-center">
                                 <div class="col-7">
                                     <ul>
                                         @if (isset($j->job_city) && isset($j->job_state))
@@ -417,16 +327,15 @@
                                                         src="{{ URL::asset('frontend/img/calendar.png') }}">
                                                     {{ $j->hours_per_week }} hrs/wk</a></li>
                                         @endif
+                                    </ul>
                                 </div>
                             </div>
-                            {{-- row 4 --}}
+                            {{-- row 3 --}}
 
-                            <div class="row">
-
-                                <div class="col-4">
-                                    <ul>
-                                        @if (isset($j->preferred_shift_duration))
-                                            <li>
+                            <div class="row d-flex align-items-center">
+                                @if (isset($j->preferred_shift_duration))
+                                    <div class="col-12 col-md-6 col-lg-6 d-flex justify-content-between justify-content-md-start ">
+                                            <div class="infos_like_ul">
                                                 @if ($j->preferred_shift_duration == '5x8 Days' || $j->preferred_shift_duration == '4x10 Days')
                                                     <svg style="vertical-align: bottom;"
                                                         xmlns="http://www.w3.org/2000/svg" width="25"
@@ -448,38 +357,50 @@
                                                     </svg>
                                                 @endif
                                                 {{ $j->preferred_shift_duration }}
-                                            </li>
-                                        @endif
-                                    </ul>
-                                </div>
-
-                                <div class="col-8 d-flex justify-content-end">
-                                    <ul>
-                                        @if (isset($j->actual_hourly_rate))
-                                            <li><img class="icon_cards"
-                                                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                {{ number_format($j->actual_hourly_rate) }}/hr
-                                            </li>
-                                        @endif
-                                        @if (isset($j->weekly_pay))
-                                            <li><img class="icon_cards"
-                                                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                {{ number_format($j->weekly_pay) }}/wk
-                                            </li>
-                                        @endif
-                                        @if (isset($j->weekly_pay))
-                                            <li style="font-weight: 600;"><img class="icon_cards"
-                                                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                {{ number_format($j->weekly_pay * 4 * 12) }}/yr
-                                            </li>
-                                        @endif
-                                    </ul>
-                                </div>
+                                            </div>
+                                            @if (isset($j->actual_hourly_rate))
+                                                <div class="infos_like_ul">
+                                                    ${{ number_format($j->actual_hourly_rate) }}/hr
+                                                </div>
+                                            @endif
+                                    </div>
+                                    <div class="col-12 mt-3 mt-md-0 col-md-6 col-lg-6 d-flex justify-content-between justify-content-md-end">
+                                            @if (isset($j->weekly_pay))
+                                            <div class="infos_like_ul">
+                                                ${{ number_format($j->weekly_pay) }}/wk
+                                            </div>
+                                            @endif
+                                            @if (isset($j->weekly_pay))
+                                                <div class="infos_like_ul" style="font-weight: 600;">
+                                                    ${{ number_format($j->weekly_pay * 4 * 12) }}/yr
+                                                </div>
+                                            @endif
+                                    </div>
+                                @else
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <ul>
+                                            @if (isset($j->actual_hourly_rate))
+                                                <li>
+                                                    $ {{ number_format($j->actual_hourly_rate) }}/hr
+                                                </li>
+                                            @endif
+                                            @if (isset($j->weekly_pay))
+                                                <li>
+                                                    $ {{ number_format($j->weekly_pay) }}/wk
+                                                </li>
+                                                <li style="font-weight: 600;">
+                                                    $ {{ number_format($j->weekly_pay * 4 * 12) }}/yr
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    </div>
+                                    
+                                @endif
                             </div>
 
 
-                            {{-- row 5 --}}
-                            <div class="row">
+                            {{-- row 4 --}}
+                            <div class="row w-100">
                                 {{-- <div class="col-6"><h5>Recently Added</h5></div> --}}
 
                                 <div class="col-6 d-flex justify-content-start">
@@ -512,66 +433,26 @@
         </div>
 
 
-        <div class="col-md-3">
-            {{-- ads container --}}
-            <div class="ads-container">
-                <a href="https://www.bhmediatrack.com/cmp/M15NZ8/2MCHZ8R/?sub1=&sub2=&sub3=" target="_blank">
-                    <div class="ad">
-                        <img src="{{ asset('images/debtmd.png') }}" alt="Ad Image" class="ad-image">
-                        <div class="ad-content">
-                            <h2>Become Debt-Free Today</h2>
-                            <ul>
-                                <li>Up to 50% lower monthly payments</li>
-                                <li>Flexible payment plans from 12-48 months</li>
-                                <li>Free consultation and zero up-front fees</li>
-                            </ul>
-                        </div>
-                    </div>
-                </a>
+        <div class="col-md-4 mt-5 mt-lg-0 col-lg-12 mt-lg-3 mt-xl-0 col-xl-3">
 
-                <a href="https://www.bhmediatrack.com/25S2ZK4/2LWX2H7/?sub1=1&sub2=2&sub3=3" target="_blank">
-            
-                    <div class="ad">
-                        <img src="{{ asset('images/myPerfectResume.png') }}" alt="Ad Image" class="ad-image">
-                        <div class="ad-content">
-                            <h2>Get the help you need to land your next gig with a <b>custom resume!</b></h2>
-                            <p>
-                                Our Industry-leading resume tools take your job search from basic to next level.
-                            </p>
-                        </div>
-                    </div>
+            <div class="landing-explore side-ads-container">
 
-                </a>
-
-                <a href="https://www.bhmediatrack.com/25S2ZK4/6Z7MWN9/?sub1=1&sub2=2&sub3=3"  target="_blank">
-                        
-                    <div class="ad">
-                        <img src="{{ asset('images/chime.png') }}" alt="Ad Image" class="ad-image">
-                        <div class="ad-content">
-                            <h2>
-                                The best way to get up to $500 before payday*
-                            </h2>
-                            <ul>
-                                <li>No interest*</li>
-                                <li>No credit check</li>
-                                <li>No mandatory fees</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </a>
+                {{-- ads container --}}
+                @include('worker::components.side_ads')
+                
             </div>
+          
         </div>
 
     </div>
 
 
-    <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="job_details_modal_for_logout_users" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <h5  id="exampleModalLabel">job ID: <span class="modal-title" style="color: #b5649e; font-weight: bold;"></span></h5>
                     <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
@@ -586,7 +467,7 @@
         </div>
     </div>
 
-
+    {{-- @include('worker::components.ads_modal') --}}
 
 </section>
 
@@ -904,16 +785,11 @@
         });
 
         $('#slider3 .ui-slider-range').append('<span class="price-range-both-3 value"></span>');
+        $('#slider3 .ui-slider-handle:eq(0)').append('<span class="price-range-min-3 value">' + $('#slider3').slider('values', 0) + '</span>');
+        $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3').slider('values', 1) + '</span>');
+        $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3').slider('values', 1) + '</span>');
 
-        $('#slider3 .ui-slider-handle:eq(0)').append('<span class="price-range-min-3 value">' + $('#slider3')
-            .slider('values', 0) + '</span>');
-
-        $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3')
-            .slider('values', 1) + '</span>');
-
-        $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3')
-            .slider('values', 1) + '</span>');
-
+        
         // Add an intersect Observer for infinite scroll
         var skip = 10;
         var el = document.querySelector('#loadTrigger');
@@ -939,6 +815,7 @@
                     dataType: 'json',
                     success: function(data) {
 
+                        jobs.push(...data.message.jobs);
                         addJobCards(data.message);
                         // Increment skip
                         skip+=10;
@@ -950,6 +827,7 @@
                             item.removeEventListener("click",handleCardClickEvent, true);
                             item.addEventListener("click", handleCardClickEvent);
                         });
+                        
                     },
                     error: function(resp) {
 
@@ -960,8 +838,6 @@
                         });
                     }
                 });
-
-
 
                 return
             }
@@ -976,15 +852,19 @@
 
         jobsLength >= 10 ? observer.observe(el):null;
 
+        var jobs = @JSON($jobs);
+        
         document.querySelectorAll(".job-item").forEach(item => {
 
             item.addEventListener("click", function() {
-                const jobData = this.dataset.job;
-                const allusers = this.dataset.users; // Corrected from 'allusers' to 'users'
+
                 try {
-                    const job = JSON.parse(jobData);
-                    const users = JSON.parse(allusers);
-                    redirectToJobDetails(job, users);
+
+                    let id = this.dataset.id;
+                    let job = jobs.filter(job => job.id == id);
+
+                    redirectToJobDetails(job[0]);
+
                 } catch (error) {
                     console.error("Invalid job data:", error);
                 }
@@ -992,16 +872,14 @@
         });
 
         function handleCardClickEvent(){
-            var jobData = this.dataset.job;
-            var allusers = this.dataset.users; // Corrected from 'allusers' to 'users'
-
-            jobData = JSON.parse(jobData.replaceAll("'", "\""));
-            allusers= JSON.parse(allusers.replaceAll("'", "\""));
-
+            
             try {
-                const job = jobData;
-                const users = allusers;
-                redirectToJobDetails(job, users);
+                
+                let id = this.dataset.id;
+                let job = jobs.filter(job => job.id == id);
+;
+                redirectToJobDetails(job[0]);
+
             } catch (error) {
                 console.error("Invalid job data:", error);
             }
@@ -1042,6 +920,7 @@
     .ss-prsnl-frm-terms .terms-content ul li:nth-child(2) {
         width: 40%;
     }
+
 
     .ss-prsn-frm-plu-div i {
         background: #3d2c39;
@@ -1171,6 +1050,9 @@
         color: black;
         text-decoration: underline;
     }
+
+
+
 </style>
 
 @stop

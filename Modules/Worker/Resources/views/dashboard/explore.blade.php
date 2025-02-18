@@ -1,8 +1,5 @@
 @extends('worker::layouts.main')
 @section('mytitle', 'Explore Jobs')
-@section('css')
-    <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
-@stop
 @section('content')
 
 
@@ -22,41 +19,13 @@
                         <div class="ss-dash-explr-job-dv" style="padding:40px !important;">
                             <h4>Filters</h4>
                             <form method="post" action="{{ route('worker.exploreSearch') }}" id="filter_form"> @csrf
-                                <div class="ss-fliter-btn-dv" style="display: flex; justify-content: space-between;">
-                                    <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
-                                    <button class="ss-fliter-btn" type="submit">Filter</button>
+                                <div class="d-none d-lg-block">
+                                    <div class="ss-fliter-btn-dv" style="display: flex; justify-content: space-between;">
+                                        <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
+                                        <button class="ss-fliter-btn" type="submit">Filter</button>
+                                    </div>
                                 </div>
-                               
-                               
-                                {{-- Organization Name --}}
-                                {{-- <div class="ss-input-slct-grp">
-                                    <label for="organization_name">Organization Name</label>
-                                    <select id="organization_name" name="organization_name">
-                                        <option value="">Select</option>
-                                        @foreach ($organizations as $v)
-                                            <option value="{{ $v->organization_name }}"
-                                                {{ $organization_name == $v->organization_name ? 'selected' : '' }}>{{ $v->organization_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div> --}}
 
-                                {{-- Recruiter Name --}}
-                                {{-- <div class="ss-input-slct-grp">
-                                    <label for="recruiter_name">Recruiter Name</label>
-                                    <select id="recruiter_name" name="recruiter_name">
-                                        <option value="">Select</option>
-                                        @foreach ($recruiters as $v)
-                                            <option value="{{ $v->first_name }} {{ $v->last_name }}"
-                                                data-org="{{ $v->organization_name }}"
-                                                {{ $recruiter_name == $v->first_name . ' ' . $v->last_name ? 'selected' : '' }}>
-                                                {{ $v->first_name }} {{ $v->last_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div> --}}
-
-                                
                                 <div class="ss-input-slct-grp">
                                     <label for="cars">Job Type</label>
                                     <select name="job_type">
@@ -67,28 +36,6 @@
                                             Non-Clinical</option>
                                     </select>
                                 </div>
-
-                                {{-- <div class="ss-input-slct-grp">
-                                    <label for="cars">Facility</label>
-                                    <select name="facility_name">
-                                        <option value="">Select</option>
-                                        @php
-                                            $uniqueFacilities = [];
-                                        @endphp
-                                        @foreach ($facilities as $v)
-                                            @if (!in_array($v->facility_name, $uniqueFacilities))
-                                                <option value="{{ $v->facility_name }}" 
-                                                        data-id="{{ $v->facility_name }}"
-                                                        {{ $facilityName == $v->facility_name ? 'selected' : '' }}>
-                                                    {{ $v->facility_name }}
-                                                </option>
-                                                @php
-                                                    $uniqueFacilities[] = $v->facility_name;
-                                                @endphp
-                                            @endif
-                                        @endforeach
-                                    </select>                                    
-                                </div> --}}
 
                                 <div class="ss-input-slct-grp">
                                     <label for="cars">Profession</label>
@@ -104,21 +51,21 @@
 
                                 <div class="ss-input-slct-grp">
                                     <label>Specialty</label>
-                                    <select name="speciality" id="speciality">
+                                    <select name="specialty" id="specialty">
                                         <option value="">Select Specialty</option>
                                         @foreach ($specialities as $v)
                                             <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
-                                                {{ $speciality == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
+                                                {{ $specialty == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-                    
+
                                 <div class="ss-form-group col-md-12">
                                     <label> State </label>
                                     <select name="state" id="state">
                                         @if (!empty($state))
-                                            <option value="" selected>{{$state}}</option>
+                                            <option value="" selected>{{ $state }}</option>
                                         @else
                                             <option value="" disabled selected hidden>Select a State</option>
                                         @endif
@@ -147,48 +94,50 @@
                                 <div class="ss-form-group ss-prsnl-frm-terms">
                                     <label>Terms</label>
                                     <div class="ss-speilty-exprnc-add-list terms-content"></div>
-                                    <ul style="align-items: flex-start; list-style: none;">
-                                        <li class="row w-100 p-0 m-0">
-                                            <div class="ps-0">
+                                    {{-- <ul style="align-items: flex-start; list-style: none;">
+                                        <li class="row w-100 p-0 m-0"> --}}
+                                        <div class="d-flex align-items-center justify-content-between">
                                                 <select class="m-0" id="termsSelect">
                                                     <option value="">Select Terms</option>
                                                     @foreach ($terms_key as $term)
-                                                        <option value="{{ $term->id }}" 
+                                                        <option value="{{ $term->id }}"
                                                             {{ in_array($term->id, $terms) ? 'selected' : '' }}>
                                                             {{ $term->title }}
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                                <input type="hidden" id="termsAllValues" name="terms" value="{{ implode('-', $terms) }}">
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="ss-prsn-frm-plu-div">
+                                                <input type="hidden" id="termsAllValues" name="terms"
+                                                    value="{{ implode('-', $terms) }}">
+                                        {{-- </li>
+                                        <li> --}}
+                                            <div class="ss-prsn-frm-plu-div ms-2 ms-xxl-4">
                                                 <a href="javascript:void(0)" onclick="addTerms('from_add')">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                                 </a>
                                             </div>
-                                        </li>
-                                    </ul>
+                                        </div>
+
+                                        {{-- </li>
+                                    </ul> --}}
                                     <div>
                                         <span class="helper help-block-terms"></span>
                                     </div>
                                 </div>
-                                
-                          
+
+
                                 <div class="ss-form-group col-md-12" style="margin: 20px 0px;">
                                     <div class="row">
                                         <div class="row col-lg-12 col-sm-12 col-md-12 col-xs-12"
                                             style="display: flex; justify-content: end; align-items:center;">
                                             <input type="hidden" name="as_soon_as" value="0">
-                                            <input id="as_soon_as" name="as_soon_as" value="1" type="checkbox" 
-                                                {{ $as_soon_as  ? "checked" : ""}}
-                                                style="box-shadow:none; width:auto;" class="col-2">
+                                            <input id="as_soon_as" name="as_soon_as" value="1" type="checkbox"
+                                                {{ $as_soon_as ? 'checked' : '' }} style="box-shadow:none; width:auto;"
+                                                class="col-2">
                                             <label class="col-10">
                                                 As soon As possible
                                             </label>
                                         </div>
-                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" >
+                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                                             <label>Start Date</label>
                                             <input type="date" value="{{ $start_date }}" name="start_date"
                                                 placeholder="Start Date">
@@ -232,7 +181,8 @@
                                         <input type="text" id="gw" class="gw" name="gw"
                                             placeholder="Search by Job ID" value="{{ request('gw') }}">
                                     </div>
-                                    <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;"></div>
+                                    <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;">
+                                    </div>
                                     <!-- Error message display -->
                                 </div>
                                 <!-- partial -->
@@ -253,7 +203,7 @@
                                   </ul>
                                 </div> --}}
 
-                                
+
                                 {{-- <input type="hidden" name="terms" value="" id="job_type"> --}}
                                 {{-- <input type="hidden" name="shifts" value="" id="shift"> --}}
                                 <input type="hidden" name="weekly_pay_from" value="{{ $weekly_pay_from }}"
@@ -270,6 +220,10 @@
 
                                 {{-- <input type="hidden" name="assignment_from" value="{{$assignment_from}}" id="al_minval">
                                 <input type="hidden" name="assignment_to" value="{{$assignment_to}}" id="al_maxval"> --}}
+                                <div class="ss-fliter-btn-dv d-lg-none w-100 d-flex justify-content-between align-items-center">
+                                    <span class="reset_mobile_mode mt-4" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
+                                    <button class="ss-fliter-btn" type="submit">Filter</button>
+                                </div>
                             </form>
 
                         </div>
@@ -281,13 +235,17 @@
 
                         <div class="ss-dash-profile-jb-mn-dv">
 
-                            <div class="ss-dash-profile-4-bx-dv">
+                            <div class="ss-dash-profile-4-bx-dv" id="job-item-container">
                                 @forelse($jobs as $j)
-                                    <div class="ss-job-prfle-sec" onclick="redirectToJobDetails(`{{ $j->id }}`)">
+                                    <div onclick="redirectToJobDetails(`{{ $j->id }}`)" class="ss-job-prfle-sec job-item" data-id="{{ $j->id }}"
+                                        data-job="{{ $j->id }}">
                                         {{-- row 1 --}}
-                                        <div class="row">
-                                            <div class="col-10">
-                                                <ul>
+                                        <div class="row d-flex align-items-center">
+                                            <p class="col-12 text-end d-sm-none" style="padding-right:20px;">
+                                                <span>+{{ $j->getOfferCount() }} Applied</span>
+                                            </p>
+                                            <div class="col-12 d-flex justify-content-between justify-content-sm-start col-sm-10">
+                                                <div class="infos_like_ul">
                                                     @if (isset($j->profession))
                                                         <li><a href="#"><svg style="vertical-align: sub;"
                                                                     xmlns="http://www.w3.org/2000/svg" width="16"
@@ -297,23 +255,19 @@
                                                                         d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
                                                                 </svg> {{ $j->profession }}</a></li>
                                                     @endif
+                                                </div>
+                                                <div class="infos_like_ul">
                                                     @if (isset($j->preferred_specialty))
                                                         <li><a href="#"> {{ $j->preferred_specialty }}</a></li>
                                                     @endif
-                                                </ul>
+                                                </div>
                                             </div>
-                                            <p class="col-2 text-center" style="padding-right:20px;">
+                                            <p class="d-none d-sm-block col-sm-2 text-center" style="padding-right:20px;">
                                                 <span>+{{ $j->getOfferCount() }} Applied</span>
                                             </p>
                                         </div>
                                         {{-- row 2 --}}
-                                        <div class="row">
-                                            {{-- <div class="col-3"><ul><li><a href="{{route('worker_job-details',['id'=>$j->id])}}"><img class="icon_cards" src="{{URL::asset('frontend/img/job.png')}}"> {{$j->job_name}}</a></li>
-                                              </ul>
-                                            </div> --}}
-                                        </div>
-                                        {{-- row 3 --}}
-                                        <div class="row">
+                                        <div class="row mt-2 mt-md-0 d-flex align-items-center">
                                             <div class="col-7">
                                                 <ul>
                                                     @if (isset($j->job_city) && isset($j->job_state))
@@ -336,16 +290,15 @@
                                                                     src="{{ URL::asset('frontend/img/calendar.png') }}">
                                                                 {{ $j->hours_per_week }} hrs/wk</a></li>
                                                     @endif
+                                                </ul>
                                             </div>
                                         </div>
-                                        {{-- row 4 --}}
+                                        {{-- row 3 --}}
 
-                                        <div class="row">
-
-                                            <div class="col-4">
-                                                <ul>
-                                                    @if (isset($j->preferred_shift_duration))
-                                                        <li>
+                                        <div class="row d-flex align-items-center">
+                                            @if (isset($j->preferred_shift_duration))
+                                                <div class="col-12 col-md-6 col-lg-6 d-flex justify-content-between justify-content-md-start ">
+                                                        <div class="infos_like_ul">
                                                             @if ($j->preferred_shift_duration == '5x8 Days' || $j->preferred_shift_duration == '4x10 Days')
                                                                 <svg style="vertical-align: bottom;"
                                                                     xmlns="http://www.w3.org/2000/svg" width="25"
@@ -367,47 +320,59 @@
                                                                 </svg>
                                                             @endif
                                                             {{ $j->preferred_shift_duration }}
-                                                        </li>
-                                                    @endif
-                                                </ul>
-                                            </div>
-
-                                            <div class="col-8 d-flex justify-content-end">
-                                                <ul>
-                                                    @if (isset($j->actual_hourly_rate))
-                                                        <li><img class="icon_cards"
-                                                                src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                            {{ number_format($j->actual_hourly_rate) }}/hr
-                                                        </li>
-                                                    @endif
-                                                    @if (isset($j->weekly_pay))
-                                                        <li><img class="icon_cards"
-                                                                src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                            {{ number_format($j->weekly_pay) }}/wk
-                                                        </li>
-                                                    @endif
-                                                    @if (isset($j->weekly_pay))
-                                                        <li style="font-weight: 600;"><img class="icon_cards"
-                                                                src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                            {{ number_format($j->weekly_pay * 4 * 12) }}/yr
-                                                        </li>
-                                                    @endif
-                                                </ul>
-                                            </div>
+                                                        </div>
+                                                        @if (isset($j->actual_hourly_rate))
+                                                            <div class="infos_like_ul">
+                                                                ${{ number_format($j->actual_hourly_rate) }}/hr
+                                                            </div>
+                                                        @endif
+                                                </div>
+                                                <div class="col-12 mt-3 mt-md-0 col-md-6 col-lg-6 d-flex justify-content-between justify-content-md-end">
+                                                        @if (isset($j->weekly_pay))
+                                                        <div class="infos_like_ul">
+                                                            ${{ number_format($j->weekly_pay) }}/wk
+                                                        </div>
+                                                        @endif
+                                                        @if (isset($j->weekly_pay))
+                                                            <div class="infos_like_ul" style="font-weight: 600;">
+                                                                ${{ number_format($j->weekly_pay * 4 * 12) }}/yr
+                                                            </div>
+                                                        @endif
+                                                </div>
+                                            @else
+                                                <div class="col-12 d-flex justify-content-end">
+                                                    <ul>
+                                                        @if (isset($j->actual_hourly_rate))
+                                                            <li>
+                                                                $ {{ number_format($j->actual_hourly_rate) }}/hr
+                                                            </li>
+                                                        @endif
+                                                        @if (isset($j->weekly_pay))
+                                                            <li>
+                                                                $ {{ number_format($j->weekly_pay) }}/wk
+                                                            </li>
+                                                            <li style="font-weight: 600;">
+                                                                $ {{ number_format($j->weekly_pay * 4 * 12) }}/yr
+                                                            </li>
+                                                        @endif
+                                                    </ul>
+                                                </div>
+                                                
+                                            @endif
                                         </div>
 
 
                                         {{-- row 5 --}}
-                                        <div class="row">
+                                        <div class="row w-100 d-flex justify-content-between align-items-center">
                                             {{-- <div class="col-6"><h5>Recently Added</h5></div> --}}
 
-                                            <div class="col-6 d-flex justify-content-start">
+                                            <div class="col-6">
                                                 @if ($j->as_soon_as == true)
                                                     <p class="col-12" style="padding-bottom: 0px; padding-top: 8px;">
                                                         As soon as possible</p>
                                                 @endif
                                             </div>
-                                            <div class="col-6 d-flex justify-content-end">
+                                            <div class="col-6 ">
                                                 @if ($j->urgency == 'Auto Offer' || $j->as_soon_as == true)
                                                     <p class="col-2 text-center"
                                                         style="padding-bottom: 0px; padding-top: 8px;">Urgent</p>
@@ -431,6 +396,7 @@
                                     </div>
                                 @endforelse
                             </div>
+                            <div id="loadTrigger"></div>
                         </div>
                     </div>
                 </div>
@@ -443,52 +409,11 @@
 @stop
 
 @section('js')
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        const recruitersName = @json($recruiters); // Recruiters data from the backend
-        const orgSelect = document.getElementById('organization_name');
-        const recruiterSelect = document.getElementById('recruiter_name');
-    
-        // Function to populate recruiters based on the selected organization
-        function populateRecruiters(selectedOrg, selectedRecruiter) {
-            // Clear recruiter dropdown
-            recruiterSelect.innerHTML = '<option value="">Select</option>';
-    
-            // Filter and add recruiters based on the organization
-            recruitersName.forEach(recruiter => {
-                const recruiterOrg = recruiter.organization_name;
-                if (recruiterOrg === selectedOrg || !selectedOrg) {
-                    // Create and append option
-                    const option = document.createElement('option');
-                    option.value = `${recruiter.first_name} ${recruiter.last_name}`;
-                    option.textContent = `${recruiter.first_name} ${recruiter.last_name}`;
-                    if (option.value === selectedRecruiter) {
-                        option.selected = true; // Persist selected recruiter
-                    }
-                    recruiterSelect.appendChild(option);
-                }
-            });
-        }
-    
-        // Event listener for organization dropdown change
-        orgSelect.addEventListener('change', function () {
-            const selectedOrg = this.value;
-            populateRecruiters(selectedOrg, recruiterSelect.value);
-        });
-    
-        // Populate recruiters on page load (for persistence after form submission)
-        document.addEventListener('DOMContentLoaded', function () {
-            const selectedOrg = orgSelect.value; // Get currently selected organization
-            const selectedRecruiter = recruiterSelect.value; // Get currently selected recruiter
-            populateRecruiters(selectedOrg, selectedRecruiter);
-        });
-    </script>
-    
-    
-    
+
+@include("worker::dashboard.script_infinite_scroll")
+
     <script>
         // get cities according to state :
-
         const jobState = document.getElementById('state');
         const jobCity = document.getElementById('city');
         let citiesData = [];
@@ -516,12 +441,11 @@
             });
 
         })
-
     </script>
 
 
     <script>
-                let terms = []; // Initialize terms as an array to store only values (texts)
+        let terms = []; // Initialize terms as an array to store only values (texts)
 
         document.addEventListener('DOMContentLoaded', () => {
             const preselectedTerms = document.getElementById('termsAllValues').value.split('-');
@@ -536,7 +460,7 @@
         function addTerms(type) {
             const selectElement = document.getElementById('termsSelect');
             const selectedValue = selectElement.options[selectElement.selectedIndex].text; // Get the text
-        
+
             if (!selectedValue || selectedValue === 'Select Terms') {
                 notie.alert({
                     type: 'error',
@@ -545,7 +469,7 @@
                 });
                 return;
             }
-        
+
             if (!terms.includes(selectedValue)) {
                 terms.push(selectedValue); // Add the text value to the array
                 selectElement.value = ''; // Clear selection
@@ -562,7 +486,7 @@
         function updateTermsList() {
             const termsContentDiv = document.querySelector('.terms-content');
             let termsHtml = '';
-        
+
             terms.forEach(term => {
                 termsHtml += `
                     <ul class="row w-100" style="list-style: none;">
@@ -575,9 +499,9 @@
                     </ul>
                 `;
             });
-        
+
             termsContentDiv.innerHTML = termsHtml;
-        
+
             // Update the hidden input field with the selected terms (joined by '-')
             document.getElementById('termsAllValues').value = terms.join('-');
         }
@@ -587,7 +511,7 @@
             if (index > -1) {
                 terms.splice(index, 1);
                 updateTermsList();
-            
+
                 notie.alert({
                     type: 'success',
                     text: '<i class="fa fa-check"></i> Term removed successfully.',
@@ -601,19 +525,11 @@
                 });
             }
         }
-
     </script>
-    
-    <script>
 
+    <script>
         function resetForm() {
             window.location.href = "{{ route('worker.explore') }}";
-        }
-
-        
-
-        function redirectToJobDetails(id) {
-            window.location.href = `job/${id}/details`;
         }
 
         function daysUntilWorkStarts(dateString) {
@@ -651,98 +567,53 @@
             var string = reg.exec(href);
             return string ? string[1] : null;
         };
-        // End url
-        // // slider call
+
+        // slider call
         $(document).ready(function() {
-            // $('#slider').slider({
-            //     range: true,
-            //     min: 1000,
-            //     max: 10000,
-            //     step: 1,
-            //     values: [$('#minval').val() ? $('#minval').val() : 3000, $('#maxval').val() ? $('#maxval')
-            //         .val() : 6000
-            //     ],
-
-            //     slide: function(event, ui) {
-
-            //         $('#slider .ui-slider-handle:eq(0) .price-range-min').html('$' + ui.values[0]);
-            //         $('#slider .ui-slider-handle:eq(1) .price-range-max').html('$' + ui.values[1]);
-            //         $('#slider .price-range-both').html('<i>$' + ui.values[0] + ' - $' + ui.values[1] +
-            //             '</i>');
-
-            //         // get values of min and max
-            //         $("#minval").val(ui.values[0]);
-            //         $("#maxval").val(ui.values[1]);
-
-            //         if (ui.values[0] == ui.values[1]) {
-            //             // alert('kir');
-            //             $('#slider .price-range-both i').css('display', 'none');
-            //         } else {
-            //             $('#slider .price-range-both i').css('display', 'inline');
-            //         }
-
-            //         if (collision($('.price-range-min'), $('.price-range-max')) == true) {
-            //             $('#slider .price-range-min, .price-range-max').css('opacity', '0');
-            //             $('#slider .price-range-both').css('display', 'block');
-            //         } else {
-            //             $('#slider .price-range-min, .price-range-max').css('opacity', '1');
-            //             $('#slider .price-range-both').css('display', 'none');
-            //         }
-
-            //     }
-            // });
-
-            // $('#slider .ui-slider-range').append('<span class="price-range-both value"><i>$' + $('#slider').slider(
-            //     'values', 0) + ' - $' + $('#slider').slider('values', 1) + '</i></span>');
-
-            // $('#slider .ui-slider-handle:eq(0)').append('<span class="price-range-min value">$' + $('#slider')
-            //     .slider('values', 0) + '</span>');
-
-            // $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value">$' + $('#slider')
-            //     .slider('values', 1) + '</span>');
 
             $('#slider').slider({
-    range: true,
-    min: 1000,
-    max: 10000,
-    step: 1,
-    values: [
-        $('#minval').val() ? parseInt($('#minval').val()) : 1000, 
-        $('#maxval').val() ? parseInt($('#maxval').val()) : 10000
-    ],
-    slide: function (event, ui) {
-        $('#slider .ui-slider-handle:eq(0) .price-range-min').html('$' + ui.values[0]);
-        $('#slider .ui-slider-handle:eq(1) .price-range-max').html('$' + ui.values[1]);
-        $('#slider .price-range-both').html('<i>$' + ui.values[0] + ' - $' + ui.values[1] + '</i>');
+                range: true,
+                min: 1000,
+                max: 10000,
+                step: 1,
+                values: [
+                    $('#minval').val() ? parseInt($('#minval').val()) : 1000,
+                    $('#maxval').val() ? parseInt($('#maxval').val()) : 10000
+                ],
+                slide: function(event, ui) {
+                    $('#slider .ui-slider-handle:eq(0) .price-range-min').html('$' + ui.values[0]);
+                    $('#slider .ui-slider-handle:eq(1) .price-range-max').html('$' + ui.values[1]);
+                    $('#slider .price-range-both').html('<i>$' + ui.values[0] + ' - $' + ui.values[1] +
+                        '</i>');
 
-        // Update hidden inputs
-        $("#minval").val(ui.values[0]);
-        $("#maxval").val(ui.values[1]);
+                    // Update hidden inputs
+                    $("#minval").val(ui.values[0]);
+                    $("#maxval").val(ui.values[1]);
 
-        // UI adjustments
-        if (ui.values[0] == ui.values[1]) {
-            $('#slider .price-range-both i').css('display', 'none');
-        } else {
-            $('#slider .price-range-both i').css('display', 'inline');
-        }
+                    // UI adjustments
+                    if (ui.values[0] == ui.values[1]) {
+                        $('#slider .price-range-both i').css('display', 'none');
+                    } else {
+                        $('#slider .price-range-both i').css('display', 'inline');
+                    }
 
-        if (collision($('.price-range-min'), $('.price-range-max')) == true) {
-            $('#slider .price-range-min, .price-range-max').css('opacity', '0');
-            $('#slider .price-range-both').css('display', 'block');
-        } else {
-            $('#slider .price-range-min, .price-range-max').css('opacity', '1');
-            $('#slider .price-range-both').css('display', 'none');
-        }
-    }
-});
+                    if (collision($('.price-range-min'), $('.price-range-max')) == true) {
+                        $('#slider .price-range-min, .price-range-max').css('opacity', '0');
+                        $('#slider .price-range-both').css('display', 'block');
+                    } else {
+                        $('#slider .price-range-min, .price-range-max').css('opacity', '1');
+                        $('#slider .price-range-both').css('display', 'none');
+                    }
+                }
+            });
 
-// Add dynamic price ranges
-$('#slider .ui-slider-range').append('<span class="price-range-both value"><i>$' + $('#slider').slider('values', 0) + ' - $' + $('#slider').slider('values', 1) + '</i></span>');
-$('#slider .ui-slider-handle:eq(0)').append('<span class="price-range-min value">$' + $('#slider').slider('values', 0) + '</span>');
-$('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value">$' + $('#slider').slider('values', 1) + '</span>');
-
-
-
+            // Add dynamic price ranges
+            $('#slider .ui-slider-range').append('<span class="price-range-both value"><i>$' + $('#slider').slider(
+                'values', 0) + ' - $' + $('#slider').slider('values', 1) + '</i></span>');
+            $('#slider .ui-slider-handle:eq(0)').append('<span class="price-range-min value">$' + $('#slider')
+                .slider('values', 0) + '</span>');
+            $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value">$' + $('#slider')
+                .slider('values', 1) + '</span>');
 
             // // slider call
             $('#slider2').slider({
@@ -839,7 +710,88 @@ $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value"
             $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3')
                 .slider('values', 1) + '</span>');
 
+            // Add an intersect Observer for infinite scroll
+            var skip = 10;
+            var submitUrl = "{{ route('worker.exploreSearch') }}";
+            var el = document.querySelector('#loadTrigger');
+
+
+            observer = new window.IntersectionObserver(([entry]) => {
+
+                // Only observe intersections
+                if (entry.isIntersecting) {
+
+                    skip > 0 ? null : 0;
+
+
+                    // fix this
+                    let params = {
+                        skip: skip,
+                        specialty: document.getElementById("specialty")?.value || "",
+                        profession: document.querySelector("select[name='profession']")?.value || "",
+                        city: document.getElementById("city")?.value || "",
+                        state: document.getElementById("state")?.value || "",
+                        terms: document.getElementById("termsAllValues")?.value || "",
+                        start_date: document.querySelector("input[name='start_date']")?.value || "",
+                        job_type: document.querySelector("select[name='job_type']")?.value || "",
+                        as_soon_as: document.getElementById("as_soon_as")?.checked ? 1 : 0,
+                        weekly_pay_from: document.getElementById("weekly_pay_from")?.value || "",
+                        weekly_pay_to: document.getElementById("weekly_pay_to")?.value || "",
+                        hourly_pay_from: document.getElementById("hourly_pay_from")?.value || "",
+                        hourly_pay_to: document.getElementById("hourly_pay_to")?.value || "",
+                        hours_per_week_from: document.getElementById("hours_per_week_from")?.value || "",
+                        hours_per_week_to: document.getElementById("hours_per_week_to")?.value || "",
+                        gw: document.getElementById("gw")?.value || "",
+                    };
+
+                    
+
+                    //Do the Ajax call
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    
+                    $.ajax({
+                        url: submitUrl,
+                        type: 'POST',
+                        dataType: 'json',
+                        data: params,
+                        success: function(data) {
+                            
+                            addJobCards(data.message);
+                            
+                            // Increment skip
+                            skip += 10;
+                        },
+                        error: function(resp) {
+                            console.log(resp);
+                            notie.alert({
+                                type: 'error',
+                                text: '<i class="fa fa-check"></i> Oops ! Can\'t load more jobs ! Please try later.',
+                                time: 5
+                            });
+                        }
+                    });
+
+                    return
+                }
+
+            }, {
+                root: null,
+                threshold: 0.5,
+            });
+
+            // Observe
+            var jobsLength = {{ count($jobs) }};
+            
+            jobsLength >= 10 ? observer.observe(el):null;
         });
+
+        function redirectToJobDetails(id) {
+            window.location.href = `job/${id}/details`;
+        }
     </script>
 
 
@@ -852,39 +804,7 @@ $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value"
                 $('#gwError').hide().text('');
 
                 // Get the value of the gw input
-                var gwValue = $('#gw').val();
-
-                // Validation checks
-                // if (gwValue.length > 0 && gwValue[0].toLowerCase() !== 'g') {
-                //       // First character should be 'G' or 'g'
-                //       $('#gwError').text('The GoodWork Number must start with "G".').show();
-                //   } else if (gwValue.length > 1 && gwValue[1].toLowerCase() !== 'w') {
-                //       // Second character should be 'W' or 'w'
-                //       $('#gwError').text('The GoodWork Number must start with "GW".').show();
-                //   } else if (gwValue.length > 2 && gwValue[2].toLowerCase() !== 'j') {
-                //       // Third character should be 'J' or 'j'
-                //       $('#gwError').text('The GoodWork Number must start with "GWJ".').show();
-                //   } else if (gwValue.length > 3 && !/^\d+$/.test(gwValue.slice(3))) {
-                //       // After the third character, it should only be numbers
-                //       $('#gwError').text('The GoodWork Number must be followed by numbers after "GWJ".').show();
-                //   } else {
-                // Check if terms input is empty and remove it
-                // var termsInput = $('input[name="terms"]');
-                // if (termsInput.length && termsInput.val() === '') {
-                //     termsInput.remove(); // Remove the empty terms input
-                // }
-
-                // Get all selected checkboxes with the name "categories[]"
-                // const selectedCategories = $("input[name='terms[]']:checked");
-
-                // Extract the values (category names) and join them into a comma-separated string
-                const categoriesString = selectedCategories.map(function() {
-                    return $(this).val();
-                }).get().join('-');
-                // Set the categoriesString as the value of the hidden input field
-                $("#job_type").val(categoriesString);
-
-                // $(this).find("input[name='terms[]']").remove();
+                var gwValue = $('#good').val();
 
                 // Change the value of the profession select to the text of the selected option
                 const professionSelect = $("select[name='profession']");
@@ -892,33 +812,30 @@ $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value"
 
                 // Add a hidden input to the form with the text of the selected option
 
-                $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText +
-                    '">');
-
-
+                $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText +'">');
                 this.submit(); // Submit the form
-                // }
+
             });
         });
     </script>
-    
+
     <style>
         .value {
             left: 0%;
         }
 
         .btn.first-collapse,
-    .btn.first-collapse:hover,
-    .btn.first-collapse:focus,
-    .btn.first-collapse:active {
-        background-color: #fff8fd;
-        color: rgb(65, 41, 57);
-        font-size: 14px;
-        font-family: 'Neue Kabel';
-        font-style: normal;
-        width: 100%;
-        background: #FFEEEF;
-    }
+        .btn.first-collapse:hover,
+        .btn.first-collapse:focus,
+        .btn.first-collapse:active {
+            background-color: #fff8fd;
+            color: rgb(65, 41, 57);
+            font-size: 14px;
+            font-family: 'Neue Kabel';
+            font-style: normal;
+            width: 100%;
+            background: #FFEEEF;
+        }
     </style>
 
 @stop

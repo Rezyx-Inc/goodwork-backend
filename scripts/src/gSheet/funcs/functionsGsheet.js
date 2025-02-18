@@ -1,31 +1,38 @@
-const { google } = require('googleapis');
-const csv = require('csvtojson');
-const path = require('path');
-const fs = require('fs');
-const xlsx = require('xlsx');
-const axios = require('axios');
+//import all required libraries and/or modules
+const { google } = require('googleapis'); //Required to connect to google APIs
+const csv = require('csvtojson'); // Convert csv files to json
+const path = require('path'); //To work with file paths and directories
+const fs = require('fs'); // To read and write files
+const xlsx = require('xlsx'); //To work with excel files
+const axios = require('axios'); // Used for API calls
 const queries = require("../../mysql/sheet.js");
 
-// precess jobs
+// Process jobs
 async function processJobs(json) {
 
     const OrgaId = "GWU000007";
     let recruiterID = null;
 
     try {
+        //POST API call to assignUpNextRecruiter API
         recruiterID = await axios.post("http://localhost:4545/organizations/assignUpNextRecruiter", { id: OrgaId });
     } catch (error) {
+        //Log the error, in case of failure
         console.error("Error fetching recruiter ID:", /*error*/);
     }
 
+    //Check if recruiter is not found
     if (recruiterID !== "Up next recruiter not found.") {
+        //Iterate through jobs present in the json
         for (const job of json) {
             try {
-                await queries.insertJob(OrgaId, job);
+                await queries.insertJob(OrgaId, job); //Insert each job into the db
 
-                await queries.updateJobRecruiterID(job["Org Job Id"], recruiterID.data.data);
+                await queries.updateJobRecruiterID(job["Org Job Id"], recruiterID.data.data); //Update recruiter details
 
             } catch (err) {
+
+                //Log the error, in case of failure
                 console.error(`Error in job with ID ${job["Org Job Id"]}:`, err);
             }
         }
@@ -38,6 +45,8 @@ async function processJobs(json) {
 
 // addJobsFromLinkWithAuth function 
 async function authorize() {
+
+    //Connect to google auth
     const auth = new google.auth.GoogleAuth({
         keyFile: path.resolve(__dirname, 'service-account.json'),
         scopes: ['https://www.googleapis.com/auth/drive.readonly', 'https://www.googleapis.com/auth/spreadsheets.readonly']
@@ -45,7 +54,10 @@ async function authorize() {
     return await auth.getClient();
 }
 
+//Function to get list of spread sheets
 async function listSpreadsheets(auth) {
+
+    //Connect to google drive
     const drive = google.drive({ version: 'v3', auth });
     try {
         const res = await drive.files.list({
@@ -54,13 +66,16 @@ async function listSpreadsheets(auth) {
         });
         return res.data.files;
     } catch (error) {
+
+        //Log and return in case of error
         console.error("Error listing spreadsheets:", error.message);
         return [];
     }
 }
 
+//Function to retrieve data in the spread sheet
 async function fetchSpreadsheetData(auth, spreadsheetId) {
-    const sheets = google.sheets({ version: 'v4', auth });
+    const sheets = google.sheets({ version: 'v4', auth }); // Connect to google sheets API
     try {
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId,
@@ -68,6 +83,7 @@ async function fetchSpreadsheetData(auth, spreadsheetId) {
         });
         const rows = response.data.values;
 
+        //Check and return if there is no data in the spreadsheet
         if (!rows || rows.length === 0) {
             console.log(`No data found in spreadsheet ${spreadsheetId}`);
             return [];
@@ -89,6 +105,7 @@ async function fetchSpreadsheetData(auth, spreadsheetId) {
     }
 }
 
+//Function to add jobs, with authorization 
 async function addJobsFromLinkWithAuth() {
     try {
         const auth = await authorize();
@@ -96,16 +113,21 @@ async function addJobsFromLinkWithAuth() {
         // List all spreadsheets linked to the service account
         const spreadsheets = await listSpreadsheets(auth);
         console.log("========", spreadsheets);
+
+        //Check and return if no spreasheets are found
         if (spreadsheets.length === 0) {
             console.log("No spreadsheets found.");
             return;
         }
 
+        //Iterate through each spreadsheet
         for (const { id, name } of spreadsheets) {
             console.log(`Processing spreadsheet: ${name} (ID: ${id})`);
 
             // Fetch data from each spreadsheet
             const jobData = await fetchSpreadsheetData(auth, id);
+
+            //Check if there are jobs mentioned in the preadsheet and process them
             if (jobData.length > 0) {
                 console.log(`Inserting jobs from spreadsheet: ${name}`);
                 await processJobs(jobData);
@@ -114,6 +136,8 @@ async function addJobsFromLinkWithAuth() {
             }
         }
     } catch (error) {
+
+        //Log in case of any error
         console.error("Error in addJobsFromLinkWithAuth:", error.message);
     }
 }
@@ -138,6 +162,7 @@ async function addJobsWithLocalData() {
 
     let json;
 
+    //CHeck file types and process accordingly
     if (fileExtension === '.csv') {
 
         // Convert CSV to JSON
@@ -162,6 +187,7 @@ async function addJobsWithLocalData() {
 
     } else {
 
+        //Log and return the error response, if the file format is not supported
         console.error("Unsupported file format. Please provide a CSV, JSON, or XLSX file.");
         return;
 
@@ -192,6 +218,7 @@ async function addJobsFromPublicSheet(url) {
         const contentType = response.headers['content-type'];
         let json;
 
+        //Check and process according to the type of the content
         if (contentType.includes('text/csv')) {
             // If the content is CSV
             const csvData = response.data.toString('utf8');
@@ -212,6 +239,7 @@ async function addJobsFromPublicSheet(url) {
         await processJobs(json);
 
     } catch (error) {
+        //Log the error message
         console.error("Error fetching or processing data from public sheet:", error.message);
     }
 }
@@ -222,11 +250,10 @@ async function deleteAllJobs() {
     try {
             await queries.deleteAllJobs()
     } catch (error) {
+        //Log the error message
         console.error('Error deleting all jobs:', error.message);
     }
 }
-
-
 
 
 module.exports = { addJobsWithLocalData, addJobsFromPublicSheet, addJobsFromLinkWithAuth , deleteAllJobs};

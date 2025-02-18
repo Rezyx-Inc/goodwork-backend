@@ -1,9 +1,11 @@
-const { pool } = require('./mysql.js');
+//Import required libraries and/or modules
+const { pool } = require('./mysql.js'); // Get MySQL connection
 const moment = require('moment');
 
 // Needs to be tested
 const { validateFields, getNewJobId } = require('../helpers/sheetHelper.js');
 
+//Function to insert a job into the db
 module.exports.insertJob = async function (orgaId, jobData) {
 
   try {
@@ -96,6 +98,7 @@ module.exports.insertJob = async function (orgaId, jobData) {
   }
 };
 
+//Function to update the job data
 module.exports.updateJob = async function (orgaId, jobData) {
 
   try {
@@ -245,7 +248,7 @@ module.exports.updateJob = async function (orgaId, jobData) {
   }
 };
 
-
+//Function to delete a job 
 module.exports.deleteJob = async function (orgaId, jobId) {
 
   try {
@@ -274,7 +277,7 @@ module.exports.deleteJob = async function (orgaId, jobId) {
   }
 };
 
-
+// Function to update the recruiter id of a job
 module.exports.updateJobRecruiterID = async function (jobdbId, recruiter_id) {
 
   try {
@@ -307,4 +310,3 @@ module.exports.deleteAllJobs = async function () {
     throw err;
   }
 };
-

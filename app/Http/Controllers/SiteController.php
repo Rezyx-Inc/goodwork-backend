@@ -94,7 +94,7 @@ class SiteController extends Controller
     $gwNumber = $request->input('gw', '');
 
     // Build the query
-    $ret = Job::where('is_open', '1');
+    $ret = Job::where('is_open', '1')->where('active', '1');
 
 
     // Initialize data array
@@ -132,9 +132,6 @@ class SiteController extends Controller
     $data['hourly_pay_to'] = $request->input('hourly_pay_to');
     $data['hours_per_week_from'] = $request->input('hours_per_week_from');
     $data['hours_per_week_to'] = $request->input('hours_per_week_to');
-
-    $allusers = User::select('id', 'role', 'first_name', 'last_name')->get();
-    $data['allusers'] = $allusers;
 
     if (!empty($gwNumber)) {
 
@@ -215,7 +212,6 @@ class SiteController extends Controller
       $ret->where('job_city', '=', $data['city']);
     }
 
-    //return response()->json(['message' =>  $ret->get()]);
     $skip = $request->input('skip');
 
     if(!empty($skip) && $skip > 0){
@@ -228,6 +224,15 @@ class SiteController extends Controller
         $data['jobs'][$key]['offer_count'] = $userapplied;
       }
 
+      foreach ($data['jobs'] as $key => $value) {
+
+        $organization_infos = User::select('organization_name','first_name','last_name','image', 'role')->where('id', $value->organization_id)->get();
+        $recruiter_infos = User::select('first_name','last_name','image', 'role')->where('id', $value->recruiter_id)->get();
+
+        $data['jobs'][$key]['organization_infos'] = $organization_infos;
+        $data['jobs'][$key]['recruiter_infos'] = $recruiter_infos;
+      }
+
       $jobSaved = new JobSaved;
       $data['jobSaved'] = $jobSaved;
       $data['skip']=$skip;
@@ -235,7 +240,6 @@ class SiteController extends Controller
       unset($data['specialities']);
       unset($data['professions']);
       unset($data['us_states']);
-      unset($data['specialities']);
       unset($data['terms_key']);
 
       return response()->json(['message' =>  $data]);
@@ -243,6 +247,21 @@ class SiteController extends Controller
     }else{
 
       $data['jobs'] = $ret->orderBy('id','desc')->skip(0)->take(10)->get();
+
+      foreach ($data['jobs'] as $key => $value) {
+
+        $userapplied = Offer::where('job_id', $value->id)->count();
+        $data['jobs'][$key]['offer_count'] = $userapplied;
+      }
+      
+      foreach ($data['jobs'] as $key => $value) {
+
+        $organization_infos = User::select('organization_name','first_name','last_name','image','role')->where('id', $value->organization_id)->get();
+        $recruiter_infos = User::select('first_name','last_name','image','role')->where('id', $value->recruiter_id)->get();
+
+        $data['jobs'][$key]['organization_infos'] = $organization_infos;
+        $data['jobs'][$key]['recruiter_infos'] = $recruiter_infos;
+      }
     }
 
     $jobSaved = new JobSaved;

@@ -1,3 +1,4 @@
+//Import all required libraries and/or modules
 const { google } = require('googleapis');
 const path = require('path');
 const fs = require('fs');
@@ -29,21 +30,25 @@ async function loadSavedCredentialsIfExist() {
 
   try {
 
+    //Read and use the access toke and credentials
     const content = await fs.promises.readFile(TOKEN_PATH);
     const credentials = JSON.parse(content);
     return google.auth.fromJSON(credentials);
 
   } catch (err) {
 
+    //Log and return the error message
     console.error('Error loading saved credentials:', err.message);
     return null;
 
   }
 }
 
+//Function to save the client credentials
 async function saveCredentials(client) {
 
   try {
+
 
     const content = await fs.promises.readFile(CREDENTIALS_PATH);
     const keys = JSON.parse(content);
@@ -58,6 +63,7 @@ async function saveCredentials(client) {
 
     });
 
+    //Write credentials to a file, as a payload
     await fs.promises.writeFile(TOKEN_PATH, payload);
 
   } catch (err) {
@@ -67,6 +73,7 @@ async function saveCredentials(client) {
   }
 }
 
+//Function to authorize the credentials
 async function authorize() {
 
   try {
@@ -79,17 +86,21 @@ async function authorize() {
       scopes: SCOPES,
       keyfilePath: CREDENTIALS_PATH,
     });
+
+    //Check if credentials are received
     if (client.credentials) {
       await saveCredentials(client);
     }
     return client;
   } catch (err) {
+
+    //Log and return the error message
     console.error('Error during authorization:', err.message);
     throw err;
   }
 }
 
-
+//Function to fetch credentials' data from the spreadsheet and save as json
 async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
   try {
 
@@ -260,13 +271,17 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
 
         let recruiterID = null;
 
+        //Fetch recruiter ID from the APi
         recruiterID = await axios.post("http://localhost:4545/organizations/assignUpNextRecruiter", { id: OrgaId });
         recruiterID = recruiterID.data;
 
+        //check if the recruiter id is fetched successfully
         if (recruiterID.success) {
 
+          //Insert the job into the db
           await queries.insertJob(OrgaId, job);
 
+          //Update recruiter details
           await queries.updateJobRecruiterID(job["Org Job Id"], recruiterID.data);
 
         }
@@ -277,6 +292,8 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
     }
 
   } catch (err) {
+
+    //Log the error message
     console.error('Error fetching or saving data:', err);
   }
 }

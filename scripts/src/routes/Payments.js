@@ -1,6 +1,10 @@
-const express = require("express");
-const router = express.Router();
+//Import required libraries and/or modules
+const express = require("express"); //To build REST APIs
+const router = express.Router(); //To redirect url routes
+
+//Dotenv to read environment variables from the .env file
 require("dotenv").config();
+
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 var _ = require("lodash");
 var { report } = require("../set.js");
@@ -13,9 +17,10 @@ router.get("/", (req, res) => {
 
 /* Recruiters - Organizations (orgs) */
 
-// Create a customer
+// POST API to create a customer
 router.post("/customer/create", async (req, res) => {
 
+  //Check and return if the request body is empty
   if (!Object.keys(req.body).length) {
 
     return res.status(400).send({ status: false, message: "Empty request" });
@@ -27,7 +32,7 @@ router.post("/customer/create", async (req, res) => {
       .send({ status: false, message: "Missing parameter." });
   }
 
-  // Check if the customer exists
+  // Check and return if the customer already exists
   try {
 
     const customerTest = await stripe.customers.list({
@@ -41,6 +46,7 @@ router.post("/customer/create", async (req, res) => {
     }
   } catch (e) {
 
+    //Log and return error response (Could be 500)
     return res.status(400).send({ status: false, message: e.message });
   }
 
@@ -61,17 +67,19 @@ router.post("/customer/create", async (req, res) => {
 
     await queries.insertCustomerStripeId(customer.id, req.body.email);
 
-    res.status(200).json({ status: true, message: portal });
+    res.status(200).json({ status: true, message: portal }); //Return success response
 
   } catch (e) {
 
+    //Log and return error response (Could be 500)
     return res.status(400).send({ status: false, message: e.message });
   }
 });
 
-// get - customer payment methods
+//GET API to get customer payment methods
 router.get("/customer/customer-payment-method", async (req, res) => {
 
+  //Check and return if the request body is empty or invalid
   if (!Object.keys(req.query).length) {
 
     return res.status(400).send({ status: false, message: "Empty request" });
@@ -85,10 +93,12 @@ router.get("/customer/customer-payment-method", async (req, res) => {
 
   try {
 
+    //Fetch customer details using customer ID
     const customer = await stripe.customers.retrieve(req.query.customerId);
 
     if (customer.invoice_settings.default_payment_method) {
 
+      //Return success message
       return res.status(200).send({
         status: true,
         message: customer.invoice_settings.default_payment_method,
@@ -96,6 +106,7 @@ router.get("/customer/customer-payment-method", async (req, res) => {
 
     } else {
 
+      //Return failure message
       return res.status(404).send({
         status: false,
         message: "No default payment method found",
@@ -104,13 +115,16 @@ router.get("/customer/customer-payment-method", async (req, res) => {
 
   } catch (e) {
 
+    //Log and return error response (Could be 500)
     console.log(e);
     return res.status(400).send({ status: false, message: e.message });
   }
 });
 
-// get - check onboarding status | consumes stripeId
+//GET API to get (check) onboarding status | consumes stripeId
 router.get("/onboarding-status", async (req, res) => {
+
+  //Check and return if the request body is empty
   if (!Object.keys(req.query).length) {
     return res.status(400).send({ status: false, message: "Empty request" });
   }
@@ -119,10 +133,11 @@ router.get("/onboarding-status", async (req, res) => {
 
   try {
 
-    account = await stripe.accounts.retrieve(req.query.stripeId);
+    account = await stripe.accounts.retrieve(req.query.stripeId); //Fetch accound ID using stripe ID
 
   } catch (e) {
 
+    //Log and return error response
     return res.status(400).send({ status: false, message: e.message });
   }
 
@@ -139,9 +154,10 @@ router.get("/onboarding-status", async (req, res) => {
   }
 });
 
-// Create a subscription/payment
+// POST API to create a subscription/payment
 router.post("/customer/subscription", async (req, res) => {
 
+  //Check and return if the request body is empty or invalid
   if (!Object.keys(req.body).length) {
 
     return res.status(400).send({ status: false, message: "Empty request" });
@@ -243,6 +259,8 @@ router.post("/customer/subscription", async (req, res) => {
         ],
       };
     } else {
+
+      //Return error response
       return res.status(400).send({
         status: false,
         message: "Unable to figuyre a subscription schedule",
@@ -259,11 +277,12 @@ router.post("/customer/subscription", async (req, res) => {
     });
   } catch (e) {
 
+    //Log and return error response (Could be 500)
     return res.status(400).send({ status: false, message: e.message });
   }
 });
 
-// List subscriptions
+//POST API to List subscriptions (Could be a GET API)
 router.post("/customer/subscription/list", async (req, res) => {
   var listOptions = {};
   if (req.body.stripeId && req.body.stripeId.length > 3) {
@@ -279,15 +298,19 @@ router.post("/customer/subscription/list", async (req, res) => {
     );
     return res
       .status(200)
-      .send({ status: true, message: subscriptionSchedules.data });
+      .send({ status: true, message: subscriptionSchedules.data }); //Return success response
   } catch (e) {
+
+    //Log and return error response (Could be 500)
     console.log(e);
     return res.status(400).send({ status: false, message: e.message });
   }
 });
 
-// Retrieve a Subscription
+//POST API to Retrieve a Subscription
 router.post("/customer/subscription/ret", async (req, res) => {
+
+  //Check and return if the request body is empty or invalid
   if (!Object.keys(req.body).length) {
     return res.status(400).send({ status: false, message: "Empty body" });
   } else if (!req.body.subscriptionScheduleId) {
@@ -302,15 +325,19 @@ router.post("/customer/subscription/ret", async (req, res) => {
     );
     return res
       .status(200)
-      .send({ status: true, message: subscriptionSchedule });
+      .send({ status: true, message: subscriptionSchedule }); //Return success response
   } catch (e) {
+
+    //Log and return error response
     console.log(e);
     return res.status(400).send({ status: false, message: e.message });
   }
 });
 
-// Cancel a Subscription
+//POST API to cancel a Subscription
 router.post("/customer/subscription/cancel", async (req, res) => {
+
+  //Check and return if the request body is empty
   if (!Object.keys(req.body).length) {
     return res.status(400).send({ status: false, message: "Empty body" });
   } else if (!req.body.subscriptionScheduleId) {
@@ -329,8 +356,10 @@ router.post("/customer/subscription/cancel", async (req, res) => {
     );
     return res
       .status(200)
-      .send({ status: true, message: subscriptionSchedule.status });
+      .send({ status: true, message: subscriptionSchedule.status }); //Return success response
   } catch (e) {
+
+    //Log and return error message (Could be 500)
     console.log(e);
     return res.status(400).send({ status: false, message: e.message });
   }

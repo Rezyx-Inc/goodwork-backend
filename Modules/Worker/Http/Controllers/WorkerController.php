@@ -5,7 +5,7 @@ namespace Modules\Worker\Http\Controllers;
 use DateTime;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\{Request, JsonResponse};
+use Illuminate\Http\{Request, JsonResponse, RedirectResponse};
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\{Hash, Auth, Session, Cache};
 use App\Enums\Role;
@@ -120,6 +120,12 @@ class WorkerController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    // Implement fallback
+    public function fallback(): RedirectResponse
+    {
+        return redirect('/');
     }
 
     public function get_profile()
