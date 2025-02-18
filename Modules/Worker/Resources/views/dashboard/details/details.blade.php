@@ -29,28 +29,34 @@
 
                             <div class="ss-job-prfle-sec">
                                 {{-- row 1 --}}
-                                <div class="row">
-                                    <div class="col-10">
-                                        <ul>
-                                            <li><a href="#"><svg style="vertical-align: sub;"
-                                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
-                                                    </svg> {{ $model->profession }}</a></li>
-                                            <li><a href="#"> {{ $model->preferred_specialty }}</a></li>
-                                        </ul>
+                                <div class="row d-flex align-items-center">
+                                    <p class="col-12 text-end d-lg-none" style="padding-right:20px;">
+                                        <span>+{{ $model->getOfferCount() }} Applied</span>
+                                    </p>
+                                    <div class="col-12 d-flex justify-content-between justify-content-lg-start col-lg-10">
+                                        <div class="infos_like_ul">
+                                            @if (isset($model->profession))
+                                                <li><a href="#"><svg style="vertical-align: sub;"
+                                                            xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" fill="currentColor"
+                                                            class="bi bi-briefcase" viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                                                        </svg> {{ $model->profession }}</a></li>
+                                            @endif
+                                        </div>
+                                        <div class="infos_like_ul">
+                                            @if (isset($model->preferred_specialty))
+                                                <li><a href="#"> {{ $model->preferred_specialty }}</a></li>
+                                            @endif
+                                        </div>
                                     </div>
-                                    <p class="col-2 text-center" style="padding-right:20px;">
+                                    <p class="d-none d-lg-block col-lg-2 text-center" style="padding-right:20px;">
                                         <span>+{{ $model->getOfferCount() }} Applied</span>
                                     </p>
                                 </div>
                                 {{-- row 2 --}}
-                                <div class="row">
-                                    {{-- <div class="col-3"><ul><li><a href="{{route('worker_job-details',['id'=>$model->id])}}"><img class="icon_cards" src="{{URL::asset('frontend/img/job.png')}}"> {{$model->job_name}}</a></li></ul></div> --}}
-                                </div>
-                                {{-- row 3 --}}
-                                <div class="row">
+                                <div class="row mt-2 mt-md-0 d-flex align-items-center">
                                     <div class="col-7">
                                         <ul>
                                             <li><a href="#"><img class="icon_cards"
@@ -60,31 +66,40 @@
                                     </div>
                                     <div class="col-5 d-flex justify-content-end">
                                         <ul>
-                                            <li><a href="#"><img class="icon_cards"
-                                                        src="{{ URL::asset('frontend/img/calendar.png') }}">
-                                                    {{ $model->preferred_assignment_duration }} wks</a></li>
-                                            <li><a href="#"><img class="icon_cards"
-                                                        src="{{ URL::asset('frontend/img/calendar.png') }}">
-                                                    {{ $model->hours_per_week }} hrs/wk</a></li>
-
+                                            @if (isset($model->preferred_assignment_duration) && isset($model->terms) && $model->terms == 'Contract')
+                                                <li><a href="#"><img class="icon_cards"
+                                                            src="{{ URL::asset('frontend/img/calendar.png') }}">
+                                                        {{ $model->preferred_assignment_duration }} wks / assignment
+                                                    </a></li>
+                                            @endif
+                                            @if (isset($model->hours_per_week))
+                                                <li><a href="#"><img class="icon_cards"
+                                                            src="{{ URL::asset('frontend/img/calendar.png') }}">
+                                                        {{ $model->hours_per_week }} hrs/wk</a></li>
+                                            @endif
+                                        </ul>
                                     </div>
                                 </div>
-                                {{-- row 4 --}}
-                                <div class="row">
-                                    <div class="col-4">
-                                        <ul>
-                                            <li>
+                                {{-- row 3 --}}
+                                <div class="row d-flex align-items-center">
+
+                                    @if (isset($model->preferred_shift_duration))
+                                    <div class="col-12 col-md-6 col-lg-6 d-flex justify-content-between justify-content-md-start ">
+                                            <div class="infos_like_ul">
                                                 @if ($model->preferred_shift_duration == '5x8 Days' || $model->preferred_shift_duration == '4x10 Days')
-                                                    <svg style="vertical-align: bottom;" xmlns="http://www.w3.org/2000/svg"
-                                                        width="25" height="25" fill="currentColor"
-                                                        class="bi bi-brightness-alt-high-fill" viewBox="0 0 16 16">
+                                                    <svg style="vertical-align: bottom;"
+                                                        xmlns="http://www.w3.org/2000/svg" width="25"
+                                                        height="25" fill="currentColor"
+                                                        class="bi bi-brightness-alt-high-fill"
+                                                        viewBox="0 0 16 16">
                                                         <path
                                                             d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3m8 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5m-13.5.5a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1zm11.157-6.157a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.9 2.121a.5.5 0 0 0 .707-.707L3.05 5.343a.5.5 0 1 0-.707.707zM8 7a4 4 0 0 0-4 4 .5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5 4 4 0 0 0-4-4" />
                                                     </svg>
                                                 @elseif ($model->preferred_shift_duration == '3x12 Nights or Days')
                                                     <svg style="vertical-align: text-bottom;"
-                                                        xmlns="http://www.w3.org/2000/svg" width="20" height="16"
-                                                        fill="currentColor" class="bi bi-moon-stars" viewBox="0 0 16 16">
+                                                        xmlns="http://www.w3.org/2000/svg" width="20"
+                                                        height="16" fill="currentColor"
+                                                        class="bi bi-moon-stars" viewBox="0 0 16 16">
                                                         <path
                                                             d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286" />
                                                         <path
@@ -92,25 +107,47 @@
                                                     </svg>
                                                 @endif
                                                 {{ $model->preferred_shift_duration }}
-                                            </li>
-
-                                        </ul>
+                                            </div>
+                                            @if (isset($model->actual_hourly_rate))
+                                                <div class="infos_like_ul">
+                                                    ${{ number_format($model->actual_hourly_rate) }}/hr
+                                                </div>
+                                            @endif
                                     </div>
-                                    <div class="col-8 d-flex justify-content-end">
-                                        <ul>
-
-                                            <li><img class="icon_cards"
-                                                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                {{ number_format($model->actual_hourly_rate, 2) }}/hr</li>
-                                            <li><img class="icon_cards"
-                                                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                {{ number_format($model->weekly_pay) }}/wk</li>
-                                            <li style="font-weight: 600;"><img class="icon_cards"
-                                                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                {{ number_format($model->weekly_pay * 4 * 12) }}/yr</li>
-                                        </ul>
+                                    <div class="col-12 mt-3 mt-md-0 col-md-6 col-lg-6 d-flex justify-content-between justify-content-md-end">
+                                            @if (isset($model->weekly_pay))
+                                            <div class="infos_like_ul">
+                                                ${{ number_format($model->weekly_pay) }}/wk
+                                            </div>
+                                            @endif
+                                            @if (isset($model->weekly_pay))
+                                                <div class="infos_like_ul" style="font-weight: 600;">
+                                                    ${{ number_format($model->weekly_pay * 4 * 12) }}/yr
+                                                </div>
+                                            @endif
                                     </div>
+                                    @else
+                                        <div class="col-12 d-flex justify-content-end">
+                                            <ul>
+                                                @if (isset($model->actual_hourly_rate))
+                                                    <li>
+                                                        $ {{ number_format($model->actual_hourly_rate) }}/hr
+                                                    </li>
+                                                @endif
+                                                @if (isset($model->weekly_pay))
+                                                    <li>
+                                                        $ {{ number_format($model->weekly_pay) }}/wk
+                                                    </li>
+                                                    <li style="font-weight: 600;">
+                                                        $ {{ number_format($model->weekly_pay * 4 * 12) }}/yr
+                                                    </li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                        
+                                    @endif
                                 </div>
+
 
 
                                 {{-- row 5 --}}
@@ -142,50 +179,101 @@
                         <div class="ss-job-apply-on-view-detls-mn-dv">
 
                             <!---------------- Header ----------------->
-                            <div class="ss-job-apply-on-tx-bx-hed-dv">
-                                <ul>
-                                    <li>
-                                        <p>Recruiter</p>
-                                    </li>
-                                    <li>
-                                        <img width="50px"
-                                            src="{{ $model->recruiter && $model->recruiter->image ? URL::asset('uploads/' . $model->recruiter->image) : URL::asset('/frontend/img/profile-icon-img.png') }}"
-                                            alt="Recruiter Image" loading="lazy" />{{ $model->recruiter->first_name }}
-                                        {{ $model->recruiter->last_name }}
-                                    </li>
-                                </ul>
+                            {{-- Header --}}
+                            <div class="d-none d-sm-block">
+                                <div class="ss-job-apply-on-tx-bx-hed-dv">
 
-                                <ul>
-                                    <li>
+                                    <ul>
+                                        <li>
+                                            <p>Recruiter</p>
+                                        </li>
+                                        <li>
+                                            <img width="50px"
+                                                src="{{ $model->recruiter && $model->recruiter->image ? URL::asset('uploads/' . $model->recruiter->image) : URL::asset('/frontend/img/profile-icon-img.png') }}"
+                                                alt="Recruiter Image" loading="lazy" />{{ $model->recruiter->first_name }}
+                                            {{ $model->recruiter->last_name }}
+                                        </li>
+                                    </ul>
+
+                                    <ul>
+                                        <li>
+                                            <span>{{ $model->id }}</span>
+                                            <h6>{{ $model->getOfferCount() }} Applied</h6>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="d-sm-none">
+                                <div class="ss-job-apply-on-tx-bx-hed-dv row">
+                                    <div class="col-6">
+                                        <p>Recruiter</p>
+                                    </div>
+                                    <div class="col-6">
                                         <span>{{ $model->id }}</span>
                                         <h6>{{ $model->getOfferCount() }} Applied</h6>
-                                    </li>
-                                </ul>
+                                    </div>
+                                    <div class="col-12 mt-3 w-100">
+                                        <img width="50px"
+                                        src="{{ $model->recruiter && $model->recruiter->image ? URL::asset('uploads/' . $model->recruiter->image) : URL::asset('/frontend/img/profile-icon-img.png') }}"
+                                        alt="Recruiter Image" loading="lazy" />{{ $model->recruiter->first_name }}
+                                    {{ $model->recruiter->last_name }}
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            {{-- ( about work ) --}}
+                            <div class="d-none d-md-block">
+                                <div class="ss-jb-aap-on-txt-abt-dv">
+                                    <h5>About Work</h5>
+                                    <ul>
+                                        <li>
+                                            <h6>Organization Name</h6>
+                                            <p>{{ $model->recruiter->organization_name ? $model->recruiter->organization_name : 'Missing information' }}
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <h6>Date Posted</h6>
+                                            <p>{{ Carbon\Carbon::parse($model->created_at)->format('M d') }}</p>
+                                        </li>
+                                        <li>
+                                            <h6>Type</h6>
+                                            <p>{{ $model->job_type }}</p>
+                                        </li>
+                                        <li>
+                                            <h6>Terms</h6>
+                                            <p>{{ $model->terms }}</p>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="d-md-none">
+                                <div class="ss-jb-aap-on-txt-abt-dv">
+                                    <h5>About Work</h5>
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <h6>Organization Name</h6>
+                                                <p>{{ $model->recruiter->organization_name ? $model->recruiter->organization_name : 'Missing information' }}
+                                                </p>
+                                        </div>
+                                        <div class="col-5">
+                                            <h6>Type</h6>
+                                            <p>{{ $model->job_type }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-7">
+                                            <h6>Date Posted</h6>
+                                            <p>{{ Carbon\Carbon::parse($model->created_at)->format('M d') }}</p>
+                                        </div>
+                                        <div class="col-5">
+                                            <h6>Terms</h6>
+                                            <p>{{ $model->terms }}</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="ss-jb-aap-on-txt-abt-dv">
-                                <h5>About Work</h5>
-                                <ul>
-                                    <li>
-                                        <h6>Organization Name</h6>
-                                        <p>{{ $model->recruiter->organization_name ? $model->recruiter->organization_name : 'Missing information' }}
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <h6>Date Posted</h6>
-                                        <p>{{ Carbon\Carbon::parse($model->created_at)->format('M d') }}</p>
-                                    </li>
-                                    <li>
-                                        <h6>Type</h6>
-                                        <p>{{ $model->job_type }}</p>
-                                    </li>
-                                    <li>
-                                        <h6>Terms</h6>
-                                        <p>{{ $model->terms }}</p>
-                                    </li>
-
-                                </ul>
-                            </div>
 
 
                             <div class="ss-jb-apply-on-disc-txt">
