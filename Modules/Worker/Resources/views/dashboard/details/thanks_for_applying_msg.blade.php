@@ -97,58 +97,22 @@
     <main style="padding-top: 170px" class="ss-main-body-sec">
         <div class="ads-container">
             
-            <div class="mb-4">
+            <div id="promenade"></div>
 
-                <h1>Thanks! You've successfully applied</h1>
-                <p>Find Work, Build Credit, and Take Control of Your Finances – All in One Place!</p>
- 
-            </div>
-            
-            <a href="https://www.bhmediatrack.com/cmp/M15NZ8/2MCHZ8R/?sub1=&sub2=&sub3=" target="_blank">
-                <div class="ad">
-                    <img src="{{ asset('images/debtmd.png') }}" alt="Ad Image" class="ad-image">
-                    <div class="content-ad-content">
-                        <h2>Become Debt-Free Today</h2>
-                        <ul>
-                            <li>Up to 50% lower monthly payments</li>
-                            <li>Flexible payment plans from 12-48 months</li>
-                            <li>Free consultation and zero up-front fees</li>
-                        </ul>
-                    </div>
-                </div>
-            </a>
-
-            <a href="https://www.bhmediatrack.com/25S2ZK4/2LWX2H7/?sub1=1&sub2=2&sub3=3" target="_blank">
-            
-                <div class="ad">
-                    <img src="{{ asset('images/myPerfectResume.png') }}" alt="Ad Image" class="ad-image">
-                    <div class="content-ad-content">
-                        <h2>Get the help you need to land your next gig with a <b>custom resume!</b></h2>
-                        <p>
-                            Our Industry-leading resume tools take your job search from basic to next level.
-                        </p>
-                    </div>
-                </div>
-
-            </a>
-
-            <a href="https://www.bhmediatrack.com/25S2ZK4/6Z7MWN9/?sub1=1&sub2=2&sub3=3"  target="_blank">
-                    
-                <div class="ad">
-                    <img src="{{ asset('images/chime.png') }}" alt="Ad Image" class="ad-image">
-                    <div class="content-ad-content">
-                        <h2>
-                            The best way to get up to $500 before payday*
-                        </h2>
-                        <ul>
-                            <li>No interest*</li>
-                            <li>No credit check</li>
-                            <li>No mandatory fees</li>
-                        </ul>
-                    </div>
-                </div>
-
-            </a>
+            <script>
+                (function(cfg) {
+                    var script = document.createElement('script');
+                    script.async = true;
+                    script.src = 'https://api.boardwalk.marketing/promenade/loader/?pid=' + cfg.pid + '&role=' + cfg.role;
+                    document.head.appendChild(script);
+                    window.boardwalk = cfg;
+                }({
+                    pid: '23d64e3b-185b-442b-b6d7-75839d66e308',
+                    role: 'path',
+                    root: 'promenade',
+                    stylesheets: ['https://cdn1.boardwalk.marketing/css/pathcss-light-column-list.css'],
+                }))
+            </script>
         </div>
     </main>
     <script type="text/javascript" src="{{ URL::asset('frontend/js/mdb.min.js') }}"></script>
