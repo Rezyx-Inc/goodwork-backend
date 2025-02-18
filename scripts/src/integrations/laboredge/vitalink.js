@@ -682,92 +682,15 @@ module.exports.seed = async ( amount ) =>{
 
 			//Creating a Recruiter user profile (manually)
 			var laboredge = {
-				userId: "GWU000002",
-			    userType: "RECRUITER",
+				userId: vitalinkOrgId,
+			    userType: "ORGANIZATION",
 			    created: new Date().toLocaleString(),
 			    logs: [],
-			    professions: [
-			        {
-			            professionId: Number(Math.random().toString().slice(2,6)),
-			            profession: "RN"
-			        },
-			        {
-			            professionId: Number(Math.random().toString().slice(2,6)),
-			            profession: "CMA"
-			        }
-			    ],
-			    specialties: [
-			        {
-			            specialtyId: Number(Math.random().toString().slice(2,6)),
-			            specialty: "OR"
-			        },
-			        {
-			            specialtyId: Number(Math.random().toString().slice(2,6)),
-			            specialty: "ICU"
-			        },
-			        {
-			            specialtyId: Number(Math.random().toString().slice(2,6)),
-			            specialty: "PDICU"
-			        }
-			    ],
-			    states: [
-			        {
-			            stateId: Number(Math.random().toString().slice(2,4)),
-			            stateCode: "WA",
-			            stateName: "Washington"
-			        }
-			    ],
-			    countries: [
-			        {
-			            countryId: 1,
-			            countryCode: "US",
-			            countryName: "United States"
-			        }
-			    ],
-			    importedJobs: [
-			        {
-			            id: Math.random().toString().slice(2,14),
-			            jobTitle: null,
-			            postingId: null,
-			            description: "Verry long description for a job post",
-			            signOnBonus: null,
-			            jobType: "Travel",
-			            startDate: randomDate(new Date(2023, 0, 1), new Date()),
-			            endDate: randomDate(new Date(2023, 0, 1), new Date()),
-			            duration: Math.random().toString().slice(2,4),
-			            durationType: "WEEK",
-			            jobStatus: "Open",
-			            floatingReqUnits: "Yes under x y z specifics",
-			            shiftsPerWeek1: Math.random().toString().slice(2,3),
-			            scheduledHrs1: Math.random().toString().slice(2,3),
-			            shift: "8x4 day only",
-			            professionId: Math.random().toString().slice(2,6),
-			            specialtyId: Math.random().toString().slice(2,6),
-			            hourlyPay: Math.random().toString().slice(2,4),
-			            rates: [
-			                {
-			                    billRateCodeId: "BR_REGULAR_BILL_RATE",
-			                    billRateCode: "Regular Bill Rate",
-			                    rate: Math.random().toString().slice(2,4)
-			                },
-			                {
-			                    billRateCodeId: "BR_GREATER_THAN_EIGHT",
-			                    billRateCode: ">8 Bill Rate",
-			                    rate: Math.random().toString().slice(2,4)
-			                },
-			                {
-			                    billRateCodeId: "BR_GREATER_THAN_FOURTY",
-			                    billRateCode: ">40 Bill Rate",
-			                    rate: Math.random().toString().slice(2,4)
-			                },
-			                {
-			                    billRateCodeId: "BR_HOLIDAY_RATE",
-			                    billRateCode: "Holiday Bill Rate",
-			                    rate: Math.random().toString().slice(2,4)
-			                }
-			            ]
-			        }
-			    ]
+			    professions: [],
+			    specialties: [],
+			    states: [],
+			    countries: [],
+			    importedJobs: []
 			};
 
 			await Laboredge.create(laboredge);
