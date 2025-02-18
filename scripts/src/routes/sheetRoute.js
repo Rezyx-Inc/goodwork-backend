@@ -1,6 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const { google } = require('googleapis');
+//Import required libraries and/or modules
+const express = require('express'); //To build REST APIs
+const router = express.Router(); //To redirect url routes
+const { google } = require('googleapis'); // To connect to googles APIs (Drive, sheets)
 const { authorize } = require('../gSheet/services/authService.js');
 var { report } = require("../set.js");
 
@@ -26,14 +27,17 @@ router.post('/createSheet', async (req, res) => {
 
     // Check if a spreadsheet with the organizationId already exists
     const existingSpreadsheet = await checkIfSpreadsheetExists(auth.credentials.access_token, organizationId, google);
-    
+
+    //Check and return if spreadsheet already exists (Could be 400)
     if (existingSpreadsheet) {
 
       return res.status(200).json({ success: false, message: 'Spreadsheet already exists.', data : { spreadsheetId: existingSpreadsheet.id } });
     }
 
+    //Connecting to sheets API using given Auth credentials
     const sheets = google.sheets({ version: 'v4', headers: { Authorization: `Bearer ${auth.credentials.access_token}` } });
 
+    //Connecting to drive API using given Access token
     const drive = google.drive({
       version: 'v3',
       headers: {
@@ -125,11 +129,14 @@ router.post('/createSheet', async (req, res) => {
 
     });
 
+    //Return success response
     return res.status(200).json({ success: true, message: 'Spreadsheet created and initialized successfully' , data : { link: `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit?gid=0#gid=0`, spreadsheetId: spreadsheetId } });
 
   } catch (error) {
 
+    //Log and return error response (Could be 500)
     console.error('Error creating spreadsheet:', error);
+
     await report('error', 'sheetRoute.js',`Unable to create a spreadsheet for ${organizationName}-${organizationId} : ${error.message}`);
 
     return res.status(200).json({ success: false, message: 'Internal server error' });

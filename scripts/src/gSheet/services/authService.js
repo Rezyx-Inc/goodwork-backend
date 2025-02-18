@@ -1,7 +1,7 @@
-const { google } = require('googleapis');
-const puppeteer = require('puppeteer');
-const fs = require('fs');
-const path = require('path');
+const { google } = require('googleapis'); // To connect to google APIs
+const puppeteer = require('puppeteer'); //To launch browser
+const fs = require('fs'); //To read and/or write fies
+const path = require('path'); // To work with file paths and directories
 
 const SCOPES = [
   'https://www.googleapis.com/auth/spreadsheets',
@@ -10,6 +10,7 @@ const SCOPES = [
   'https://www.googleapis.com/auth/drive.metadata'
 ];
 
+//Client secrets (Could be stored in a secured file, like env)
 const CLIENT_ID = '87009881002-8a43qvn1q9c588sd7ae7ki6m9ud41tpi.apps.googleusercontent.com';
 const CLIENT_SECRET = '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';
 const REDIRECT_URI = 'http://localhost:3000/oauth2callback';
@@ -17,6 +18,7 @@ const REDIRECT_URI = 'http://localhost:3000/oauth2callback';
 const e_mail = 'goodwork.world.gsheet@gmail.com';
 const pass_word = 'kubkot-mebgaf-wiKfu8';
 
+//Client Authentication data
 const OAUTH2_CLIENT = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
 // Function to get an OAuth token using Puppeteer
@@ -40,12 +42,12 @@ async function getOAuthTokenWithPuppeteer() {
   // Wait for the password input field and type the password (with increased timeout)
   try {
     console.log("Waiting for password field...");
-    await new Promise(function (resolve) { setTimeout(resolve, 6000) });
+    await new Promise(function (resolve) { setTimeout(resolve, 6000) }); //6 seconds given to enter the password
     await page.waitForSelector('input[name="Passwd"]');
     //await page.type('input[name="Passwd"]', pass_word);
     await page.type('div[id="password"]>>>input[name="Passwd"]', pass_word);
   } catch (error) {
-    console.log('Error waiting for password field:', error);
+    console.log('Error waiting for password field:', error); //Log the error message
     const pageContent = await page.content();
     //console.log(pageContent); // Log the HTML content for debugging
     await page.screenshot({ path: 'error_screenshot.png' }); // Take a screenshot for debugging
@@ -67,7 +69,7 @@ async function getOAuthTokenWithPuppeteer() {
 
   try {
     console.log("Waiting for consent button...");
-    await new Promise(function (resolve) { setTimeout(resolve, 6000) });
+    await new Promise(function (resolve) { setTimeout(resolve, 6000) }); // 6 sec given for the consent
     await page.click('div[jsname="QkNstf"]>>>button');
   } catch {
     console.log("Error clicking consent button");
@@ -106,6 +108,7 @@ async function getOAuthTokenWithPuppeteer() {
   // Close the browser
   await browser.close();
 
+  //Check and throw error in casue of authroization failure
   if (!code) {
     throw new Error('OAuth2 flow failed. No authorization code received.');
   }
@@ -131,6 +134,7 @@ function loadAccessToken() {
   const tokenPath = path.join(__dirname, 'token.json');
   // console.log('Token path:', tokenPath);
 
+  //Check if the path already exists
   if (fs.existsSync(tokenPath)) {
     const tokens = JSON.parse(fs.readFileSync(tokenPath, 'utf-8'));
     return tokens.access_token;
@@ -145,12 +149,14 @@ async function authorize(cron) {
   console.log("cron" , cron);
   let accessToken = loadAccessToken();
 
+  //Check and log is access toke in not found
   if (!accessToken) {
     console.log('No saved access token found, starting OAuth2 flow...');
     accessToken = await getOAuthTokenWithPuppeteer();
   
   }else if(cron){
 
+    //Refresh and get a new token
     console.log('Cron refreshing the token');
     accessToken = await getOAuthTokenWithPuppeteer();
 
@@ -158,7 +164,7 @@ async function authorize(cron) {
     console.log('Using saved access token...');
   }
 
-  OAUTH2_CLIENT.setCredentials({ access_token: accessToken });
+  OAUTH2_CLIENT.setCredentials({ access_token: accessToken }); // Set clien creds
   return OAUTH2_CLIENT;
 }
 

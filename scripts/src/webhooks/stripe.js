@@ -1,7 +1,10 @@
+//Import required libraries and/or modules
+
+//To read environment variables from the .env file
 require("dotenv").config();
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
-const express = require("express");
+const express = require("express"); //To build REST APIs
 const app = express();
 
 var { report } = require("../set.js");
@@ -14,7 +17,7 @@ app.post(
     "/webhook",
     express.raw({ type: "application/json" }),
     async (request, response) => {
-        const sig = request.headers["stripe-signature"];
+        const sig = request.headers["stripe-signature"]; //Setting request headers
 
         let event;
 
@@ -25,18 +28,19 @@ app.post(
                 endpointSecret
             );
         } catch (err) {
+            //Return error message, while testing
             response.status(400).send(`Webhook Error: ${err.message}`);
             await report('error', 'stripe.js', "Webhook Error");
             return;
         }
 
         // send worker payment
-
         async function sendTransfer(offerId) {
             let workerId;
             try {
                 let offer = queries.getOfferDetails(offerId);
 
+                //Check and return if payment is already done
                 if (
                     offer.worker_payment_status !== null ||
                     offer.worker_payment_status == "Done"
@@ -62,6 +66,7 @@ app.post(
                         workerMultiplier = 0;
                 }
 
+                //Calculate total amount based on no. of workers
                 let amount =
                     Number(offer.total_organization_amount) * workerMultiplier;
 
@@ -76,6 +81,8 @@ app.post(
                 //  worker_payment_status "Done" "Pending" null
                 await queries.setWorkerPaymentStatus(offerId);
             } catch (e) {
+
+                //Log and return error response
                 console.log(e);
                 await report('error', 'stripe.js', "Worker Transfer Failed " + workerId);
                 return false;
@@ -84,6 +91,7 @@ app.post(
 
         // Handle the event
         switch (event.type) {
+            //Payment done
             case "invoice.paid":
                 const invoicePaid = event.data.object;
                 //report("INVOICE PAID _ Customer : " + invoicePaid.metadata.customer_name + " | Offer : " + invoicePaid.metadata.offerId)
@@ -97,7 +105,8 @@ app.post(
                 );
                 //workerPayment ? report("Worker Paid " +invoicePaid.metadata.offerId) : ""
                 break;
-
+            
+            //Payment finalized (Not paid)
             case "invoice.finalized":
                 const invoiceFinalized = event.data.object;
                 await stripe.invoices.pay(invoiceFinalized.id);
@@ -114,6 +123,7 @@ app.post(
     }
 );
 
+//Assign to a port
 app.listen(process.env.STRIPE_WEBHOOK_PORT, () =>
     console.log(`Running on port`, process.env.STRIPE_WEBHOOK_PORT)
 );

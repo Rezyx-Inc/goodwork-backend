@@ -8,15 +8,15 @@
 
     var isLoggedIn = @json(auth()->guard('frontend')->check());
 
-    function redirectToJobDetails(job, users) {
+    function redirectToJobDetails(job) {
         if (isLoggedIn) {
             window.location.href = `worker/job/${job.id}/details`;
         } else {
-            showJobModal(job, users);
+            showJobModal(job);
         }
     }
 
-    function showJobModal(job, users) {
+    function showJobModal(job) {
 
         // Image paths from Blade
         const locationIcon = @json(asset('frontend/img/location.png'));
@@ -26,18 +26,19 @@
         // Path for profile images
         const userProfilePath = @json(asset('uploads/'));
         
+        job = job[0];
+
         // full name
-        const creator = users.find(user => user.id === job.recruiter_id || user.id === job.organization_id);
-        const fullName = creator ? creator.first_name + ' ' + creator.last_name : 'Unknown';
-        const userRole = creator ? creator.role : 'Unknown';
+        let assignedTo = job.recruiter_infos.length == 0 ? job.organization_infos[0] : job.recruiter_infos[0];        
+        const fullName = assignedTo ? assignedTo.first_name + ' ' + assignedTo.last_name : 'Unknown';
+        const userRole = assignedTo ? assignedTo.role : 'Unknown';
         
         // image
-        const recruiterImage = (creator && creator.image) ? creator.image : null; 
+        const recruiterImage = (assignedTo && assignedTo.image) ? assignedTo.image : null; 
         const defaultImage = "frontend/img/account-img.png";       
         
         // org name
-        const org = users.find(user => user.id === job.organization_id);
-        const orgrName = org ? org.organization_name : 'Unknown';
+        const orgrName = job.organization_infos.length == 0 ?  'Unknown' : job.organization_infos[0].organization_name;
 
         // set the set ask recruiter as a link to message
         let askRecruiter = `<a class="ask_recruiter_href" href="{{ route('worker.login') }}" >Ask recruiter</a>`;
@@ -45,16 +46,42 @@
         // set modal title
         document.querySelector("#job_details_modal_for_logout_users .modal-title").innerHTML = job.job_id
 
+        {/* } ${($job->preferred_shift_duration === '5x8 Days' || $job->preferred_shift_duration == '4x10 Days') ? `
+                                            <svg style="vertical-align: bottom;"
+                                                xmlns="http://www.w3.org/2000/svg" width="25"
+                                                height="25" fill="currentColor"
+                                                class="bi bi-brightness-alt-high-fill"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3m8 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5m-13.5.5a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1zm11.157-6.157a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.9 2.121a.5.5 0 0 0 .707-.707L3.05 5.343a.5.5 0 1 0-.707.707zM8 7a4 4 0 0 0-4 4 .5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5 4 4 0 0 0-4-4" />
+                                            </svg>`
+                                        : ($job->preferred_shift_duration === '3x12 Nights or Days') ? `
+                                            <svg style="vertical-align: text-bottom;"
+                                                xmlns="http://www.w3.org/2000/svg" width="20"
+                                                height="16" fill="currentColor"
+                                                class="bi bi-moon-stars" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286" />
+                                                <path
+                                                    d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z" />
+                                            </svg> ` 
+                                        : ''}
+        */}
+
         // Set job data in the modal
         document.querySelector("#job_details_modal_for_logout_users .modal-body").innerHTML = `
         <main class="ss-main-body-sec px-1">
             <div class="ss-apply-on-jb-mmn-dv">
                 <div class="row">
+
                     <div class="col-lg-12">
                         <div class="ss-apply-on-jb-mmn-dv-box-divs model_content_width">
                             <div class="ss-job-prfle-sec header_content_width">
                                 <div class="row">
-                                    <div class="col-10">
+                                    <p class="col-12 text-end d-md-none" style="padding-right:20px;">
+                                        <span>+${job.offer_count} Applied</span>
+                                    </p>
+                                    <div  class="col-12 col-md-10">
                                         <ul>
                                             <li>
                                                 <a href="#">
@@ -67,10 +94,13 @@
                                             <li><a href="#">${job.preferred_specialty}</a></li>
                                         </ul>
                                     </div>
+                                    <p class="d-none d-md-block col-md-2 text-center" style="padding-right:20px;">
+                                    <span>+{{ $j->getOfferCount() }} Applied</span>
+                                    </p>
                                 </div>
-
                                 <div class="row">
-                                    <div class="col-7">
+                                    
+                                    <div class="col-12 col-sm-6">
                                         <ul>
                                             <li>
                                                 <a href="#">
@@ -80,7 +110,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-5 d-flex justify-content-end">
+                                    <div class="col-12 col-sm-6 d-flex justify-content-end">
                                         <ul>
                                             ${job.preferred_assignment_duration && job.preferred_assignment_duration !== '' ? `
                                                     <li>
@@ -99,7 +129,17 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-12 d-flex justify-content-end">
+                                    <div class="col-12 col-md-6">
+                                        ${job.preferred_shift_duration && job.preferred_shift_duration !== '' ? `
+                                        <ul>
+                                            <li>
+                                                ${job.preferred_shift_duration}
+                                            </li>
+                                        </ul>
+                                        ` : ''}
+                                    </div>
+
+                                    <div class="col-12 col-md-6 d-flex justify-content-end">
                                         <ul>
                                             ${job.actual_hourly_rate && job.actual_hourly_rate !== '' ? `
                                                     <li>
@@ -124,49 +164,97 @@
                             </div>
 
                             <div class="ss-job-apply-on-view-detls-mn-dv infos_width">
-                                <div class="ss-job-apply-on-tx-bx-hed-dv">
-                                    <ul>
-                                        <li>
-                                            <p>${userRole}</p>
-                                        </li>
-                                        <li>
-                                            <img width="50px" height="50px" src="${recruiterImage ? `${userProfilePath}/${recruiterImage}` : 'frontend/img/account-img.png'}" onerror="this.src='default-image.png';" />   
-                                            ${fullName}
-                                        </li>
-                                    </ul>
-                                    <ul>
-                                        <li>
+                                <div class="d-none d-sm-block">
+                                    <div class="ss-job-apply-on-tx-bx-hed-dv">
+                                        <ul>
+                                            <li>
+                                                <p>${userRole}</p>
+                                            </li>
+                                            <li>
+                                                <img width="50px" height="50px" src="${recruiterImage ? `${userProfilePath}/${recruiterImage}` : 'frontend/img/account-img.png'}" onerror="this.src='default-image.png';" />   
+                                                ${fullName}
+                                            </li>
+                                        </ul>
+                                        <ul>
+                                            <li>
+                                                <span>${job.id}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="d-sm-none">
+                                    <div class="ss-job-apply-on-tx-bx-hed-dv row">
+                                        <div class="col-12 text-end">
                                             <span>${job.id}</span>
-                                        </li>
-                                    </ul>
+                                        </div>
+                                        <div class="col-12">
+                                            <p>${userRole}</p>
+                                        </div>
+                                        <div class="col-12 mt-3 w-100">
+                                           <img width="50px" height="50px" src="${recruiterImage ? `${userProfilePath}/${recruiterImage}` : 'frontend/img/account-img.png'}" onerror="this.src='default-image.png';" />   
+                                            ${fullName}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="ss-jb-aap-on-txt-abt-dv">
-                                    <h5>About Work</h5>
-                                    <ul>
-                                        <li>
-                                            <h6>Organization Name</h6>
-                                            <p>${orgrName}</p>
-                                        </li>
-                                        <li>
-                                            <h6>Date Posted</h6>
-                                            <p>${new Date(job.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
-                                        </li>
-                                        <li>
-                                            <h6>Type</h6>
-                                            <p>${job.job_type ? job.job_type : askRecruiter}</p>
-                                        </li>
-                                        <li>
-                                            <h6>Terms</h6>
-                                            <p>${job.terms ? job.terms : askRecruiter}</p>
-                                        </li>
-                                    </ul>
+
+
+                                <div class="d-none d-md-block">
+                                    <div class="ss-jb-aap-on-txt-abt-dv">
+                                        <h5>About Work</h5>
+                                        <ul>
+                                            <li>
+                                                <h6>Organization Name</h6>
+                                                <p>${orgrName}</p>
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <h6>Date Posted</h6>
+                                                <p>${new Date(job.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
+                                            </li>
+                                            <li>
+                                                <h6>Type</h6>
+                                                <p>${job.job_type ? job.job_type : askRecruiter}</p>
+                                            </li>
+                                            <li>
+                                                <h6>Terms</h6>
+                                                <p>${job.terms ? job.terms : askRecruiter}</p>
+                                            </li>
+
+                                        </ul>
+                                    </div>
                                 </div>
+                                <div class="d-md-none">
+                                    <div class="ss-jb-aap-on-txt-abt-dv">
+                                        <h5>About Work</h5>
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <h6>Organization Name</h6>
+                                                <p>${orgrName}</p>
+                                            </div>
+                                            <div class="col-5">
+                                                <h6>Type</h6>
+                                                <p>${job.job_type ? job.job_type : askRecruiter}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-7">
+                                                <h6>Date Posted</h6>
+                                                <p>${new Date(job.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
+                                            </div>
+                                            <div class="col-5">
+                                                <h6>Terms</h6>
+                                                <p>${job.terms ? job.terms : askRecruiter}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 ${job.description ? 
                                 `<div class="ss-jb-apply-on-disc-txt">
                                     <h5>Description</h5>
                                     <p id="job_description">${job.description}</p>
                                 </div>` 
-                                : ''}
+                                : 'No description available.'}
 
 
 
@@ -848,18 +936,21 @@
         myModal.show();
     }
 
+
+
     function addJobCards(jobs){
 
         for(job of jobs.jobs){
             var escapedJob = JSON.stringify(job).replaceAll("\"", "'");
 
             var newCard = '<div class="ss-job-prfle-sec job-item" data-users="'+ JSON.stringify(allUsers).replaceAll("\"", "'") +'" data-id="'+ job.id +'" data-job="'+ escapedJob +'">'+
-                '<div class="row">'+
-                    '<p class="col-12 text-end d-md-none" style="padding-right:20px;">'+
+                '<div class="row d-flex align-items-center">'+
+                    '<p class="col-12 text-end d-sm-none" style="padding-right:20px;">'+
                         '<span>+'+ job.offer_count +' Applied</span>'+
                     '</p>'+
-                    '<div class="col-12 col-md-10">'+
-                        '<ul>';
+                    '<div class="col-12 d-flex justify-content-between justify-content-sm-start col-sm-10">'+
+                        '<div class="infos_like_ul">';
+
                         if(job.profession){
                             newCard += '<li><a href="#"><svg style="vertical-align: sub;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">'+
                                 '<path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5"/></svg> '+ job.profession +'</a></li>';
@@ -867,14 +958,14 @@
                         if(job.preferred_specialty){
                             newCard += '<li><a href="#"> '+ job.preferred_specialty +'</a></li>';
                         }
-                        newCard += '</ul>'+
+                        newCard += '</div>'+
                     '</div>'+
-                    '<p class="d-none d-md-block col-md-2 text-center" style="padding-right:20px;">'+
+                    '<p class="d-none d-sm-block col-sm-2 text-center" style="padding-right:20px;">'+
                         '<span>+'+ job.offer_count +' Applied</span>'+
                     '</p>'+
                 '</div>'+
-                
-                '<div class="row">'+
+
+                '<div class="row mt-2 mt-md-0 d-flex align-items-center">'+
                     '<div class="col-7">'+
                         '<ul>';
                         if(job.job_city && job.job_state){
@@ -894,50 +985,70 @@
                     '</div>'+
                 '</div>'+
 
-                '<div class="row">';
-                    if(job.preferred_shift_duration){
-                        newCard += '<div class="col-12 col-md-6 col-lg-6">'+
-                            '<ul>'+
-                                '<li>';
-                                if(job.preferred_shift_duration === '5x8 Days' || job.preferred_shift_duration === '4x10 Days'){
-                                    newCard += '<svg style="vertical-align: bottom;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-brightness-alt-high-fill" viewBox="0 0 16 16">'+
-                                        '<path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3m8 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5m-13.5.5a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1z"/>'+
-                                    '</svg>';
-                                } else if(job.preferred_shift_duration === '3x12 Nights or Days'){
-                                    newCard += '<svg style="vertical-align: text-bottom;" xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor" class="bi bi-moon-stars" viewBox="0 0 16 16">'+
-                                        '<path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097z"/>'+
-                                    '</svg>';
-                                }
-                                newCard += job.preferred_shift_duration +'</li>';
-                                if(job.actual_hourly_rate){
-                                    newCard += '<li>$ '+ job.actual_hourly_rate +'/hr</li>';
-                                }
-                            newCard += '</ul>'+
+                '<div class="row d-flex align-items-center">';
+                if(job.preferred_shift_duration){
+                    newCard += '<div class="col-12 col-md-6 col-lg-6 d-flex justify-content-between justify-content-md-start ">'+
+                        '<div class="infos_like_ul">';
+                        if(job.preferred_shift_duration === '5x8 Days' || job.preferred_shift_duration === '4x10 Days'){
+                            newCard += '<svg style="vertical-align: bottom;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-brightness-alt-high-fill" viewBox="0 0 16 16">'+
+                                '<path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3m8 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5m-13.5.5a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1z"/>'+
+                            '</svg>';
+                        } else if(job.preferred_shift_duration === '3x12 Nights or Days'){
+                            newCard += '<svg style="vertical-align: text-bottom;" xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor" class="bi bi-moon-stars" viewBox="0 0 16 16">'+
+                                '<path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097z"/>'+
+                            '</svg>';
+                        }
+                        newCard += job.preferred_shift_duration +
                         '</div>';
-                    }
-                    newCard += '<div class="col-12 col-md-6 col-lg-6 d-flex justify-content-end">'+
+                        if(job.actual_hourly_rate){
+                            newCard += '<div class="infos_like_ul">'+
+                                '$'+ job.actual_hourly_rate +'/hr'+
+                            '</div>';
+                        }
+                    newCard += '</div>'+
+                    '<div class="col-12 mt-3 mt-md-0 col-md-6 col-lg-6 d-flex justify-content-between justify-content-md-end">'+
+                        (job.weekly_pay ? 
+                            '<div class="infos_like_ul">'+
+                                '$'+ job.weekly_pay +'/wk'+
+                            '</div>' : '') +
+                        (job.weekly_pay ? 
+                            '<div class="infos_like_ul" style="font-weight: 600;">'+
+                                '$'+ (job.weekly_pay * 4 * 12) +'/yr'+
+                            '</div>' : '') +
+                    '</div>';
+                } else {
+                    newCard += '<div class="col-12 col-sm-4 col-lg-5">'+
+                        '<ul>';
+                        if(job.actual_hourly_rate){
+                            newCard += '<li>$ '+ job.actual_hourly_rate +'/hr</li>';
+                        }
+                    newCard += '</ul>'+
+                    '</div>'+
+                    '<div class="col-12 col-sm-8 col-lg-7 d-flex justify-content-end">'+
                         '<ul>';
                         if(job.weekly_pay){
                             newCard += '<li>$ '+ job.weekly_pay +'/wk</li>';
                             newCard += '<li style="font-weight: 600;">$ '+ (job.weekly_pay * 4 * 12) +'/yr</li>';
                         }
                         newCard += '</ul>'+
-                    '</div>'+
-                '</div>'+
+                    '</div>';
+                }
+                newCard += '</div>'+
 
                 '<div class="row w-100">'+
                     '<div class="col-6 d-flex justify-content-start">';
-                    if(job.as_soon_as){
+                    if(job.as_soon_as === true){
                         newCard += '<p class="col-12" style="padding-bottom: 0px; padding-top: 8px;">As soon as possible</p>';
                     }
-                    newCard += '</div>'+
-                    '<div class="col-6 d-flex justify-content-end">';
-                    if(job.urgency === 'Auto Offer' || job.as_soon_as){
+                newCard += '</div>'+
+                '<div class="col-6 d-flex justify-content-end">';
+                    if(job.urgency === 'Auto Offer' || job.as_soon_as === true){
                         newCard += '<p class="col-2 text-center" style="padding-bottom: 0px; padding-top: 8px;">Urgent</p>';
                     }
-                    newCard += '</div>'+
+                newCard += '</div>'+
                 '</div>'+
             '</div>';
+
 
             $('#job-item-container').append(newCard);
         }

@@ -2,6 +2,8 @@ const { google } = require('googleapis');
 
 // Function to delete all spreadsheets
 async function deleteAllSpreadsheets(auth) {
+
+    //Initialize the google drive API client
     const drive = google.drive({ version: 'v3', headers: { Authorization: `Bearer ${auth}` } });
     try {
         // Step 1: List all spreadsheets
@@ -10,10 +12,11 @@ async function deleteAllSpreadsheets(auth) {
             fields: 'files(id, name)',
         });
 
+        //Extract the list of file from the fetched 'res'
         const files = res.data.files;
 
         if (files.length === 0) {
-            console.log('No spreadsheets found to delete.');
+            console.log('No spreadsheets found to delete.'); //log in case if there no spreadsheets are found
             return;
         }
 
@@ -22,7 +25,7 @@ async function deleteAllSpreadsheets(auth) {
             await drive.files.delete({
                 fileId: file.id,
             });
-            console.log(`Deleted spreadsheet: ${file.name} (${file.id})`);
+            console.log(`Deleted spreadsheet: ${file.name} (${file.id})`); //logging the deleted spreadsheet's name and id
         }
     } catch (err) {
         console.error('Error deleting spreadsheets:', err.message);
@@ -46,9 +49,11 @@ async function deleteSpreadsheetById(auth, spreadsheetId) {
 // Function to add data to the Google Sheet
 async function addDataToSpreadsheet(auth, idForAdd) {
     try {
+
+        //Initialize the google sheets API client
         const sheets = google.sheets({ version: 'v4', headers: { Authorization: `Bearer ${auth}` } });
 
-        // Example data to insert
+        // Example data to insert into the sheet
         const values = [
             [
                 '',
@@ -111,7 +116,7 @@ async function addDataToSpreadsheet(auth, idForAdd) {
         ];
 
 
-
+        //Creating an object to hold the values' data
         const resource = {
             values,
         };
@@ -126,9 +131,9 @@ async function addDataToSpreadsheet(auth, idForAdd) {
 
         console.log(`${res.data.updates.updatedCells} cells appended.`);
     } catch (err) {
-        console.error('Error adding data:', err.message);
+        console.error('Error adding data:', err.message); // Logging the error occured while adding
     }
 }
 
-
+//Export the functions to be used in the other modules
 module.exports = { deleteAllSpreadsheets, deleteSpreadsheetById, addDataToSpreadsheet };
