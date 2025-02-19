@@ -1,7 +1,7 @@
 
 <style>
     /* Ads Container */
-    .ads-container {
+    .side-ads-container {
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -70,7 +70,7 @@
         text-align: left;
     }
     
-    #job-item-container .ads-container {
+    #job-item-container .side-ads-container {
         position: relative;
     }
 </style>
@@ -78,7 +78,7 @@
 
 
 
-<div class="side-ads ads-container">
+<div class="side-ads side-ads-container">
 
     @php
         $nbr = $nbr ?? 3;

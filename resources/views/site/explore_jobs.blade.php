@@ -293,7 +293,7 @@
 
         <div class="col-md-4 col-lg-3 mt-5 mt-lg-0 mt-lg-3 mt-xl-0">
 
-            <div class="landing-explore side-ads-container">
+            <div class="landing-explore side-ads-banner">
 
                 {{-- ads container --}}
                 @include('worker::components.side_ads')
