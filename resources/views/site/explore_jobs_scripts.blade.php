@@ -1243,4 +1243,26 @@
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
+    
+    function injectAdBetweenCards() {
+        
+        let types = ['side', 'horizontal'];
+        // choose random type
+        let type = types[Math.floor(Math.random() * types.length)];
+
+        fetch("{{ route('load-ads') }}?type=" + type)
+            .then(response => response.json())
+            .then(data => {
+
+                if (data.html) {
+                    
+                    $('.job-item-container').append(data.html);
+                    
+                } else if (data.error) {
+                    console.error('Error loading ad:', data.error);
+                }
+            })
+            .catch(error => console.error('Request failed', error));
+
+    }
 </script>
