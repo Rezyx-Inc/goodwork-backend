@@ -50,220 +50,212 @@
 <section class="ss-explore-job-mn-sec">
     <div class="row mx-3">
         <div class="col-md-12 col-lg-5 col-xl-4 col-xxl-3 ss-expl-filtr-lft-dv-bx">
-            <div style="padding:40px !important;background-color:#fff8fd !important;">
-                <h4 class="text-center" style="padding-bottom: 10px; font-size: 30px; font-weight: 500;">Filters
-                </h4>
-                <!---form--->
-                <form method="get" action="{{ route('explore-jobs') }}" id="filter_form">
-                   <div class="d-none d-lg-block">
-                    <div class="ss-fliter-btn-dv" style="display: flex; justify-content: space-between;">
-                        <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
-                        <button class="ss-fliter-btn" type="submit">Filter</button>
-                    </div>
-                   </div>
-
-                    {{-- job type --}}
-                    <div class="ss-input-slct-grp mb-3">
-                        <label for="cars">Job Type</label>
-                        <select name="job_type">
-                            <option value="">Select</option>
-                            <option value="Clinical" {{ $job_type == 'Clinical' ? 'selected' : '' }}>Clinical
-                            </option>
-                            <option value="Non-Clinical" {{ $job_type == 'Non-Clinical' ? 'selected' : '' }}>
-                                Non-Clinical</option>
-                        </select>
-                    </div>
-
-                    {{-- facility --}}
-                        {{-- <div class="ss-input-slct-grp mb-3">
-                        <label for="cars">Facility</label>
-                        <select name="facility_name">
-                            <option value="">Select</option>
-                            @php
-                                $uniqueFacilities = [];
-                            @endphp
-                            @foreach ($facilities as $v)
-                                @if (!in_array($v->facility_name, $uniqueFacilities))
-                                    <option value="{{ $v->facility_name }}" 
-                                            data-id="{{ $v->facility_name }}"
-                                            {{ $facilityName == $v->facility_name ? 'selected' : '' }}>
-                                        {{ $v->facility_name }}
-                                    </option>
-                                    @php
-                                        $uniqueFacilities[] = $v->facility_name;
-                                    @endphp
-                                @endif
-                            @endforeach
-                        </select>                                    
-                        </div> --}}
-
-                    {{-- profession --}}
-                    <div class="ss-input-slct-grp mb-3">
-                        <label for="cars">Profession</label>
-                        <select name="profession">
-                            <option value="">Select</option>
-                            @foreach ($professions as $v)
-                                <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
-                                    {{ $profession == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    {{-- specialty --}}
-                    <div class="ss-input-slct-grp mb-3">
-                        <label>Specialty</label>
-                        <select name="speciality" id="speciality">
-                            <option value="">Select Specialty</option>
-                            @foreach ($specialities as $v)
-                                <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
-                                    {{ $speciality == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    {{-- state --}}
-                    <div class="ss-input-slct-grp mb-3">
-                        <label> State </label>
-                        <select name="state" id="state">
-                            @if (!empty($state))
-                                <option value="" selected>{{ $state }}</option>
-                            @else
-                                <option value="" disabled selected hidden>Select a State</option>
-                            @endif
-                            @foreach ($us_states as $state)
-                                <option id="{{ $state->id }}" value="{{ $state->name }}">
-                                    {{ $state->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    {{-- city --}}
-                    <div class="ss-input-slct-grp mb-3">
-                        <label>City</label>
-                        <select name="city" id="city">
-                            @if (!empty($city))
-                                <option value="">Select a city</option>
-                                <option value="{{ $city }}" selected>{{ $city }}</option>
-                            @else
-                                <option value="">Select state first</option>
-                            @endif
-                        </select>
-                    </div>
-
-
-                    {{-- terms --}}
-                    <div class="ss-form-group ss-prsnl-frm-terms mb-3">
-                        <label>Terms</label>
-                        <div class="ss-speilty-exprnc-add-list terms-content"></div>
-                        {{-- <ul style="align-items: flex-start; list-style: none;"> --}}
-                            {{-- <div class="row w-100 p-0 m-0"> --}}
-                                <div class="d-flex align-items-center justify-content-between ">
-                                        <select class="m-0" id="termsSelect">
-                                            <option value="">Select Terms</option>
-                                            @foreach ($terms_key as $term)
-                                                <option value="{{ $term->id }}"
-                                                    {{ in_array($term->id, $terms) ? 'selected' : '' }}>
-                                                    {{ $term->title }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <input type="hidden" id="termsAllValues" name="terms"
-                                            value="{{ implode('-', $terms) }}">
-                                {{-- </div>
-                                <div> --}}
-                                    <div class="ss-prsn-frm-plu-div ms-5">
-                                        <a href="javascript:void(0)" onclick="addTerms('from_add')">
-                                            <i class="fa fa-plus" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            {{-- </div> --}}
-                        {{-- </ul> --}}
-                        <div>
-                            <span class="helper help-block-terms"></span>
-                        </div>
-                    </div>
-
-
-                    {{-- As soon As possible --}}
-                    <div class="ss-form-group col-md-12 mb-3">
-                        <div class="row">
-                            <div class="row col-lg-12 col-sm-12 col-md-12 col-xs-12"
-                                style="display: flex; justify-content: end; align-items:center;">
-                                <input type="hidden" name="as_soon_as" value="0">
-                                <input id="as_soon_as" name="as_soon_as" value="1" type="checkbox"
-                                    {{ $as_soon_as ? 'checked' : '' }} style="box-shadow:none; width:auto;"
-                                    class="col-2">
-                                <label class="col-10">
-                                    As soon As possible
-                                </label>
+            <nav class="navbar navbar-expand-lg" style="padding:10px !important;background-color:#fff8fd !important;">
+                <button class="navbar-toggler d-lg-none d-flex mx-auto my-auto align-items-center" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    style="background-color:#fff8fd !important;" >
+                    <span class="navbar-toggler-icon me-3"></span> 
+                    <span class="text-center" style="font-size: 30px; font-weight: 500;">Filters</span>
+                </button>
+            
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <div class="navbar-nav mx-hauto" style="padding:10px !important">
+                        <!-- Form -->
+                        <form method="get" action="{{ route('explore-jobs') }}" id="filter_form">
+                            <div class=" d-none d-lg-block">
+                                <h4 class="text-center" 
+                                style="padding-bottom: 10px; font-size: 30px; font-weight: 500;">
+                                Filters
+                            </h4>
+                            </div> 
+                            <div class="d-none d-lg-block">
+                             <div class="ss-fliter-btn-dv" style="display: flex; justify-content: space-between;">
+                                 <span class="ss-reset-btn" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
+                                 <button class="ss-fliter-btn" type="submit">Filter</button>
+                             </div>
                             </div>
-                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                                <div class="ss-starrt-date">
-                                    <label>Start Date</label>
-                                    <input type="date" value="{{ $start_date }}" name="start_date"
-                                        placeholder="Start Date">
-                                </div>
-                            </div>
-                        </div>
+         
+                             {{-- job type --}}
+                             <div class="ss-input-slct-grp mb-3">
+                                 <label for="cars">Job Type</label>
+                                 <select name="job_type">
+                                     <option value="">Select</option>
+                                     <option value="Clinical" {{ $job_type == 'Clinical' ? 'selected' : '' }}>Clinical
+                                     </option>
+                                     <option value="Non-Clinical" {{ $job_type == 'Non-Clinical' ? 'selected' : '' }}>
+                                         Non-Clinical</option>
+                                 </select>
+                             </div>
+         
+                             {{-- profession --}}
+                             <div class="ss-input-slct-grp mb-3">
+                                 <label for="cars">Profession</label>
+                                 <select name="profession">
+                                     <option value="">Select</option>
+                                     @foreach ($professions as $v)
+                                         <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
+                                             {{ $profession == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
+                                         </option>
+                                     @endforeach
+                                 </select>
+                             </div>
+         
+                             {{-- specialty --}}
+                             <div class="ss-input-slct-grp mb-3">
+                                 <label>Specialty</label>
+                                 <select name="speciality" id="speciality">
+                                     <option value="">Select Specialty</option>
+                                     @foreach ($specialities as $v)
+                                         <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
+                                             {{ $speciality == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
+                                         </option>
+                                     @endforeach
+                                 </select>
+                             </div>
+         
+                             {{-- state --}}
+                             <div class="ss-input-slct-grp mb-3">
+                                 <label> State </label>
+                                 <select name="state" id="state">
+                                     @if (!empty($state))
+                                         <option value="" selected>{{ $state }}</option>
+                                     @else
+                                         <option value="" disabled selected hidden>Select a State</option>
+                                     @endif
+                                     @foreach ($us_states as $state)
+                                         <option id="{{ $state->id }}" value="{{ $state->name }}">
+                                             {{ $state->name }}
+                                         </option>
+                                     @endforeach
+                                 </select>
+                             </div>
+         
+                             {{-- city --}}
+                             <div class="ss-input-slct-grp mb-3">
+                                 <label>City</label>
+                                 <select name="city" id="city">
+                                     @if (!empty($city))
+                                         <option value="">Select a city</option>
+                                         <option value="{{ $city }}" selected>{{ $city }}</option>
+                                     @else
+                                         <option value="">Select state first</option>
+                                     @endif
+                                 </select>
+                             </div>
+         
+         
+                             {{-- terms --}}
+                             <div class="ss-form-group ss-prsnl-frm-terms mb-3">
+                                 <label>Terms</label>
+                                 <div class="ss-speilty-exprnc-add-list terms-content"></div>
+                                 {{-- <ul style="align-items: flex-start; list-style: none;"> --}}
+                                     {{-- <div class="row w-100 p-0 m-0"> --}}
+                                         <div class="d-flex align-items-center justify-content-between ">
+                                                 <select class="m-0" id="termsSelect">
+                                                     <option value="">Select Terms</option>
+                                                     @foreach ($terms_key as $term)
+                                                         <option value="{{ $term->id }}"
+                                                             {{ in_array($term->id, $terms) ? 'selected' : '' }}>
+                                                             {{ $term->title }}
+                                                         </option>
+                                                     @endforeach
+                                                 </select>
+                                                 <input type="hidden" id="termsAllValues" name="terms"
+                                                     value="{{ implode('-', $terms) }}">
+                                         {{-- </div>
+                                         <div> --}}
+                                             <div class="ss-prsn-frm-plu-div ms-5">
+                                                 <a href="javascript:void(0)" onclick="addTerms('from_add')">
+                                                     <i class="fa fa-plus" aria-hidden="true"></i>
+                                                 </a>
+                                             </div>
+                                         </div>
+                                     {{-- </div> --}}
+                                 {{-- </ul> --}}
+                                 <div>
+                                     <span class="helper help-block-terms"></span>
+                                 </div>
+                             </div>
+         
+         
+                             {{-- As soon As possible --}}
+                             <div class="ss-form-group col-md-12 mb-3">
+                                 <div class="row">
+                                     <div class="row col-lg-12 col-sm-12 col-md-12 col-xs-12"
+                                         style="display: flex; justify-content: end; align-items:center;">
+                                         <input type="hidden" name="as_soon_as" value="0">
+                                         <input id="as_soon_as" name="as_soon_as" value="1" type="checkbox"
+                                             {{ $as_soon_as ? 'checked' : '' }} style="box-shadow:none; width:auto;"
+                                             class="col-2">
+                                         <label class="col-10">
+                                             As soon As possible
+                                         </label>
+                                     </div>
+                                     <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                         <div class="ss-starrt-date">
+                                             <label>Start Date</label>
+                                             <input type="date" value="{{ $start_date }}" name="start_date"
+                                                 placeholder="Start Date">
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+         
+                             <!-- partial:index.partial.html -->
+                             <div class="ss-price-week-sec">
+                                 <label>Weekly Pay</label>
+                                 <div id="slider"></div>
+                             </div>
+                             <!-- partial -->
+         
+         
+                             <!-- partial:index.partial.html -->
+                             <div class="ss-price-week-sec">
+                                 <label>Hours Per Shift</label>
+                                 <div id="slider2"></div>
+                             </div>
+                             <!-- partial -->
+                             <!-- partial:index.partial.html -->
+                             <div class="ss-price-week-sec">
+                                 <label>Hours Per Week</label>
+                                 <div id="slider3"></div>
+                             </div>
+         
+                             {{-- job id --}}
+                             <div class="ss-input-slct-grp job_id mt-md-5 mb-3">
+                                 <label for="cars">Job ID</label>
+                                 <div class="form-outline">
+                                     <input type="text" id="gw" class="gw" name="gw"
+                                         placeholder="Search by Job ID" value="{{ request('gw') }}">
+                                 </div>
+                                 <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;">
+                                 </div>
+                                 <!-- Error message display -->
+                             </div>
+         
+                             {{-- <input type="hidden" name="terms" value="" id="job_type"> --}}
+                             {{-- <input type="hidden" name="shifts" value="" id="shift"> --}}
+                             <input type="hidden" name="weekly_pay_from" value="{{ $weekly_pay_from }}"
+                                 id="minval">
+                             <input type="hidden" name="weekly_pay_to" value="{{ $weekly_pay_to }}" id="maxval">
+                             <input type="hidden" name="hourly_pay_from" value="{{ $hourly_pay_from }}"
+                                 id="hps_minval">
+                             <input type="hidden" name="hourly_pay_to" value="{{ $hourly_pay_to }}"
+                                 id="hps_maxval">
+                             <input type="hidden" name="hours_per_week_from" value="{{ $hours_per_week_from }}"
+                                 id="hpw_minval">
+                             <input type="hidden" name="hours_per_week_to" value="{{ $hours_per_week_to }}"
+                                 id="hpw_maxval">
+                             {{-- <input type="hidden" name="assignment_from" value="{{$assignment_from}}" id="al_minval">
+                         <input type="hidden" name="assignment_to" value="{{$assignment_to}}" id="al_maxval"> --}}
+                         <div class="ss-fliter-btn-dv d-lg-none w-100 d-flex justify-content-between">
+                             <span class="reset_mobile_mode" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
+                             <button class="ss-fliter-btn" type="submit">Filter</button>
+                         </div>
+                        </form>
                     </div>
-
-                    <!-- partial:index.partial.html -->
-                    <div class="ss-price-week-sec">
-                        <label>Weekly Pay</label>
-                        <div id="slider"></div>
-                    </div>
-                    <!-- partial -->
-
-
-                    <!-- partial:index.partial.html -->
-                    <div class="ss-price-week-sec">
-                        <label>Hours Per Shift</label>
-                        <div id="slider2"></div>
-                    </div>
-                    <!-- partial -->
-                    <!-- partial:index.partial.html -->
-                    <div class="ss-price-week-sec">
-                        <label>Hours Per Week</label>
-                        <div id="slider3"></div>
-                    </div>
-
-                    {{-- job id --}}
-                    <div class="ss-input-slct-grp job_id mt-lg-5 mb-3">
-                        <label for="cars">Job ID</label>
-                        <div class="form-outline">
-                            <input type="text" id="gw" class="gw" name="gw"
-                                placeholder="Search by Job ID" value="{{ request('gw') }}">
-                        </div>
-                        <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;">
-                        </div>
-                        <!-- Error message display -->
-                    </div>
-
-                    {{-- <input type="hidden" name="terms" value="" id="job_type"> --}}
-                    {{-- <input type="hidden" name="shifts" value="" id="shift"> --}}
-                    <input type="hidden" name="weekly_pay_from" value="{{ $weekly_pay_from }}"
-                        id="minval">
-                    <input type="hidden" name="weekly_pay_to" value="{{ $weekly_pay_to }}" id="maxval">
-                    <input type="hidden" name="hourly_pay_from" value="{{ $hourly_pay_from }}"
-                        id="hps_minval">
-                    <input type="hidden" name="hourly_pay_to" value="{{ $hourly_pay_to }}"
-                        id="hps_maxval">
-                    <input type="hidden" name="hours_per_week_from" value="{{ $hours_per_week_from }}"
-                        id="hpw_minval">
-                    <input type="hidden" name="hours_per_week_to" value="{{ $hours_per_week_to }}"
-                        id="hpw_maxval">
-                    {{-- <input type="hidden" name="assignment_from" value="{{$assignment_from}}" id="al_minval">
-                <input type="hidden" name="assignment_to" value="{{$assignment_to}}" id="al_maxval"> --}}
-                <div class="ss-fliter-btn-dv d-lg-none w-100 d-flex justify-content-between">
-                    <span class="reset_mobile_mode" onclick="resetForm()">Clear search</span>&nbsp;&nbsp;
-                    <button class="ss-fliter-btn" type="submit">Filter</button>
                 </div>
-                </form>
-            </div>
+            </nav>
+            
         </div>
 
 
