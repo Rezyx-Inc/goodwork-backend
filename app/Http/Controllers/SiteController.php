@@ -47,14 +47,14 @@ class SiteController extends Controller
   public function signup(Request $request)
   {
     $data = [];
-    return view('site.signup', $data);
+    return view('site.Auth.signup', $data);
   }
 
   /** Login page */
   public function login(Request $request)
   {
     $data = [];
-    return view('site.login', $data);
+    return view('site.Auth.login', $data);
   }
 
   /** forgot password page */
