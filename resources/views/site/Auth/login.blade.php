@@ -17,8 +17,8 @@
                     <!--------login form------->
                     <div class="ss-login-work-dv">
                         <h4>
-                            <span>Organization</span>
-                            Login
+                            <span>Login</span>
+                            
                         </h4>
                         <form method="post" action="{{ route('organization-login') }}" id="login-form" class="">
                             <div class="ss-form-group">
