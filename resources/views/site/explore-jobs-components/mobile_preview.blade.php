@@ -1,5 +1,4 @@
-<div class="ss-dash-profile-4-bx-dv" id="job-item-container">
-    @forelse($jobs as $j)
+@forelse($jobs as $j)
         <div class="ss-job-prfle-sec job-item" data-id="{{ $j->id }}" style="margin-left: 0px;">
             {{-- row 1 --}}
             <div class="row d-flex align-items-center">
@@ -200,7 +199,4 @@
         <div class="ss-job-prfle-sec">
             <h4>No Data found</h4>
         </div>
-    @endforelse
-
-</div>
-<div id="loadTrigger"></div>
+@endforelse
