@@ -1004,27 +1004,75 @@
                         </div>
 
                         <div class="row d-flex align-items-center">
-                            
-
-                                 <div class="col-6 d-flex justify-content-start">
-                                        <ul>
-                                            ${job.hours_per_week ? 
-                                                `<li><a href="#"><img class="icon_cards" src="frontend/img/calendar.png"> ${job.hours_per_week} hrs/wk</a></li>` : ''}
-                                        </ul>
-                                </div>
-                                <div class="col-6  d-flex justify-content-end p-0">
-                                    <ul>
-                                        ${job.weekly_pay ?
-                                            `<li style="font-weight: 600;">$ ${numberWithCommas(job.weekly_pay.toFixed(0))}/wk</li>` : ''}
-                                    </ul>
-                                </div>
-                                <div class="col-12 d-flex justify-content-end p-0">
-                                    <ul>
-                                        ${job.weekly_pay ?
-                                            `<li style="font-weight: 600;">$ ${numberWithCommas((job.weekly_pay * 4 * 12).toFixed(0))}/yr</li>` : ''}
-                                    </ul>
-                                </div>
-                        </div> 
+    ${job.preferred_shift_duration ? 
+        `<div class="col-6 d-flex justify-content-between justify-content-md-start">
+            <ul>
+                ${job.preferred_shift_duration === '5x8 Days' || job.preferred_shift_duration === '4x10 Days' ? 
+                    `<li>
+                        <svg style="vertical-align: bottom;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-brightness-alt-high-fill" viewBox="0 0 16 16">
+                            <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3m8 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5m-13.5.5a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1z"/>
+                        </svg>
+                        ${job.preferred_shift_duration}
+                    </li>` : 
+                    job.preferred_shift_duration === '3x12 Nights or Days' ?
+                    `<li>
+                        <svg style="vertical-align: text-bottom;" xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor" class="bi bi-moon-stars" viewBox="0 0 16 16">
+                            <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097z"/>
+                            <path d="M13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"/>
+                        </svg>
+                        ${job.preferred_shift_duration}
+                    </li>` : ''}
+            </ul>
+        </div>
+        <div class="col-6 d-flex justify-content-end p-0">
+            <ul>
+                ${job.weekly_pay ? 
+                    `<li>
+                        $ ${numberWithCommas(job.weekly_pay)}/wk
+                    </li>` : ''}
+            </ul>
+        </div>
+        <div class="col-6 d-flex justify-content-start">
+            <ul>
+                ${job.hours_per_week ? 
+                    `<li>
+                        <a href="#"><img class="icon_cards" src="frontend/img/calendar.png"> ${job.hours_per_week} hrs/wk</a>
+                    </li>` : ''}
+            </ul>
+        </div>
+        <div class="col-6  d-flex justify-content-end p-0">
+            <ul>
+                ${job.weekly_pay ? 
+                    `<li style="font-weight: 600;">
+                        $ ${numberWithCommas(job.weekly_pay * 4 * 12)}/yr
+                    </li>` : ''}
+            </ul>
+        </div>` : `
+        <div class="col-6 d-flex justify-content-start">
+            <ul>
+                ${job.hours_per_week ? 
+                    `<li>
+                        <a href="#"><img class="icon_cards" src="frontend/img/calendar.png"> ${job.hours_per_week} hrs/wk</a>
+                    </li>` : ''}
+            </ul>
+        </div>
+        <div class="col-6  d-flex justify-content-end p-0">
+            <ul>
+                ${job.weekly_pay ? 
+                    `<li style="font-weight: 600;">
+                        $ ${numberWithCommas(job.weekly_pay)}/wk
+                    </li>` : ''}
+            </ul>
+        </div>
+        <div class="col-12  d-flex justify-content-end p-0">
+            <ul>
+                ${job.weekly_pay ? 
+                    `<li style="font-weight: 600;">
+                        $ ${numberWithCommas(job.weekly_pay * 4 * 12)}/yr
+                    </li>` : ''}
+            </ul>
+        </div>`}
+</div>
             
 
                         <div class="row w-100">
@@ -1105,26 +1153,75 @@
                         </div>
 
                         <div class="row d-flex align-items-center">
-                            
-                                 <div class="col-6 d-flex justify-content-start">
-                                        <ul>
-                                            ${job.hours_per_week ? 
-                                                `<li><a href="#"><img class="icon_cards" src="frontend/img/calendar.png"> ${job.hours_per_week} hrs/wk</a></li>` : ''}
-                                        </ul>
-                                </div>
-                                <div class="col-6 mt-3 mt-md-0 d-flex justify-content-end">
-                                    <ul>
-                                        ${job.weekly_pay ?
-                                            `<li style="font-weight: 600;">$ ${numberWithCommas(job.weekly_pay.toFixed(0))}/wk</li>` : ''}
-                                    </ul>
-                                </div>
-                                <div class="col-12 mt-3 mt-md-0 d-flex justify-content-end">
-                                    <ul>
-                                        ${job.weekly_pay ?
-                                            `<li style="font-weight: 600;">$ ${numberWithCommas((job.weekly_pay * 4 * 12).toFixed(0))}/yr</li>` : ''}
-                                    </ul>
-                                </div>
-                     </div> 
+    ${job.preferred_shift_duration ? 
+        `<div class="col-6 d-flex justify-content-between justify-content-md-start">
+            <ul>
+                ${job.preferred_shift_duration === '5x8 Days' || job.preferred_shift_duration === '4x10 Days' ? 
+                    `<li>
+                        <svg style="vertical-align: bottom;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-brightness-alt-high-fill" viewBox="0 0 16 16">
+                            <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3m8 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5m-13.5.5a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1z"/>
+                        </svg>
+                        ${job.preferred_shift_duration}
+                    </li>` : 
+                    job.preferred_shift_duration === '3x12 Nights or Days' ?
+                    `<li>
+                        <svg style="vertical-align: text-bottom;" xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor" class="bi bi-moon-stars" viewBox="0 0 16 16">
+                            <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097z"/>
+                            <path d="M13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"/>
+                        </svg>
+                        ${job.preferred_shift_duration}
+                    </li>` : ''}
+            </ul>
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+            <ul>
+                ${job.weekly_pay ? 
+                    `<li>
+                        $ ${numberWithCommas(job.weekly_pay)}/wk
+                    </li>` : ''}
+            </ul>
+        </div>
+        <div class="col-6 d-flex justify-content-start">
+            <ul>
+                ${job.hours_per_week ? 
+                    `<li>
+                        <a href="#"><img class="icon_cards" src="frontend/img/calendar.png"> ${job.hours_per_week} hrs/wk</a>
+                    </li>` : ''}
+            </ul>
+        </div>
+        <div class="col-6 mt-3 mt-md-0 d-flex justify-content-between justify-content-md-end">
+            <ul>
+                ${job.weekly_pay ? 
+                    `<li style="font-weight: 600;">
+                        $ ${numberWithCommas(job.weekly_pay * 4 * 12)}/yr
+                    </li>` : ''}
+            </ul>
+        </div>` : `
+        <div class="col-6 d-flex justify-content-start">
+            <ul>
+                ${job.hours_per_week ? 
+                    `<li>
+                        <a href="#"><img class="icon_cards" src="frontend/img/calendar.png"> ${job.hours_per_week} hrs/wk</a>
+                    </li>` : ''}
+            </ul>
+        </div>
+        <div class="col-6 mt-3 mt-md-0 d-flex justify-content-end">
+            <ul>
+                ${job.weekly_pay ? 
+                    `<li style="font-weight: 600;">
+                        $ ${numberWithCommas(job.weekly_pay)}/wk
+                    </li>` : ''}
+            </ul>
+        </div>
+        <div class="col-12 mt-3 mt-md-0 d-flex justify-content-end">
+            <ul>
+                ${job.weekly_pay ? 
+                    `<li style="font-weight: 600;">
+                        $ ${numberWithCommas(job.weekly_pay * 4 * 12)}/yr
+                    </li>` : ''}
+            </ul>
+        </div>`}
+</div>
             
 
                     <div class="row w-100">
