@@ -107,7 +107,7 @@
                     document.head.appendChild(script);
                     window.boardwalk = cfg;
                 }({
-                    pid: '23d64e3b-185b-442b-b6d7-75839d66e308',
+                    pid: 'b720caf4-f5b9-45df-99b7-8d644f4979cf',
                     role: 'path',
                     root: 'promenade',
                     stylesheets: ['https://cdn1.boardwalk.marketing/css/pathcss-light-column-list.css'],
