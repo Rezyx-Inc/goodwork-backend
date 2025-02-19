@@ -47,9 +47,7 @@
         </script>
         <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        @if(!in_array($route_name, $no_header_pages))
         @include('partials.header')
-        @endif
         @yield('content')
 
         @include('partials.footer')

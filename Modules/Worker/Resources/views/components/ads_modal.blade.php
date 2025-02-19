@@ -43,7 +43,7 @@
         align-items: center;
     }
 
-    #adPopup .ads-container {
+    #adPopup .pop-ads-container {
         max-width: 800px;
         margin: 20px auto;
         background: #fff;
@@ -114,7 +114,7 @@
 
 <div id="adPopup">
     <button class="close-btn" id="closePopup">&times;</button>
-    <div class="ads-container">
+    <div class="pop-ads-container">
         @php
             $ads = \App\Enums\AdsEnum::random();
         @endphp

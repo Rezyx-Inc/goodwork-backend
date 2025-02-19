@@ -3257,7 +3257,7 @@ ul.ss-jb-dtlpop-chck li {
 
 
 
-.side-ads-container {
+.side-ads-banner {
     height: 80vh;
     position: sticky;
     top: 0;
@@ -3266,13 +3266,13 @@ ul.ss-jb-dtlpop-chck li {
 }
 
 
-.landing-explore.side-ads-container {
+.landing-explore.side-ads-banner {
     height: 100vh;
 }
 
 /* Adjustments for mobile view */
 @media (max-width: 768px) {
-    .side-ads-container {
+    .side-ads-banner {
         max-height: 75vh;
         margin-top: 35px;
     }

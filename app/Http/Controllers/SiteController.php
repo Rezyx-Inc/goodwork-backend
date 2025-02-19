@@ -47,14 +47,14 @@ class SiteController extends Controller
   public function signup(Request $request)
   {
     $data = [];
-    return view('site.signup', $data);
+    return view('site.Auth.signup', $data);
   }
 
   /** Login page */
   public function login(Request $request)
   {
     $data = [];
-    return view('site.login', $data);
+    return view('site.Auth.login', $data);
   }
 
   /** forgot password page */
@@ -641,5 +641,32 @@ class SiteController extends Controller
     } else {
       return response()->json('Forbidden', 403);
     }
+  }
+  
+  
+  public function load_ad(Request $request)
+  {
+      // Check if 'type' is present in the request
+      if ($request->has('type')) {
+          $type = $request->type;
+          $nbr = $request->nbr ?? 1;
+
+          if ($type == 'side') {
+              $adHtml = view('worker::components.side_ads', compact('nbr'))->render();
+          } elseif ($type == 'horizontal') {
+              $adHtml = view('worker::components.horizontal_ads', compact('nbr'))->render();
+          } elseif ($type == 'modal') {
+              $adHtml = view('worker::components.ads_modal', compact('nbr'))->render();
+          } else {
+              // If the 'type' is invalid, return an error message
+              return response()->json(['error' => 'Invalid ad type'], 400);
+          }
+
+          // Return the HTML response
+          return response()->json(['html' => $adHtml]);
+      }
+
+      
+      return response()->json(['error' => 'Ad type is required'], 400);
   }
 }

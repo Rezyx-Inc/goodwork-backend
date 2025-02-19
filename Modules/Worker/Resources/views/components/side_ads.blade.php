@@ -1,7 +1,7 @@
 
 <style>
     /* Ads Container */
-    .ads-container {
+    .side-ads-container {
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -69,32 +69,16 @@
         margin-bottom: 15px;
         text-align: left;
     }
-
-    /* Call-to-Action Button */
-    .cta-button {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: #ffffff;
-        text-align: center;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 14px;
-        font-weight: 500;
-        transition: background-color 0.3s ease;
-        margin-top: 10px;
-    }
-
-    .cta-button:hover {
-        background-color: #0056b3;
-        color: #ffffff
+    
+    #job-item-container .side-ads-container {
+        position: relative;
     }
 </style>
 
 
 
 
-<div class="ads-container">
+<div class="side-ads side-ads-container">
 
     @php
         $nbr = $nbr ?? 3;
