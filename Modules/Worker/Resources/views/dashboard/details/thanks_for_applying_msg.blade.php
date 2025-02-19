@@ -31,7 +31,7 @@
 
 
     <style>
-        .ads-container {
+        .side-ads-container {
             max-width: 800px;
             margin: 0 auto;
             background: #fff;
@@ -95,7 +95,7 @@
     
     <!--Main layout-->
     <main style="padding-top: 170px" class="ss-main-body-sec">
-        <div class="ads-container">
+        <div class="side-ads-container">
             
             <div id="promenade"></div>
 
