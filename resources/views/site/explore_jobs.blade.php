@@ -49,7 +49,7 @@
 
 <section class="ss-explore-job-mn-sec">
     <div class="row mx-3">
-        <div class="col-md-12 col-lg-5 col-xl-4 col-xxl-3 ss-expl-filtr-lft-dv-bx">
+        <div class="col-md-12 col-lg-4 ss-expl-filtr-lft-dv-bx">
             <div style="padding:40px !important;background-color:#fff8fd !important;">
                 <h4 class="text-center" style="padding-bottom: 10px; font-size: 30px; font-weight: 500;">Filters
                 </h4>
@@ -267,7 +267,7 @@
         </div>
 
 
-        <div class="col-md-8 mt-4 mt-lg-0 col-lg-7 col-xl-5 col-xxl-6">
+        <div class="col-md-8 col-lg-5 mt-4 mt-lg-0">
 
             <!-----------jobs profiles---------->
 
@@ -286,7 +286,7 @@
         </div>
 
 
-        <div class="col-md-4 mt-5 mt-lg-0 col-lg-12 mt-lg-3 mt-xl-0 col-xl-3">
+        <div class="col-md-4 col-lg-3 mt-5 mt-lg-0 mt-lg-3 mt-xl-0">
 
             <div class="landing-explore side-ads-container">
 
