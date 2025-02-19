@@ -274,13 +274,18 @@
             <div class="ss-dash-profile-jb-mn-dv">
 
                 <!-- mobil preview -->
-                <div id="mobile-view" class="d-block d-md-none" style="display: none;">
-                    @include('site.explore-jobs-components.mobile_preview')
+                <div id="mobile-view" class="d-block d-md-none job-item-container" style="display: none;">
+                    <div class="ss-dash-profile-4-bx-dv">
+                        @include('site.explore-jobs-components.mobile_preview')
+                    </div>
                 </div>
                 <!-- large preveiw -->
                 <div id="desktop-view" class="d-none d-md-block" style="display: none;">
-                    @include('site.explore-jobs-components.large_preview')
+                    <div class="ss-dash-profile-4-bx-dv job-item-container" >
+                        @include('site.explore-jobs-components.large_preview')
+                    </div>
                 </div>
+                <div id="loadTrigger"></div>
             </div>
 
         </div>
@@ -344,11 +349,14 @@
         if (width < 768) {
             $("#mobile-view").show();
             $("#desktop-view").hide();
+            return 'mobile';
         } else {
             $("#mobile-view").hide();
             $("#desktop-view").show();
+            return 'desktop';
         }
     }
+
     
     $(document).ready(adjustLayout);
     $(window).resize(adjustLayout);
