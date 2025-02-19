@@ -24,7 +24,9 @@
 </head>
 
 <body>
-    <script>$(document).ready(function() {
+    <script type="module">
+
+    $(document).ready(function() {
         $.ajaxSetup({
             xhrFields: {
                 withCredentials: true
@@ -38,7 +40,8 @@
         });
     });</script>
 
-    <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
+
+
     <script src="{{ asset('js/app.js') }}"></script>
     <header>
         @include('organization::partials.sidebar')
@@ -51,20 +54,14 @@
     <script type="text/javascript" src="{{ URL::asset('backend/vendors/confirm/jquery-confirm.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript" src="{{URL::asset('backend/vendors/notie/dist/notie.min.js') }}"></script>
     <script src="{{URL::asset('backend/vendors/ckeditor/ckeditor.js')}}"></script>
-    <script type="text/javascript" src="{{URL::asset('frontend/js/nav-bar-script.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('organization/custom/js/owl.carousel.min.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('organization/custom/js/mdb.min.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('organization/custom/js/nav-bar-script.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('frontend/custom/js/profile.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('frontend/custom/js/script.js')}}"></script>
-    <script type="text/javascript">
-</script>
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-    @yield('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    @yield('js')
+
     <script>$(document).ready(function() {
         $.ajaxSetup({
             xhrFields: {

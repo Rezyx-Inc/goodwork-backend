@@ -6,7 +6,7 @@ function submit_form(form_id)
 
 $(document).ready(function () {
 
-    $('#phone_number').mask('(999) 999-9999');
+    $('#phone_number')?? $('#phone_number').mask('(999) 999-9999');
 
 $('#signup-form-submit').submit(function (event) {
     event.preventDefault();
