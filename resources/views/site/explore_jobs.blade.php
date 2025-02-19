@@ -274,8 +274,8 @@
             <div class="ss-dash-profile-jb-mn-dv">
 
                 <!-- mobil preview -->
-                <div id="mobile-view" class="d-block d-md-none job-item-container" style="display: none;">
-                    <div class="ss-dash-profile-4-bx-dv">
+                <div id="mobile-view" class="d-block d-md-none" style="display: none;">
+                    <div class="ss-dash-profile-4-bx-dv job-item-container">
                         @include('site.explore-jobs-components.mobile_preview')
                     </div>
                 </div>
