@@ -621,7 +621,7 @@ async function getUpdatedJobs(newJobs, oldJobs, userId){
 	for( job of oldJobs){
 
 		let needle = _.find(newJobs, ['id', job.id]);
-		// console.log("2. Needle length : "+needle.length+", Needle is : "+needle);
+		
 		
 		if(!needle){
 			console.log("Inside not needle block with job id : ",job.id," , old id : ", needle, "Status", job.jobStatus);
