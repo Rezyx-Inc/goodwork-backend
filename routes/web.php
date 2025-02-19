@@ -34,6 +34,9 @@ Route::middleware(['web'])->group(function () {
     // add exploreJobs root
     Route::get('explore-jobs', ['uses' => 'SiteController@explore_jobs', 'as' => 'explore-jobs']);
 
+    // add load ads root 
+    Route::get('load-ads', ['uses' => 'SiteController@load_ad', 'as' => 'load-ads']);
+
     Route::post('get-states', ['uses' => 'SiteController@get_state', 'as' => 'get-states']);
     Route::post('get-cities', ['uses' => 'SiteController@get_city', 'as' => 'get-cities']);
     Route::post('get-speciality', ['uses' => 'SiteController@get_speciality', 'as' => 'get-speciality']);
