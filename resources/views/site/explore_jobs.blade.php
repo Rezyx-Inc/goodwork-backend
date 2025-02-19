@@ -693,6 +693,12 @@
 
                         jobs.push(...data.message.jobs);
                         addJobCards(data.message);
+
+                        // if data data.message.jobs.length == 0 
+                        if(data.message.jobs.length > 0){
+                            injectAdBetweenCards();
+                        }
+                        
                         // Increment skip
                         skip+=10;
 
