@@ -1,28 +1,25 @@
+//To configure environment variables from a .env file
 require("dotenv").config();
-var cron = require("node-cron");
-var laboredge = require("./laboredge.js");
+
+//import all required libraries and/or modules
+var cron = require("node-cron"); // Used to schedule cron jobs
+var { vitalink } = require("../integrations/laboredge");
+var { expedientRN } = require("../integrations/ceipal");
 var { report } = require("../set.js");
-var gsheet = require("../gSheet/index.js").main;
-var gSheetAuth = require("../gSheet/services/authService.js").authorize;
 
-// Uncomment to seed accounts
-//laboredge.seed(999);
+//var gsheet = require("../gSheet/index.js").main;
+//var gSheetAuth = require("../gSheet/services/authService.js").authorize;
 
-//report("Hello from cron")
-//laboredge.update();
-// (async () => {
-//     console.log("Exec imm");
-//     await gSheetAuth(true);
-// })();
+var ardorHealth = require("../integrations/ardorHealth.js");
 
-if (process.env.ENABLE_CRONS) {
+if (process.env.ENABLE_CRONS === "true") {
     console.log("Starting integrations cron jobs.");
 
     // Check newly added integrations every 10 minutes
-    cron.schedule("*/10 * * * *", () => {
-        console.log("Checking new integrations");
-        // laboredge.init();
-    });
+    //cron.schedule("*/10 * * * *", () => {
+        //console.log("Checking new integrations");
+        // vitalink.init();
+    //});
 
     // Check newly added integrations every 30 minutes
     // cron.schedule("*/30 * * * *", async () => {
@@ -31,18 +28,21 @@ if (process.env.ENABLE_CRONS) {
     // });
 
     // Check updates every hour
-    // cron.schedule("0 * * * *", () => {
-    //     console.log("Checking job updates");
-    //     // laboredge.update();
-    //     gsheet();
-    // });
+    cron.schedule("0 * * * *", () => {
+
+        console.log("Hourly Checking job updates");
+        // ardorHealth.init();
+        vitalink.update();
+
+    });
 
     // Check other updates every day at 1 am
     cron.schedule("0 1 * * *", () => {
         console.log("Checking other updates");
-        //laboredge.updateOthers();
+        //vitalink.updateOthers();
     });
 
+    //Handling unexpected termination on SIGTERM signal
     process.on("SIGTERM", function () {
         report("Unexpected Crons exit");
     });

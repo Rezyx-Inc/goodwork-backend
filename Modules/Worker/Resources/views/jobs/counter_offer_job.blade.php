@@ -16,7 +16,7 @@
 
     <div class="ss-jb-apply-on-disc-txt">
         <h5>Description</h5>
-        <p>{{ $jobdetails['description'] }}</p>
+        <p>{!! $jobdetails['description'] !!}</p>
     </div>
 
 

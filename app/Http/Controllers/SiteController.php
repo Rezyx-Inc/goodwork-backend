@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Artisan;
 // ************ Requests ************
 use App\Http\Requests\{LoginRequest, SignupRequest, ForgotRequest, ResetRequest, OTPRequest, ContactUsRequest};
 // ************ models ************
-use App\Models\{User, States, Countries, Nurse, Availability, Keyword, Speciality, JobSaved, Profession};
+use App\Models\{User, State, Offer, Countries, Nurse, Availability, Keyword, Speciality, JobSaved, Profession, States};
 
 use DateTime;
 
@@ -47,14 +47,14 @@ class SiteController extends Controller
   public function signup(Request $request)
   {
     $data = [];
-    return view('site.signup', $data);
+    return view('site.Auth.signup', $data);
   }
 
   /** Login page */
   public function login(Request $request)
   {
     $data = [];
-    return view('site.login', $data);
+    return view('site.Auth.login', $data);
   }
 
   /** forgot password page */
@@ -94,124 +94,180 @@ class SiteController extends Controller
     $gwNumber = $request->input('gw', '');
 
     // Build the query
-    $ret = Job::where('active', '1');
+    $ret = Job::where('is_open', '1')->where('active', '1');
 
 
-
-
+    // Initialize data array
     $data = [];
-    $data['user'] = auth()->guard('frontend')->user();
     $data['jobSaved'] = new JobSaved();
+
+    // Fetch related data
+    $data['terms_key'] = Keyword::select('id','title')->where(['filter' => 'terms'])->get();
     $data['specialities'] = Speciality::select('full_name')->get();
     $data['professions'] = Profession::select('full_name')->get();
-    $data['terms_key'] = Keyword::where(['filter' => 'Terms'])->get();
-    $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
-    $data['usa'] = $usa = Countries::where(['iso3' => 'USA'])->first();
-    $data['us_states'] = States::where('country_id', $usa->id)->get();
-    // $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
-
-
-    $data['profession'] = isset($request->profession) ? $request->profession : '';
-    $data['specialty'] = isset($request->specialty) ? $request->specialty : '';
-    $data['experience'] = isset($request->experience) ? $request->experience : '';
-    $data['city'] = isset($request->city) ? $request->city : '';
-    $data['state'] = isset($request->state) ? $request->state : '';
-    $data['terms'] = isset($request->terms) ? explode('-', $request->terms) : [];
-    $data['start_date'] = isset($request->start_date) ? $request->start_date : '';
-    $data['end_date'] = isset($request->end_date) ? $request->end_date : '';
-    $data['start_date'] = new DateTime($data['start_date']);
-    $data['start_date'] = $data['start_date']->format('Y-m-d');
-
-    $data['shifts'] = isset($request->shifts) ? explode('-', $request->shifts) : [];
-
-    $data['weekly_pay_from'] = isset($request->weekly_pay_from) ? $request->weekly_pay_from : 10;
-    $data['weekly_pay_to'] = isset($request->weekly_pay_to) ? $request->weekly_pay_to : 10000;
-    $data['hourly_pay_from'] = isset($request->hourly_pay_from) ? $request->hourly_pay_from : 2;
-    $data['hourly_pay_to'] = isset($request->hourly_pay_to) ? $request->hourly_pay_to : 24;
-    $data['hours_per_week_from'] = isset($request->hours_per_week_from) ? $request->hours_per_week_from : 10;
-    $data['hours_per_week_to'] = isset($request->hours_per_week_to) ? $request->hours_per_week_to : 100;
-
+    $data['us_states'] = State::select('id', 'name')->get();
     
+    // Set filter values from the request, use null as the default if not provided
+    $data['organization_name'] = $request->input('organization_name', null);
+    $data['recruiter_name'] = $request->input('recruiter_name', null);
+    $data['facilityName'] = $request->input('facility_name', null);
+    $data['job_id'] = $request->input('gw', null);
+    $data['profession'] = $request->input('profession');
+    $data['speciality'] = $request->input('speciality');
+    $data['experience'] = $request->input('experience');
+    $data['city'] = $request->input('city');
+    $data['state'] = $request->input('state');
+    $data['terms'] = $request->input('terms') ? explode('-', $request->terms) : [];
+    $data['start_date'] = $request->input('start_date', null);
+    $data['end_date'] = $request->input('end_date', null);
+    $data['start_date'] = $data['start_date'] ? (new DateTime($data['start_date']))->format('Y-m-d') : null;
+    $data['shifts'] = $request->has('shifts') ? explode('-', $request->shifts) : [];
+    $data['job_type'] = $request->input('job_type', null);
+    $data['as_soon_as'] = $request->input('as_soon_as', null);
+
+    // Pay and hour filters
+    $data['weekly_pay_from'] = $request->input('weekly_pay_from');
+    $data['weekly_pay_to'] = $request->input('weekly_pay_to');
+    $data['hourly_pay_from'] = $request->input('hourly_pay_from');
+    $data['hourly_pay_to'] = $request->input('hourly_pay_to');
+    $data['hours_per_week_from'] = $request->input('hours_per_week_from');
+    $data['hours_per_week_to'] = $request->input('hours_per_week_to');
 
     if (!empty($gwNumber)) {
 
       if (str_starts_with($gwNumber, 'GWJ')) {
 
         $ret->where('id', $gwNumber);
-        
       } else {
 
         $ret->where('job_id', $gwNumber);
-
       }
 
       $data['jobs'] = $ret->get();
+
       return view('site.explore_jobs', $data);
     }
 
-
-
-    if ($data['profession']) {
-
-      $ret->where('profession', '=', $data['profession']);
+    if (!empty($data['facilityName'])) {
+      $ret->where('facility_name', 'like', $data['facilityName']);
     }
 
-    if ($data['specialty']) {
 
-      $ret->where('specialty', '=', $data['specialty']);
+    if (!empty($data['job_type'])) {
+      $ret->where('job_type', 'like', $data['job_type']);
     }
 
-    if (count($data['terms']) && !is_null($request->input('terms'))) {
+    if (!empty($data['profession'])) {
+      $ret->where('profession', 'like', $data['profession']);
+    }
+
+    if (!empty($data['speciality'])) {
+      $ret->where('preferred_specialty', 'like', $data['speciality']);
+    }
+
+    if (!empty($data['terms']) && !is_null($data['terms']) && is_array($data['terms']) && count($data['terms']) > 0) {
 
       $ret->whereIn('terms', $data['terms']);
     }
+  
+    if (!empty($data['as_soon_as'])) {
+      $ret->where('as_soon_as', '=', $data['as_soon_as']);
 
-    if (isset($request->start_date)) {
-
-      $ret->where('start_date', '<=', $data['start_date']);
+    } elseif (!empty($data['start_date'])) {
+      $ret->where('start_date', '>=', $data['start_date']);
     }
 
-    if ($data['shifts']) {
-
-      $ret->whereIn('preferred_shift', $data['shifts']);
-    }
-
-
-    if (isset($request->weekly_pay_from)) {
-
+    if (!empty($data['weekly_pay_from'])) {
       $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
-    }
 
-    if (isset($request->weekly_pay_to)) {
+     }
+
+    if (!empty($data['weekly_pay_to'])) {
       $ret->where('weekly_pay', '<=', $data['weekly_pay_to']);
     }
 
-    if (isset($request->hourly_pay_from)) {
+    if (!empty($data['hourly_pay_from'])) {
       $ret->where('hours_shift', '>=', $data['hourly_pay_from']);
     }
 
-    if (isset($request->hourly_pay_to)) {
+    if (!empty($data['hourly_pay_to'])) {
       $ret->where('hours_shift', '<=', $data['hourly_pay_to']);
     }
 
-    if (isset($request->hours_per_week_from)) {
+    if (!empty($data['hours_per_week_from'])) {
       $ret->where('hours_per_week', '>=', $data['hours_per_week_from']);
     }
 
-    if (isset($request->hours_per_week_to)) {
+    if (!empty($data['hours_per_week_to'])) {
       $ret->where('hours_per_week', '<=', $data['hours_per_week_to']);
     }
-
+    
     if (isset($request->state)) {
-      $ret->where('job_state', '=', $data['state']);
+      $state = State::where('name' ,$data['state'])->get();
+
+      $ret->whereIn('job_state', [$state[0]->name, $state[0]->iso2]);
     }
 
     if (isset($request->city)) {
       $ret->where('job_city', '=', $data['city']);
     }
 
+    $skip = $request->input('skip');
 
-    $data['jobs'] = $ret->get();
+    if(!empty($skip) && $skip > 0){
+
+      $data['jobs'] = $ret->orderBy('id','desc')->skip($skip)->take(10)->get();
+
+      foreach ($data['jobs'] as $key => $value) {
+
+        $userapplied = Offer::where('job_id', $value->id)->count();
+        $data['jobs'][$key]['offer_count'] = $userapplied;
+      }
+
+      foreach ($data['jobs'] as $key => $value) {
+
+        $organization_infos = User::select('organization_name','first_name','last_name','image', 'role')->where('id', $value->organization_id)->get();
+        $recruiter_infos = User::select('first_name','last_name','image', 'role')->where('id', $value->recruiter_id)->get();
+
+        $data['jobs'][$key]['organization_infos'] = $organization_infos;
+        $data['jobs'][$key]['recruiter_infos'] = $recruiter_infos;
+      }
+
+      $jobSaved = new JobSaved;
+      $data['jobSaved'] = $jobSaved;
+      $data['skip']=$skip;
+
+      unset($data['specialities']);
+      unset($data['professions']);
+      unset($data['us_states']);
+      unset($data['terms_key']);
+
+      return response()->json(['message' =>  $data]);
+
+    }else{
+
+      $data['jobs'] = $ret->orderBy('id','desc')->skip(0)->take(10)->get();
+
+      foreach ($data['jobs'] as $key => $value) {
+
+        $userapplied = Offer::where('job_id', $value->id)->count();
+        $data['jobs'][$key]['offer_count'] = $userapplied;
+      }
+      
+      foreach ($data['jobs'] as $key => $value) {
+
+        $organization_infos = User::select('organization_name','first_name','last_name','image','role')->where('id', $value->organization_id)->get();
+        $recruiter_infos = User::select('first_name','last_name','image','role')->where('id', $value->recruiter_id)->get();
+
+        $data['jobs'][$key]['organization_infos'] = $organization_infos;
+        $data['jobs'][$key]['recruiter_infos'] = $recruiter_infos;
+      }
+    }
+
+    $jobSaved = new JobSaved;
+
+    $data['jobSaved'] = $jobSaved;
+
     return view('site.explore_jobs', $data);
   }
 
@@ -585,5 +641,32 @@ class SiteController extends Controller
     } else {
       return response()->json('Forbidden', 403);
     }
+  }
+  
+  
+  public function load_ad(Request $request)
+  {
+      // Check if 'type' is present in the request
+      if ($request->has('type')) {
+          $type = $request->type;
+          $nbr = $request->nbr ?? 1;
+
+          if ($type == 'side') {
+              $adHtml = view('worker::components.side_ads', compact('nbr'))->render();
+          } elseif ($type == 'horizontal') {
+              $adHtml = view('worker::components.horizontal_ads', compact('nbr'))->render();
+          } elseif ($type == 'modal') {
+              $adHtml = view('worker::components.ads_modal', compact('nbr'))->render();
+          } else {
+              // If the 'type' is invalid, return an error message
+              return response()->json(['error' => 'Invalid ad type'], 400);
+          }
+
+          // Return the HTML response
+          return response()->json(['html' => $adHtml]);
+      }
+
+      
+      return response()->json(['error' => 'Ad type is required'], 400);
   }
 }

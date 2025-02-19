@@ -25,19 +25,19 @@ $faker = app('Faker\Generator');
             <tbody>
                 @foreach($columns as $item)
                 <tr>
-                    <th scope="row">{{$item["displayName"]}}</th>
+                    <th scope="row">{{$item->displayName}}</th>
                     <td>
                         <div class="form-check">
 
-                            <input id="apply_{{$item["workerFieldIdMatch"]}}" onclick="triggerSaveKeysChanges()" class="form-check-input"
-                            @if($item['applyDisabled']) disabled @endif   type="checkbox" name="requiredToApply[]" value="{{$item["workerFieldIdMatch"]}}">
+                            <input id="apply_{{$item->workerFieldIdMatch}}" onclick="triggerSaveKeysChanges()" class="form-check-input"
+                            @if($item->applyDisabled) disabled @endif   type="checkbox" name="requiredToApply[]" value="{{$item->workerFieldIdMatch}}">
 
                         </div>
                     </td>
                     <td>
                         <div class="form-check">
-                            <input id="submit_{{$item["fieldID"]}}" onclick="triggerSaveKeysChanges()" class="form-check-input"
-                            @if ($item['publishDisabled']) disabled @endif  type="checkbox" name="requiredToSubmit[]" value="{{$item["fieldID"]}}">
+                            <input id="submit_{{$item->fieldID}}" onclick="triggerSaveKeysChanges()" class="form-check-input"
+                            @if ($item->publishDisabled) disabled @endif  type="checkbox" name="requiredToSubmit[]" value="{{$item->fieldID}}">
                         </div>
                     </td>
                 </tr>
@@ -64,7 +64,6 @@ $faker = app('Faker\Generator');
             requiredToApply: requiredToApply,
             requiredToSubmit: requiredToSubmit
         };
-
         $.ajax({
                     url: '/organization/add-preferences',
                     type: 'POST',

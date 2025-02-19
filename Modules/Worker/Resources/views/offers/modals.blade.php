@@ -80,7 +80,7 @@
                                 @if (isset($allKeywords['Certification']))
                                     @foreach ($allKeywords['Certification'] as $value)
                                         <li class="item" value="{{ $value->title }}">
-                                            <span class="checkbox">
+                                            <span class="checkbox" onclick="triggerFileInput({{ $loop->index }})">
                                                 <i class="fa-solid fa-check check-icon"></i>
                                             </span>
                                             <span class="item-text">{{ $value->title }}</span>
@@ -131,7 +131,7 @@
                                 @if (isset($allKeywords['Vaccinations']))
                                     @foreach ($allKeywords['Vaccinations'] as $value)
                                         <li class="item" value="{{ $value->title }}">
-                                            <span class="checkbox">
+                                            <span class="checkbox" onclick="triggerFileInput({{ $loop->index }})">
                                                 <i class="fa-solid fa-check check-icon"></i>
                                             </span>
                                             <span class="item-text">{{ $value->title }}</span>
@@ -266,7 +266,7 @@
                                 @if (isset($allKeywords['Speciality']))
                                     @foreach ($allKeywords['Speciality'] as $value)
                                         <li class="item" value="{{ $value->title }}">
-                                            <span class="checkbox">
+                                            <span class="checkbox" onclick="triggerFileInput({{ $loop->index }})">
                                                 <i class="fa-solid fa-check check-icon"></i>
                                             </span>
                                             <span class="item-text">{{ $value->title }}</span>
@@ -941,3 +941,48 @@
     </div>
 </div>
 
+{{-- multi number values --}}
+
+<div class="modal fade ss-jb-dtl-pops-mn-dv" id="multi_input_number_modal" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="ss-pop-cls-vbtn">
+                <button type="button" class="btn-close" data-target="#multi_input_number_modal"
+                    onclick="close_modal(this)" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="ss-job-dtl-pop-form">
+                    <form method="post" action="{{ route('worker-update-information') }}" id="multi_input_number_modal_form"
+                        class="modal-form">
+                        <div class="ss-job-dtl-pop-frm-sml-dv">
+                            <div></div>
+                        </div>
+                        <h4></h4>
+                        <div class="ss-form-group">
+                            <input value="" type="text" name="" placeholder="Enter numbers separated by commas">
+                            <span class="help-block"></span>
+                        </div>
+                        <div class="pt-3">
+                            <span class="helper help-block-multi_input_number_modal"></span>
+                        </div>
+                        <button class="ss-job-dtl-pop-sv-btn"
+                            onclick="saveData(event,'multi_input_number')"
+                            >Save</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{{-- end multi number values --}}
+
+
+
+<script>
+    function triggerFileInput(index) {
+        document.getElementById('upload-' + index).click();
+    }
+</script>

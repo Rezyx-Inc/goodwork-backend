@@ -86,10 +86,51 @@
         <span class="help-block-zip_code"></span>
 
         {{-- Email --}}
-        <div class="ss-form-group">
-            <label>Email</label>
-            <input id="email" type="text" name="email" placeholder="Please enter your Email"
-                value="{{ isset($user->email) ? $user->email : '' }}">
+        <div class="row w-100 d-flex align-items-center ">
+            <div class="col-11">
+                <div class="ss-form-group">
+                    <label>New Email</label>
+                    <input type="text" name="newEmail" id="newEmail"
+                        placeholder="Please enter your new Email">
+                </div>
+            </div>
+            <div class="col-1 h-100 d-flex align-items-end justify-content-center">
+                <div class="ss-form-group">
+                    <button type="button" class="col-11 w-100 ss-prsnl-save-btn rounded-5"
+                    id="sendOTPforVerifyEmail">
+                    Send OTP
+                </button>
+                </div>
+            </div>
+        </div>
+        <span class="help-block-email"></span>
+        {{-- OTP for new email --}}
+        <div id="otpDiv" style="display:none;">
+            <center>
+                <div class="ss-form-group col-7 d-flex align-items-center justify-content-center" >
+                    <label class="me-3">Code:</label>
+                    <ul class="ss-otp-v-ul">
+                        <li><input class="otp-input" type="text" name="otp1"
+                                oninput="digitValidate(this)" onkeyup="tabChange(1)"
+                                maxlength="1"></li>
+                        <li><input class="otp-input" type="text" name="otp2"
+                                oninput="digitValidate(this)" onkeyup="tabChange(2)"
+                                maxlength="1"></li>
+                        <li><input class="otp-input" type="text" name="otp3"
+                                oninput="digitValidate(this)" onkeyup="tabChange(3)"
+                                maxlength="1"></li>
+                        <li><input class="otp-input" type="text" name="otp4"
+                                oninput="digitValidate(this)" onkeyup="tabChange(4)"
+                                maxlength="1"></li>
+                    </ul>
+                </div>
+            </center>
+        </div>
+        <span class="help-block-otp"></span>
+        {{-- confirm new email button --}}
+        <div class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+            <button type="button" class="col-12 ss-prsnl-save-btn"
+                id="SaveAccountInformation" style="display:none;">Confirm</button>
         </div>
 
         {{-- Phone Number --}}
@@ -109,3 +150,177 @@
 
     </div>
 </div>
+
+@section('js')
+
+    <script type="text/javascript">
+
+        const email = document.querySelector('input[name="newEmail"]');
+        var inputs = [];
+
+        // account setting validation here
+
+        function validateAccountSettingInformation() {
+            //$('.help-block-new_mobile').text('');
+            $('.help-block-validation').text('');
+            $('.help-block-email').text('');
+            let isValid = true;
+            // Create an array of all inputs
+            inputs = [email];
+
+
+
+            // Check if all inputs are empty
+            const allEmpty = inputs.every(input => input.value.trim() === '');
+
+            // If all inputs are empty, show an error
+            if (allEmpty) {
+                $('.help-block-validation').text('Please fill at least one field');
+                $('.help-block-validation').addClass('text-danger');
+                isValid = false;
+            }
+
+            // Email validation
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email.value)) {
+                $('.help-block-email').text('Please enter a valid email');
+                $('.help-block-email').addClass('text-danger');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+        
+
+        // send otp button
+        const sendOTPButton = document.getElementById('sendOTPforVerifyEmail');
+        sendOTPButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (!validateAccountSettingInformation()) {
+                return;
+            }
+
+            // undide the otp input fields
+            let OtpDiv = document.getElementById('otpDiv');
+            
+
+            let email = document.getElementById('newEmail').value;
+
+            $('.help-block-email').text('');
+
+            let data = {
+                email: email
+            };
+            $.ajax({
+                url: '/worker/send-otp-worker',
+                type: 'POST',
+                data: data,
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> ' + resp.message,
+                            time: 5
+                        });
+                        OtpDiv.style.display = OtpDiv.style.display === "none" ? "block" : "block";
+                    } else {
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-check"></i> ' + resp.message,
+                            time: 5
+                        });
+                    }
+                },
+                error: function(resp) {
+                    // Check if the server provided a custom error message
+                    if (resp.responseJSON && resp.responseJSON.message) {
+                        $('.help-block-email').text(resp.responseJSON.message);
+                        $('.help-block-email').addClass('text-danger');
+                    } else {
+                        // Generic error message for unexpected errors
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-check"></i> Please try again later!',
+                            time: 5
+                        });
+                    }
+                }
+            });
+
+        })
+
+        function ValidateOTP() {
+            let inputs = document.querySelectorAll('.otp-input');
+            let otp = Array.from(inputs).map(input => input.value).join('');
+            let isValid = true;
+            if (otp === '') {
+                $('.help-block-otp').text('Please enter the OTP');
+                $('.help-block-otp').addClass('text-danger');
+                isValid = false;
+            } else if (otp.length < inputs.length) {
+                $('.help-block-otp').text('Please complete the OTP');
+                $('.help-block-otp').addClass('text-danger');
+                isValid = false;
+            } else {
+                $('.help-block-otp').text('');
+                $('.help-block-otp').removeClass('text-danger');
+            }
+
+            return isValid;
+        }
+        // Verify the OTP and update the email
+        const saveButtonForVerifyEmail = document.getElementById('SaveAccountInformation');
+        saveButtonForVerifyEmail.addEventListener("click", function(event) {
+            event.preventDefault();
+
+            if (!ValidateOTP()) {
+                return;
+            }
+
+            let inputs = document.querySelectorAll('.otp-input');
+            let otp = Array.from(inputs).map(input => input.value).join('');
+            let email = document.getElementById('newEmail').value;
+
+            let data = {
+                otp: otp,
+                email: email
+            };
+
+            $.ajax({
+                url: '/worker/update-email-worker',
+                type: 'POST',
+                data: data,
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> ' + resp.message,
+                            time: 5
+                        });
+                        setTimeout(() => {
+                            location.reload();
+                        }, 3000);
+                    } else {
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-times"></i> ' + resp.message,
+                            time: 5
+                        });
+                    }
+                },
+                error: function() {
+                    notie.alert({
+                        type: 'error',
+                        text: '<i class="fa fa-times"></i> Please try again later!',
+                        time: 5
+                    });
+                }
+            });
+        });
+
+
+       
+    </script>
+@stop

@@ -97,6 +97,10 @@ class RecruiterController extends Controller
     {
         $idOrganization = $request->query('organizationId');
         $idWorker = $request->query('workerId');
+        $nurse = Nurse::where('id', $idWorker)->first();
+        if(isset($nurse)){
+            $idWorker = $nurse->user_id;
+        }
         $page = $request->query('page', 1);
 
         $idRecruiter = Auth::guard('recruiter')->user()->id;
@@ -321,11 +325,12 @@ class RecruiterController extends Controller
 
                 // Call the get_private_messages function
                 $request->query->set('workerId', $nurse_user_id);
-                $request->query->set('organizationId', $recruiter_id); // Replace this with the actual organizationId
+                $request->query->set('organizationId', $organization_id); // Replace this with the actual organizationId
+
                 return $this->get_direct_private_messages($request);
             }else{
                 $request->query->set('workerId', $nurse_user_id);
-                $request->query->set('organizationId', $recruiter_id);
+                $request->query->set('organizationId', $organization_id);
                 return $this->get_direct_private_messages($request);
             }
         }
@@ -511,12 +516,12 @@ class RecruiterController extends Controller
             $created_by = Auth::guard('recruiter')->user()->id;
             // Validate the form data
 
-            $active = $request->input('active');
+            $is_open = $request->input('is_open');
 
             // $active = $activeRequest['active'];
             $validatedData = [];
 
-            if ($active == 'false') {
+            if ($is_open == 'false') {
 
                 $validatedData = $request->validate([
                     'job_id' => 'nullable|string',
@@ -673,7 +678,7 @@ class RecruiterController extends Controller
                 
                     $job->recruiter_id = $created_by;
                     $job->created_by = $created_by;
-                    $job->active = false;
+                    $job->active = true;
                     $job->is_open = false;
 
                     // example
@@ -703,26 +708,32 @@ class RecruiterController extends Controller
 
                     // check if the recruiter is associated with an organization
                     $checkResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/checkRecruiter', ['id' => $created_by]);
-                    $checkResponse = $checkResponse->json();
-                    if (isset($checkResponse[0])) {
-                        $orgId = $checkResponse[0]['orgId'];
+                    $checkResponse = json_decode($checkResponse->body());
+                    if ($checkResponse->success) {
+                        
+                        if (isset($checkResponse->data)) {
+                            $orgId = $checkResponse->data->org[0]->orgId;
+                        } else {
+                            $orgId = null;
+                        }
+
+                        // Check if the is_resume bool is set
+                        if (!isset($request->is_resume)){
+                            $job->is_resume = false;
+                        }
+
+                        $job->organization_id = $orgId;
+                        $job->save();
+
                     } else {
-                        $orgId = null;
+                        return response()->json(['success' => false, 'message' => $checkResponse->message]);
                     }
-
-                    // Check if the is_resume bool is set
-                    if (!isset($request->is_resume)){
-                        $job->is_resume = false;
-                    }
-
-                    $job->organization_id = $orgId;
-                    $job->save();
 
                 } catch (Exception $e) {
                     return response()->json(['success' => false, 'message' => $e->getMessage()]);
                 }
 
-            } elseif ($active == "true") {
+            } elseif ($is_open == "true") {
                 //return request()->all();
 
                 $validatedData = $request->validate([
@@ -894,20 +905,28 @@ class RecruiterController extends Controller
                 // Save the job data to the database
               
                 $checkResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/checkRecruiter', ['id' => $created_by]);
-                $checkResponse = $checkResponse->json();
-                if (isset($checkResponse[0])) {
-                    $orgId = $checkResponse[0]['orgId'];
+                $checkResponse = json_decode($checkResponse->body());
+
+                if ($checkResponse->success) {
+                        
+                    if (isset($checkResponse->data)) {
+                        $orgId = $checkResponse->data->org[0]->orgId;
+                    } else {
+                        $orgId = null;
+                    }
+    
+                    // Check if the is_resume bool is set
+                    if (!isset($request->is_resume)){
+                        $job->is_resume = false;
+                    }
+    
+                    $job->organization_id = $orgId;
+                    $job->save();
+
                 } else {
-                    $orgId = null;
+                    return response()->json(['success' => false, 'message' => $checkResponse->message]);
                 }
-
-                // Check if the is_resume bool is set
-                if (!isset($request->is_resume)){
-                    $job->is_resume = false;
-                }
-
-                $job->organization_id = $orgId;
-                $job->save();
+                
 
             } else {
 
@@ -1011,7 +1030,6 @@ class RecruiterController extends Controller
                     'benefits' => 'nullable|string',
                     'feels_like_per_hour' => 'nullable|string',
                     'as_soon_as' => 'nullable|integer',
-                    'active' => '0',
                     'professional_state_licensure' => 'nullable|string',
                     'total_goodwork_amount' => 'nullable|string',
                     'total_contract_amount' => 'nullable|string',
@@ -1044,7 +1062,7 @@ class RecruiterController extends Controller
             
             $job->recruiter_id = Auth::guard('recruiter')->user()->id;
             $job->created_by = Auth::guard('recruiter')->user()->id;
-            $job->active = false;
+            $job->active = true;
             $job->is_open = false;
 
             // Check if the is_resume bool is set
@@ -1124,7 +1142,7 @@ class RecruiterController extends Controller
                 'is_resume' => 'nullable|string',
 
                 'preferred_shift_duration' => 'nullable|string',
-                'hours_per_week' => 'nullable|numeric',
+                'hours_per_week' => 'nullable|integer',
                 'guaranteed_hours' => 'nullable|string',
                 'hours_shift' => 'nullable|integer',
                 'weeks_shift' => 'nullable|string',

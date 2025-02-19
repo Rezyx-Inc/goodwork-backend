@@ -580,15 +580,12 @@ function apply_on_jobs(obj,worked_at_facility_before,reload_page = true)
         success: function (resp) {
             ajaxindicatorstop();
             if (resp.success) {
-                notie.alert({
-                    type: 'success',
-                    text: '<i class="fa fa-check"></i> ' + resp.msg,
-                    time: 3
-                });
 
                 // On success: Remove both buttons
                 applyButton.remove();
                 applyButtonLoading.remove();
+                // in a new tab call  route thanks for applying
+                window.open(full_path + 'worker/thanks-for-applying', '_blank');
                 return;
             }else{
                 notie.alert({
@@ -656,13 +653,6 @@ function update_nurse_information(data_to_send, notify = false)
         data: data_to_send,
         success: function (resp) {
             ajaxindicatorstop();
-            if (notify && resp.success) {
-                notie.alert({
-                    type: 'success',
-                    text: '<i class="fa fa-check"></i> ' + resp.msg,
-                    time: 3
-                });
-            }
         },
         error: function (resp) {
             ajaxindicatorstop();

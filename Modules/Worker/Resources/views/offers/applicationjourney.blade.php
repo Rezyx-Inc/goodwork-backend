@@ -1117,6 +1117,7 @@
 
         function close_modal(obj) {
             let target = $(obj).data('target');
+            $(target).find('form').trigger('reset');
             $(target).modal('hide');
         }
 

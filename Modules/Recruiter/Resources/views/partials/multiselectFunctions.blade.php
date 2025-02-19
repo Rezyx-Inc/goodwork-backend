@@ -36,7 +36,7 @@ var diff = {};
 
 
 
-function addcertifications(type) {
+    function addcertifications(type) {
         var id;
         var idtitle;
         if (type == 'from_add') {
@@ -801,7 +801,7 @@ function addcertifications(type) {
                 'hours_per_week': { id: 'hours_per_week', type: 'number' },
                 'state': { id: 'state', type: 'select' },
                 'city': { id: 'city', type: 'select' },
-                'is_resume': { id: 'is_resume', type: 'checkbox'},
+                
 
                 'guaranteed_hours': { id: 'guaranteed_hours', type: 'number' },
                 'hours_shift': { id: 'hours_shift', type: 'number' },
@@ -874,7 +874,7 @@ function addcertifications(type) {
             if (professional_licensure_all_values) {
                 professional_licensureStr = Object.values(professional_licensure).join(', ');
                 professional_licensure_all_values.value = professional_licensureStr;
-                data['professional_licensure'] = professional_licensureStr;
+                data['job_location'] = professional_licensureStr;
             }
 
             let Emr_all_values = document.getElementById("EmrAllValues");
@@ -913,7 +913,7 @@ function addcertifications(type) {
             if (shifttimeofday_all_values) {
                 shifttimeofdayStr = Object.values(shifttimeofday).join(', ');
                 shifttimeofday_all_values.value = shifttimeofdayStr;
-                data['shifttimeofday'] = shifttimeofdayStr;
+                data['preferred_shift_duration'] = shifttimeofdayStr;
             }
         } catch (error) {
             // console.log(error);
@@ -973,7 +973,7 @@ function addcertifications(type) {
             if (result.hasOwnProperty(key)) {
                 const element = result[key];
                 
-                if(data[key] != element && data[key] != null){
+                if(data[key] != element && data[key] != undefined){
                     diff[key] = element;
                     // console.log('key',key);
                     // console.log('element',element);
@@ -1064,7 +1064,7 @@ function addcertifications(type) {
             getMultiSelectValues();
             console.log(data);
             let id = document.getElementById('offer_id').value;
-            console.log(data.is_resume);
+            
 
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             if (csrfToken) {
@@ -1100,7 +1100,7 @@ function addcertifications(type) {
                         applicationStatus('Offered', id);
                         
                         setTimeout(() => {
-                            //location.reload();
+                            location.reload();
                         }, 2000);
                     },
                     error: function(error) {
@@ -1136,7 +1136,7 @@ function addcertifications(type) {
                 'hours_per_week': { id: 'hours_per_week', type: 'number' },
                 'state': { id: 'state', type: 'select' },
                 'city': { id: 'city', type: 'select' },
-                'is_resume': { id: 'is_resume', type: 'checkbox'},
+                
 
                 'guaranteed_hours': { id: 'guaranteed_hours', type: 'number' },
                 'hours_shift': { id: 'hours_shift', type: 'number' },

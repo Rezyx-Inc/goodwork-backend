@@ -39,7 +39,7 @@
                     <input type="checkbox" id="{{ $id }}-{{ $key }}"
                            name="{{ $name }}-check" value="{{ $title }}"
                            {{ isset($selected) && !empty($selected) && in_array($title, explode(', ', $selected)) ? 'checked' : '' }} />
-                    <label for="{{ $id }}-{{ $key }}" style="display: inline; width: 100%;">{{ $title }}</label>
+                    <label for="{{ $id }}-{{ $key }}" style="display: inline; width: 100%;"> {{ $title }}</label>
                 </li>
             @endforeach
         @endif
@@ -57,6 +57,14 @@
         const hiddenInput = container.querySelector(`#{{ $uniqueId }}-hidden`);
         const dropdownBtn = container.querySelector('.select-btn');
         const dropdownList = container.querySelector('.list-items');
+
+        dropdownBtn.addEventListener('click', () => {
+            // if dropdownBtn does not have class open, add it
+
+            if (!dropdownBtn.classList.contains('open')) {
+                dropdownBtn.classList.add('open');
+            } 
+        });
 
         // Function to update hidden input value and placeholder
         function updateHiddenInput() {

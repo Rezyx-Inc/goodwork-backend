@@ -5,9 +5,9 @@
 /public/mix-manifest.json
 /public/storage
 /public/landing/video/
-/scripts/src/gSheet/jsons/
+scripts/src/gSheet/jsons/
 public/uploads/*
-/storage/*.key
+storage/*.key
 /vendor
 /files/*
 .env
@@ -22,3 +22,4 @@ package-lock.json
 .rnd
 stripe.exe
 composer.lock
+/storage/Goodwork/*

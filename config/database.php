@@ -95,6 +95,8 @@ return [
             'driver' => 'mongodb',
             'dsn' => env('MONGODB_URI'),
             'database' => env('YOUR_DATABASE_NAME'),
+            'host' => env('MONGODB_HOST', '127.0.0.1'),
+            'port' => env('MONGODB_PORT',27017),
         ],
         // notification db
         'mongodb_notification' => [

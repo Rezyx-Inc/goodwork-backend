@@ -2,7 +2,7 @@
     <script type="text/javascript" src="{{ URL::asset('frontend/vendor/mask/jquery.mask.min.js') }}"></script>
 
     <script>
-        let all_files = [];
+        var all_files = [];
         let userMatch = @json($matches);
         let workerMatch = [];
         for (let key in userMatch) {
@@ -407,7 +407,10 @@
             if (description) {
                 var descriptionText = description.innerText;
                 if (descriptionText.length > 100) {
-                    description.innerText = '{!! $model->description !!}';
+                    @php
+                        $desc = preg_replace('/\s+/', '', $model->description);
+                    @endphp
+                    description.innerText = '{!! $desc !!}';
                     var readMore = document.getElementById('read-more');
                     var readLess = document.getElementById('read-less');
 
@@ -450,6 +453,7 @@
         }
     </script>
     <script>
+
         var dataToSend = {};
         var EmrStr = '';
         var requiredFieldsToApply = @json($requiredFieldsToApply);
@@ -532,7 +536,7 @@
                         match = true;
                     }
                     break;
-                case 'worker_facility_city':
+                case 'city':
                     if (job['job_city'] == InsertedValue) {
                         match = true;
                     }
@@ -747,10 +751,17 @@
                     match = undefined;
             }
 
+            if (workerMatch[workerField] && workerMatch[workerField].match != undefined) {
+                workerMatch[workerField].match = match;
+            }
+
+            console.log("====> matchWithWorker", match);
+
             return match;
         }
 
         async function collect_data(event, type) {
+
             event.preventDefault();
             // targiting the input form and collectiong data
 
@@ -811,11 +822,12 @@
                     areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
                     areaDiv.classList.add('ss-s-jb-apl-bg-pink');
                 }
-            } else if (dataToSend[inputName] == '1') {
-                let areaDiv = document.getElementById(inputName);
-                areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
-                areaDiv.classList.add('ss-s-jb-apl-bg-blue');
             }
+            //  else if (dataToSend[inputName] == '1') {
+            //     let areaDiv = document.getElementById(inputName);
+            //     areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
+            //     areaDiv.classList.add('ss-s-jb-apl-bg-blue');
+            // }
             if (type == 'file') {
                 try {
                     let resp = await sendMultipleFiles(inputName);
@@ -848,6 +860,7 @@
             } else {
                 element = $('#' + inputName).find('p[data-name="' + inputName + '"]');
             }
+
             switch (type) {
                 case 'input':
                 case 'input_number':
@@ -881,7 +894,7 @@
                     // if (inputName == 'references') {
                     //     display_uploaded_reference_files(element, 2);
                     // } else if (inputName == 'certification') {
-                    display_uploaded_certification_files(element, inputName);
+                    display_uploaded_certification_files(element, inputName, all_files);
                     // }
 
                     break;
@@ -927,14 +940,13 @@
         }
 
         // display uploaded certification files
-        function display_uploaded_certification_files(element, type) {
+        function display_uploaded_certification_files(element, type, all_files) {
             // filter worker_files by type
             worker_files = all_files.filter(file => file.type == type);
 
             let text = element.data('title');
-            // console.log("*****************************element", element, "type", type, " =>text : ", text);
             if (worker_files.length > 0) {
-                text = worker_files.length + ' Files Uploaded';
+                text = worker_files.length + ' File(s) Uploaded';
             }
             element.html(text);
         }
@@ -952,25 +964,38 @@
             let areaDiv = document.getElementById(inputName);
             let check = false;
             if (inputName == 'certification') {
+                // if job_certification_displayname does not have any element then return undefined to avoid colorizing the area
+                if ( job_certification_displayname?.length == null || job_certification_displayname?.length == 0 || ( job_certification_displayname?.length == 1 && job_certification_displayname[0] == '')) {
+                    return undefined;
+                }
                 const is_job_certif_exist_in_worker_files = job_certification_displayname.every(element =>
-                    worker_files_displayname_by_type.includes(element));
+                    worker_files_displayname_by_type?.includes(element));
                 if (is_job_certif_exist_in_worker_files) {
                     check = true;
                 }
             } else if (inputName == 'vaccination') {
+                if ( job_vaccination_displayname?.length == null || job_vaccination_displayname?.length == 0 || ( job_vaccination_displayname?.length == 1 && job_vaccination_displayname[0] == '')) {
+                    return undefined;
+                }
                 const is_job_vaccin_exist_in_worker_files = job_vaccination_displayname.every(element =>
-                    worker_files_displayname_by_type.includes(element));
+                    worker_files_displayname_by_type?.includes(element));
 
                 if (is_job_vaccin_exist_in_worker_files) {
                     check = true;
                 }
             } else if (inputName == 'references') {
-                if (number_of_references <= worker_files_displayname_by_type.length) {
+                if(number_of_references == 0){
+                    return undefined;
+                }
+                if (number_of_references <= worker_files_displayname_by_type?.length) {
                     check = true;
                 }
             } else if (inputName == 'skills') {
+                if (job_skills_displayname?.length == null || job_skills_displayname?.length == 0 || ( job_skills_displayname?.length == 1 && job_skills_displayname[0] == '')) {
+                    return undefined;
+                }
                 const is_job_skill_exist_in_worker_files = job_skills_displayname.every(element =>
-                    worker_files_displayname_by_type.includes(element));
+                    worker_files_displayname_by_type?.includes(element));
                 // console.log('job skills job name :', job_skills_displayname)
                 // console.log('worker_files_displayname_by_type', worker_files_displayname_by_type)
                 // console.log('is_job_skill_exist_in_worker_files', is_job_skill_exist_in_worker_files);
@@ -978,7 +1003,7 @@
                     check = true;
                 }
             } else if (inputName == 'driving_license') {
-                if (worker_files_displayname_by_type.length > 0) {
+                if (worker_files_displayname_by_type?.length > 0) {
                     check = true;
                 }
             
@@ -986,18 +1011,22 @@
             
                 let is_resume = @json($model["is_resume"]);
 
-                if (worker_files_displayname_by_type.length > 0 && is_resume) {
+                if (!is_resume) {
+                    return undefined;
+                }
+
+                if (worker_files_displayname_by_type?.length > 0 && is_resume) {
 
                     check = true;
                 
-                }else if (worker_files_displayname_by_type.length > 0 && !is_resume){
+                }else if (worker_files_displayname_by_type?.length > 0 && !is_resume){
                     check = true;
                 }else{
                     check = false;
                 }
 
             } else if (inputName == 'diploma') {
-                if (worker_files_displayname_by_type.length > 0) {
+                if (worker_files_displayname_by_type?.length > 0) {
                     check = true;
                 }
             }
@@ -1022,8 +1051,9 @@
         }
 
         async function get_all_files_displayName_by_type(type) {
-            let files = worker_files.filter(file => file.type == type);
-            let displayNames = files.map(file => file.displayName);
+
+            let files = worker_files?.filter(file => file.type == type);
+            let displayNames = files?.map(file => file.displayName);
             worker_files_displayname_by_type = displayNames;
             return displayNames;
         }
@@ -1031,7 +1061,7 @@
 
         async function check_required_files_before_sent(obj) {
 
-            update_nurse_information(dataToSend)
+            update_nurse_information(dataToSend, true);
 
             let access = true;
             for (const requiredField of requiredFieldsToApply) {
@@ -1081,11 +1111,11 @@
                     }
                 } else {
                     let fieldValue = dataToSend[requiredField];
-                    if (fieldValue == null && workerMatch[requiredField].match == false) {
+                    if (!fieldValue || workerMatch[requiredField].match == false) {
 
                         notie.alert({
                             type: 'error',
-                            text: '<i class="fa fa-exclamation-triangle"></i> Please fill the required fields',
+                            text: '<i class="fa fa-exclamation-triangle"></i> Please fill the required fields' ,
                             time: 3
                         });
                         access = false;
@@ -1094,6 +1124,7 @@
 
                 }
             };
+            
             if (access == false) {
                 return false;
             }
@@ -1122,26 +1153,6 @@
             } catch (error) {
                 console.error('Failed to get files:', error);
             }
-
-
-            // check for profession match with job
-            // if (matchWithWorker('profession', dataToSend['profession']) != true) {
-            //     notie.alert({
-            //         type: 'error',
-            //         text: '<i class="fa fa-exclamation-triangle"></i> Profession not matched with job requirements',
-            //         time: 3
-            //     });
-            //     return false;
-            // }
-
-            // if (diploma.length == 0 || driving_license.length == 0 || worked_bfore == null) {
-            //     notie.alert({
-            //         type: 'error',
-            //         text: '<i class="fa fa-exclamation-triangle"></i> Please upload all required files',
-            //         time: 3
-            //     });
-            //     return false;
-            // }
 
             apply_on_jobs(obj, worked_bfore);
 
@@ -1249,11 +1260,16 @@
             let matchCount = 0;
             var job = @json($model);
 
+            let field = workerField;
             if (job_attr_mapping[workerField]) {
-                workerField = job_attr_mapping[workerField];
+                field = job_attr_mapping[workerField];
             }
 
-            let job_vals = job[workerField]?.split(', ');
+            if ( !job[field] || job[field] == null || job[field] == '' ) {
+                return undefined;
+            }
+
+            let job_vals = job[field]?.split(', ');
             let nurse_vals = InsertedValue ? InsertedValue.split(', ') : [];
 
             
@@ -1264,6 +1280,10 @@
             if (!!matches && matches.length > 0) {
                 match = true;
                 matchCount = matches.length;
+            }
+
+            if (workerMatch[workerField] && workerMatch[workerField].match != undefined) {
+                workerMatch[workerField].match = match;
             }
             
             return match;
@@ -1291,7 +1311,8 @@
             }
 
             // check the match for item color 
-            if (multi_select_match_with_worker(id, value)) {
+            if (multi_select_match_with_worker(id, value) != undefined ) {
+                if (multi_select_match_with_worker(id, value)) {
                     let areaDiv = document.getElementById(id);
                     if (areaDiv) {
                         areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
@@ -1304,6 +1325,7 @@
                         areaDiv.classList.add('ss-s-jb-apl-bg-pink');
                     }
                 }
+            }
 
         }
 
@@ -1312,15 +1334,85 @@
             return text.length > limit ? text.substring(0, limit) + '...' : text;
         }
 
-        // update nurse information change every 50 seconds
-        setInterval(() => {
-            update_nurse_information(dataToSend);
-        }, 50000);
 
-        // Save on page exit
+        function askRecruiter(e, type, workerid, recruiter_id , organization_id, name) {
+
+            let url = "{{ url('worker/messages') }}";
+            window.open(
+                url + '?worker_id=' + workerid + '&organization_id=' + organization_id + '&recruiter_id=' + recruiter_id + '&name=' + name ,
+                '_blank' 
+            );
+        }
+
+        // auto-save script
+        
+        const baseDuration = 30;
+        let countdown = baseDuration;
+        let intervalId = null;
+        let isTabActive = true;
+
+        function startSavingWithCountdown() {
+            console.log("Auto-saving enabled");
+            updateCountdown();
+        }
+
+        function updateCountdown() {
+            if (intervalId) clearInterval(intervalId);
+
+            const autoSaveMessage = document.getElementById('autoSaveMessage');
+            const progressBar = document.getElementById('progressBar');
+
+            intervalId = setInterval(() => {
+                if (!isTabActive) return;
+
+                countdown--;
+                progressBar.style.width = (countdown / baseDuration) * 100 + "%";
+
+                if (countdown <= 0) {
+                    clearInterval(intervalId);
+                    intervalId = null; 
+                    autoSaveMessage.innerHTML = "Saving...";
+                    progressBar.style.width = "0%";
+                    update_nurse_information(dataToSend);
+
+                    // Restart the countdown after saving
+                    setTimeout(() => {
+                        countdown = baseDuration;
+                        autoSaveMessage.innerHTML = ``;
+                        // Reset progress bar
+                        progressBar.style.width = "100%"; 
+                        updateCountdown();
+                    }, 2000);
+                }
+            }, 1000);
+        }
+
+        // Pause & resume countdown based on tab visibility
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                isTabActive = true;
+                if (!intervalId) updateCountdown();
+            } else {
+                isTabActive = false;
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+        });
+
+        // Save before the user exits the page
         window.addEventListener('beforeunload', function() {
-            // update nurse information change before exit
             update_nurse_information(dataToSend);
         });
+
+        // Start saving when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            startSavingWithCountdown();
+        });
+
+        // Manual Save Function (Immediate Save & Resets Timer)
+        function manualSave() {
+            // Forces countdown to reach zero
+            countdown = 1;
+        }
     </script>
 @stop

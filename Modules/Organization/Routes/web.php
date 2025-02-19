@@ -30,6 +30,8 @@ Route::prefix('organization')->group(function () {
         Route::post('organization-send-job-offer', ['uses' => 'OrganizationApplicationController@sendJobOffer', 'as' => 'organization-send-job-offer']);
 
         Route::get('organization-opportunities-manager', ['uses' => 'OrganizationOpportunitiesController@index', 'as' => 'organization-opportunities-manager']);
+        Route::post('load-more-jobs', ['uses' => 'OrganizationOpportunitiesController@load_more_jobs', 'as' => 'organization-opportunities-manager-load-more-jobs']);
+
         Route::get('organization-create-opportunity', ['uses' => 'OrganizationOpportunitiesController@create', 'as' => 'organization-create-opportunity']);
         Route::post('organization-create-opportunity/{check_type}', ['uses' => 'OrganizationOpportunitiesController@hide_job', 'as' => 'organization-create-opportunity-store']);
         Route::post('get-job-listing', ['uses' => 'OrganizationOpportunitiesController@getJobListing', 'as' => 'organization-get-job-listing']);
@@ -52,7 +54,9 @@ Route::prefix('organization')->group(function () {
         Route::get('add-job', ['uses' => 'OrganizationController@addJob', 'as' => 'organization-add-job']);
         Route::post('add-job', ['uses' => 'OrganizationController@addJobStore', 'as' => 'organizationaddJob']);
 
-
+        Route::post('/send-otp', ['uses' => 'OrganizationController@sendOtp', 'as' => 'sendOtp']) ;
+        Route::post('/update-email', ['uses' => 'OrganizationController@updateEmail', 'as' => 'updateEmail']);
+        
          // disactivate account
          Route::post('disactivate-account',['uses' => 'OrganizationDashboardController@disactivate_account', 'as' => 'organization-disactivate_account']);
 
@@ -67,7 +71,7 @@ Route::prefix('organization')->group(function () {
 
         // Send amount
 
-        Route::post('send-amount-transfer',['uses' => 'OrganizationDashboardController@send_amount', 'as' => 'organization-send_amount']);
+        Route::post('check-stripe',['uses' => 'OrganizationDashboardController@check_stripe', 'as' => 'organization-check_stripe']);
 
         //edit job
         Route::post('get-job-to-edit', ['uses' => 'OrganizationController@get_job_to_edit', 'as' => 'organization-get_job_to_edit']);

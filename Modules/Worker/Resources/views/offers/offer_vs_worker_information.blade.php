@@ -233,13 +233,10 @@
         </div>
         <div id="worker_hours_per_week" class="row d-flex align-items-center" style="margin:auto;">
             <div class="col-md-6">
-                <p class="profile_info_text" data-target="input_number" data-title="What rate is fair?"
-                    data-placeholder="Ideal hours per week?" data-name="worker_hours_per_week"
+                <p class="profile_info_text" data-target="multi_input_number" data-title="Maximum hours per week you'll work?"
+                    data-placeholder="Ideal hours per week?" data-name="worker_hours_per_week" data-value=""
                     onclick="open_modal(this)">
-                    @if (isset($userdetails->nurse->worker_hours_per_week))
-                        {{ number_format($userdetails->nurse->worker_hours_per_week) }}
-                        {{ $userdetails->nurse->worker_hours_per_week > 1 ? 'hours' : 'hour' }}
-                    @else
+                    @if (!isset($userdetails->nurse->worker_hours_per_week))
                         Ideal hours per week?
                     @endif
                 </p>
@@ -296,8 +293,8 @@
         </div>
         <div id="city" class="row  d-flex align-items-center" style="margin:auto;">
             <div class="col-md-6">
-                <p class="profile_info_text" data-target="city" data-title="Cities you'd like to work?"
-                    data-name="city" onclick="open_multiselect_modal(this)">
+                <p class="profile_info_text" data-target="input" data-title="Cities you'd like to work?"
+                 data-placeholder="Cities you'd like to work?'"    data-name="city" onclick="open_modal(this)">
 
                     @if (!!$userdetails->nurse->city)
                         {{ truncateText($userdetails->nurse->city) }}
@@ -398,13 +395,10 @@
         </div>
         <div id="worker_guaranteed_hours" class="row d-flex align-items-center" style="margin:auto;">
             <div class="col-md-6">
-                <p class="profile_info_text" data-target="input_number" data-title="What rate is fair?"
-                    data-placeholder="Open to jobs with no guaranteed hours?" data-name="worker_guaranteed_hours"
+                <p class="profile_info_text" data-target="multi_input_number" data-title="Minimum guaranteed Hrs/wk"
+                     data-name="worker_guaranteed_hours"  data-value=""
                     onclick="open_modal(this)">
-                    @if (isset($userdetails->nurse->worker_guaranteed_hours))
-                        {{ number_format($userdetails->nurse->worker_guaranteed_hours) }}
-                        {{ $userdetails->nurse->worker_guaranteed_hours > 1 ? ' hours' : ' hour' }}
-                    @else
+                    @if (!isset($userdetails->nurse->worker_guaranteed_hours))
                         Open to jobs with no guaranteed hours?
                     @endif
                 </p>
@@ -429,17 +423,14 @@
         </div>
         {{-- Hours/Shift --}}
         <div class="col-md-12">
-            <span class="mt-3">Reg Hrs/Shift</span>
+            <span class="mt-3">Hrs/Shift</span>
         </div>
         <div id="worker_hours_shift" class="row d-flex align-items-center" style="margin:auto;">
             <div class="col-md-6">
-                <p class="profile_info_text" data-target="input_number" data-title="What rate is fair?"
-                    data-placeholder="Preferred hours per shift" data-name="worker_hours_shift"
+                <p class="profile_info_text" data-target="multi_input_number" data-title="Hours per shift you'll work?"
+                    data-placeholder="Preferred hours per shift" data-name="worker_hours_shift" data-value=""
                     onclick="open_modal(this)">
-                    @if (isset($userdetails->nurse->worker_hours_shift))
-                        {{ number_format($userdetails->nurse->worker_hours_shift) }}
-                        {{ $userdetails->nurse->worker_hours_shift > 1 ? ' hours' : ' hour' }}
-                    @else
+                    @if (!isset($userdetails->nurse->worker_hours_shift))
                         Preferred hours per shift
                     @endif
                 </p>
@@ -469,13 +460,10 @@
         </div>
         <div id="worker_shifts_week" class="row d-flex align-items-center" style="margin:auto;">
             <div class="col-md-6">
-                <p class="profile_info_text" data-target="input_number" data-title="What rate is fair?"
-                    data-placeholder="Ideal shifts per week" data-name="worker_shifts_week"
+                <p class="profile_info_text" data-target="multi_input_number" data-title="Shifts per week?"
+                    data-placeholder="Ideal shifts per week" data-name="worker_shifts_week" data-value=""
                     onclick="open_modal(this)">
-                    @if (isset($userdetails->nurse->worker_shifts_week))
-                        {{ number_format($userdetails->nurse->worker_shifts_week) }}
-                        {{ $userdetails->nurse->worker_shifts_week > 1 ? ' shifts' : ' shift' }}
-                    @else
+                    @if (!isset($userdetails->nurse->worker_shifts_week))
                         Ideal shifts per week
                     @endif
                 </p>
@@ -504,13 +492,10 @@
         </div>
         <div id="worker_weeks_assignment" class="row d-flex align-items-center" style="margin:auto;">
             <div class="col-md-6">
-                <p class="profile_info_text" data-target="input_number" data-title="What rate is fair?"
+                <p class="profile_info_text" data-target="multi_input_number" data-title="How many weeks?"
                     data-placeholder="How many weeks?" data-name="worker_weeks_assignment"
                     onclick="open_modal(this)">
                     @if (isset($userdetails->nurse->worker_weeks_assignment))
-                        {{ number_format($userdetails->nurse->worker_weeks_assignment) }}
-                        {{ $userdetails->nurse->worker_weeks_assignment > 1 ? ' weeks' : ' week' }}
-                    @else
                         How many weeks?
                     @endif
                 </p>
@@ -612,7 +597,7 @@
         </div>
         <div id="rto" class="row d-flex align-items-center" style="margin:auto;">
             <div class="col-md-6">
-                <p class="profile_info_text" data-target="rto" data-title="What rate is fair?"
+                <p class="profile_info_text" data-target="input" data-title="Any time off?"
                     data-placeholder="What rate is fair?" data-name="rto" onclick="open_modal(this)">
                     @if (isset($userdetails->nurse->rto))
                         {{ $userdetails->nurse->rto }}
@@ -796,7 +781,9 @@
                         What rate is fair?
                     @endif
             </div> --}}
-            <div class="col-md-12">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
                 <p>
                     {!! isset($offerdetails->weekly_taxable_amount)
                         ? '$ ' . number_format($offerdetails->weekly_taxable_amount)
@@ -1001,7 +988,9 @@
         <div class="col-md-12">
             <span class="mt-3">$/Org</span>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
             <h6> {{ isset($offerdetails->total_organization_amount) ? '$ ' . number_format($offerdetails->total_organization_amount) : 'Missing Est. Total Organization Amount Information' }}
             </h6>
         </div>
@@ -1015,10 +1004,10 @@
 
             <div class="col-md-6">
                 {{-- <h6>{{ $userdetails->nurse->worker_pay_frequency ?? 'Missing Pay Frequency Information' }}</h6> --}}
-                <p class="profile_info_text" data-target="pay_frequency" data-title="Pay frequency"
-                    data-placeholder="Pay frequency?" data-name="worker_pay_frequency" onclick="open_modal(this)">
+                <p class="profile_info_text" data-target="worker_pay_frequency" data-title="Pay frequency"
+                    data-placeholder="Pay frequency?" data-name="worker_pay_frequency" onclick="open_multiselect_modal(this)">
                     @if (isset($userdetails->nurse->worker_pay_frequency))
-                        {{ $userdetails->nurse->worker_pay_frequency }}
+                        {{ truncateText($userdetails->nurse->worker_pay_frequency) }}
                     @else
                         Pay frequency?
                     @endif
@@ -1057,8 +1046,8 @@
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if (!empty($offerBenefits))
-                        {{ implode(', ', $offerBenefits) }}
+                    @if ($offerdetails->benefits)
+                        {{ $offerdetails->benefits }}
                     @else
                         <a style="cursor: pointer;"
                             onclick="askRecruiter(this, 'benefits', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
@@ -1149,13 +1138,13 @@
         <div id="worker_facility_name" class="row d-flex align-items-center" style="margin:auto;">
             <div class="col-md-6">
 
-                <p class="profile_info_text" data-target="input" data-title="Where do you prefer to work?"
+                <p class="profile_info_text" data-target="input" data-title="What facilities would you like to work at?"
                     data-placeholder="Where do you prefer to work?" data-name="worker_facility_name"
                     onclick="open_modal(this)">
                     @if (isset($userdetails->nurse->worker_facility_name) && $userdetails->nurse->worker_facility_name != '')
                         {{ $userdetails->nurse->worker_facility_name }}
                     @else
-                        What facilities have you worked at?
+                        What facilities would you like to work at?
                     @endif
                 </p>
 
@@ -1406,11 +1395,11 @@
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->worker_description)
-                        {{ $userdetails->nurse->worker_description }}
+                    @if ($offerdetails->description)
+                        {{ $offerdetails->description }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'worker_description', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'description', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1438,11 +1427,11 @@
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->worker_experience)
-                        {{ $userdetails->nurse->worker_experience . ' Year(s)' }}
+                    @if ($offerdetails->experience)
+                        {{ $offerdetails->experience }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'worker_experience', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'experience', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1542,8 +1531,8 @@
         <div id="block_scheduling" class="row d-flex align-items-center" style="margin:auto;">
             <div class="col-md-6">
                 <p class="profile_info_text" data-target="binary"
-                    data-title="Are you willing to work block scheduling?"
-                    data-placeholder="Are you willing to work block scheduling?" data-name="block_scheduling"
+                    data-title="Do you require block scheduling?"
+                    data-placeholder="Do you require block scheduling?" data-name="block_scheduling"
                     onclick="open_modal(this)">
                     @if (isset($userdetails->nurse->block_scheduling))
                         @if ($userdetails->nurse->block_scheduling == '1')
@@ -1554,7 +1543,7 @@
                             Will you do block scheduling?
                         @endif
                     @else
-                        Are you willing to work block scheduling?
+                        Do you require block scheduling?
                     @endif
                 </p>
             </div>
@@ -1578,8 +1567,8 @@
         </div>
         <div id="float_requirement" class="row d-flex align-items-center" style="margin:auto;">
             <div class="col-md-6">
-                <p class="profile_info_text" data-target="binary" data-title="Are you willing to float?"
-                    data-placeholder="Are you willing to float?" data-name="float_requirement"
+                <p class="profile_info_text" data-target="binary" data-title="Are you willing float?"
+                    data-placeholder="Are you willing float?" data-name="float_requirement"
                     onclick="open_modal(this)">
                     @if (isset($userdetails->nurse->float_requirement))
                         @if ($userdetails->nurse->float_requirement == '1')
@@ -1590,7 +1579,7 @@
                             Will you float?
                         @endif
                     @else
-                        Are you willing to float?
+                        Are you willing float?
                     @endif
                 </p>
             </div>
@@ -1627,11 +1616,11 @@
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->worker_patient_ratio)
-                        {{ $userdetails->nurse->worker_patient_ratio }}
+                    @if ($offerdetails->Patient_ratio)
+                        {{ number_format($offerdetails->Patient_ratio) }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'worker_patient_ratio', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'Patient_ratio', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1727,8 +1716,8 @@
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->nurse_classification)
-                        {{ $userdetails->nurse->nurse_classification }}
+                    @if ($offerdetails->nurse_classification)
+                        {{ $offerdetails->nurse_classification }}
                     @else
                         <a style="cursor: pointer;"
                             onclick="askRecruiter(this, 'nurse_classification', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
@@ -1764,7 +1753,7 @@
 
         <div id="vaccination" class="row d-flex align-items-center" style="margin:auto;">
             <div class="col-md-6 ">
-                <p id="vaccination-placeholder" class="profile_info_text" class="certification_file"
+                <p id="vaccination-placeholder" class="profile_info_text" class="vaccination_file"
                     data-target="vaccination_file" onclick="open_modal(this)" data-title="No vaccination?"
                     data-placeholder="No vaccination?">
                 </p>
@@ -1812,6 +1801,49 @@
 </div>
 
 <script>
+    function UpdateMultiNumberInputsValues(WorkerFieldName, workerFieldValue) {
+            // Split the value by commas to create an array
+            var multi_input_number_value = workerFieldValue.split(',');
+
+            // Convert each item in the array to an integer
+            multi_input_number_value = multi_input_number_value.map(function(item) {
+                return parseInt(item, 10);
+            });
+        
+            // Filter out any invalid numbers (NaN)
+            multi_input_number_value = multi_input_number_value.filter(function(item) {
+                return !isNaN(item);
+            });
+        
+            // Map each item to a string with 'hour' or 'hours'
+            multi_input_number_value = multi_input_number_value.map(function(item) {
+                return item + (item > 1 ? ' hours' : ' hour');
+            });
+        
+            // Join the array back into a string
+            multi_input_number_value = multi_input_number_value.join(', ');
+
+            // fill the input with the new value, get it by name 
+            // var input = document.getElementsByName(WorkerFieldName);
+            // if (input.length > 0) {
+            //     input[0].value = multi_input_number_value;
+            // } else {
+            //     console.error('Input not found for name:', WorkerFieldName);
+            // }
+        
+            // Find the element by WorkerFieldName and set its innerHTML
+            var element = document.getElementById(WorkerFieldName);
+            var element = element.querySelector('p');
+            if (element) {
+                
+                element.setAttribute('data-value', workerFieldValue);
+                console.log('workerFieldValue', workerFieldValue);
+                console.log('element', element);
+                element.innerHTML = multi_input_number_value;
+            } else {
+                console.error('Element not found for ID:', WorkerFieldName);
+            }
+        }
     
     document.addEventListener('DOMContentLoaded', function() {
 
@@ -1844,7 +1876,6 @@
             }
         }
 
-       
 
     });
 
@@ -1978,7 +2009,7 @@
                         WorkerId: worker_id
                     }),
                     success: function(resp) {
-                        let jsonResp = JSON.parse(resp);
+                        let jsonResp = resp.data;
                         let files = jsonResp;
                         worker_files = files;
                       //  console.log('worker_files', worker_files);
@@ -2275,14 +2306,17 @@
     ];
 
     var timeFields = [
-        'hours_per_week',
-        'worker_weeks_assignment',
+        'worker_experience',
+        'Patient_ratio'
+    ];
+
+    var multi_select_number_fields = [
         'guaranteed_hours',
-        'preferred_assignment_duration',
+        'hours_per_week',
         'hours_shift',
         'weeks_shift',
-        'worker_experience'
-    ];
+        'preferred_assignment_duration'
+    ]
 
     var rateFields = [
         'distance_from_your_home',
@@ -2293,7 +2327,6 @@
         'call_back_rate',
         'orientation_rate',
         'weekly_non_taxable_amount',
-        'feels_like_per_hour',
         'referral_bonus',
         'sign_on_bonus',
         'extension_bonus',
@@ -2306,12 +2339,14 @@
         'profession',
         'specialty',
         'state',
-        'city',
         'worker_job_type',
         'terms',
         'clinical_setting_you_prefer',
         'worker_benefits',
-        'worker_job_location'
+        'worker_job_location',
+        'worker_pay_frequency',
+        'worker_emr',
+        'nurse_classification'
     ];
 
     var noMatchingField = [
@@ -2319,6 +2354,14 @@
         'worker_facility_name',
         'worker_facilitys_parent_system',
         'worker_description',
+    ];
+
+    var booleanFields = [
+        'rto',
+        'on_call',
+        'block_scheduling',
+        'float_requirement',
+        'feels_like_per_hour',
     ];
 
 
@@ -2342,12 +2385,24 @@
                 } else if (worker[value] == offer[key]) {
                   //  console.log('worker:', worker[value]);
                     match = true;
+                } else if (multi_select_number_fields.includes(key)){
+                    let workerValue = worker[value].split(',').map(function(item) {
+                        return parseInt(item, 10); 
+                    });
+                    let offerValue = offer[key];
+                    UpdateMultiNumberInputsValues(value, worker[value]);
+                    // match = workerValue.includes(offerValue);
+                    for (let element of workerValue) {
+                        if (element >= offerValue) {
+                            match = true;
+                            break; 
+                        }
+                    }
                 } else if (rateFields.includes(key)) {
                   //  console.log('worker rate field:', worker[value]);
                     match = worker[value] <= offer[key];
                 } else if (timeFields.includes(key)) {
                   //  console.log('worker time field:', worker[value]);
-
                     match = worker[value] >= offer[key];
                 } else if (multiSelect.includes(value)) {
                   //  console.log('worker multi select field:', worker[value]);
@@ -2361,7 +2416,44 @@
                     } else if (key == 'end_date') {
                         match = workerDate >= offerDate;
                     }
+                } else if (booleanFields.includes(key)) {
+                    console.log('worker boolean field:', worker[value], 'workerfield name:', value);
+                    if(key == 'rto') {
+                        if (offer[key] == 'not allowed') {
+                            match = false;
+                        } else if (offer[key] == 'allowed') {
+                            if (worker[value] != null && worker[value] != '') {
+                                match = true;
+                            } else {
+                                match = false;
+                            }
+                        }
+                    }else if(key == 'feels_like_per_hour'){
+                        if (worker[value] == '0') {
+                            match = false;
+                        } else if (worker[value] == '1') {
+                            match = true;
+                        } 
+                    }else if (offer[key] == '0') {
+                        match = true;
+                    } else if (offer[key] == '1') {
+                        match = worker[value] == offer[key];
+                    } 
+                } else {
+                    if(key == 'preferred_shift_duration'){
+
+                        if(offer[key] == 'Nights or Days'){
+                            match = worker[value].includes('Days') || worker[value].includes('Nights');
+                        }else if (offer[key] == 'Nights & Days'){
+                            console.log('worker:', worker[value]); 
+                            match = worker[value] == 'Nights & Days' || worker[value].includes('Days, Nights') || worker[value].includes('Nights, Days') || worker[value].includes('Days, Days') || worker[value].includes('Nights, Nights'); 
+                        }else{
+                            match = worker[value].includes(offer[key]);
+                        }
+
+                    }
                 }
+
                 let DivElement = document.getElementById(value);
                 if (DivElement) {
                     if (match == true) {
@@ -2376,7 +2468,8 @@
                 }
             }
         } catch (error) {
-            console.error('error :', error);
+            //console.error('error :', error);
+            return false;
         }
     }
 
@@ -2407,6 +2500,7 @@
             name = $(obj).data('name');
             title = $(obj).data('title');
             target = $(obj).data('target');
+            let value = $(obj).attr('data-value') || '';
 
             modal = '#' + target + '_modal';
             form = modal + '_form';
@@ -2421,10 +2515,15 @@
                     $(form).find('input[type="number"]').attr('name', name);
                     $(form).find('input[type="number"]').attr('placeholder', $(obj).data('placeholder'));
                     break;
-                case 'binary':
-                    $(form).find('input[type="radio"]').attr('name', name);
+                case 'multi_input_number':
+                    $(form).find('input[type="text"]').attr('name', name);
+                    // reset and set the value
+                    $(form).find('input[type="text"]').attr('value', value);
+                    $(form).find('input[type="text"]').attr('placeholder', $(obj).data('placeholder'));
+                    // clear the helper text
+                    $(form).find('.helper').text('');
                     break;
-                case 'rto':
+                case 'binary':
                     $(form).find('input[type="radio"]').attr('name', name);
                     break;
                 case 'dropdown':
@@ -2486,6 +2585,20 @@
 
                     match = InsertedValue >= offer[offerField];
 
+                } else if (multi_select_number_fields.includes(offerField)){
+
+                    let workerValue = InsertedValue.split(',').map(function(item) {
+                        return parseInt(item, 10); 
+                    });
+                    let offerValue = offer[offerField];
+                    for (let element of workerValue) {
+                        if (element >= offerValue) {
+                            match = true;
+                            break; 
+                        }
+                    }
+                    UpdateMultiNumberInputsValues(workerField, InsertedValue);
+
                 } else if (dateFields.includes(offerField)) {
 
                     let insertedDate = new Date(InsertedValue);
@@ -2500,9 +2613,40 @@
                         match = insertedDate >= offerDate;
 
                     }
-                } else {
+                }else if (booleanFields.includes(offerField)) {
+                    
+                    if(offerField == 'rto') {
+                        if (offer[offerField] == 'not allowed') {
+                            match = false;
+                        } else if (offer[offerField] == 'allowed') {
+                            if (InsertedValue != null && InsertedValue != '') {
+                                match = true;
+                            } else {
+                                match = false;
+                            }
+                        }
+                    }else if (offer[offerField] == '0') {
+                        match = true;
+                    } else if (offer[offerField] == '1') {
+                        match = InsertedValue == offer[offerField];
+                    } 
 
-                    match = InsertedValue == offer[offerField];
+                }  else {
+
+                    if(offerField == 'preferred_shift_duration'){
+
+                        if(offer[offerField] == 'Nights or Days'){
+                            match = InsertedValue.includes('Days') || InsertedValue.includes('Nights');
+                        }else if (offer[offerField] == 'Nights & Days'){
+                            console.log('worker:', InsertedValue); 
+                            match = InsertedValue == 'Nights & Days' || InsertedValue.includes('Days, Nights') || InsertedValue.includes('Nights, Days') || InsertedValue.includes('Days, Days') || InsertedValue.includes('Nights, Nights'); 
+                        }else{
+                            match = InsertedValue.includes(offer[offerField]);
+                        }
+
+                    }else {
+                            match = InsertedValue == offer[offerField];
+                    }
 
                 }
 
@@ -2512,6 +2656,7 @@
 
         } catch (error) {
             console.error('error :', error);
+            return false;
         }
     }
 
@@ -2593,8 +2738,35 @@
         let input;
         let name;
         let value;
+        
+        if (type === 'multi_input_number') {
 
-        if (type === 'rto' || type === 'binary') {
+            input = form.querySelector('input');
+            value = input.value;
+            name =  input.name;
+            let numbers = value.split(',').map(num => num.trim());
+            let valid = numbers.every(num => Number.isInteger(Number(num)) && num !== ''); 
+            
+            if (!valid) {
+
+                $('.help-block-multi_input_number_modal').text('Please enter valid numbers separated by commas.');
+                $('.help-block-multi_input_number_modal').addClass('text-danger');
+                return;
+
+            }else{
+
+                $('.help-block-multi_input_number_modal').text('');
+                $('.help-block-multi_input_number_modal').removeClass('text-danger');
+
+            }
+
+            value = numbers.join(', ');
+
+            // update the input :)
+            input.value = value;
+
+        }else if (type === 'binary') {
+
             input = form.querySelector('input[type="radio"]:checked');
             if (!input) {
                 console.error('No input selected for type:', type);
@@ -2602,7 +2774,9 @@
             }
             name = input.name;
             value = input.value;
+
         } else {
+
             input = form.querySelector('input');
             if (!input) {
                 input = form.querySelector('select');
@@ -2614,16 +2788,12 @@
             }
             name = input.name;
             value = input.value;
+
         }
-
-        // console.log('Input name:', name);
-        // console.log('Input value:', value);
-
 
         let match = multi_select_match_with_worker(name, value);
         //  console.log('Match:', match);
         let element = document.getElementById(name);
-
 
         if (element) {
 
@@ -2632,7 +2802,7 @@
 
                 childElement.innerText = value == '1' ? 'Yes' : 'No';
 
-            } else {
+            } else if (type !== 'multi_input_number') {
 
                 childElement.innerText = value;
 
@@ -2651,13 +2821,11 @@
             }
 
         } else {
-
-          //  console.log('Element not found for ID:', name);
-
+            console.log('Element not found for ID:', name);
         }
 
         let formData = new FormData(form);
-
+        console.log('formData:', formData);
         fetch(form.action, {
                 method: 'POST',
                 body: formData,
@@ -2670,6 +2838,8 @@
 
               //  console.log('Success:', data);
                 $('#' + type + '_modal').modal('hide');
+              // clear form
+                form.reset();
 
             })
             .catch((error) => {

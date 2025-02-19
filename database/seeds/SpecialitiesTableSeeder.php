@@ -8,7 +8,7 @@ class SpecialitiesTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('specialities')->delete();
+        // DB::table('specialities')->delete();
         $specialties = [
             'Acute Care',
             'Addiction Medicine',
@@ -272,11 +272,17 @@ class SpecialitiesTableSeeder extends Seeder
             'Visual Impairments Teacher',
             'Women\'s Services',
             'Wound Care',
-            'X-Ray Technician'
+            'X-Ray Technician',
+            'In-Patient',
+            'Outpatient Surgery',
+            'Crisis Stabilization Unit',
         ];
 
         foreach ($specialties as $specialty) {
             //$professionId = DB::table('professions')->inRandomOrder()->value('id');
+            if (DB::table('specialities')->where('full_name', $specialty)->exists()) {
+                continue;
+            }
             DB::table('specialities')->insert([
                 //'id' => Str::uuid(),
                 //'Profession_id' => $professionId,

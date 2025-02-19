@@ -56,6 +56,9 @@
         if (!element.classList.contains('active')) {
             element.classList.add('active');
         }
+
+        $('.collapse').removeClass('show');
+        $('.helper').text('');
     }
 </script>
 
@@ -970,7 +973,7 @@
     document.addEventListener('DOMContentLoaded', async function() {
 
         // for job creation in dev mode
-        //fillData();
+        // fillData();
 
         // FOR JOB CREATION 
         // get professions according to job type :
@@ -2733,10 +2736,6 @@
                             id: 'number_of_referencesEdit',
                             type: 'number'
                         },
-                        'eligible_work_in_us': {
-                            id: 'eligible_work_in_usEdit',
-                            type: 'select'
-                        },
                         'urgency': {
                             id: 'urgencyEdit',
                             type: 'checkbox'
@@ -3466,7 +3465,7 @@
                 holidays_all_values.value = holidayStr;
             }
 
-            document.getElementById("active").value = false;
+            document.getElementById("active").value = true;
             document.getElementById("is_open").value = false;
             let act = document.getElementById("active").value;
 
@@ -3873,7 +3872,7 @@
             if (holidays_all_values) {
                 holidays_all_values.value = holidayStr;
             }
-            document.getElementById("activeDraft").value = false;
+            document.getElementById("activeDraft").value = true;
             document.getElementById("is_openDraft").value = false;
             // var jobName = document.getElementById("job_nameDraft").value;
             // if (jobName.trim() === '') {
@@ -3895,34 +3894,23 @@
 
     function validateFirstEdit() {
         var access = true;
-        var jobType = document.getElementById("job_typeEdit").value;
-        var specialty = document.getElementById("preferred_specialtyEdit").value;
-        var profession = document.getElementById("perferred_professionEdit").value;
-        var city = document.getElementById("job_cityEdit").value;
-        var state = document.getElementById("job_stateEdit").value;
-        var weeklyPay = document.getElementById("weekly_payEdit").value;
-        var terms = document.getElementById("termsEdit").value;
-        var preferred_experience = document.getElementById("preferred_experienceEdit").value;
-        var eligible_work_in_us = document.getElementById("eligible_work_in_usEdit").value;
-        var hours_per_week = document.getElementById("hours_per_weekEdit").value;
-        var guaranteed_hours = document.getElementById("guaranteed_hoursEdit").value;
-        var hours_shift = document.getElementById("hours_shiftEdit").value;
-        var weeks_shift = document.getElementById("weeks_shiftEdit").value;
-        var pay_frequency = document.getElementById("pay_frequencyEdit").value;
-        var actual_hourly_rate = document.getElementById("actual_hourly_rateEdit").value;
-        var overtime = document.getElementById("overtimeEdit").value;
-        var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amountEdit").value;
-
-
-
-        if (jobType.trim() === "") {
-            $('.help-block-job_typeEdit').text('Please enter the Work type');
-            $('.help-block-job_typeEdit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-job_typeEdit').text('');
-
-        }
+        
+        var specialtyElement = document.getElementById("preferred_specialtyEdit");
+        var specialty = specialtyElement.value;
+        var professionElement = document.getElementById("perferred_professionEdit");
+        var profession = professionElement.value;
+        var cityElement = document.getElementById("job_cityEdit");
+        var city = cityElement.value;
+        var stateElement = document.getElementById("job_stateEdit");
+        var state = stateElement.value;
+        var weeklyPayElement = document.getElementById("weekly_payEdit");
+        var weeklyPay = weeklyPayElement.value;
+        var termsElement = document.getElementById("termsEdit");
+        var terms = termsElement.value;
+        var hoursPerWeekElement = document.getElementById("hours_per_weekEdit");
+        var hoursPerWeek = hoursPerWeekElement.value;
+        var actual_hourly_rate = document.getElementById("actual_hourly_rateEdit");
+        var actual_hourly_rate = actual_hourly_rate.value;
 
         if (specialty.trim() === '') {
             $('.help-block-preferred_specialtyEdit').text('Please enter the Work speciality');
@@ -3967,112 +3955,57 @@
             $('.help-block-job_stateEdit').text('');
         }
 
-        if (weeklyPay.trim() === '') {
-            $('.help-block-weekly_payEdit').text('Please enter the Work weekly pay');
-            $('.help-block-weekly_payEdit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-weekly_payEdit').text('');
+        if (terms === "Perm") {
 
-        }
+                if (actual_hourly_rate.trim() === '') {
+                
+                    $('.help-block-actual_hourly_rateEdit').text('Perm Job requires Actual hourly rate');
+                    $('.help-block-actual_hourly_rateEdit').addClass('text-danger');
+                    access = false;
+                } else {
+                    $('.help-block-actual_hourly_rateEdit').text('');
+                }
 
-        if (preferred_experience.trim() === '') {
-            $('.help-block-preferred_experienceEdit').text('Please enter the preferred experience');
-            $('.help-block-preferred_experienceEdit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-preferred_experienceEdit').text('');
-        }
+                if (hoursPerWeek.trim() === '') {
+                    hoursPerWeekElement.closest('.collapse').classList.add('show');
+                    $('.help-block-hours_per_weekEdit').text('Perm Job requires Hours per week');
+                    $('.help-block-hours_per_weekEdit').addClass('text-danger');
+                    access = false;
+                } else {
+                    $('.help-block-hours_per_weekEdit').text('');
+                }
 
-        if (eligible_work_in_us.trim() === '') {
-            $('.help-block-eligible_work_in_usEdit').text('Please enter the eligible work in us');
-            $('.help-block-eligible_work_in_usEdit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-eligible_work_in_usEdit').text('');
-        }
+        } else if (terms === "Shift") {
+                
+                if (actual_hourly_rate.trim() === '') {
+                    // actual_hourly_rate.closest('.collapse').classList.add('show');
+                    $('.help-block-actual_hourly_rateEdit').text('Shift Job requires Actual hourly rate');
+                    $('.help-block-actual_hourly_rateEdit').addClass('text-danger');
+                    access = false;
+                } else {
+                    $('.help-block-actual_hourly_rateEdit').text('');
+                }
 
-        if (hours_per_week.trim() === '') {
-            $('.help-block-hours_per_weekEdit').text('Please enter the hours per week');
-            $('.help-block-hours_per_weekEdit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-hours_per_weekEdit').text('');
-        }
+        } else if (terms === "Contract (Travel or Local)" || terms === "Contract to Perm" || terms ===
+                "Contract (Travel only)" || terms === "Contract (Local only)") {
+                
+                if (weeklyPay.trim() === '') {
+                
+                    $('.help-block-weekly_payEdit').text('Contract Job requires Weekly pay');
+                    $('.help-block-weekly_payEdit').addClass('text-danger');
+                    access = false;
+                } else {
+                    $('.help-block-weekly_payEdit').text('');
+                }
 
-        if (guaranteed_hours.trim() === '') {
-            $('.help-block-guaranteed_hoursEdit').text('Please enter the guaranteed hours');
-            $('.help-block-guaranteed_hoursEdit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-guaranteed_hoursEdit').text('');
-        }
-
-        if (hours_shift.trim() === '') {
-            $('.help-block-hours_shiftEdit').text('Please enter the hours shift');
-            $('.help-block-hours_shiftEdit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-hours_shiftEdit').text('');
-        }
-
-        if (weeks_shift.trim() === '') {
-            $('.help-block-weeks_shiftEdit').text('Please enter the weeks shift');
-            $('.help-block-weeks_shiftEdit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-weeks_shiftEdit').text('');
-        }
-
-        if (pay_frequency.trim() === '') {
-            $('.help-block-pay_frequencyEdit').text('Please enter the pay frequency');
-            $('.help-block-pay_frequencyEdit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-pay_frequencyEdit').text('');
-        }
-
-        if (actual_hourly_rate.trim() === '') {
-            $('.help-block-actual_hourly_rateEdit').text('Please enter the actual hourly rate');
-            $('.help-block-actual_hourly_rateEdit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-actual_hourly_rateEdit').text('');
-        }
-
-        if (overtime.trim() === '') {
-            $('.help-block-overtimeEdit').text('Please enter the overtime');
-            $('.help-block-overtimeEdit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-overtimeEdit').text('');
-        }
-
-        if (weekly_non_taxable_amount.trim() === '') {
-            $('.help-block-weekly_non_taxable_amountEdit').text('Please enter the weekly non taxable amount');
-            $('.help-block-weekly_non_taxable_amountEdit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-weekly_non_taxable_amountEdit').text('');
-        }
-
-        // shift time of day
-        // the shift time of day is {} how can i check if it is empty ?
-
-        if (Object.keys(shifttimeofday).length === 0) {
-            $('.help-block-shift_time_of_day').text('Please enter the Shift time of day');
-            $('.help-block-shift_time_of_day').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-shift_time_of_day').text('');
-        }
-        // professional licensure
-        if (Object.keys(professional_licensure).length === 0) {
-            $('.help-block-professional_licensure').text('Please enter the Professional licensure');
-            $('.help-block-professional_licensure').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-professional_licensure').text('');
+                if (hoursPerWeek.trim() === '') {
+                    hoursPerWeekElement.closest('.collapse').classList.add('show');
+                    $('.help-block-hours_per_weekEdit').text(' Contract Job requires Hours per week');
+                    $('.help-block-hours_per_weekEdit').addClass('text-danger');
+                    access = false;
+                } else {
+                    $('.help-block-hours_per_weekEdit').text('');
+                }
         }
 
         if (access) {
@@ -4080,6 +4013,7 @@
         } else {
             return false;
         }
+ 
     }
 
     function validateRequiredFieldsToSubmitEdit(slideFields) {
@@ -4238,7 +4172,52 @@
             "skills"
         ];
 
-        if (validateRequiredMultiCheckFieldsToSubmitEdit(slideFields)) {
+        const otherSlideFields = [
+            "preferred_experience",
+            "traveler_distance_from_facility",
+            "clinical_setting",
+            "Patient_ratio",
+            "Unit",
+            "scrub_color",
+            "rto",
+            "job_id",
+            "job_name",
+            "job_type",
+            "preferred_work_location",
+            "referral_bonus",
+            "sign_on_bonus",
+            "completion_bonus",
+            "extension_bonus",
+            "other_bonus",
+            "on_call",
+            "on_call_rate",
+            "description",
+            "holiday",
+            "orientation_rate",
+            "block_scheduling",
+            "float_requirement",
+            "number_of_references",
+            "facilitys_parent_system",
+            "facility_name",
+            "contract_termination_policy",
+            "facility_shift_cancelation_policy",
+            "four_zero_one_k",
+            "health_insaurance",
+            "feels_like_per_hour",
+            "call_back_rate",
+            "as_soon_as",
+            "start_date",
+            "urgency",
+            "professional_state_licensure",
+            "is_resume",
+            "total_contract_amount",
+            "total_goodwork_amount",
+            "total_organization_amount",
+            "goodwork_weekly_amount",
+        ];
+
+        if (validateRequiredMultiCheckFieldsToSubmitEdit(slideFields) && validateRequiredFieldsToSubmitEdit(
+                otherSlideFields) && validateFirstEdit()) {
             event.target.form.submit();
         }
     });
@@ -4289,7 +4268,7 @@
             if (holidays_all_values) {
                 holidays_all_values.value = holidayStr;
             }
-            document.getElementById("activeEdit").value = false;
+            document.getElementById("activeEdit").value = true;
             document.getElementById("is_openEdit").value = false;
             // var jobName = document.getElementById("job_nameEdit").value;
             // if (jobName.trim() === '') {

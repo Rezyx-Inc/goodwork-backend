@@ -166,7 +166,7 @@
             <div class="ss-form-group col-md-12"> 
                 <label> City </label>
                 <select name="city" id="city">
-                    <option value="">Select a city</option>
+                    <option value="" disabled selected hidden>Select a city</option>
                 </select>
                 <div>
                     <div> 
@@ -196,7 +196,7 @@
                     <li class="row w-100 p-0 m-0">
                         <div class="ps-0">
                             <select class="m-0" id="shifttimeofday">
-                                <option value="">Select Shift Time of Day</option>
+                                <option value="" disabled selected hidden>Select Shift Time of Day</option>
                                 @if (isset($allKeywords['PreferredShift']))
                                     @foreach ($allKeywords['PreferredShift'] as $value)
                                         <option value="{{ $value->id }}">{{$value->title}}</option>
@@ -1022,6 +1022,7 @@
                 </div>
 
                 <div class="ss-counter-buttons-div">
+
                     <button class="ss-counter-button" id="ss-reject-offer-btn" onclick="offerSend(event,'counter')">Send</button>
                 </div>
         </div>
@@ -1033,8 +1034,62 @@
 
 <script>
 
-    $(document).ready(function() {
+    $(document).ready(async function() {
         getOfferDataToEdit();
+
+
+        const jobState = document.getElementById('state');
+        const jobCity = document.getElementById('city');
+        let citiesData = [];
+        const selectedJobState = jobState.value;
+        const selectedState = $(jobState).find(':selected').attr('id');
+
+        jobState.addEventListener('change', async function() {
+
+            const selectedJobState = this.value;
+            const selectedState = $(this).find(':selected').attr('id');
+
+            await $.get(`/api/cities/${selectedState}`, function(cities) {
+                citiesData = cities;
+            });
+
+            jobCity.innerHTML = '<option value="">Cities</option>';
+
+            citiesData.forEach(function(City) {
+
+                const option = document.createElement('option');
+                option.value = City.name;
+                option.textContent = City.name;
+                jobCity.appendChild(option);
+
+            });
+
+        });
+
+        // get cities according to already selected state :
+
+        if (selectedJobState) {
+            console.log('selectedJobState :', selectedJobState);
+            await $.get(`/api/cities/${selectedState}`, function(cities) {
+                citiesData = cities;
+            });
+
+            if(jobCity.value == ''){
+                jobCity.innerHTML = '<option value="" disabled selected hidden>Cities</option>';
+            }else{
+                jobCity.innerHTML = '<option value="' + jobCity.value + '" selected>' + jobCity.value + '</option>';
+            }
+
+            citiesData.forEach(function(City) {
+
+                const option = document.createElement('option');
+                option.value = City.name;
+                option.textContent = City.name;
+                jobCity.appendChild(option);
+
+            });
+
+        }
     });
 
 

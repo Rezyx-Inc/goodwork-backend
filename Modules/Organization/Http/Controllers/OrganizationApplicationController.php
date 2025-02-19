@@ -12,6 +12,7 @@ use URL;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use App\Events\NotificationOffer;
+use App\Events\NewPrivateMessage;
 // ************ models ************
 /** Models */
 use App\Models\{Job, Offer, Nurse, User, OffersLogs, States, Cities, Keyword, Speciality, Profession, State};
@@ -232,7 +233,7 @@ class OrganizationApplicationController extends Controller
                 $update_array['description'] = isset($request->description) ? $request->description : $job_data->description;
                 $update_array['weekly_taxable_amount'] = isset($request->hours_shift) && isset($request->actual_hourly_rate) ? $request->hours_shift * $request->actual_hourly_rate : null;
                 $update_array['organization_weekly_amount'] = isset($request->weekly_non_taxable_amount) && isset($update_array['weekly_taxable_amount']) ? $request->weekly_non_taxable_amount + $update_array['weekly_taxable_amount'] : null;
-                $update_array['goodwork_weekly_amount'] = isset($update_array['weekly_taxable_amount']) ? $update_array['weekly_taxable_amount'] * 0.05 : 0;
+                $update_array['goodwork_weekly_amount'] = isset($update_array['weekly_taxable_amount']) ? $update_array['weekly_taxable_amount'] * 0.08 : 0;
                 $update_array['total_organization_amount'] = isset($request->preferred_assignment_duration) && isset($update_array['organization_weekly_amount']) && isset($request->sign_on_bonus) && isset($request->completion_bonus) ? $request->preferred_assignment_duration + $update_array['organization_weekly_amount'] + $request->sign_on_bonus + $request->completion_bonus : null;
                 $update_array['total_goodwork_amount'] = isset($request->preferred_assignment_duration) && isset($update_array['goodwork_weekly_amount']) ? $request->preferred_assignment_duration + $update_array['goodwork_weekly_amount'] : null;
                 $update_array['total_contract_amount'] = isset($update_array['total_goodwork_amount']) && isset($update_array['total_organization_amount']) ? $update_array['total_goodwork_amount'] + isset($update_array['total_organization_amount']) : null;
@@ -509,15 +510,18 @@ class OrganizationApplicationController extends Controller
             $urlDocs = 'http://localhost:' . config('app.file_api_port') . '/documents/get-docs';
             $fileresponse = Http::post($urlDocs, ['workerId' => $worker_id]);
             $files = [];
-            if (!empty($fileresponse->json()['files'])) {
-                $hasFile = true;
+            $api_response = json_decode($fileresponse->body());
+            if ($api_response->success) {
+                if (!empty($api_response->data->docs->files)) {
+                    $hasFile = true;
 
-                foreach ($fileresponse->json()['files'] as $file) {
-                    $files[] = [
-                        'name' => $file['name'],
-                        'content' => $file['content'],
-                        'type' => $file['type']
-                    ];
+                    foreach ($api_response->data->docs->files as $file) {
+                        $files[] = [
+                            'name' => $file->name,
+                            'content' => $file->content,
+                            'type' => $file->type
+                        ];
+                    }
                 }
             }
             $response['content'] = view('organization::offers.workers_complete_information', ['type' => $type, 'hasFile' => $hasFile, 'userdetails' => $user, 'nursedetails' => $nurse, 'jobappliedcount' => $jobappliedcount, 'offerdetails' => $offers])->render();
@@ -542,13 +546,13 @@ class OrganizationApplicationController extends Controller
 
             $orgId = Auth::guard('organization')->user()->id;
             $scriptResponse = Http::get('http://localhost:'. config('app.file_api_port') .'/organizations/getRecruiters/' . $orgId);
-            $responseData = $scriptResponse->json();
+            $responseData = json_decode($scriptResponse->body());
             $allRecruiters = [];
             $ids = [];
-            if(isset($responseData)) {
+            if($responseData->success) {
                 $ids = array_map(function($recruiter) {
-                return $recruiter['id'];
-                }, $responseData);
+                return $recruiter->id;
+                }, $responseData->data->recruiters); 
             }
             $allRecruiters = User::whereIn('id', $ids)->where('role', 'RECRUITER')->get();
 
@@ -562,22 +566,42 @@ class OrganizationApplicationController extends Controller
 
     public function updateApplicationStatus(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'status' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first()]);
+        }
+
         $organization = Auth::guard('organization')->user();
         $organization_id = $organization->id;
-        $full_name = $organization->first_name . ' ' . $organization->last_name;
+        $full_name = $organization->organization_name;
         $offer_id = $request->id;
         $offer = Offer::where('id', $offer_id)->first();
+
+        if (!$offer) {
+            return response()->json(['message' => 'Offer not found']);
+        }
+
         $status = $request->status;
+        $offer_updated = Offer::where(['id' => $offer_id])->update(['status' => $status]);
         $jobid = $offer->job_id;
 
-        if (isset($jobid)) {
-            $job = Offer::where(['id' => $offer_id])->update(['status' => $status]);
-            if ($job) {
+            if ($offer_updated) {
                 // send notification to the worker
+                $message = $full_name . ' has changed the status of your application to ' . $status;
+                $recruiter_id = $offer->recruiter_id;
+                $idWorker = $offer->worker_user_id;
+                $idWorker = Nurse::where('id', $idWorker)->first()->user_id;
+                $role = 'ADMIN';
+                $type = 'text';
+                $fileName = null;
                 $time = now()->toDateTimeString();
-                $receiver = $offer->worker_user_id;
-                $job_name = Job::where('id', $jobid)->first()->job_name;
-                event(new NotificationOffer($status, false, $time, $receiver, $organization_id, $full_name, $jobid, $job_name, $offer_id));
+                event(new NewPrivateMessage($message, $organization_id, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
+                // event(new NotificationOffer($status, false, $time, $receiver, $organization_id, $full_name, $jobid, $job_name, $offer_id));
                 $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
                 $statusCounts = [];
                 $offerLists = [];
@@ -598,9 +622,7 @@ class OrganizationApplicationController extends Controller
             } else {
                 return response()->json(['message' => 'Something went wrong! Please check']);
             }
-        } else {
-            return response()->json(['message' => 'Something went wrong! Please check']);
-        }
+
     }
 
     public function organization_counter_offer(Request $request)
@@ -608,7 +630,7 @@ class OrganizationApplicationController extends Controller
         try {
             $organization = Auth::guard('organization')->user();
             $organization_id = $organization->id;
-            $full_name = $organization->first_name . ' ' . $organization->last_name;
+            $full_name = $organization->organization_name;
             $offer_id = $request->id;
             $data = $request->data;
             $offer = Offer::where('id', $offer_id)->first();
@@ -617,9 +639,19 @@ class OrganizationApplicationController extends Controller
                 $offer->update($data);
                 $jobid = $offer->job_id;
                 $time = now()->toDateTimeString();
-                $receiver = $offer->worker_user_id;
-                $job_name = Job::where('id', $jobid)->first()->job_name;
-                event(new NotificationOffer('Offered', false, $time, $receiver, $organization_id, $full_name, $jobid, $job_name, $offer_id));
+                // $receiver = $offer->worker_user_id;
+                // $job_name = Job::where('id', $jobid)->first()->job_name;
+                // event(new NotificationOffer('Offered', false, $time, $receiver, $organization_id, $full_name, $jobid, $job_name, $offer_id));
+
+                $message =  $message = $full_name . ' has sent you a counter offer';
+                $recruiter_id = $offer->recruiter_id;
+                $idWorker = $offer->worker_user_id;
+                $idWorker = Nurse::where('id', $idWorker)->first()->user_id;
+                $role = 'ADMIN';
+                $type = 'text';
+                $fileName = null;
+                $time = now()->toDateTimeString();
+                event(new NewPrivateMessage($message, $organization_id, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
 
                 return response()->json([
                     'status' => 'success',
@@ -647,7 +679,7 @@ class OrganizationApplicationController extends Controller
         try {
             $user = Auth::guard('organization')->user();
             $organization_id = $user->id;
-            $full_name = $user->first_name . ' ' . $user->last_name;
+            $full_name = $user->organization_name;
             $validator = Validator::make($request->all(), [
                 'id' => 'required',
                 'jobid' => 'required',
@@ -658,6 +690,18 @@ class OrganizationApplicationController extends Controller
                     'message' => $validator->errors()->first(),
                 ];
             } else {
+
+                $offer = Offer::where('id', $request->id)->first();
+                $time = now()->toDateTimeString();
+                $action = $request->type == 'rejectcounter' ? 'Rejected' : 'Accepted';
+                $message = $full_name . ' has ' . $action . ' the job offer';
+                $recruiter_id = $offer->recruiter_id;
+                $idWorker = $offer->worker_user_id;
+                $idWorker = Nurse::where('id', $idWorker)->first()->user_id;
+                $role = 'ADMIN';
+                $type = 'text';
+                $fileName = null;
+
                 if ($request->type == 'rejectcounter') {
                     $update_array['is_counter'] = '0';
                     $update_array['is_draft'] = '0';
@@ -677,8 +721,9 @@ class OrganizationApplicationController extends Controller
                         $receiver = $offer->worker_user_id;
                         $job_name = Job::where('id', $jobid)->first()->job_name;
 
+                        event(new NewPrivateMessage($message, $organization_id, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
 
-                        event(new NotificationOffer('Rejected', false, $time, $receiver, $organization_id, $full_name, $jobid, $job_name, $id));
+                        // event(new NotificationOffer('Rejected', false, $time, $receiver, $organization_id, $full_name, $jobid, $job_name, $id));
                     }
                 } elseif ($request->type == 'offersend') {
                     $update_array['is_counter'] = '0';
@@ -712,7 +757,7 @@ class OrganizationApplicationController extends Controller
                         $receiver = $offer->worker_user_id;
                         $job_name = Job::where('id', $jobid)->first()->job_name;
 
-
+                        event(new NewPrivateMessage($message, $organization_id, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
                         event(new NotificationOffer('Offered', false, $time, $receiver, $organization_id, $full_name, $jobid, $job_name, $id));
 
                     }
@@ -733,10 +778,11 @@ class OrganizationApplicationController extends Controller
             //return response()->json(['workerId' => $workerId]);
 
             $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/list-docs', ['workerId' => $workerId]);
-            if ($response->successful()) {
-                return $response->body();
+            $api_response = json_decode($response->body());
+            if ($api_response->success) {
+                return response()->json(['success' => true, 'data' => $api_response->data->list]);
             } else {
-                return response()->json(['success' => false], $response->status());
+                return response()->json(['success' => false, 'message' => $api_response->message], $response->status());
             }
 
 
@@ -750,6 +796,14 @@ class OrganizationApplicationController extends Controller
         try {
             $bsonId = $request->input('bsonId');
             $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/get-doc', ['bsonId' => $bsonId]);
+
+            $api_response = json_decode($response->body());
+
+            if ($api_response->success) {
+                return json_encode($api_response->data);
+            } else {
+                return response()->json(['success' => false, 'message' => $api_response->message], $response->status());
+            }
 
             // Pass through the response from Node.js API
             return $response->body();

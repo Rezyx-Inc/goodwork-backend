@@ -1276,7 +1276,7 @@ button.ss-fliter-btn {
 }
 
 .ss-dash-profile-jb-mn-dv {
-    width: 88%;
+    width: 100%;
     margin: auto;
 }
 
@@ -1636,6 +1636,47 @@ ul.ss-msg-notifi-sec li {
     font-size: 12px;
 }
 
+.ss-msg-rply-admin-dv h6 {
+    font-size: 15px;
+    font-weight: 400;
+    padding-bottom: 5px;
+}
+
+.ss-msg-rply-admin-dv p {
+    background: rgb(181, 100, 158);
+    color: #fff;
+    padding: 8px 60px 8px 30px;
+    border-radius: 0px 14px 15px 15px;
+    display: table;
+    margin-top: 5px;
+    margin-bottom: 4px;
+}
+
+.ss-msg-rply-admin-dv span {
+    display: block;
+    font-size: 12px;
+}
+
+.ss-msg-rply-worker-dv h6 {
+    font-size: 15px;
+    font-weight: 400;
+    padding-bottom: 5px;
+}
+
+.ss-msg-rply-worker-dv p {
+    background: rgb(82, 222, 193);  
+    color: #000;
+    padding: 8px 60px 8px 30px;
+    border-radius: 0px 14px 15px 15px;
+    display: table;
+    margin-top: 5px;
+    margin-bottom: 4px;
+}
+
+.ss-msg-rply-worker-dv span {
+    display: block;
+    font-size: 12px;
+}
 
 .ss-msg-rply-black-dv h6 {
     font-weight: 400;

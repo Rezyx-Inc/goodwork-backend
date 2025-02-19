@@ -1179,6 +1179,26 @@ span.ui-slider-handle.ui-corner-all.ui-state-default:focus {
     border:0;
 }
 
+span.reset_mobile_mode{
+    border: 1px #3d2c39 solid;
+    background: #3d2c3998;
+    padding: 10px ;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    width: 100%;
+    border-radius: 100px;
+}
+
+@media (max-width: 576px) {
+    button.ss-fliter-btn, span.reset_mobile_mode {
+        font-size: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%
+    }
+}
 
 button.ss-fliter-btn {
     border: 0;
@@ -1192,11 +1212,10 @@ button.ss-fliter-btn {
 /* filter reset button */
 span.ss-reset-btn {
     border: 1px #3d2c39 solid;
-    cursor: pointer;
     background: #3d2c3998;
     padding: 10px ;
-    text-align: center;
     color: #fff;
+    text-align: center;
     font-size: 18px;
     width: 100%;
     border-radius: 100px;
@@ -1240,11 +1259,12 @@ span.ss-reset-btn {
 
 
 .ss-job-prfle-sec {
-    box-shadow: 10px 10px 0px 0px #403B4BE5;
-    border: 2px solid #3D2C39;
+    box-shadow: 5px 5px 0px 0px #6b647ae5;
+    border: 2px solid #aaa6a9;
     padding: 15px;
     border-bottom: 5px;
     margin-bottom: 30px;
+    margin-top: 30px;
     border-radius: 10px;
     position: relative;
     background: #fff;
@@ -1260,28 +1280,41 @@ span.ss-reset-btn {
     right: 12px;
 }*/
 
-.ss-job-prfle-sec ul {
+.ss-job-prfle-sec ul, .infos_like_ul {
     display: flex;
     list-style: none;
     padding:5px 0;
     gap: 9px;
 }
 
-.ss-job-prfle-sec ul li{
+.ss-job-prfle-sec ul li, .infos_like_ul{
     background: #FFEEEF;
     padding: 5px 11px;
     border-radius: 100px;
-    font-size: 16px;
     display: inline-block;
     font-weight: 500;
     color: #3b71ca;
     height: fit-content;
+    
+}
+
+@media (max-width: 576px) {
+    .ss-job-prfle-sec a, .ss-job-prfle-sec ul li,.infos_like_ul {
+        font-size: 13px;
+    }
+    /* .job-item .row>* {
+        padding: 0 5px;
+    } */
+}
+@media (min-width: 576px) {
+    .ss-job-prfle-sec a, .ss-job-prfle-sec ul li, .infos_like_ul{
+        font-size: 16px;
+    }
 }
 
 .ss-job-prfle-sec a {
     background: #FFEEEF;
     border-radius: 100px;
-    font-size: 16px;
     display: inline-block;
     font-weight: 500;
 }
@@ -1327,7 +1360,7 @@ span.ss-reset-btn {
 
 
 .ss-dash-profile-jb-mn-dv {
-    width: 88%;
+    width: 100%;
     margin: auto;
 }
 
@@ -1684,6 +1717,27 @@ ul.ss-msg-notifi-sec li {
 }
 
 .ss-msg-rply-recrut-dv span {
+    display: block;
+    font-size: 12px;
+}
+
+.ss-msg-rply-admin-dv h6 {
+    font-size: 15px;
+    font-weight: 400;
+    padding-bottom: 5px;
+}
+
+.ss-msg-rply-admin-dv p {
+    background: rgb(181, 100, 158);
+    color: #fff;
+    padding: 8px 60px 8px 30px;
+    border-radius: 0px 14px 15px 15px;
+    display: table;
+    margin-top: 5px;
+    margin-bottom: 4px;
+}
+
+.ss-msg-rply-admin-dv span {
     display: block;
     font-size: 12px;
 }
@@ -2511,7 +2565,7 @@ border-radius: 100px;
     align-items: center;
 }
 
-.ss-job-apply-on-tx-bx-hed-dv p {
+.ss-job-apply-on-tx-bx-hed-dv p, .mobile_header p {
     color: #006BC9;
     font-size: 14px;
     padding-bottom: 5px;
@@ -3201,3 +3255,25 @@ ul.ss-jb-dtlpop-chck li {
     justify-content: center !important;
 }
 
+
+
+.side-ads-container {
+    height: 80vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+    /* padding: 1rem; */
+}
+
+
+.landing-explore.side-ads-container {
+    height: 100vh;
+}
+
+/* Adjustments for mobile view */
+@media (max-width: 768px) {
+    .side-ads-container {
+        max-height: 75vh;
+        margin-top: 35px;
+    }
+}

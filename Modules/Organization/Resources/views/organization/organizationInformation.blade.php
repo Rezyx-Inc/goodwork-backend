@@ -78,7 +78,7 @@
 </div>
 <div class="ss-jb-apply-on-disc-txt col-md-12 mt-4 mb-3">
     <h5>Description</h5>
-    <p class="mb-3">{{ $jobdetails->description ?? 'Missing Description information' }}</p>
+    <p class="mb-3">{!! $jobdetails->description ?? 'Missing Description information' !!}</p>
 </div>
 
 <div class="ss-job-ap-on-offred-new-dv">

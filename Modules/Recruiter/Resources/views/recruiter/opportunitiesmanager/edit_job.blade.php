@@ -77,7 +77,7 @@
                                     <input type="text" name="job_id" id="job_idEdit"
                                         placeholder="Enter Work Id">
                                     <div> 
-                                            <span class="helper help-block-job_id"></span>
+                                            <span class="helper help-block-job_idEdit"></span>
                                     </div>
                                 </div>
 
@@ -95,7 +95,7 @@
                                     </select>
 
                                     <div> 
-                                    <span class="helper help-block-job_type"></span>
+                                    <span class="helper help-block-job_typeEdit"></span>
                                     </div>
                                 </div>
 
@@ -111,7 +111,7 @@
                                         @endforeach
                                     </select>
                                     <div> 
-                                    <span class="helper help-block-terms"></span>
+                                    <span class="helper help-block-termsEdit"></span>
                                     </div>
                                 </div>
 
@@ -128,7 +128,7 @@
                                         @endforeach
                                     </select>
                                     <div> 
-                                    <span class="helper help-block-perferred_profession"></span>
+                                    <span class="helper help-block-perferred_professionEdit"></span>
                                     </div>
                                 </div>
 
@@ -146,7 +146,7 @@
                                         @endforeach
                                     </select>
                                     <div> 
-                                    <span class="helper help-block-preferred_specialty"></span>
+                                    <span class="helper help-block-preferred_specialtyEdit"></span>
                                     </div>
                                 </div>
 
@@ -157,7 +157,7 @@
                                     <input type="number" name="actual_hourly_rate" id="actual_hourly_rateEdit"
                                         placeholder="Enter Taxable Regular Hourly rate">
                                     <div> 
-                                        <span class="helper help-block-actual_hourly_rate"></span>
+                                        <span class="helper help-block-actual_hourly_rateEdit"></span>
                                     </div>
                                 </div>
 
@@ -168,7 +168,7 @@
                                     <input type="number" step="0.01" name="weekly_pay" id="weekly_payEdit"
                                         placeholder="Enter Weekly Pay">
                                     <div> 
-                                        <span class="helper help-block-weekly_pay"></span>
+                                        <span class="helper help-block-weekly_payEdit"></span>
                                     </div>
                                 </div>
 
@@ -185,7 +185,7 @@
                                         @endforeach
                                     </select>
                                     <div> 
-                                    <span class="helper help-block-job_state"></span>
+                                    <span class="helper help-block-job_stateEdit"></span>
                                     </div>
                                 </div>
 
@@ -198,7 +198,7 @@
                                     </select>
                                     <div>
                                         <div> 
-                                        <span class="helper help-block-job_city"></span>
+                                        <span class="helper help-block-job_cityEdit"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -262,7 +262,7 @@
                                         </li>
                                     </ul>
                                     <div> 
-                                    <span class="helper help-block-shift_time_of_day"></span>
+                                    <span class="helper help-block-shift_time_of_dayEdit"></span>
                                     </div>
                                 </div>
 
@@ -272,7 +272,7 @@
                                     <input type="number" name="hours_per_week" id="hours_per_weekEdit"
                                         placeholder="Enter hours per week">
                                     <div> 
-                                        <span class="helper help-block-hours_per_week"></span>
+                                        <span class="helper help-block-hours_per_weekEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Guaranteed Hrs/wk --}}
@@ -281,7 +281,7 @@
                                     <input type="number" name="guaranteed_hours" id="guaranteed_hoursEdit"
                                         placeholder="Enter Guaranteed Hours per week">
                                     <div> 
-                                        <span class="helper help-block-guaranteed_hours"></span>
+                                        <span class="helper help-block-guaranteed_hoursEdit"></span>
                                     </div>
                                     </div>
                                 {{-- Hrs/Shift --}}
@@ -290,7 +290,7 @@
                                     <input type="number" name="hours_shift" id="hours_shiftEdit"
                                         placeholder="Enter Hours Per Shift">
                                     <div> 
-                                        <span class="helper help-block-hours_shift"></span>
+                                        <span class="helper help-block-hours_shiftEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Shifts/Wk --}}
@@ -300,7 +300,7 @@
                                     <input type="number" name="weeks_shift" id="weeks_shiftEdit"
                                         placeholder="Enter Shift Per Weeks">
                                     <div> 
-                                        <span class="helper help-block-weeks_shift"></span>
+                                        <span class="helper help-block-weeks_shiftEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Wks/Contract --}}
@@ -310,7 +310,7 @@
                                         id="preferred_assignment_durationEdit"
                                         placeholder="Enter Work Duration Per Assignment">
                                     <div> 
-                                        <span class="helper help-block-preferred_assignment_duration"></span>
+                                        <span class="helper help-block-preferred_assignment_durationEdit"></span>
                                     </div>
                                     </div>
                                 {{-- Start Date --}}
@@ -332,7 +332,7 @@
                                     <input id="start_dateEdit" type="date" min="2024-03-06" name="start_date"
                                         placeholder="Select Date" value="{{ date('Y-m-d') }}">
                                     <div> 
-                                        <span class="helper help-block-start_date"></span>
+                                        <span class="helper help-block-start_dateEdit"></span>
                                     </div>
                                 </div>
                                 {{-- End Date --}}
@@ -346,7 +346,7 @@
                                     <input id="end_dateEdit" type="date" min="2024-03-06" name="end_date"
                                         placeholder="Select Date" value="{{ date('Y-m-d') }}">
                                     <div> 
-                                        <span class="helper help-block-end_date"></span>
+                                        <span class="helper help-block-end_dateEdit"></span>
                                     </div>
                                 </div>
                                 {{-- RTO --}}
@@ -360,7 +360,7 @@
                                         </option>
                                     </select>
                                     <div> 
-                                    <span class="helper help-block-rto"></span>
+                                    <span class="helper help-block-rtoEdit"></span>
                                     </div>
                                 </div>
 
@@ -380,7 +380,7 @@
                                     <input type="number" name="overtime" id="overtimeEdit"
                                         placeholder="Enter actual Overtime Hourly rate">
                                     <div> 
-                                        <span class="helper help-block-overtime"></span>
+                                        <span class="helper help-block-overtimeEdit"></span>
                                     </div>
                                 </div>
                                 {{-- on call check --}}
@@ -395,7 +395,7 @@
                                         </option>
                                     </select>
                                     <div> 
-                                    <span class="helper help-block-on_call"></span>
+                                    <span class="helper help-block-on_callEdit"></span>
                                     </div>
                                 </div>
                                 {{-- On Call/Hr --}}
@@ -404,7 +404,7 @@
                                     <input type="number" name="on_call_rate" id="on_call_rateEdit"
                                         placeholder="Enter a call back hourly rate">
                                     <div> 
-                                        <span class="helper help-block-on_call_rate"></span>
+                                        <span class="helper help-block-on_call_rateEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Call Back/Hr --}}
@@ -413,11 +413,8 @@
                                     <input type="number" name="call_back_rate" id="call_back_rateEdit"
                                         placeholder="Enter Call Back Hourly rate">
                                     <div> 
-                                        <span class="helper help-block-call_back_rate"></span>
+                                        <span class="helper help-block-call_back_rateEdit"></span>
                                     </div>
-                                        <div> 
-                                    <span class="helper help-block-call_back_rate"></span>
-                                        </div>
                                 </div>
                                 {{-- Orientation/Hr --}}
                                 <div class="ss-form-group col-md-12">
@@ -425,7 +422,7 @@
                                     <input type="number" name="orientation_rate" id="orientation_rateEdit"
                                         placeholder="Enter Orientation Hourly rate">
                                     <div> 
-                                        <span class="helper help-block-orientation_rate"></span>
+                                        <span class="helper help-block-orientation_rateEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Taxable/Wk  --}}
@@ -435,7 +432,7 @@
                                         id="weekly_taxable_amountEdit"
                                         placeholder="Enter Weekly non-taxable amount">
                                     <div> 
-                                        <span class="helper help-block-weekly_taxable_amount"></span>
+                                        <span class="helper help-block-weekly_taxable_amountEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Non-taxable/Wk  --}}
@@ -445,7 +442,7 @@
                                         id="weekly_non_taxable_amountEdit"
                                         placeholder="Enter Weekly non-taxable amount">
                                     <div> 
-                                        <span class="helper help-block-weekly_non_taxable_amount"></span>
+                                        <span class="helper help-block-weekly_non_taxable_amountEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Feels Like $/hr --}}
@@ -454,7 +451,7 @@
                                     <input type="number" name="feels_like_per_hour" id="feels_like_per_hourEdit"
                                         placeholder="Enter Feels Like $/hrs">
                                     <div> 
-                                        <span class="helper help-block-feels_like_per_hour"></span>
+                                        <span class="helper help-block-feels_like_per_hourEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Gw$/Wk --}}
@@ -463,7 +460,7 @@
                                     <input type="number" name="goodwork_weekly_amount" id="goodwork_weekly_amountEdit"
                                         placeholder="Enter Gw$/Wk">
                                     <div> 
-                                        <span class="helper help-block-goodwork_weekly_amount"></span>
+                                        <span class="helper help-block-goodwork_weekly_amountEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Bonus --}}
@@ -472,7 +469,7 @@
                                     <input type="number" name="referral_bonus" id="referral_bonusEdit"
                                         placeholder="Enter referral bonus">
                                     <div> 
-                                        <span class="helper help-block-referral_bonus"></span>
+                                        <span class="helper help-block-referral_bonusEdit"></span>
                                     </div>
                                     </div>
                                 <div class="ss-form-group col-md-12">
@@ -480,7 +477,7 @@
                                     <input type="number" name="sign_on_bonus" id="sign_on_bonusEdit"
                                         placeholder="Enter sign on bonus">
                                     <div> 
-                                        <span class="helper help-block-sign_on_bonus"></span>
+                                        <span class="helper help-block-sign_on_bonusEdit"></span>
                                     </div>
                                     </div>
                                 <div class="ss-form-group col-md-12">
@@ -488,7 +485,7 @@
                                     <input type="number" name="completion_bonus" id="completion_bonusEdit"
                                         placeholder="Enter completion bonus">
                                     <div> 
-                                        <span class="helper help-block-completion_bonus"></span>
+                                        <span class="helper help-block-completion_bonusEdit"></span>
                                     </div>
                                     </div>
                                 <div class="ss-form-group col-md-12">
@@ -497,7 +494,7 @@
                                     <input type="number" name="extension_bonus" id="extension_bonusEdit"
                                         placeholder="Enter extension bonus">
                                     <div> 
-                                        <span class="helper help-block-extension_bonus"></span>
+                                        <span class="helper help-block-extension_bonusEdit"></span>
                                     </div>
                                     </div>
                                 <div class="ss-form-group col-md-12">
@@ -505,7 +502,7 @@
                                     <input type="number" name="other_bonus" id="other_bonusEdit"
                                         placeholder="Enter other bonus">
                                     <div> 
-                                        <span class="helper help-block-other_bonus"></span>
+                                        <span class="helper help-block-other_bonusEdit"></span>
                                     </div>
                                 </div>
 
@@ -517,7 +514,7 @@
                                         id="total_organization_amountEdit"
                                         placeholder="Enter Total Organization Amount">
                                     <div> 
-                                        <span class="helper help-block-total_organization_amount"></span>
+                                        <span class="helper help-block-total_organization_amountEdit"></span>
                                     </div>
                                 </div>
 
@@ -529,7 +526,7 @@
                                         id="total_goodwork_amountEdit"
                                         placeholder="Enter Total Goodwork Amount">
                                     <div> 
-                                        <span class="helper help-block-total_goodwork_amount"></span>
+                                        <span class="helper help-block-total_goodwork_amountEdit"></span>
                                     </div>
                                 </div>
 
@@ -541,7 +538,7 @@
                                         id="total_contract_amountEdit"
                                         placeholder="Enter Total Contract Amount">
                                     <div> 
-                                        <span class="helper help-block-total_contract_amount"></span>
+                                        <span class="helper help-block-total_contract_amountEdit"></span>
                                     </div>
                                 </div>
 
@@ -557,7 +554,7 @@
                                         @endforeach
                                     </select>
                                     <div> 
-                                    <span class="helper help-block-pay_frequency"></span>
+                                    <span class="helper help-block-pay_frequencyEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Benefits --}}
@@ -587,7 +584,7 @@
                                         </li>
                                     </ul>
                                     <div> 
-                                    <span class="helper help-block-benefits"></span>
+                                    <span class="helper help-block-benefitsEdit"></span>
                                     </div>
                                 </div>
 
@@ -612,7 +609,7 @@
                                         @endforeach
                                     </select>
                                     <div> 
-                                    <span class="helper help-block-clinical_setting"></span>
+                                    <span class="helper help-block-clinical_settingEdit"></span>
                                     </div>
                                 </div>
                                 
@@ -622,7 +619,7 @@
                                     <input type="text" name="preferred_work_location"
                                         id="preferred_work_locationEdit" placeholder="Enter Facilty address">
                                     <div> 
-                                        <span class="helper help-block-preferred_work_location"></span>
+                                        <span class="helper help-block-preferred_work_locationEdit"></span>
                                     </div>
                                 </div>
 
@@ -633,7 +630,7 @@
                                     <input type="text" name="facility_name" id="facility_nameEdit"
                                         placeholder="Enter facility name">
                                     <div> 
-                                        <span class="helper help-block-facility_name"></span>
+                                        <span class="helper help-block-facility_nameEdit"></span>
                                     </div>
                                 </div>
 
@@ -645,7 +642,7 @@
                                         id="facilitys_parent_systemEdit"
                                         placeholder="Enter facility's parent system">
                                     <div> 
-                                        <span class="helper help-block-facilitys_parent_system"></span>
+                                        <span class="helper help-block-facilitys_parent_systemEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Shift Cancellation Policy --}}
@@ -655,7 +652,7 @@
                                         id="facility_shift_cancelation_policyEdit"
                                         placeholder="Select your shift cancellation policy">
                                     <div> 
-                                        <span class="helper help-block-facility_shift_cancelation_policy"></span>
+                                        <span class="helper help-block-facility_shift_cancelation_policyEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Contract Termination Policy --}}
@@ -665,7 +662,7 @@
                                         id="contract_termination_policyEdit"
                                         placeholder="Enter your contract termination policy">
                                     <div> 
-                                        <span class="helper help-block-contract_termination_policy"></span>
+                                        <span class="helper help-block-contract_termination_policyEdit"></span>
                                     </div>
                                 </div>
 
@@ -676,7 +673,7 @@
                                         id="traveler_distance_from_facilityEdit"
                                         placeholder="Enter travel distance">
                                     <div> 
-                                        <span class="helper help-block-traveler_distance_from_facility"></span>
+                                        <span class="helper help-block-traveler_distance_from_facilityEdit"></span>
                                     </div>
                                 </div>
 
@@ -718,7 +715,7 @@
                                         </li>
                                     </ul>
                                     <div> 
-                                    <span class="helper help-block-professional_licensure"></span>
+                                    <span class="helper help-block-professional_licensureEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Certifications --}}
@@ -749,7 +746,7 @@
                                         </li>
                                     </ul>
                                     <div> 
-                                    <span class="helper help-block-certificate"></span>
+                                    <span class="helper help-block-certificateEdit"></span>
                                     </div>
                                 </div>
 
@@ -768,7 +765,7 @@
                                     <label>Description</label>
                                     <textarea type="text" name="description" id="descriptionEdit" placeholder="Enter Work Description"></textarea>
                                     <div> 
-                                    <span class="helper help-block-description"></span>
+                                    <span class="helper help-block-descriptionEdit"></span>
                                     </div>
                                 </div>
                                     {{-- Auto Offer --}}
@@ -786,7 +783,7 @@
                                     </div>
                                     
                                     <div> 
-                                        <span class="helper help-block-urgency"></span>
+                                        <span class="helper help-block-urgencyEdit"></span>
                                     </div>
                                 </div>
                                
@@ -796,7 +793,7 @@
                                     <input type="number" name="preferred_experience"
                                         id="preferred_experienceEdit" placeholder="Enter Experience">
                                     <div> 
-                                        <span class="helper help-block-preferred_experience"></span>
+                                        <span class="helper help-block-preferred_experienceEdit"></span>
                                     </div>
                                 </div>
                                 {{-- number of references --}}
@@ -805,7 +802,7 @@
                                     <input type="number" name="number_of_references"
                                         id="number_of_referencesEdit" placeholder="Enter number of references">
                                     <div> 
-                                        <span class="helper help-block-number_of_references"></span>
+                                        <span class="helper help-block-number_of_referencesEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Skills --}}
@@ -835,7 +832,7 @@
                                         </li>
                                     </ul>
                                     <div> 
-                                    <span class="helper help-block-skills"></span>
+                                    <span class="helper help-block-skillsEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Block scheduling --}}
@@ -850,7 +847,7 @@
                                         </option>
                                     </select>
                                     <div> 
-                                    <span class="helper help-block-block_scheduling"></span>
+                                    <span class="helper help-block-block_schedulingEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Floating requirements --}}
@@ -865,7 +862,7 @@
                                         </option>
                                     </select>
                                     <div> 
-                                    <span class="helper help-block-float_requirement"></span>
+                                    <span class="helper help-block-float_requirementEdit"></span>
                                     </div>
                                 </div>
                                 {{-- Patient Ratio Max --}}
@@ -874,7 +871,7 @@
                                     <input type="number" name="Patient_ratio" id="Patient_ratioEdit"
                                         placeholder="Enter Patient ratio">
                                     <div> 
-                                        <span class="helper help-block-Patient_ratio"></span>
+                                        <span class="helper help-block-Patient_ratioEdit"></span>
                                     </div>
                                 </div>
 
@@ -906,7 +903,7 @@
                                         </li>
                                     </ul>
                                     <div> 
-                                    <span class="helper help-block-Emr"></span>
+                                    <span class="helper help-block-EmrEdit"></span>
                                     </div>
                                 </div>
 
@@ -917,7 +914,7 @@
                                     <input type="text" name="Unit" id="UnitEdit"
                                         placeholder="Enter Unit">
                                     <div> 
-                                        <span class="helper help-block-Unit"></span>
+                                        <span class="helper help-block-UnitEdit"></span>
                                     </div>
                                 </div>
 
@@ -959,7 +956,7 @@
                                         </li>
                                     </ul>
                                     <div> 
-                                    <span class="helper help-block-nurse_classification"></span>
+                                    <span class="helper help-block-nurse_classificationEdit"></span>
                                     </div>
                                 </div>
 
@@ -1004,7 +1001,7 @@
                                             </li>
                                         </ul>
                                         <div> 
-                                        <span class="helper help-block-vaccinations"></span>
+                                        <span class="helper help-block-vaccinationsEdit"></span>
                                         </div>
                                     </div>
 
@@ -1025,7 +1022,7 @@
                                     <input type="text" name="scrub_color" id="scrub_colorEdit"
                                         placeholder="Enter scrub color">
                                     <div> 
-                                        <span class="helper help-block-scrub_color"></span>
+                                        <span class="helper help-block-scrub_colorEdit"></span>
                                     </div>
                                     </div>
                                 
@@ -1035,7 +1032,7 @@
                                     <input type="text" name="job_name" id="job_nameEdit"
                                         placeholder="Enter Work name">
                                     <div> 
-                                        <span class="helper help-block-job_name"></span>
+                                        <span class="helper help-block-job_nameEdit"></span>
                                     </div>
                                 </div>
                                  
@@ -1062,7 +1059,7 @@
                                         </li>
                                     </ul>
                                     <div> 
-                                        <span class="helper help-block-holiday"></span>
+                                        <span class="helper help-block-holidayEdit"></span>
                                     </div>
                                 </div>
                                           
@@ -1091,7 +1088,7 @@
                                             </div>
                                         </div>
                                         <div> 
-                                        <span class="helper help-block-professional_state_licensure"></span>
+                                        <span class="helper help-block-professional_state_licensureEdit"></span>
                                         </div>
                                 </div>
                             </div>

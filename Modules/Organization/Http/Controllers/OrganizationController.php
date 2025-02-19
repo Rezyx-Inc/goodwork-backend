@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\register;
 use App\Mail\RegisterRecruiter;
+use App\Mail\VerifyNewEmail;
 
 
 class OrganizationController extends Controller
@@ -101,6 +102,10 @@ class OrganizationController extends Controller
     {
         $idRecruiter = $request->query('recruiterId');
         $idWorker = $request->query('workerId');
+        $nurse = Nurse::where('id', $idWorker)->first();
+        if(isset($nurse)){
+            $idWorker = $nurse->user_id;
+        }
         $page = $request->query('page', 1);
 
         $idOrganization = Auth::guard('organization')->user()->id;
@@ -241,7 +246,7 @@ class OrganizationController extends Controller
             ->first();
 
         if ($worker) {
-            $nameworker = $user->fullName;
+            $nameworker = $worker->fullName;
         } else {
             // Handle the case where no user is found
             $nameworker = 'Default Name';
@@ -529,12 +534,12 @@ class OrganizationController extends Controller
             $created_by = Auth::guard('organization')->user()->id;
             // Validate the form data
 
-            $active = $request->input('active');
+            $is_open = $request->input('is_open');
 
             // $active = $activeRequest['active'];
             $validatedData = [];
 
-            if ($active == 'false') {
+            if ($is_open == 'false') {
 
                 $validatedData = $request->validate([
                     'job_type' => 'nullable|string',
@@ -627,7 +632,7 @@ class OrganizationController extends Controller
                 
                     $job->organization_id = $created_by;
                     $job->created_by = $created_by;
-                    $job->active = false;
+                    $job->active = true;
                     $job->is_open = false;
 
                     // Check if the is_resume bool is set
@@ -639,69 +644,83 @@ class OrganizationController extends Controller
                 } catch (Exception $e) {
                     return response()->json(['success' => false, 'message' => $e->getMessage()]);
                 }
-            } elseif ($active == "true") {
+            } elseif ($is_open == "true") {
                 //return request()->all();
 
                 $validatedData = $request->validate([
                     
-                    'job_type' => 'required|string',
-                    'job_name' => 'nullable|string',
                     'job_id' => 'nullable|string',
+                    
+                    'job_type' => 'nullable|string',
+                    'terms' => 'required|string',
+                    'preferred_specialty' => 'required|string',
+                    'profession' => 'required|string',
+                    'actual_hourly_rate' => 'nullable|string',
+                    'weekly_pay' => 'nullable|numeric',
+                    'job_state' => 'required|string',
                     'job_city' => 'required|string',
                     'is_resume' => 'nullable|string',
-                    'job_state' => 'required|string',
-                    'weekly_pay' => 'required|numeric',
-                    'preferred_specialty' => 'required|string',
-                    'preferred_work_location' => 'nullable|string',
-                    'preferred_experience' => 'nullable|integer',
-                    'description' => 'nullable|string',
-                    'terms' => 'nullable|string',
-                    'start_date' => 'nullable|date',
-                    'hours_shift' => 'nullable|integer',
-                    'facility_shift_cancelation_policy' => 'nullable|string',
-                    'traveler_distance_from_facility' => 'nullable|string',
-                    'clinical_setting' => 'nullable|string',
-                    'Patient_ratio' => 'nullable|string',
-                    'Unit' => 'nullable|string',
-                    'scrub_color' => 'nullable|string',
-                    'rto' => 'nullable|string',
+
+                    'preferred_shift_duration' => 'nullable|string',
+                    'hours_per_week' => 'nullable|integer',
                     'guaranteed_hours' => 'nullable|string',
+                    'hours_shift' => 'nullable|integer',
                     'weeks_shift' => 'nullable|string',
-                    'referral_bonus' => 'nullable|string',
-                    'sign_on_bonus' => 'nullable|string',
-                    'completion_bonus' => 'nullable|numeric',
-                    'extension_bonus' => 'nullable|numeric',
-                    'other_bonus' => 'nullable|numeric',
-                    'actual_hourly_rate' => 'nullable|numeric',
+                    'preferred_assignment_duration' => 'nullable|string',
+                    'as_soon_as' => 'nullable|integer',
+                    'start_date' => 'nullable|date',
+                    'end_date' => 'nullable|date',
+                    'rto' => 'nullable|string',
+
                     'overtime' => 'nullable|string',
-                    'holiday' => 'nullable|string',
-                    'orientation_rate' => 'nullable|string',
                     'on_call' => 'nullable|string',
                     'on_call_rate' => 'nullable|string',
                     'call_back_rate' => 'nullable|string',
+                    'orientation_rate' => 'nullable|string',
+                    'weekly_taxable_amount' => 'nullable|string',
                     'weekly_non_taxable_amount' => 'nullable|string',
-                    'profession' => 'nullable|string',
-                    'Emr' => 'nullable|string',
-                    'preferred_assignment_duration' => 'nullable|string',
-                    'block_scheduling' => 'nullable|string',
-                    'contract_termination_policy' => 'nullable|string',
-                    'job_location' => 'nullable|string',
-                    'vaccinations' => 'nullable|string',
-                    'number_of_references' => 'nullable|integer',
-                    'min_title_of_reference' => 'nullable|string',
-                    'eligible_work_in_us' => 'nullable|boolean',
-                    'recency_of_reference' => 'nullable|integer',
-                    'certificate' => 'nullable|string',
-                    'preferred_shift_duration' => 'nullable|string',
-                    'skills' => 'nullable|string',
-                    'urgency' => 'nullable|string',
-                    'facilitys_parent_system' => 'nullable|string',
-                    'facility_name' => 'nullable|string',
-                    'nurse_classification' => 'nullable|string',
+                    'feels_like_per_hour' => 'nullable|string',
+                    'goodwork_weekly_amount' => 'nullable|string',
+                    'referral_bonus' => 'nullable|string',
+                    'sign_on_bonus' => 'nullable|string',
+                    'completion_bonus' => 'nullable|string',
+                    'extension_bonus' => 'nullable|string',
+                    'other_bonus' => 'nullable|string',
+                    'total_organization_amount' => 'nullable|string',
+                    'total_goodwork_amount' => 'nullable|string',
+                    'total_contract_amount' => 'nullable|string',
                     'pay_frequency' => 'nullable|string',
                     'benefits' => 'nullable|string',
-                    'feels_like_per_hour' => 'nullable|string',
-                    'as_soon_as' => 'nullable|integer',
+
+                    'clinical_setting' => 'nullable|string',
+                    'preferred_work_location' => 'nullable|string',
+                    'facility_name' => 'nullable|string',
+                    'facilitys_parent_system' => 'nullable|string',
+                    'facility_shift_cancelation_policy' => 'nullable|string',
+                    'contract_termination_policy' => 'nullable|string',
+                    'traveler_distance_from_facility' => 'nullable|string',
+                    'job_location' => 'nullable|string',
+
+                    'certificate' => 'nullable|string',
+
+                    'description' => 'nullable|string',
+                    'urgency' => 'nullable|string',
+                    'preferred_experience' => 'nullable|integer',
+                    'number_of_references' => 'nullable|integer',
+
+                    'skills' => 'nullable|string',
+                    'block_scheduling' => 'nullable|string',
+                    'float_requirement' => 'nullable|string',
+                    'Patient_ratio' => 'nullable|string',
+                    'Emr' => 'nullable|string',
+                    'Unit' => 'nullable|string',
+                    'nurse_classification' => 'nullable|string',
+
+                    'vaccinations' => 'nullable|string',
+
+                    'scrub_color' => 'nullable|string',
+                    'job_name' => 'nullable|string',
+                    'holiday' => 'nullable|string',
                     'professional_state_licensure' => 'nullable|string',
                 ]);
 
@@ -740,7 +759,7 @@ class OrganizationController extends Controller
                 $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
                 $job->organization_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
                 $job->total_organization_amount = ($job->preferred_assignment_duration * $job->organization_weekly_amount) + ($job->sign_on_bonus + $job->completion_bonus);
-                $job->goodwork_weekly_amount = ($job->organization_weekly_amount) * 0.05;
+                $job->goodwork_weekly_amount = ($job->organization_weekly_amount) * 0.08;
                 $job->total_goodwork_amount = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
                 $job->total_contract_amount = $job->total_goodwork_amount + $job->total_organization_amount;
                 
@@ -755,11 +774,12 @@ class OrganizationController extends Controller
                     'id' => $job->organization_id,
                 ]);
 
-                if ($AssignmentResponse->status() == 200) {
-                    $recruiterId = $AssignmentResponse->body();
+                $api_response = json_decode($AssignmentResponse->body());
+                if ($api_response->success) {
+                    $recruiterId = $api_response->data->id;
                     $job->recruiter_id = $recruiterId;
                     $job->save();
-                } 
+                }
 
             } else {
 
@@ -861,7 +881,6 @@ class OrganizationController extends Controller
                     'benefits' => 'nullable|string',
                     'feels_like_per_hour' => 'nullable|string',
                     'as_soon_as' => 'nullable|integer',
-                    'active' => '0',
                     'professional_state_licensure' => 'nullable|string',
 
             ]);
@@ -891,7 +910,7 @@ class OrganizationController extends Controller
             
             $job->organization_id = Auth::guard('organization')->user()->id;
             $job->created_by = Auth::guard('organization')->user()->id;
-            $job->active = false;
+            $job->active = true;
             $job->is_open = false;
             
             // Check if the is_resume bool is set
@@ -958,66 +977,80 @@ class OrganizationController extends Controller
         $validatedData = [];
         try {
             $validatedData = $request->validate([
-                'job_type' => 'required|string',
-                'job_name' => 'required|string',
+                    
                 'job_id' => 'nullable|string',
-                'job_city' => 'required|string',
-                'job_state' => 'required|string',
-                'is_resume' => 'nullable|string',
-                'weekly_pay' => 'required|numeric',
+                
+                'job_type' => 'nullable|string',
+                'terms' => 'required|string',
                 'preferred_specialty' => 'required|string',
-                'preferred_work_location' => 'nullable|string',
-                'description' => 'nullable|string',
-                'terms' => 'nullable|string',
-                'start_date' => 'nullable|date',
-                'hours_shift' => 'nullable|integer',
-                'facility_shift_cancelation_policy' => 'nullable|string',
-                'traveler_distance_from_facility' => 'nullable|string',
-                'clinical_setting' => 'nullable|string',
-                'Patient_ratio' => 'nullable|string',
-                'Unit' => 'nullable|string',
-                'scrub_color' => 'nullable|string',
-                'preferred_experience' => 'nullable|integer',
-                'rto' => 'nullable|string',
+                'profession' => 'required|string',
+                'actual_hourly_rate' => 'nullable|string',
+                'weekly_pay' => 'nullable|numeric',
+                'job_state' => 'required|string',
+                'job_city' => 'required|string',
+                'is_resume' => 'nullable|string',
+
+                'preferred_shift_duration' => 'nullable|string',
+                'hours_per_week' => 'nullable|integer',
                 'guaranteed_hours' => 'nullable|string',
+                'hours_shift' => 'nullable|integer',
                 'weeks_shift' => 'nullable|string',
+                'preferred_assignment_duration' => 'nullable|string',
+                'as_soon_as' => 'nullable|integer',
+                'start_date' => 'nullable|date',
+                'end_date' => 'nullable|date',
+                'rto' => 'nullable|string',
+
+                'overtime' => 'nullable|string',
+                'on_call' => 'nullable|string',
+                'on_call_rate' => 'nullable|string',
+                'call_back_rate' => 'nullable|string',
+                'orientation_rate' => 'nullable|string',
+                'weekly_taxable_amount' => 'nullable|string',
+                'weekly_non_taxable_amount' => 'nullable|string',
+                'feels_like_per_hour' => 'nullable|string',
+                'goodwork_weekly_amount' => 'nullable|string',
                 'referral_bonus' => 'nullable|string',
                 'sign_on_bonus' => 'nullable|string',
-                'completion_bonus' => 'nullable|numeric',
-                'extension_bonus' => 'nullable|numeric',
-                'other_bonus' => 'nullable|numeric',
-                'actual_hourly_rate' => 'nullable|numeric',
-                'overtime' => 'nullable|string',
-                'holiday' => 'nullable|string',
-                'orientation_rate' => 'nullable|string',
-                'on_call' => 'nullable|string',
-                'call_back_rate' => 'nullable|string',
-                'weekly_non_taxable_amount' => 'nullable|string',
-                'profession' => 'nullable|string',
-                'Emr' => 'nullable|string',
-                'preferred_assignment_duration' => 'nullable|string',
-                'block_scheduling' => 'nullable|string',
-                'contract_termination_policy' => 'nullable|string',
-                'on_call_rate' => 'nullable|string',
-                'job_location' => 'nullable|string',
-                'vaccinations' => 'nullable|string',
-                'number_of_references' => 'nullable|integer',
-                'min_title_of_reference' => 'nullable|string',
-                'eligible_work_in_us' => 'nullable|boolean',
-                'recency_of_reference' => 'nullable|integer',
-                'certificate' => 'nullable|string',
-                'preferred_shift_duration' => 'nullable|string',
-                'skills' => 'nullable|string',
-                'urgency' => 'nullable|string',
-                'facilitys_parent_system' => 'nullable|string',
-                'facility_name' => 'nullable|string',
-                'nurse_classification' => 'nullable|string',
+                'completion_bonus' => 'nullable|string',
+                'extension_bonus' => 'nullable|string',
+                'other_bonus' => 'nullable|string',
+                'total_organization_amount' => 'nullable|string',
+                'total_goodwork_amount' => 'nullable|string',
+                'total_contract_amount' => 'nullable|string',
                 'pay_frequency' => 'nullable|string',
                 'benefits' => 'nullable|string',
-                'feels_like_per_hour' => 'nullable|string',
-                'as_soon_as' => 'nullable|integer',
-                'professional_state_licensure' => 'nullable|string',
 
+                'clinical_setting' => 'nullable|string',
+                'preferred_work_location' => 'nullable|string',
+                'facility_name' => 'nullable|string',
+                'facilitys_parent_system' => 'nullable|string',
+                'facility_shift_cancelation_policy' => 'nullable|string',
+                'contract_termination_policy' => 'nullable|string',
+                'traveler_distance_from_facility' => 'nullable|string',
+                'job_location' => 'nullable|string',
+
+                'certificate' => 'nullable|string',
+
+                'description' => 'nullable|string',
+                'urgency' => 'nullable|string',
+                'preferred_experience' => 'nullable|integer',
+                'number_of_references' => 'nullable|integer',
+
+                'skills' => 'nullable|string',
+                'block_scheduling' => 'nullable|string',
+                'float_requirement' => 'nullable|string',
+                'Patient_ratio' => 'nullable|string',
+                'Emr' => 'nullable|string',
+                'Unit' => 'nullable|string',
+                'nurse_classification' => 'nullable|string',
+
+                'vaccinations' => 'nullable|string',
+
+                'scrub_color' => 'nullable|string',
+                'job_name' => 'nullable|string',
+                'holiday' => 'nullable|string',
+                'professional_state_licensure' => 'nullable|string',
             ]);
 
             $job = Job::find($request->id);
@@ -1058,7 +1091,7 @@ class OrganizationController extends Controller
             $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
             $job->organization_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
             $job->total_organization_amount = ($job->preferred_assignment_duration * $job->organization_weekly_amount) + ($job->sign_on_bonus + $job->completion_bonus);
-            $job->goodwork_weekly_amount = ($job->organization_weekly_amount) * 0.05;
+            $job->goodwork_weekly_amount = ($job->organization_weekly_amount) * 0.08;
             $job->total_goodwork_amount = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
             $job->total_contract_amount = $job->total_goodwork_amount + $job->total_organization_amount;
             
@@ -1197,15 +1230,14 @@ public function recruiters_management()
     $orgId = Auth::guard('organization')->user()->id;
 
     $scriptResponse = Http::get('http://localhost:'. config('app.file_api_port') .'/organizations/getRecruiters/' . $orgId);
-
-   
-
-    $responseData = $scriptResponse->json();
-    if(isset($responseData)) {
     
-    $ids = array_map(function($recruiter) {
-        return $recruiter['id'];
-    }, $responseData);
+    $responseData = json_decode($scriptResponse->body());
+    
+    if($responseData->success) {
+    
+        $ids = array_map(function($recruiter) {
+            return $recruiter->id;
+        }, $responseData->data->recruiters);
 
     $recruiters = User::whereIn('id', $ids)->where('role', 'RECRUITER')->get();
     } else {
@@ -1230,9 +1262,9 @@ public function recruiters_management()
             'id' => $recruiter_id,
         ]);
 
-        //return $scriptResponse;
+        $api_response = json_decode($scriptResponse->body());
 
-        if ($scriptResponse->failed()) {
+        if (!$api_response->success) {
             $data = [];
             $data['msg'] = "error 99";
             $data['success'] = false;
@@ -1406,7 +1438,9 @@ public function recruiters_management()
 
                     //return $scriptResponse;
 
-                    if ($scriptResponse->failed()) {
+                    $api_response = json_decode($scriptResponse->body());
+
+                    if (!$api_response->success) {
                         $data = [];
                         $data['msg'] = "Unexpected error, please contact support@goodwork.world";
                         $data['success'] = false;
@@ -1540,17 +1574,29 @@ public function recruiters_management()
     public function get_preferences(Request $request){
         try{    
 
-            // $columns = Schema::getColumnListing('jobs');
-            // $columns = array_diff($columns, ['id','import_id','facility_id','created_at','updated_at','created_by','deleted_at','recruiter_id','organization_id']);
             $orgId = Auth::guard('organization')->user()->id;
             $columns = Http::get('http://localhost:'. config('app.file_api_port') .'/organizations/getFieldsRules');
             $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/get-preferences', [
                 'id' => $orgId,
             ]);
-            $requiredFields = $requiredFields->json();
-            $columns = $columns->json();
+            $requiredFields = json_decode($requiredFields->body());
+            $columns = json_decode($columns->body());
 
-            $columns = $columns[0]["ruleFields"];
+            if($columns->success == false){
+                return response()->json([
+                    'msg' => $columns->message,
+                    'success' => false
+                ]);
+            }else{
+                $columns = $columns->data[0]->ruleFields;
+            }
+
+            if($requiredFields->success == false){
+                $requiredFields = [];
+            }else{
+                $requiredFields = $requiredFields->data->preferences;
+            }
+
             //return response()->json(['columns'=>$columns]);
             //return $columns;
             return view('organization::organization.organization_rules_management', compact('columns','requiredFields'));
@@ -1568,13 +1614,22 @@ public function recruiters_management()
 
     public function add_preferences(Request $request){
         try{
-
             $orgId = Auth::guard('organization')->user()->id;
+            $preferences = $request->preferences;
+            
             $response = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/add-preferences', [
                 'id' => $orgId,
-                'preferences' => $request->preferences,
+                'preferences' => $preferences,
             ]);
-            return $response;
+            $api_response = json_decode($response->body());
+
+            if($api_response->success == false){
+                return response()->json([
+                    'msg' => $api_response->message,
+                    'success' => false
+                ]);
+            }
+            return response()->json($api_response);
 
         }catch(\Exeption $ex ){
 
@@ -1595,11 +1650,27 @@ public function recruiters_management()
             $job = Job::where('id', $jobId)->first();
             $orgId = Auth::guard('organization')->user()->id;
 
-            $AssignmentResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/manuelRecruiterAssignment/' . $orgId, [
+            $workers_id = [];
+            $offers = Offer::where('job_id', $jobId)->get();
+
+            if (sizeof($offers) > 0) {
+                foreach ($offers as $offer) {
+                    $user_id = Nurse::where('id', $offer->worker_user_id)->pluck('user_id')->first();
+                    $workers_id[] = $user_id;
+                }
+            }
+
+            //return response()->json(['success' => true, 'workers_ids' => $workers_id]);
+            //{"success":true,"workers_ids":["GWU000005"]}
+
+            $AssignmentResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/manualRecruiterAssignment/' . $orgId, [
                 'id' => $recruiterId,
+                'workers_id' => $workers_id,
             ]);
 
-            if ($AssignmentResponse->status() == 200) {
+            $api_response = json_decode($AssignmentResponse->body());
+            
+            if ($api_response->success == true) {
                 $offers = Offer::where('job_id', $jobId)->get();
 
                 foreach ($offers as $offer) {
@@ -1612,7 +1683,7 @@ public function recruiters_management()
 
             } else {
 
-                return response()->json(['error' => "An error occurred: " . $AssignmentResponse->body()], 500);
+                return response()->json(['error' => "An error occurred: " . $api_response->message], 500);
 
             }
 
@@ -1623,6 +1694,82 @@ public function recruiters_management()
             return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
 
         }
+    }
+
+
+
+    // Send OTP to the user's new email
+    public function sendOtp(Request $request)
+    {
+        try {
+        
+            $user = Auth::guard('organization')->user();
+        
+            // Validate the email
+            $request->validate([
+                'email' => 'required|email'
+            ]);
+        
+            //  Check if the email is already in use
+            if (User::where('email', $request->email)->exists()) {
+                return response()->json(['status' => false, 'message' => 'The email is already exist.'], 400);
+            }      
+            
+            // Generate a verification code
+            $code = rand(1000, 9999);
+        
+            // Update the user's email verification status
+            $user->email_verified_at = null;
+            $user->otp = $code;
+            $user->save();
+        
+            // Prepare email data
+            $email_data = [
+                'name' => $user->first_name . ' ' . $user->last_name,
+                'subject' => 'Verify Your New Email',
+                'code' => $code,
+                'new_email' => $request->email,
+            ];
+        
+            // Send the email
+            Mail::to($request->email)->send(new VerifyNewEmail($email_data));
+        
+            return response()->json(['status' => true ,'message' => 'Verification email sent successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => "An error occurred while sending the verification email. Please try again later."], 500);
+        }
+    }
+
+
+    // verify the OTP and Update the email
+    public function updateEmail(Request $request)
+    {
+       try {
+            $user = Auth::guard('organization')->user();
+        
+            // Validate the email
+            $request->validate([
+                'otp' => 'required|numeric',
+            ]);
+        
+            // Check if the OTP is correct
+            if ($request->otp == $user->otp) {
+
+                $user->email = $request->email;
+                $user->otp = null;
+                $user->save();
+
+                // Send a success response
+                return response()->json(['status' => true ,'message' => 'Email updated successfully.'], 200);
+            } else {
+                // Send an error response
+                return response()->json(['status' => false , 'message' => 'Invalid OTP.'], 400);
+            }
+        
+                   
+       } catch (\Throwable $th) {
+        return response()->json(['error' => "An error occurred while updating the email."],);
+       }
     }
 
 }

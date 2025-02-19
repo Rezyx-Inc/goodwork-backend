@@ -30,6 +30,7 @@ use App\Mail\support;
 use Illuminate\Support\Facades\Http;
 use App\Events\NotificationJob;
 use App\Events\NotificationOffer;
+use App\Events\NewPrivateMessage;
 
 /* *********** Requests *********** */
 use App\Http\Requests\{UserEditProfile, ChangePasswordRequest, ShippingRequest, BillingRequest};
@@ -37,6 +38,7 @@ use App\Http\Requests\{UserEditProfile, ChangePasswordRequest, ShippingRequest, 
 /** Models */
 
 use App\Models\{User, Nurse, Follows, NurseReference, Job, Offer, NurseAsset, Keyword, Facility, Availability, Countries, States, Cities, JobSaved, State, OffersLogs};
+use Illuminate\Support\Facades\Log;
 
 define('default_max_step', 5);
 define('min_increment', 1);
@@ -356,7 +358,9 @@ class WorkerDashboardController extends Controller
     $worker_id = ['workerId' => $nurse['id']];
     $response = Http::get($url, $worker_id);
 
-    if ($response->json() !== null) {
+    $body = json_decode($response->body());
+
+    if ($body->success) {
       $progress += 1;
     }
 
@@ -386,162 +390,16 @@ class WorkerDashboardController extends Controller
     return view('worker::dashboard.my_work_journey', $data);
   }
 
-  // public function explore(Request $request)
-  // {
-  //   // GW Number
-  //   $gwNumber = $request->input('gw', '');
-
-  //   // Build the query
-  //   $ret = Job::where('active', '1');
-
-
-  //   // Initialize data array
-  //   $data = [];
-  //   $data['user'] = auth()->guard('frontend')->user();
-  //   $data['jobSaved'] = new JobSaved();
-
-  //   // Fetch related data
-  //   $data['specialities'] = Speciality::select('full_name')->get();
-  //   $data['professions'] = Profession::select('full_name')->get();
-  //   $data['terms_key'] = Keyword::where(['filter' => 'terms'])->get();
-  //   $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
-  //   $usa = Countries::where(['iso3' => 'USA'])->first();
-  //   $data['us_states'] = States::where('country_id', $usa->id)->get();
-
-  //   // Set filter values from the request, use null as the default if not provided
-  //   $data['profession'] = $request->input('profession');
-  //   $data['speciality'] = $request->input('speciality');
-  //   $data['experience'] = $request->input('experience');
-  //   $data['city'] = $request->input('city');
-  //   $data['state'] = $request->input('state');
-  //   $data['terms'] = $request->has('terms') ? explode('-', $request->terms) : [];
-  //   $data['start_date'] = $request->input('start_date', null);
-  //   $data['end_date'] = $request->input('end_date', null);
-  //   $data['start_date'] = $data['start_date'] ? (new DateTime($data['start_date']))->format('Y-m-d') : null;
-  //   $data['shifts'] = $request->has('shifts') ? explode('-', $request->shifts) : [];
-  //   $data['job_type'] = $request->input('job_type', null);
-  //   $data['as_soon_as'] = $request->input('as_soon_as', null);
-
-  //   // Pay and hour filters
-  //   $data['weekly_pay_from'] = $request->input('weekly_pay_from', 10);
-  //   $data['weekly_pay_to'] = $request->input('weekly_pay_to', 10000);
-  //   $data['hourly_pay_from'] = $request->input('hourly_pay_from', 2);
-  //   $data['hourly_pay_to'] = $request->input('hourly_pay_to', 24);
-  //   $data['hours_per_week_from'] = $request->input('hours_per_week_from', 10);
-  //   $data['hours_per_week_to'] = $request->input('hours_per_week_to', 100);
-
-  //   //return response()->json(['message' => $data['as_soon_as']]); 
-
-  //   $user = auth()->guard('frontend')->user();
-
-  //   $nurse = NURSE::where('user_id', $user->id)->first();
-  //   $jobs_id = Offer::where('worker_user_id', $nurse->id)
-  //     ->select('job_id')
-  //     ->get();
-
-  //   if (!empty($gwNumber)) {
-
-  //     if (str_starts_with($gwNumber, 'GWJ')) {
-
-  //       $ret->where('id', $gwNumber);
-  //     } else {
-
-  //       $ret->where('job_id', $gwNumber);
-  //     }
-
-  //     $data['jobs'] = $ret->get();
-  //     return view('worker::dashboard.explore', $data);
-  //   }
-
-
-  //   if (!empty($data['job_type'])) {
-  //     $ret->where('job_type', '=', $data['job_type']);
-  //   }
-
-  //   if (!empty($data['profession'])) {
-  //     $ret->where('profession', '=', $data['profession']);
-  //   }
-
-  //   if (!empty($data['speciality'])) {
-  //     $ret->where('preferred_specialty', '=', $data['speciality']);
-  //   }
-
-  //   if (!empty($data['terms']) && !is_null($request->input('terms'))) {
-  //     $ret->whereIn('terms', $data['terms']);
-  //   }
-
-  //   if (!empty($data['as_soon_as'])) {
-  //     $ret->where('as_soon_as', '=', $data['as_soon_as']);
-  //   } elseif (!empty($data['start_date'])) {
-  //     $ret->where('start_date', '<=', $data['start_date']);
-  //   }
-
-  //   if (!empty($data['shifts'])) {
-  //     $ret->whereIn('preferred_shift', $data['shifts']);
-  //   }
-
-  //   if (!empty($data['state'])) {
-  //     $ret->where('job_state', '=', $data['state']);
-  //   }
-
-  //   if (!empty($data['city'])) {
-  //     $ret->where('job_city', '=', $data['city']);
-  //   }
-
-  //   if (isset($request->weekly_pay_from)) {
-
-  //     $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
-  //   }
-
-  //   if (isset($request->weekly_pay_to)) {
-  //     $ret->where('weekly_pay', '<=', $data['weekly_pay_to']);
-  //   }
-
-  //   if (isset($request->hourly_pay_from)) {
-  //     $ret->where('hours_shift', '>=', $data['hourly_pay_from']);
-  //   }
-
-  //   if (isset($request->hourly_pay_to)) {
-  //     $ret->where('hours_shift', '<=', $data['hourly_pay_to']);
-  //   }
-
-  //   if (isset($request->hours_per_week_from)) {
-  //     $ret->where('hours_per_week', '>=', $data['hours_per_week_from']);
-  //   }
-
-  //   if (isset($request->hours_per_week_to)) {
-  //     $ret->where('hours_per_week', '<=', $data['hours_per_week_to']);
-  //   }
-
-  //   if (isset($request->state)) {
-  //     $ret->where('job_state', '=', $data['state']);
-  //   }
-
-  //   if (isset($request->city)) {
-  //     $ret->where('job_city', '=', $data['city']);
-  //   }
-
-  //   //return response()->json(['message' =>  $ret->get()]);
-  //   $data['jobs'] = $ret->get();
-
-  //   $jobSaved = new JobSaved;
-
-  //   $data['jobSaved'] = $jobSaved;
-
-
-  //   return view('worker::dashboard.explore', $data);
-  // }
 
 
   public function explore(Request $request)
   {
-    //dd($request->all());
+
     // GW Number
     $gwNumber = $request->input('gw', '');
 
     // Build the query
-    $ret = Job::where('active', '1');
-
+    $ret = Job::where('is_open', '1')->where('active', '1') ;
 
     // Initialize data array
     $data = [];
@@ -553,19 +411,15 @@ class WorkerDashboardController extends Controller
     $data['professions'] = Profession::select('full_name')->get();
     $data['terms_key'] = Keyword::where(['filter' => 'terms'])->get();
     $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
-    $usa = Countries::where(['iso3' => 'USA'])->first();
-    //$data['us_states'] = States::where('country_id', $usa->id)->get();
     $data['us_states'] = State::select('id', 'name')->get();
     
     // Set filter values from the request, use null as the default if not provided
     $data['job_id'] = $request->input('gw', null);
     $data['profession'] = $request->input('profession');
-    $data['speciality'] = $request->input('speciality');
-    $data['experience'] = $request->input('experience');
+    $data['specialty'] = $request->input('specialty');
     $data['city'] = $request->input('city');
     $data['state'] = $request->input('state');
     $data['terms'] = $request->has('terms') ? explode('-', $request->terms) : [];
-    // dd($request->terms);
     $data['start_date'] = $request->input('start_date', null);
     $data['end_date'] = $request->input('end_date', null);
     $data['start_date'] = $data['start_date'] ? (new DateTime($data['start_date']))->format('Y-m-d') : null;
@@ -580,15 +434,6 @@ class WorkerDashboardController extends Controller
     $data['hourly_pay_to'] = $request->input('hourly_pay_to');
     $data['hours_per_week_from'] = $request->input('hours_per_week_from');
     $data['hours_per_week_to'] = $request->input('hours_per_week_to');
-    
-    //return response()->json(['message' => $data['as_soon_as']]); 
-
-    $user = auth()->guard('frontend')->user();
-
-    $nurse = NURSE::where('user_id', $user->id)->first();
-    $jobs_id = Offer::where('worker_user_id', $nurse->id)
-      ->select('job_id')
-      ->get();
 
     if (!empty($gwNumber)) {
 
@@ -604,31 +449,30 @@ class WorkerDashboardController extends Controller
       return view('worker::dashboard.explore', $data);
     }
 
-
     if (!empty($data['job_type'])) {
-      $ret->where('job_type', 'like', $data['job_type']);
+      $ret->where('job_type', '=', $data['job_type']);
     }
 
     if (!empty($data['profession'])) {
-      $ret->where('profession', 'like', $data['profession']);
+      $ret->where('profession', '=', $data['profession']);
     }
 
-    if (!empty($data['speciality'])) {
-      $ret->where('preferred_specialty', 'like', $data['speciality']);
+    if (!empty($data['specialty'])) {
+      $ret->where('preferred_specialty', '=', $data['specialty']);
     }
 
     if (!empty($data['terms']) && !is_null($request->input('terms')) && is_array($data['terms']) && count($data['terms']) > 0) {
-      $ret->where(function ($query) use ($data) {
-          foreach ($data['terms'] as $term) {
-              $query->orWhere('terms', $term);
-          }
-      });
+
+      $ret->whereIn('terms', $data['terms']);
+
     }
   
-  
     if (!empty($data['as_soon_as'])) {
+
       $ret->where('as_soon_as', '=', $data['as_soon_as']);
+
     } elseif (!empty($data['start_date'])) {
+
       $ret->where('start_date', '>=', $data['start_date']);
     }
 
@@ -639,48 +483,89 @@ class WorkerDashboardController extends Controller
     */
 
     if (!empty($data['weekly_pay_from'])) {
+
       $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
 
-     }
+    }
 
     if (!empty($data['weekly_pay_to'])) {
+
       $ret->where('weekly_pay', '<=', $data['weekly_pay_to']);
+
     }
 
     if (!empty($data['hourly_pay_from'])) {
+
       $ret->where('hours_shift', '>=', $data['hourly_pay_from']);
+
     }
 
     if (!empty($data['hourly_pay_to'])) {
+
       $ret->where('hours_shift', '<=', $data['hourly_pay_to']);
+
     }
 
     if (!empty($data['hours_per_week_from'])) {
+
       $ret->where('hours_per_week', '>=', $data['hours_per_week_from']);
+
     }
+
     if (!empty($data['hours_per_week_to'])) {
+
       $ret->where('hours_per_week', '<=', $data['hours_per_week_to']);
+
     }
     
-
-
     if (isset($request->state)) {
-      $ret->where('job_state', 'like', $data['state']);
+
+      $state = State::where('name' ,$data['state'])->get();
+
+      $ret->whereIn('job_state', [$state[0]->name, $state[0]->iso2]);
+
     }
 
     if (isset($request->city)) {
-      $ret->where('job_city', 'like', $data['city']);
+
+      $ret->where('job_city', '=', $data['city']);
+
     }
 
-    //return response()->json(['message' =>  $ret->get()]);
-    $data['jobs'] = $ret->get();
+    $skip = $request->input('skip');
+
+    if(!empty($skip) && $skip > 0){
+
+      $data['jobs'] = $ret->orderBy('id','desc')->skip($skip)->take(10)->get();
+
+      foreach ($data['jobs'] as $key => $value) {
+
+        $userapplied = Offer::where('job_id', $value->id)->count();
+        $data['jobs'][$key]['offer_count'] = $userapplied;
+      }
+
+      $jobSaved = new JobSaved;
+      $data['jobSaved'] = $jobSaved;
+      $data['skip']=$skip;
+
+      unset($data['specialities']);
+      unset($data['professions']);
+      unset($data['us_states']);
+      unset($data['terms_key']);
+
+      return response()->json(['message' =>  $data]);
+
+    }else{
+
+      $data['jobs'] = $ret->orderBy('id','desc')->skip(0)->take(10)->get();
+    }
 
     $jobSaved = new JobSaved;
 
     $data['jobSaved'] = $jobSaved;
 
 
-    return view('worker::dashboard.explore', $data);
+    return view('worker::dashboard.explore')->with($data);
   }
 
 
@@ -852,14 +737,35 @@ class WorkerDashboardController extends Controller
       $time = now()->toDateTimeString();
       event(new NotificationJob('Apply', false, $time, $job->created_by, $user->id, $user->full_name, $request->jid, $job->job_name));
 
+      $message = $user->full_name . ' has applied to job ' . $job->id;
+      $idOrganization = $job->organization_id;
+      $recruiter_id = $job->recruiter_id;
+      $idWorker = $user->id;
+      $role = 'ADMIN';
+      $type = 'text';
+      $fileName = null;
+      event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
+      //event(new NotificationOffer($status, false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $offer_id));
+
       DB::commit();
 
       return new JsonResponse(['success' => true, 'msg' => 'Applied to job successfully'], 200);
     } catch (\Exception $e) {
       DB::rollBack();
-      // return err
-      return response()->json(["success" => false,"message" => "Something went wrong." ] , 500);
+      // return err :
+      // return new JsonResponse(['success' => false, 'msg' => $e->getMessage()], 500);
+      Log::error( "code: 03050114 :: " . $e->getMessage() );
+      return response()->json(["success" => false,"msg" => "An error occured, please contact the support (code: 03050114)" ] , 500);
     }
+  }
+
+  // 
+  public function thanks_for_applying()
+  {
+    $data = [];
+    $data['user'] = $user = auth()->guard('frontend')->user();
+
+    return view('worker::dashboard.details.thanks_for_applying_msg', compact('data'));
   }
 
   public function my_work_journey()
@@ -1065,65 +971,6 @@ class WorkerDashboardController extends Controller
     }
   }
 
-
-  // adding add stripe function
-
-
-  public function add_stripe_account(Request $request)
-  {
-    try {
-      $user = Auth::guard('frontend')->user();
-      $user_email = $user->email;
-      $user_id = $user->id;
-
-      // Define the data for the request
-      $data = [
-        'userId' => $user_id,
-        'email' => $user_email
-      ];
-
-      // Define the URL<
-      $url = 'http://localhost:' . config('app.file_api_port') . '/payments/create';
-
-      // return response()->json(['data'=>$data , 'url' => $url]);
-
-      // Make the request
-      $response = Http::post($url, $data);
-
-      $stripeId = $response->json()['message'];
-
-
-      $user_data['stripeAccountId'] = $stripeId;
-      // if(!isset($user_data)){
-      //     return response()->json(['stripeidnot'=>$stripeId]);
-      // }
-
-      $user->update($user_data);
-
-
-      // Check the response
-      if ($response->successful()) {
-        $get_account_url = 'http://localhost:' . config('app.file_api_port') . '/payments/account-link';
-        $data_account_url = [
-          'stripeId' => $user_data['stripeAccountId'],
-          'userId' => $user_id
-        ];
-
-
-        $get_account_link_response = Http::get($get_account_url, $data_account_url);
-
-
-
-        return response()->json(['status' => true, 'account_link' => $get_account_link_response->json()['message']]);
-      } else {
-        return response()->json(['status' => false, 'message' => 'Error']);
-      }
-    } catch (\Exception $e) {
-      // Log the exception or return a response
-      return response()->json(['status' => false, 'message' => $e->getMessage()]);
-    }
-  }
-
   public function check_onboarding_status(Request $request)
   {
     $user = Auth::guard('frontend')->user();
@@ -1142,34 +989,6 @@ class WorkerDashboardController extends Controller
       return response()->json(['status' => true, 'message' => $get_onboarding_status_response->json()['message']]);
     } else {
       return response()->json(['status' => false, 'message' => 'Error checking onboarding status']);
-    }
-  }
-
-  public function login_to_stripe_account(Request $request)
-  {
-
-    $user = Auth::guard('frontend')->user();
-
-    $stripeId = $user->stripeAccountId;
-
-    if (!$stripeId) {
-      return response()->json(['status' => false, 'message' => 'Missing stripeId']);
-    }
-    $data = ['stripeId' => $stripeId];
-    // Get login link
-    $get_login_url = 'http://localhost:' . config('app.file_api_port') . '/payments/login-link';
-    $get_login_link_response = Http::get($get_login_url, $data);
-    //return response()->json(['login_link',$get_login_link_response->json()['message'] ]);
-
-    if ($get_login_link_response->successful()) {
-      return response()->json([
-        'status' => true,
-        'message' => 'You have successfully created a Stripe account.',
-
-        'login_link' => $get_login_link_response->json()['message']
-      ]);
-    } else {
-      return response()->json(['status' => false, 'message' => 'Error getting login link']);
     }
   }
 

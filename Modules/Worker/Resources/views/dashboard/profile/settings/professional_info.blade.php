@@ -117,8 +117,8 @@
             'label' => 'States',
             'placeholder' => "States you will work in?",
             'name' => 'state',
-            'options' => $allKeywords['State'],
-            'option_attribute' => 'title',
+            'options' => $states,
+            'option_attribute' => 'name',
             'selected' => old('state', $worker->state),
         ])
 
@@ -129,7 +129,7 @@
     {{-- city --}}
 
     <div class="ss-form-group">
- 
+        {{-- 
         @include('worker::components.custom_multiple_select_input', [
             'id' => 'city',
             'label' => 'Cities',
@@ -139,9 +139,15 @@
             'option_attribute' => 'title',
             'selected' => old('city', $worker->city),
         ])
+        --}}
 
-        <span class="help-block-city"></span>
+        <label>Cities</label>
+        <input type="text" id="city" name="city"
+            placeholder="Cities you will work in?"
+            value="{{ !empty($worker->city) ? $worker->city : '' }}">
+        <span class="help-block-city"></span> 
     </div>
+
     {{-- End city  --}}
 </div>
 
@@ -416,7 +422,8 @@
     <div class="ss-form-group col-md-12">
         <label>Current Address</label>
         <input type="text" name="worker_preferred_work_location" id="worker_preferred_work_location"
-            placeholder="Where are you staying now?">
+            placeholder="Where are you staying now?"
+            value="{{ !empty($worker->worker_preferred_work_location) ? $worker->worker_preferred_work_location : '' }}">
     </div>
     <span class="helper help-block-worker_preferred_work_location"></span>
 
@@ -425,7 +432,8 @@
     <div class="ss-form-group col-md-12">
         <label>Facilities you've worked at?</label>
         <input type="text" name="worker_facility_name" id="worker_facility_name"
-            placeholder="What facilities have you worked at?">
+            placeholder="What facilities have you worked at?"
+            value="{{ !empty($worker->worker_facility_name) ? $worker->worker_facility_name : '' }}">
     </div>
     <span class="helper help-block-worker_facility_name"></span>
 
@@ -435,7 +443,8 @@
     <div class="ss-form-group col-md-12">
         <label>Fav Facility Parent Systems</label>
         <input type="text" name="worker_facilitys_parent_system" id="worker_facilitys_parent_system"
-            placeholder="What systems would you like to work at?">
+            placeholder="What systems would you like to work at?"
+            value="{{ !empty($worker->worker_facilitys_parent_system) ? $worker->worker_facilitys_parent_system : '' }}">
     </div>
     <span class="helper help-block-worker_facilitys_parent_system"></span>
 
@@ -453,7 +462,8 @@
 
     <div class="ss-form-group col-md-12">
         <label>Fav States</label>
-        <input type="text" name="worker_facility_state" id="worker_facility_state" placeholder="Fav States">
+        <input type="text" name="worker_facility_state" id="worker_facility_state" placeholder="Fav States" 
+            value="{{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : '' }}">
     </div>
     <span class="helper help-block-worker_facility_state"></span>
 
@@ -462,7 +472,8 @@
 
     <div class="ss-form-group col-md-12">
         <label>Fav Cities</label>
-        <input type="text" name="worker_facility_city" id="worker_facility_city" placeholder="Fav Cities">
+        <input type="text" name="worker_facility_city" id="worker_facility_city" placeholder="Fav Cities"
+            value="{{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : '' }}">
     </div>
     <span class="helper help-block-worker_facility_city"></span>
 
@@ -540,20 +551,20 @@
     <span class="help-block-worker_experience"></span>
     {{-- End Experience --}}
 
-    {{-- worker_on_call --}}
+    {{-- worker_on_call_check --}}
     <div class="ss-form-group">
         <label>On Call</label>
-        <select name="worker_on_call" id="worker_on_call">
-            <option value="" {{ empty($worker->worker_on_call) ? 'selected' : '' }} disabled hidden>
+        <select name="worker_on_call_check" id="worker_on_call_check">
+            <option value="" {{ empty($worker->worker_on_call_check) ? 'selected' : '' }} disabled hidden>
                 Will you do call?
             </option>
             <option value="Yes"
-                {{ !empty($worker->worker_on_call) && $worker->worker_on_call == 'Yes' ? 'selected' : '' }}>Yes
+                {{ !empty($worker->worker_on_call_check) && $worker->worker_on_call_check == 'Yes' ? 'selected' : '' }}>Yes
             </option>
             <option value="No"
-                {{ !empty($worker->worker_on_call) && $worker->worker_on_call == 'No' ? 'selected' : '' }}>No</option>
+                {{ !empty($worker->worker_on_call_check) && $worker->worker_on_call_check == 'No' ? 'selected' : '' }}>No</option>
         </select>
-        <span class="help-block-worker_on_call"></span>
+        <span class="help-block-worker_on_call_check"></span>
     </div>
     {{-- End worker_call  --}}
 
@@ -609,24 +620,20 @@
 
     {{-- EMR --}}
     <div class="ss-form-group">
-        <label>EMR</label>
-        <select name="worker_emr" class="emr mb-3" id="emr">
-            <option value="" {{ empty($worker->worker_emr) ? 'selected' : '' }} disabled hidden>
-                What EMRs have you used?
-            </option>
-            @if (isset($allKeywords['EMR']))
-                @foreach ($allKeywords['EMR'] as $value)
-                    <option value="{{ $value->id }}"
-                        {{ !empty($worker->worker_emr) && $worker->worker_emr == $value->id ? 'selected' : '' }}>
-                        {{ $value->title }}
-                    </option>
-                @endforeach
-            @endif
-        </select>
+        @include('worker::components.custom_multiple_select_input', [
+            'id' => 'worker_emr',
+            'label' => 'EMR',
+            'placeholder' => 'What EMRs have you used?',
+            'name' => 'worker_emr',
+            'options' => $allKeywords['EMR'],
+            'option_attribute' => 'title',
+            'selected' => old('worker_emr', $worker->worker_emr),
+        ])
+
     </div>
     <span class="help-block-worker_emr"></span>
-    {{-- End EMR --}}
-
+    {{-- end EMR --}}
+    
     {{-- Unit --}}
     <div class="ss-form-group">
         <label>Unit</label>

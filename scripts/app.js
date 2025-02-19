@@ -1,9 +1,22 @@
-const pm2 = require('pm2');
-var path = require("path");
-var cron = require('node-cron');
+/*
+  some notes
+  This script here is supposed to manage storage types, either disk (using path in docs.files model) or mongodb, or any other type of storage.
+  Each storage is yet to be defined, for now it is only mongodb, although a disk storage is already set by default by creating a directory for it since it will most likely be used very soon.
+
+  This script also acts as an entry point for integrations cron jobs
+
+*/
+
+//Import required libraries and/or modules
+const pm2 = require('pm2'); // To connect to PM2
+var path = require("path"); // To work with file paths and directories
+var cron = require('node-cron'); //To shedule tasks
+
+//To read environment variables from the .env file
 require("dotenv").config();
 
 var { report } = require('./src/set.js')
+
 
 const server = path.join(path.dirname(__filename), "server.js")
 const crons = path.join(path.dirname(__filename), "/src/crons/index.js")
@@ -11,13 +24,17 @@ const webhooks = path.join(path.dirname(__filename), "/src/webhooks/stripe.js")
 
 const { argv } = require('node:process');
 
-pm2.connect(function(err) {
+//Connecting to pm2
+pm2.connect( async function(err) {
+
+  //Log and report if failed to connect to pm2
   if (err) {
     console.error(err)
-    report("Unable to connect PM2")
+    await report('error','app.js',"Unable to connect PM2")
     process.exit(2)
   }
 
+  //Check if we can start the watch
   if(argv[2] === "start"){
 
     // Watch is disabled by default for now because it is unstable - and i don't have time to fix it
@@ -29,92 +46,95 @@ pm2.connect(function(err) {
     console.log("Starting the File Management service.")
 
     // Files management
-    pm2.start({
+    await pm2.start({
       script    : server,
       name      : 'files',
       watch     : watch
-    }, function(err, apps) {
+    }, async function(err, apps) {
+
+      //Log and return, if failed to start the server
       if (err) {
         console.error(err)
-        report("Unable to start File management")
+        await report('error','app.js',"Unable to start File management")
         return pm2.disconnect()
 
       }
-      return pm2.disconnect()
+      await report("notification", 'app.js', 'Started Files management service');
+      return pm2.disconnect() //Disconnect from pm2
     });
 
     console.log("Starting the Webhooks service")
     // Webhook management
-    pm2.start({
+    await pm2.start({
       script    : webhooks,
       name      : 'webhooks',
       watch     : watch
-    }, function(err, apps) {
+    }, async function(err, apps) {
+
+      //Log and return, if failed to start the webhook server
       if (err) {
         console.error(err)
-        report("Unable to start Webhook service")
+        await report('error','app.js',"Unable to start Webhook service")
         return pm2.disconnect()
 
       }
+
+      await report("notification", 'app.js', 'Started Webhooks service');
       return pm2.disconnect()
     });
 
     // Crons management
-    if(process.env.ENABLE_CRONS == true){
+    if(process.env.ENABLE_CRONS === "true"){
       console.log("Starting the Cron service.")
-      pm2.start({
+      await pm2.start({
         script    : crons,
         name      : 'crons',
         watch     : watch
-      }, function(err, apps) {
+      }, async function(err, apps) {
+        //Log and return, if failed to start the cron server
         if (err) {
           console.error(err)
-          report("Unable to start Cron service")
+          await report('error','app.js',"Unable to start Cron service")
           return pm2.disconnect()
         }
+        await report("notification", 'app.js', 'Started Crons service');
         return pm2.disconnect()
       });
     }
-  
-  }else if(argv[2] === "stop"){
+
+  }else if(argv[2] === "stop"){ //Stop the cron service
 
     console.log("Stopping the file management and integration services")
 
     // List the processes managed by PM2 then delete
-    pm2.list((err, list) => {
+    await pm2.list(async (err, list) => {
       if(list.length == 0){
         console.log("No process to stop.")
         pm2.disconnect()
-      }    
+      }
       if(!err){
 
         for(proc of list){
-          pm2.delete(proc.name, (err, proc) => {
+          pm2.delete(proc.name, async (err, proc) => {
+
+            await report("notification", 'app.js', 'Stopped a service');
             // Disconnects from PM2
             pm2.disconnect()
-          });  
+          });
         }
 
       }else{
+
+        //Log and return in case of error
         console.log("Unable to list processes", err)
-        report("Unable to list PM2 processes")
+        await report('error','app.js',"Unable to list PM2 processes")
         pm2.disconnect()
       }
     })
 
   }else{
     console.error("Invalid argument")
-    report("Invalid app argument")
+    await report('error','app.js',"Invalid app argument")
   }
-  
+
 })
-
-
-/*
-  some notes
-  This script here is supposed to manage storage types, either disk (using path in docs.files model) or mongodb, or any other type of storage.
-  Each storage is yet to be defined, for now it is only mongodb, although a disk storage is already set by default by creating a directory for it since it will most likely be used very soon.
-
-  This script also acts as an entry point for integrations cron jobs
-
-*/

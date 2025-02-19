@@ -1,6 +1,8 @@
-require("dotenv").config();
+//Import required libraries and/or modules
+require("dotenv").config(); //To read environment variables from the .env file
 const mysql = require("mysql2")
 
+//Connect to MySQL db
 module.exports.pool = mysql.createPool({
 	host: process.env.DB_HOST,
 	port: process.env.DB_PORT,

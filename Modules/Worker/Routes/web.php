@@ -12,10 +12,11 @@
 */
 
 Route::prefix('worker')->group(function () {
+
     Route::get('/', 'WorkerController@index');
 
-
-
+    // Handle fallback
+    Route::fallback(['uses'=> 'WorkerController@fallback']);
 
     Route::middleware(['user_not_logged_in'])->group(function () {
         Route::get('/login', ['uses' => 'WorkerAuthController@get_login', 'as' => 'worker.login']);
@@ -37,6 +38,7 @@ Route::prefix('worker')->group(function () {
             Route::get('messages', ['uses' => 'WorkerController@get_messages', 'as' => 'worker.messages']);
             Route::get('profile/{type}', ['uses' => 'WorkerDashboardController@my_profile', 'as' => 'profile']);
             Route::get('explore', ['uses' => 'WorkerDashboardController@explore', 'as' => 'worker.explore']);
+            Route::post('explore', ['uses' => 'WorkerDashboardController@explore', 'as' => 'worker.exploreSearch']);
             Route::post('help-and-support', ['uses' => 'WorkerDashboardController@helpAndSupport', 'as' => 'worker-help-and-support']);
             Route::post('worker-update-profile', ['uses' => 'WorkerDashboardController@updateProfile', 'as' => 'worker-update-profile']);
 
@@ -47,6 +49,8 @@ Route::prefix('worker')->group(function () {
             Route::get('/getMessages', ['uses' => 'WorkerController@get_private_messages', 'as' => 'WorkergetPrivateMessages']);
             Route::get('my-work-journey', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'worker.my-work-journey']);
 
+            Route::post('/send-otp-worker', ['uses' => 'WorkerAuthController@sendOtp_worker', 'as' => 'sendOtp-worker']) ;
+            Route::post('/update-email-worker', ['uses' => 'WorkerAuthController@updateEmail_worker', 'as' => 'updateEmail-worker']);
 
             //Route::get('my-work-journey', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'my-work-journey']);
             Route::post('fetch-job-content', ['uses' => 'WorkerController@fetch_job_content', 'as' => 'worker-fetch-job-content']);
@@ -105,6 +109,9 @@ Route::prefix('worker')->group(function () {
 
             // apply on job
             Route::post('apply-on-job', ['uses' => 'WorkerDashboardController@apply_on_jobs', 'as' => 'apply-on-job']);
+
+            // thanks-for-applying
+            Route::get('thanks-for-applying', ['uses' => 'WorkerDashboardController@thanks_for_applying', 'as' => 'thanks-for-applying']);
 
             // reading message notification
             Route::post('read-message-notification', ['uses' => 'WorkerController@read_message_notification', 'as' => 'read-message-notification']);

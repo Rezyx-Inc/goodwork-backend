@@ -25,10 +25,6 @@
                                     <!-- <a class="nav-link" href="{{ route('recruiter.login') }}">For Recruiters</a> -->
                                     <a class="nav-link" href="{{ route('for-recruiters') }}">For Recruiters</a>
                                 </li>
-                                <li class="nav-item">
-
-                                    <a class="nav-link" href="{{ route('about-us') }}">About Us</a>
-                                </li>
                             </ul>
                             <span class="navbar-text">
                                 <div class="ss-log-div-sec">
@@ -37,10 +33,10 @@
                                         @if (request()->routeIs('/'))
                                             @if (!auth()->guard('frontend')->check())
                                                 <li>
-                                                    <a href="{{ route('worker.login') }}">Login</a>
+                                                    <a href="{{ route('login') }}">Login</a>
                                                 </li>
                                                 <li>
-                                                    <a href="{{ route('worker-signup') }}">Join Goodwork</a>
+                                                    <a href="{{ route('signup') }}">Join Goodwork</a>
                                                 </li>
                                             @else
                                                 <li></li>
@@ -51,7 +47,7 @@
                                         @elseif (request()->routeIs('for-recruiters'))
                                             @if (!auth()->guard('recruiter')->check())
                                                 <li>
-                                                    <a class="login_style" href="{{ route('recruiter.login') }}">Login</a>
+                                                    <a class="login_style" href="{{ route('login') }}">Login</a>
                                                 </li>
                                                 {{-- <li>
                                                     <a href="{{ route('recruiter-signup') }}">Join Goodwork</a>
@@ -65,10 +61,10 @@
                                         @elseif (request()->routeIs('for-organizations'))
                                             @if (!auth()->guard('organization')->check())
                                                 <li>
-                                                    <a href="{{ route('organization.login') }}">Login</a>
+                                                    <a href="{{ route('login') }}">Login</a>
                                                 </li>
                                                 <li>
-                                                    <a href="{{ route('organization-signup') }}">Join Goodwork</a>
+                                                    <a href="{{ route('signup') }}">Join Goodwork</a>
                                                 </li>
                                             @else
                                                 <li></li>

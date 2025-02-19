@@ -12,6 +12,62 @@
 @include('worker::dashboard.profile.settings.upload_document_modal')
 
 
+<!-- Static Auto-Save Notification -->
+<div class="autoSaveBox">
+    <strong>Auto-Save</strong>
+    <div id="autoSaveMessage"></div>
+    <div class="progress">
+        <div id="progressBar" class="progress-bar" style="width: 100%;"></div>
+    </div>
+    <u class="manualSave" onclick="manualSave()"><strong>Manually Save!</strong></u>
+</div>
+
+
+
+<style>
+    .autoSaveBox {
+        position: fixed;
+        bottom: 30px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.45);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 14px;
+        z-index: 1000;
+        min-width: 220px;
+        text-align: center;
+    }
+
+    .progress {
+        height: 8px;
+        background: #444;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top: 5px;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: #42d611!important;
+        transition: width 1s linear;
+    }
+
+    .manualSave {
+        color: #1d4112!important;
+        cursor: pointer;
+        display: block;
+        margin-top: 5px;
+    }
+    
+    .manualSave:hover {
+        font-size: 16px;
+        transition: 0.3s;
+    }
+
+</style>
+
+
 <style>
     /* for collapse */
 
@@ -35,41 +91,91 @@
 
 
 <script>
+    const baseDuration = 30;
+    let countdown = baseDuration;
+    let intervalId = null;
+    let isTabActive = true;
 
-    // Save on page exit
-    window.addEventListener('beforeunload', function() {
-        // Call the saveData function to send the AJAX request
-        saveInfos();
-    });
+    function startSavingWithProgressBar() {
+        if (intervalId) return;
+        updateProgressBar();
+    }
 
-    // Save change every 50 seconds
-    setInterval(() => {
-        saveInfos();
-    }, 50000);
+    function updateProgressBar() {
+        if (intervalId) clearInterval(intervalId);
+
+        const autoSaveMessage = document.getElementById('autoSaveMessage');
+        const progressBar = document.getElementById('progressBar');
+
+        countdown = baseDuration; 
+        progressBar.style.width = "100%";
+
+        intervalId = setInterval(() => {
+            if (!isTabActive) return;
+
+            countdown--;
+            let progressPercent = (countdown / baseDuration) * 100;
+            progressBar.style.width = progressPercent + "%";
+
+            if (countdown <= 0) {
+                clearInterval(intervalId);
+                intervalId = null;
+                autoSaveMessage.innerHTML = "Saving...";
+                progressBar.style.width = "0%";
+                saveInfos();
+
+                // Restart countdown after saving
+                setTimeout(() => {
+                    countdown = 20;
+                    autoSaveMessage.innerHTML = ``;
+                    // Reset progress bar
+                    progressBar.style.width = "100%"; 
+                    updateProgressBar();
+                }, 2000);
+            }
+        }, 1000);
+    }
 
     function saveInfos() {
-        // Perform basic validation if needed
-        if (!validateBasicInfo()) {
-            return; // Skip the save if validation fails
-        }
-
-        // Get the form element
         let form = document.getElementById('worker-profile-form');
         let formData = new FormData(form);
 
-        // Send the data silently using fetch with keepalive
         fetch('/worker/update-worker-profile', {
             method: 'POST',
             body: formData,
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
-            keepalive: true // Ensures the request completes even if the page unloads
+            keepalive: true
         }).then(response => {
-            // console.log("Silent save successful");
+            console.log("Auto-save successful");
         }).catch(error => {
-            // console.error("Silent save failed", error);
+            console.error("Error saving worker information:", error);
         });
     }
 
+    // Pause and resume countdown based on tab visibility
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            isTabActive = true;
+            // Resume countdown only if it's not running
+            if (!intervalId) updateProgressBar();
+        } else {
+            isTabActive = false;
+            // Stop interval
+            clearInterval(intervalId);
+            intervalId = null;
+        }
+    });
+
+    // Start progress bar countdown when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        startSavingWithProgressBar();
+    });
+
+    // Manual Save Function (Immediately Saves & Resets Timer)
+    function manualSave() {
+        // Force countdown to reach zero
+        countdown = 1;
+    }
 </script>

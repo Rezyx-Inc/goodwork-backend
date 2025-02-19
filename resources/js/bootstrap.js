@@ -9,14 +9,16 @@ import jQuery from 'jquery';
 import 'bootstrap';
 
 try {
+
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
+    require('jquery-mask-plugin');
 
     require('bootstrap');
 } catch (e) {}
 
 // ..and assign to window the ones that need it
-window.$ = window.jQuery  = jQuery;
+//window.$ = window.jQuery  = jQuery;
 
 
 
