@@ -139,58 +139,52 @@
 
 
                                 <div class="row d-flex align-items-center">
-                                    ${job.preferred_shift_duration && job.preferred_shift_duration !== '' ? `
-                                    <div class="col-12 col-lg-6">
+                                    ${job.preferred_shift_duration ? `
+                                    <div class="col-6 d-flex justify-content-between justify-content-md-start">
                                         <ul>
                                             <li>
                                                 ${job.preferred_shift_duration}
                                             </li>
-                                             ${job.actual_hourly_rate && job.actual_hourly_rate !== '' ? `
-                                                    <li>
-                                                        $ ${(Number(job.actual_hourly_rate) || 0).toFixed(0)}/hr
-                                                    </li>
-                                                ` : ''}
                                         </ul>
                                     </div>
-                                    <div class="col-12 col-lg-6 d-flex justify-content-end">
-                                        <ul> 
-                                            ${job.weekly_pay && job.weekly_pay !== '' ? `
-                                                    <li>
-                                                        $ ${(Number(job.weekly_pay) || 0).toFixed(0)}/hr
-                                                    </li>
-                                                ` : ''}
-
-                                            ${job.weekly_pay && job.weekly_pay !== '' ? `
-                                                    <li>
-                                                        $ ${(job.weekly_pay * 4 * 12).toFixed(0)}/yr
-                                                    </li>
-                                                ` : ''}
-                                        </ul>
-                                    </div>
-                                        ` : 
-                                        `
-                                    <div class="col-12 d-flex justify-content-end">
+                                    ` : ''}
+                                    
+                                    <div class="col-6 d-flex justify-content-end">
                                         <ul>
-                                            ${job.actual_hourly_rate && job.actual_hourly_rate !== '' ? `
+                                            ${job.weekly_pay 
+                                                ? `
                                                     <li>
-                                                        $ ${(Number(job.actual_hourly_rate) || 0).toFixed(0)}/hr
+                                                        $ ${job.weekly_pay.toLocaleString()}/wk
                                                     </li>
                                                 ` : ''}
-                                                
-                                            ${job.weekly_pay && job.weekly_pay !== '' ? `
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="col-6 d-flex justify-content-start">
+                                        <ul>
+                                            ${job.hours_per_week 
+                                                ? `
                                                     <li>
-                                                        $ ${(Number(job.weekly_pay) || 0).toFixed(0)}/wk
+                                                        <a href="#">
+                                                            <img class="icon_cards" src="${calendarIcon}">
+                                                            ${job.hours_per_week} hrs/wk
+                                                        </a>
                                                     </li>
                                                 ` : ''}
+                                        </ul>
+                                    </div>
 
-                                            ${job.weekly_pay && job.weekly_pay !== '' ? `
-                                                    <li>
+                                    <div class="col-6 d-flex justify-content-end">
+                                        <ul>
+                                            ${job.weekly_pay 
+                                                ? `
+                                                    <li style="font-weight: 600;">
                                                         $ ${(job.weekly_pay * 4 * 12).toFixed(0)}/yr
                                                     </li>
                                                 ` : ''}
                                         </ul>
                                     </div>
-                                    `}
+                                    
                                 </div>
                             </div>
 
