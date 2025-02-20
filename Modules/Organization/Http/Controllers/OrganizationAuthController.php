@@ -113,7 +113,7 @@ class OrganizationAuthController extends Controller
   public function post_login(Request $request)
   {
     try {
-      if ($request->ajax()) {
+      
 
         $validator = Validator::make($request->all(), [
           'id' => 'email:rfc,dns',
@@ -164,11 +164,11 @@ class OrganizationAuthController extends Controller
           $data['success'] = false;
           return response()->json($data);
         }
-      }
+      
     } catch (\Exception $e) {
       $data = [];
       // $data['msg'] = $e->getMessage();
-      $data['msg'] = 'We encountered an error. Please try again later.';
+      $data['msg'] = 'We encountered an error. Please try again later. (code: 03010111)';
       $data['success'] = false;
       return response()->json($data);
     }
@@ -191,7 +191,7 @@ class OrganizationAuthController extends Controller
   public function post_signup(Request $request)
   {
     try {
-      if ($request->ajax()) {
+      
         $validator = Validator::make($request->all(), [
           'first_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
           'last_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
@@ -272,11 +272,11 @@ class OrganizationAuthController extends Controller
             'link' => route('organization.verify')
           ]);
         }
-      }
+      
     } catch (\Exception $e) {
       $data = [];
       // $data['msg'] = $e->getMessage();
-      $data['msg'] = 'We encountered an error. Please try again later.';
+      $data['msg'] = 'We encountered an error. Please try again later. (code: 03010113)';
       $data['success'] = false;
       return response()->json($data);
     }

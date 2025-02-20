@@ -95,7 +95,7 @@ class WorkerAuthController extends Controller
             $data['success'] = false;
             Log::error("post_login : ",$e->getMessage());
             return response()->json([
-                'msg' => 'We encountered an error. Please try again later.',
+                'msg' => 'We encountered an error. Please try again later. (code: 03010104)',
                 'success' => false
             ], 500);
 
@@ -213,7 +213,7 @@ class WorkerAuthController extends Controller
         } catch (\Exception $e) {
             $data = [];
             // $data['msg'] = $e->getMessage();
-            $data['msg'] ='We encountered an error. Please try again later.';
+            $data['msg'] ='We encountered an error. Please try again later. (code: 03010107)';
             $data['success'] = false;
             Log::error("post_signup : ",$e->getMessage());
             return response()->json(['msg' => $data['msg'], 'success' => false], 500);
