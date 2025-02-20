@@ -52,13 +52,17 @@ class WorkerAuthController extends Controller
     {
         try {
 
-            if ($request->ajax()) {
+                if (!$request->ajax()) {
+                    return response()->json(['success' => false, 'msg' => 'Invalid request'], 400);
+                }
+
                 $validator = Validator::make($request->all(), ['id' => 'email',]);
                 if ($validator->fails()) {
                     $data = [];
-                    $data['msg'] = 'it must be a valid email address';
-                    $data['success'] = false;
-                    return response()->json($data, 400);
+                    return response()->json([
+                        'msg' => 'It must be a valid email address',
+                        'success' => false
+                    ], 400);
                 }
                 $data_msg = [];
                 $input = $request->only('id');
@@ -76,25 +80,29 @@ class WorkerAuthController extends Controller
                     $model->update(['otp' => $otp, 'otp_expiry' => date('Y-m-d H:i:s', time() + 300)]);
                     $email_data = ['name' => $model->first_name . ' ' . $model->last_name, 'otp' => $otp, 'subject' => 'One Time for login'];
                     Mail::to($model->email)->send(new login($email_data));
-                    $data_msg['msg'] = 'OTP sent to your registered email and mobile number.';
-                    $data_msg['success'] = true;
-                    $data_msg['link'] = Route('worker.verify');
-                    return response()->json($data_msg, 200);
+                    return response()->json([
+                        'msg' => 'OTP sent to your registered email and mobile number.',
+                        'success' => true,
+                        'link' => route('worker.verify')
+                    ], 200);
 
                 } else {
-                    $data = [];
-                    $data['msg'] = 'Wrong login information. Have you created an account ?';
-                    $data['success'] = false;
-                    return response()->json($data, 404);
+                    return response()->json([
+                        'msg' => 'Wrong login information. Have you created an account?',
+                        'success' => false
+                    ], 404);
                 }
 
-            }
+            
         } catch (\Exception $e) {
             $data = [];
             $data['msg'] = 'We encountered an error. Please try again later.';
             $data['success'] = false;
             Log::error("post_login : ",$e->getMessage());
-            return response()->json($data, 500);
+            return response()->json([
+                'msg' => 'We encountered an error. Please try again later.',
+                'success' => false
+            ], 500);
 
         }
 
