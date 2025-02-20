@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\register;
 use App\Mail\RegisterRecruiter;
 use App\Mail\VerifyNewEmail;
+use App\Mail\NotifyEvents;
 
 
 class OrganizationController extends Controller
@@ -515,6 +516,19 @@ class OrganizationController extends Controller
         //return response()->json(['success' => true, 'message' => $message, 'id' => $id, 'idRecruiter' => $idRecruiter, 'idWorker' => $idWorker, 'role' => $role, 'time' => $time, 'type' => $type, 'fileName' => $fileName]);
         event(new NewPrivateMessage($message, $id, $idRecruiter, $idWorker, $role, $time, $type, $fileName));
         event(new NotificationMessage($message, false, $time, $idWorker, $id, $full_name));
+
+        // Send an email notification
+        $workerNotificationDetails = User::where('id', $idWorker)->get();
+        if($workerNotificationDetails[0]['email_messages'] == 1){
+
+            $dataToSend = ["message" => $full_name . "(". $user->organization_name .") Sent you a private message.", "title" => "New Private Message"];
+            try{
+
+                Mail::to($workerNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+            } catch (\Exception $ex) {
+                return response()->json(["message" => $ex->getMessage()]);
+            }
+        }
 
         return true;
     }

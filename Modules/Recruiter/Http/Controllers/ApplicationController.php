@@ -17,6 +17,8 @@ use Carbon\Carbon;
 // ************ models ************
 /** Models */
 use App\Models\{Job, Offer, Nurse, User, OffersLogs, States, Cities, Keyword ,Speciality, Profession, State};
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NotifyEvents;
 
 class ApplicationController extends Controller
 {
@@ -638,7 +640,7 @@ class ApplicationController extends Controller
             $idWorker = $offer->worker_user_id;
             $idWorker = Nurse::where('id', $idWorker)->first()->user_id;
             $role = 'ADMIN';
-            $type = 'text';
+            $type = 'applicationUpdate';
             $fileName = null;
             $time = now()->toDateTimeString();
             event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
@@ -657,6 +659,20 @@ class ApplicationController extends Controller
                     $statusCounts[$statusCount->status] = 0;
                 }
             }
+
+            // Send an email notification
+            $workerNotificationDetails = User::where('id', $idWorker)->get();
+            if($workerNotificationDetails[0]['email_application_stages'] == 1){
+
+                $dataToSend = ["message" => $message, "title" => "Application Status Update"];
+                try{
+
+                    Mail::to($workerNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+                } catch (\Exception $ex) {
+                    return response()->json(["message" => $ex->getMessage()]);
+                }
+            }
+
             return response()->json(['message' => 'Update Successfully', 'type' => $status, 'statusCounts' => $statusCounts]);
         } else {
             return response()->json(['message' => 'Something went wrong! Please check']);
@@ -708,6 +724,20 @@ class ApplicationController extends Controller
                 $fileName = null;
                 $time = now()->toDateTimeString();
                 event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
+
+                // Send an email notification
+                $workerNotificationDetails = User::where('id', $idWorker)->get();
+                if($workerNotificationDetails[0]['email_new_offer'] == 1){
+
+                    $dataToSend = ["message" => $message, "title" => "Offer Update"];
+                    try{
+
+                        Mail::to($workerNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+                    } catch (\Exception $ex) {
+                        return response()->json(["message" => $ex->getMessage()]);
+                    }
+                }
+
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Offer updated successfully',
@@ -778,6 +808,19 @@ class ApplicationController extends Controller
                         event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
 
                         event(new NotificationOffer('Rejected', false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $id));
+
+                        // Send an email notification
+                        $workerNotificationDetails = User::where('id', $idWorker)->get();
+                        if($workerNotificationDetails[0]['email_application_stages'] == 1){
+
+                            $dataToSend = ["message" => $message, "title" => "Offer Rejected"];
+                            try{
+
+                                Mail::to($workerNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+                            } catch (\Exception $ex) {
+                                return response()->json(["message" => $ex->getMessage()]);
+                            }
+                        }
                     }
                 } elseif ($request->type == 'offersend') {
                     $update_array['is_counter'] = '0';
@@ -813,6 +856,19 @@ class ApplicationController extends Controller
 
                         event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
                         event(new NotificationOffer('Offered', false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $id));
+
+                        // Send an email notification
+                        $workerNotificationDetails = User::where('id', $idWorker)->get();
+                        if($workerNotificationDetails[0]['email_application_stages'] == 1){
+
+                            $dataToSend = ["message" => $message, "title" => "Offer Accepted"];
+                            try{
+
+                                Mail::to($workerNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+                            } catch (\Exception $ex) {
+                                return response()->json(["message" => $ex->getMessage()]);
+                            }
+                        }
 
                     }
                 }
