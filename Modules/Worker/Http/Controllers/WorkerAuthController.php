@@ -182,7 +182,7 @@ class WorkerAuthController extends Controller
                     Nurse::create([
                         'user_id' => $model->id,
                         'active' => '1',
-                        'profession' => $request->profession,
+                        'profession' => isset($request->profession) ? $request->profession : null,
                     ]);
 
                     // dispatching the event after creating user before validate
