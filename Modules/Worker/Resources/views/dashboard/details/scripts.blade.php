@@ -1110,8 +1110,8 @@
                         break;
                     }
                 } else {
-                    let fieldValue = dataToSend[requiredField];
-                    if (!fieldValue || workerMatch[requiredField].match == false) {
+                    // let fieldValue = dataToSend[requiredField];
+                    if (workerMatch[requiredField].match == false) {
 
                         notie.alert({
                             type: 'error',
