@@ -85,7 +85,7 @@ class WorkerAuthController extends Controller
                     return response()->json([
                         'msg' => 'Wrong login information. Have you created an account?',
                         'success' => false
-                    ], 404);
+                    ], 401);
                 }
 
             
@@ -166,7 +166,7 @@ class WorkerAuthController extends Controller
                         $data = [];
                         $data['msg'] = 'Already exist.';
                         $data['success'] = false;
-                        return response()->json(['msg' => $data['msg'], 'success' => false], 400);
+                    return response()->json(['msg' => $data['msg'], 'success' => false], 409);
                     }
                     $response = [];
                     $model = User::create([
@@ -212,8 +212,8 @@ class WorkerAuthController extends Controller
                 }
         } catch (\Exception $e) {
             $data = [];
-            $data['msg'] = $e->getMessage();
-            //$data['msg'] ='We encountered an error. Please try again later.';
+            // $data['msg'] = $e->getMessage();
+            $data['msg'] ='We encountered an error. Please try again later.';
             $data['success'] = false;
             Log::error("post_signup : ",$e->getMessage());
             return response()->json(['msg' => $data['msg'], 'success' => false], 500);
