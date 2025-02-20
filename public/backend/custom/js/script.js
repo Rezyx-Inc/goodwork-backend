@@ -25,8 +25,6 @@ $('#signup-form-submit').submit(function (event) {
         contentType: false,
         data: data,
         success: function (resp) {
-            console.log("debugging auth Object (success):");
-            console.log(resp);
             ajaxindicatorstop();
             if (resp.success) {
                 notie.alert({
@@ -41,16 +39,11 @@ $('#signup-form-submit').submit(function (event) {
             }
         },
         error: function (resp) {
-            console.log("debugging auth Object (error):");
-            console.log(resp);
             ajaxindicatorstop();
-            $.each(resp.responseJSON.errors, function (key, val) {
-                $('#signup-form-submit').find('input[name="' + key + '"]').closest('.mb-3').find('.help-block').html(val[0]);
-                $('#signup-form-submit').find('input[name="' + key + '"]').closest('.mb-3').addClass('has-error');
-                if (key == 'terms') {
-                    $('#signup-form-submit').find('input[name="' + key + '"]').closest('.form-check').find('.help-block').html(val[0]);
-                    $('#signup-form-submit').find('input[name="' + key + '"]').closest('.form-check').addClass('has-error');
-                }
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> ' + resp.responseJSON.msg,
+                time: 5
             });
         }
     })
@@ -77,8 +70,6 @@ $('#login-form').submit(function (event) {
             contentType: false,
             data: data,
             success: function (resp) {
-                console.log("debugging auth Object (success):");
-                console.log(resp);
                 ajaxindicatorstop();
                 if (resp.success) {
                     notie.alert({
@@ -98,12 +89,10 @@ $('#login-form').submit(function (event) {
                 }
             },
             error: function (resp) {
-                console.log("debugging auth Object (error):");
-                console.log(resp);
                 ajaxindicatorstop();
                 notie.alert({
                     type: 'error',
-                    text: '<i class="fa fa-check"></i> Wrong email or password' ,
+                    text: '<i class="fa fa-check"></i> ' + resp.responseJSON.msg,
                     time: 5
                 });
             }

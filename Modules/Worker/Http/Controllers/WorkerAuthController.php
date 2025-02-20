@@ -51,11 +51,6 @@ class WorkerAuthController extends Controller
     public function post_login(Request $request)
     {
         try {
-
-                if (!$request->ajax()) {
-                    return response()->json(['success' => false, 'msg' => 'Invalid request'], 400);
-                }
-
                 $validator = Validator::make($request->all(), ['id' => 'email',]);
                 if ($validator->fails()) {
                     $data = [];
@@ -90,17 +85,15 @@ class WorkerAuthController extends Controller
                     return response()->json([
                         'msg' => 'Wrong login information. Have you created an account?',
                         'success' => false
-                    ], 404);
+                    ], 401);
                 }
 
             
         } catch (\Exception $e) {
             $data = [];
-            $data['msg'] = 'We encountered an error. Please try again later.';
-            $data['success'] = false;
             Log::error("post_login : ",$e->getMessage());
             return response()->json([
-                'msg' => 'We encountered an error. Please try again later.',
+                'msg' => 'An error occured, please contact the support (code: 03010104)',
                 'success' => false
             ], 500);
 
@@ -152,7 +145,6 @@ class WorkerAuthController extends Controller
     public function post_signup(Request $request)
     {
         try {
-            if ($request->ajax()) {
                 $validator = Validator::make($request->all(), [
                     'first_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
                     'last_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
@@ -164,16 +156,15 @@ class WorkerAuthController extends Controller
                 if ($validator->fails()) {
                     $data = [];
                     $data['msg'] = $validator->errors()->first();
-                    ;
                     $data['success'] = false;
-                    return response()->json($data, 400);
+                    return response()->json(['msg' => $data['msg'], 'success' => false], 400);
                 } else {
                     $check = User::where(['email' => $request->email])->whereNull('deleted_at')->first();
                     if (!empty($check)) {
                         $data = [];
                         $data['msg'] = 'Already exist.';
                         $data['success'] = false;
-                        return response()->json($data, 404);
+                    return response()->json(['msg' => $data['msg'], 'success' => false], 409);
                     }
                     $response = [];
                     $model = User::create([
@@ -215,16 +206,15 @@ class WorkerAuthController extends Controller
                     $response['success'] = true;
                     $response['link'] = Route('worker.verify');
 
-                    return response()->json($response, 200);
+                    return response()->json(['msg' => $response['msg'], 'success' => true, 'link' => $response['link']], 200);
                 }
-            }
         } catch (\Exception $e) {
             $data = [];
-            $data['msg'] = $e->getMessage();
-            //$data['msg'] ='We encountered an error. Please try again later.';
+            // $data['msg'] = $e->getMessage();
+            $data['msg'] ='An error occured, please contact the support (code: 03010107)';
             $data['success'] = false;
             Log::error("post_signup : ",$e->getMessage());
-            return response()->json($data, 500);
+            return response()->json(['msg' => $data['msg'], 'success' => false], 500);
         }
     }
 

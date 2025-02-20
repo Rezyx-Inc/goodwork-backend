@@ -83,8 +83,6 @@ $('#login-form').submit(function (event) {
             contentType: false,
             data: data,
             success: function (resp) {
-                console.log("debugging auth Object (success):");
-                console.log(resp);
                 ajaxindicatorstop();
                 if (resp.success) {
                     notie.alert({
@@ -104,12 +102,10 @@ $('#login-form').submit(function (event) {
                 }
             },
             error: function (resp) {
-                console.log("debugging auth Object (error):");
-                console.log(resp);
                 ajaxindicatorstop();
                 notie.alert({
                     type: 'error',
-                    text: '<i class="fa fa-check"></i> Wrong email or password' ,
+                    text: '<i class="fa fa-check"></i> ' + resp.responseJSON.msg,
                     time: 5
                 });
             }

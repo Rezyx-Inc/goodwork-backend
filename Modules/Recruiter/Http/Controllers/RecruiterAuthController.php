@@ -108,7 +108,7 @@ class RecruiterAuthController extends Controller
 
     public function post_login(Request $request) {
         try{
-        if ($request->ajax()) {
+        
 
                 $validator = Validator::make($request->all(), [
                     'id' => 'email:rfc,dns',
@@ -160,11 +160,11 @@ class RecruiterAuthController extends Controller
                  return response()->json($data);
             }
 
-        }
+        
     }catch(\Exception $e){
         $data = [];
        // $data['msg'] = $e->getMessage();
-       $data['msg'] ='We encountered an error. Please try again later.';
+       $data['msg'] ='An error occured, please contact the support (code: 02010111)';
         $data['success'] = false;
         return response()->json($data);
     }
@@ -185,7 +185,7 @@ class RecruiterAuthController extends Controller
 
     public function post_signup(Request $request) {
         try{
-        if ($request->ajax()) {
+        
             $validator = Validator::make($request->all(), [
                 'first_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
                 'last_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
@@ -239,11 +239,11 @@ class RecruiterAuthController extends Controller
 
                 return response()->json($response);
             }
-        }
+        
     }catch(\Exception $e){
         $data = [];
        // $data['msg'] = $e->getMessage();
-       $data['msg'] ='We encountered an error. Please try again later.';
+        $data['msg'] ='An error occured, please contact the support (code: 02010113)';
         $data['success'] = false;
         return response()->json($data);
     }
