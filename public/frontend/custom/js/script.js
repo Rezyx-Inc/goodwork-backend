@@ -83,6 +83,7 @@ $('#login-form').submit(function (event) {
             contentType: false,
             data: data,
             success: function (resp) {
+                console.log("debugging auth Object (success):");
                 console.log(resp);
                 ajaxindicatorstop();
                 if (resp.success) {
@@ -103,6 +104,8 @@ $('#login-form').submit(function (event) {
                 }
             },
             error: function (resp) {
+                console.log("debugging auth Object (error):");
+                console.log(resp);
                 ajaxindicatorstop();
                 notie.alert({
                     type: 'error',
