@@ -101,12 +101,6 @@ $('#login-form').submit(function (event) {
                     text: '<i class="fa fa-check"></i> Wrong email or password' ,
                     time: 5
                 });
-                console.log(resp);
-                $.each(resp.responseJSON.errors, function (key, val) {
-                    console.log(val[0]);
-                    $('#login-form').find('[name="' + key + '"]').closest('.col-12').find('.invalid-feedback').html(val[0]);
-                    $('#login-form').find('[name="' + key + '"]').addClass('is-invalid');
-                });
             }
         })
 });

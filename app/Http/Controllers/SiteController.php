@@ -47,12 +47,18 @@ class SiteController extends Controller
   public function signup(Request $request)
   {
     $data = [];
+    $professions = Profession::select('full_name')->get();
+    $data['professions'] = $professions;
     return view('site.Auth.signup', $data);
   }
 
   /** Login page */
   public function login(Request $request)
   {
+    if (Auth::guard('frontend')->check() && Auth::guard('recruiter')->check() && Auth::guard('organization')->check()) {
+      return redirect()->route('/');
+    }
+    
     $data = [];
     return view('site.Auth.login', $data);
   }
