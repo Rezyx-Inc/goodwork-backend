@@ -137,7 +137,6 @@
                                     </div>
                                 </div>
 
-
                                 <div class="row d-flex align-items-center">
                                     ${job.preferred_shift_duration ? `
                                     <div class="col-6 d-flex justify-content-between justify-content-md-start">
@@ -189,8 +188,8 @@
                             </div>
 
                             <div class="ss-job-apply-on-view-detls-mn-dv infos_width">
-                                <div class="d-none d-sm-block">
-                                    <div class="ss-job-apply-on-tx-bx-hed-dv">
+                                <div class="d-none d-md-block">
+                                    <div class="ss-job-apply-on-tx-bx-hed-dv d-flex justify-content-between align-items-center">
                                         <ul>
                                             <li>
                                                 <p>${userRole}</p>
@@ -208,14 +207,14 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="d-sm-none">
-                                    <div class="ss-job-apply-on-tx-bx-hed-dv row">
-                                        <div class="col-12 text-end">
+                                <div class="d-md-none">
+                                    <div class="ss-job-apply-on-tx-bx-hed-dv row d-flex justify-content-between align-items-center">
+                                        <div class="col-6">
+                                            <p>${userRole}</p>
+                                        </div>
+                                        <div class="col-6 text-end">
                                             <span>${job.id}</span>
                                              <h6>+${job.offer_count} Applied</h6>
-                                        </div>
-                                        <div class="col-12">
-                                            <p>${userRole}</p>
                                         </div>
                                         <div class="col-12 mt-3 w-100">
                                            <img width="50px" height="50px" src="${recruiterImage ? `${userProfilePath}/${recruiterImage}` : 'frontend/img/account-img.png'}" onerror="this.src='default-image.png';" />   
