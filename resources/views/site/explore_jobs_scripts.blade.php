@@ -50,51 +50,50 @@
         document.querySelector("#job_details_modal_for_logout_users .modal-body").innerHTML = `
         <main class="ss-main-body-sec px-1">
             <div class="ss-apply-on-jb-mmn-dv">
-                <div class="row">
+                <div class="row d-flex align-items-center">
 
                     <div class="col-lg-12">
                         <div class="ss-apply-on-jb-mmn-dv-box-divs model_content_width">
                             <div class="ss-job-prfle-sec header_content_width">
-                                <div class="row d-flex align-items-center">
+                                <div class="row mt-2 mt-md-0 d-flex align-items-center">
                                     <div class="col-9">
-                                       <div class="infos_like_ul">
+                                       <ul>
                                             ${(job.profession && job.preferred_specialty) 
-    ? `
-        <li>
-            <svg style="vertical-align: text-top;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
-                <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
-            </svg>
-            ${job.profession}, ${job.preferred_specialty}
-        </li>
-    ` : (job.profession 
-        ? `
-            <li>
-                <svg style="vertical-align: text-top;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
-                    <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
-                </svg>
-                ${job.profession}
-            </li>
-        ` : (job.preferred_specialty
-            ? `
-                <li>
-                    <svg style="vertical-align: text-top;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
-                        <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
-                    </svg>
-                    ${job.preferred_specialty}
-                </li>
-            ` : `
-                <li>
-                    <svg style="vertical-align: text-top;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
-                        <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
-                    </svg>
-                    No profession or specialty specified
-                </li>
-            `
-        )
-    )
-}
-
-                                        </div>
+                                                ? `
+                                                    <li>
+                                                        <svg style="vertical-align: text-top;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
+                                                            <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                                                        </svg>
+                                                        ${job.profession}, ${job.preferred_specialty}
+                                                    </li>
+                                                ` : (job.profession 
+                                                    ? `
+                                                        <li>
+                                                            <svg style="vertical-align: text-top;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
+                                                                <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                                                            </svg>
+                                                            ${job.profession}
+                                                        </li>
+                                                    ` : (job.preferred_specialty
+                                                        ? `
+                                                            <li>
+                                                                <svg style="vertical-align: text-top;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
+                                                                    <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                                                                </svg>
+                                                                ${job.preferred_specialty}
+                                                            </li>
+                                                        ` : `
+                                                            <li>
+                                                                <svg style="vertical-align: text-top;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
+                                                                    <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                                                                </svg>
+                                                                No profession or specialty specified
+                                                            </li>
+                                                        `
+                                                    )
+                                                )
+                                            }
+                                        </ul>
                                     </div>
                                     <div class="col-3 d-flex justify-content-end p-0">
                                         <p class="text-center">
@@ -106,31 +105,38 @@
                                 <div class="row mt-2 mt-md-0 d-flex align-items-center">
                                     <div class="col-7">
                                         <ul>
-                                            <li>
-                                                <a href="#">
-                                                    <img class="icon_cards" src="${locationIcon}">
-                                                    ${job.job_city}, ${job.job_state}
-                                                </a>
-                                            </li>
+                                            ${(job.job_city && job.job_state) 
+                                                ? `
+                                                    <li>
+                                                        <a href="#">
+                                                            <img class="icon_cards" src="${locationIcon}">
+                                                            ${job.job_city}, ${job.job_state}
+                                                        </a>
+                                                    </li>
+                                                ` : ''}
                                         </ul>
                                     </div>
                                     <div class="col-5 d-flex justify-content-end">
                                         <ul>
-                                            ${job.preferred_assignment_duration && job.preferred_assignment_duration !== '' && job.terms && job.terms === 'Contract' ? `
+                                            ${(job.preferred_assignment_duration && job.terms && job.terms === 'Contract') 
+                                                ? `
                                                     <li>
-                                                        <img class="icon_cards" src="${calendarIcon}"">
-                                                        ${job.preferred_assignment_duration} wks / assignment
+                                                        <a href="#">
+                                                            <img class="icon_cards" src="${calendarIcon}">
+                                                            ${job.preferred_assignment_duration} wks / assignment
+                                                        </a>
                                                     </li>
                                                 ` : ''}
-                                            ${job.hours_per_week && job.hours_per_week !== '' ? `
+                                            ${job.actual_hourly_rate 
+                                                ? `
                                                     <li>
-                                                        <img class="icon_cards" src="${calendarIcon}">
-                                                        ${job.hours_per_week} hrs/wk
+                                                        $ ${job.actual_hourly_rate.toLocaleString()}/hr
                                                     </li>
                                                 ` : ''}
                                         </ul>
                                     </div>
                                 </div>
+
 
                                 <div class="row d-flex align-items-center">
                                     ${job.preferred_shift_duration && job.preferred_shift_duration !== '' ? `
