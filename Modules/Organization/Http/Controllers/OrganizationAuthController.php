@@ -168,7 +168,7 @@ class OrganizationAuthController extends Controller
     } catch (\Exception $e) {
       $data = [];
       // $data['msg'] = $e->getMessage();
-      $data['msg'] = 'We encountered an error. Please try again later. (code: 03010111)';
+      $data['msg'] = 'An error occured, please contact the support (code: 03010111)';
       $data['success'] = false;
       return response()->json($data);
     }
@@ -276,7 +276,7 @@ class OrganizationAuthController extends Controller
     } catch (\Exception $e) {
       $data = [];
       // $data['msg'] = $e->getMessage();
-      $data['msg'] = 'We encountered an error. Please try again later. (code: 03010113)';
+      $data['msg'] = 'An error occured, please contact the support (code: 03010113)';
       $data['success'] = false;
       return response()->json($data);
     }
