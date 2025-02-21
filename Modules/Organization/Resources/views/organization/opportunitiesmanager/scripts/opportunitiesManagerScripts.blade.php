@@ -1151,7 +1151,7 @@
     document.addEventListener('DOMContentLoaded', async function() {
 
         // for job creation in dev mode
-        // fillData();
+         fillData();
 
         // FOR JOB CREATION 
         // get professions according to job type :
