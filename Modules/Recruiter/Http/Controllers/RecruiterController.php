@@ -20,6 +20,8 @@ use App\Models\NotificationMessage as NotificationMessageModel;
 use App\Models\NotificationJobModel;
 use App\Models\NotificationOfferModel;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NotifyEvents;
 
 
 class RecruiterController extends Controller
@@ -497,6 +499,19 @@ class RecruiterController extends Controller
         $time = now()->toDateTimeString();
         event(new NewPrivateMessage($message, $idOrganization, $id, $idWorker, $role, $time, $type, $fileName));
         event(new NotificationMessage($message, false, $time, $idWorker, $id, $full_name));
+
+        // Send an email notification
+        $workerNotificationDetails = User::where('id', $idWorker)->get();
+        if($workerNotificationDetails[0]['email_messages'] == 1){
+
+            $dataToSend = ["message" => $full_name . "(". $user->organization_name .") Sent you a private message.", "title" => "New Private Message"];
+            try{
+
+                Mail::to($workerNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+            } catch (\Exception $ex) {
+                return response()->json(["message" => $ex->getMessage()]);
+            }
+        }
 
         return true;
     }

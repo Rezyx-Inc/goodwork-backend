@@ -747,6 +747,33 @@ class WorkerDashboardController extends Controller
       event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
       //event(new NotificationOffer($status, false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $offer_id));
 
+      // Send an email notification
+      $organizationNotificationDetails = User::where('id', $idOrganization)->get();
+      $recruiterNotificationDetails = User::where('id', $idRecruiter)->get();
+
+      if($organizationNotificationDetails[0]['email_new_applications'] == 1){
+
+          $dataToSend = ["message" => $full_name . " Has applied to " . $request->jid , "title" => "New Application"];
+          try{
+
+              Mail::to($organizationNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+          } catch (\Exception $ex) {
+              return response()->json(["message" => $ex->getMessage()]);
+          }
+      }
+
+      if($recruiterNotificationDetails[0]['email_new_applications'] == 1){
+
+          $dataToSend = ["message" => $full_name . " Has applied to " . $request->jid , "title" => "New Application"];
+
+          try{
+
+              Mail::to($recruiterNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+          } catch (\Exception $ex) {
+              return response()->json(["message" => $ex->getMessage()]);
+          }
+      }
+
       DB::commit();
 
       return new JsonResponse(['success' => true, 'msg' => 'Applied to job successfully'], 200);
@@ -1115,6 +1142,29 @@ class WorkerDashboardController extends Controller
       $job_name = Job::where('id', $jobid)->first()->job_name;
 
       event(new NotificationOffer('Offered', false, $time, $receiver, $nurse_id, $full_name, $jobid, $job_name, $id));
+
+      if($organizationNotificationDetails[0]['email_counter_offer'] == 1){
+
+        $dataToSend = ["message" => $full_name . " Has Countered " . $offerexist->id , "title" => "Offer Countered"];
+        try{
+
+            Mail::to($organizationNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+        } catch (\Exception $ex) {
+            return response()->json(["message" => $ex->getMessage()]);
+        }
+    }
+
+    if($recruiterNotificationDetails[0]['email_counter_offer'] == 1){
+
+        $dataToSend = ["message" => $full_name . " Has Countered " . $offerexist->id , "title" => "Offer Countered"];
+
+        try{
+
+            Mail::to($recruiterNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+        } catch (\Exception $ex) {
+            return response()->json(["message" => $ex->getMessage()]);
+        }
+    }
 
       return response()->json(['success' => true, 'msg' => 'Counter offer created successfully']);
     } catch (\Exception $e) {
