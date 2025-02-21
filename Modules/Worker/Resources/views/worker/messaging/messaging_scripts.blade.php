@@ -396,6 +396,7 @@
     }
 
     function sendAjaxRequest(formData) {
+        document.getElementById('messageEnvoye').value = "";
         $.ajax({
             url: 'send-message',
             type: 'POST',
@@ -403,7 +404,7 @@
             processData: false, // tell jQuery not to process the data
             contentType: false, // tell jQuery not to set contentType
             success: function() {
-                document.getElementById('messageEnvoye').value = "";
+                console.log('Message sent successfully');
             }
         });
     }

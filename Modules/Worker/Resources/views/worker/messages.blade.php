@@ -184,6 +184,7 @@
         }
 
         function sendAjaxRequest(formData) {
+            document.getElementById('messageEnvoye').value = "";
             $.ajax({
                 url: 'send-message',
                 type: 'POST',
@@ -191,7 +192,6 @@
                 processData: false,
                 contentType: false,
                 success: function() {
-                    document.getElementById('messageEnvoye').value = "";
                     console.log('message envoyé');
                 }
             });
