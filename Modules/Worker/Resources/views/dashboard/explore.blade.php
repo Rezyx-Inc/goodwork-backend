@@ -15,7 +15,7 @@
                         <h2>Explore</h2>
                     </div>
 
-                    <div class="col-lg-4">
+                    <div class="col-xl-4">
                         <div class="ss-dash-explr-job-dv" style="padding:40px !important;">
                             <h4>Filters</h4>
                             <form method="post" action="{{ route('worker.exploreSearch') }}" id="filter_form"> @csrf
@@ -26,7 +26,7 @@
                                     </div>
                                 </div>
 
-                                <div class="ss-input-slct-grp">
+                                <div class="ss-input-slct-grp mb-2">
                                     <label for="cars">Job Type</label>
                                     <select name="job_type">
                                         <option value="">Select</option>
@@ -37,7 +37,7 @@
                                     </select>
                                 </div>
 
-                                <div class="ss-input-slct-grp">
+                                <div class="ss-input-slct-grp mb-2">
                                     <label for="cars">Profession</label>
                                     <select name="profession">
                                         <option value="">Select</option>
@@ -49,7 +49,7 @@
                                     </select>
                                 </div>
 
-                                <div class="ss-input-slct-grp">
+                                <div class="ss-input-slct-grp mb-2">
                                     <label>Specialty</label>
                                     <select name="specialty" id="specialty">
                                         <option value="">Select Specialty</option>
@@ -61,7 +61,7 @@
                                     </select>
                                 </div>
 
-                                <div class="ss-form-group col-md-12">
+                                <div class="ss-form-group col-md-12 mb-2">
                                     <label> State </label>
                                     <select name="state" id="state">
                                         @if (!empty($state))
@@ -78,7 +78,7 @@
                                 </div>
 
 
-                                <div class="ss-input-slct-grp">
+                                <div class="ss-input-slct-grp mb-2">
                                     <label>City</label>
                                     <select name="city" id="city">
                                         @if (!empty($city))
@@ -91,7 +91,7 @@
                                 </div>
 
 
-                                <div class="ss-form-group ss-prsnl-frm-terms">
+                                <div class="ss-form-group ss-prsnl-frm-terms mb-2">
                                     <label>Terms</label>
                                     <div class="ss-speilty-exprnc-add-list terms-content"></div>
                                     {{-- <ul style="align-items: flex-start; list-style: none;">
@@ -175,7 +175,7 @@
                                     <label>Hours Per Week</label>
                                     <div id="slider3"></div>
                                 </div>
-                                <div class="ss-input-slct-grp">
+                                <div class="ss-input-slct-grp mt-2">
                                     <label for="cars">Job ID</label>
                                     <div class="form-outline">
                                         <input type="text" id="gw" class="gw" name="gw"
@@ -229,7 +229,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-8">
+                    <div class="col-xl-8">
 
                         <!-----------jobs profiles---------->
 
