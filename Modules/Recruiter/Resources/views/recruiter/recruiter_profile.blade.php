@@ -329,7 +329,7 @@
                                 <p style="
                                 margin-top: 20px;
                             ">
-                                    Please contact us at <span style="font-weight: 500">support@goodwork.com</span></p>
+                                    Please contact us at <span style="font-weight: 500">techteam@goodwork.world</span></p>
                             </div>
 
                         </div>

@@ -419,7 +419,7 @@ public function index()
             $user = Auth::guard('organization')->user();
             $user_email = $user->email;
             $email_data = ['support_subject_issue' => $request->support_subject_issue, 'support_subject' => $request->support_subject, 'worker_email' => $user_email];
-            Mail::to('support@goodwork.com')->send(new support($email_data));
+            Mail::to('techteam@goodwork.world')->send(new support($email_data));
 
             return response()->json(['status' => true, 'message' => 'Support ticket sent successfully']);
         } catch (ValidationException $e) {
