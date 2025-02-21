@@ -83,7 +83,6 @@ $('#login-form').submit(function (event) {
             contentType: false,
             data: data,
             success: function (resp) {
-                console.log(resp);
                 ajaxindicatorstop();
                 if (resp.success) {
                     notie.alert({
@@ -104,16 +103,10 @@ $('#login-form').submit(function (event) {
             },
             error: function (resp) {
                 ajaxindicatorstop();
-                // notie.alert({
-                //     type: 'error',
-                //     text: '<i class="fa fa-check"></i> Wrong email or password' ,
-                //     time: 5
-                // });
-                console.log(resp);
-                $.each(resp.responseJSON.errors, function (key, val) {
-                    console.log(val[0]);
-                    form.find('[name="' + key + '"]').closest('.ss-form-group').find('.help-block').html(val[0]);
-                    form.find('[name="' + key + '"]').closest('.ss-form-group').addClass('has-error');
+                notie.alert({
+                    type: 'error',
+                    text: '<i class="fa fa-check"></i> ' + resp.responseJSON.msg,
+                    time: 5
                 });
             }
         })
@@ -161,16 +154,10 @@ $('#counter-offer-form').submit(function (event) {
         },
         error: function (resp) {
             ajaxindicatorstop();
-            // notie.alert({
-            //     type: 'error',
-            //     text: '<i class="fa fa-check"></i> Wrong email or password' ,
-            //     time: 5
-            // });
-            console.log(resp);
-            $.each(resp.responseJSON.errors, function (key, val) {
-                console.log(val[0]);
-                form.find('[name="' + key + '"]').closest('.ss-form-group').find('.help-block').html(val[0]);
-                form.find('[name="' + key + '"]').closest('.ss-form-group').addClass('has-error');
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> Wrong email or password' ,
+                time: 5
             });
         }
     })

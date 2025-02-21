@@ -44,6 +44,9 @@ class NewPrivateMessage implements ShouldBroadcast
 
     public function broadcastOn()
     {
+
+
+
         $idOrganization = $this->OrganizationId;
         $idWorker = $this->WorkerId;
         $idRecruiter = $this->RecruiterId;

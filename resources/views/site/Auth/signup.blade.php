@@ -32,6 +32,19 @@
                     <input type="text" name="organization_name" placeholder="Organization Name" required><br/>
                     <span class="help-block-organization-name"></span>
                 </div>
+                <div class="ss-form-group" style="display:none;" id="worker_profession">
+                    <select name="profession" id="perferred_profession">
+                        <option value="" disabled selected hidden>Select a Profession
+                        </option>
+                        @foreach ($professions as $value)
+                            <option value="{{ $value->full_name }}">{{ $value->full_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <div>
+                        <span class="helper help-block-perferred_profession"></span>
+                    </div>
+                </div>
                 <div class="ss-form-group">
                     <input type="text" name="first_name" placeholder="First Name" required><br/>
                     <span class="help-block-first-name"></span>
@@ -76,8 +89,13 @@
     var role = document.querySelector('select[name=role]').value;
     if(role == 'organization'){
         $('#organization_id').show();
-    }else{
+        $('#worker_profession').hide();
+    }else if (role == 'worker'){
+        $('#worker_profession').show();
         $('#organization_id').hide();
+    }else {
+        $('#organization_id').hide();
+        $('#worker_profession').hide();
     }
   }
 
@@ -95,7 +113,16 @@
     var lastName = $('input[name="last_name"]').val();
     var email = $('input[name="email"]').val();
     var mobile = $('#contact_number').val();
+    var profession = $('select[name="profession"]').val();
     var role = $('select[name="role"]').val();
+
+    if (role === 'worker' && profession === null) {
+        $('.help-block-perferred_profession').text('Please select a profession');
+        $('.help-block-perferred_profession').addClass('text-danger');
+        access = false;
+    }else{
+        $('.help-block-perferred_profession').text('');
+    }
 
     if (role === 'organization' && organization_name.trim() === '') {
     $('.help-block-organization-name').text('Please enter your organization name');
@@ -141,6 +168,7 @@
     } else {
         $('.help-block-role').text('');
     }
+
     if(access){
         $('#loading').removeClass('d-none');
         $('#sign').addClass('d-none');

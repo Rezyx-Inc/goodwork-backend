@@ -26,9 +26,28 @@
                                  name="role" required>
                                     <option value="" disabled selected hidden
                                     >What’s your role?</option>
-                                    <option value="organization">Organization</option>
-                                    <option value="worker">Worker</option>
-                                    <option value="recruiter">Recruiter</option>
+
+                                    @if(Auth::guard('organization')->check() && !Auth::guard('frontend')->check() && !Auth::guard('recruiter')->check())
+                                        <option value="worker">Worker</option>
+                                        <option value="recruiter">Recruiter</option>
+                                    @elseif(Auth::guard('frontend')->check() && !Auth::guard('organization')->check() && !Auth::guard('recruiter')->check())
+                                        <option value="organization">Organization</option>
+                                        <option value="recruiter">Recruiter</option>
+                                    @elseif(Auth::guard('recruiter')->check() && !Auth::guard('frontend')->check() && !Auth::guard('organization')->check())
+                                        <option value="organization">Organization</option>
+                                        <option value="worker">Worker</option>
+                                    @else
+                                        @if(!Auth::guard('organization')->check())
+                                            <option value="organization">Organization</option>
+                                        @endif
+                                        @if(!Auth::guard('frontend')->check())
+                                            <option value="worker">Worker</option>
+                                        @endif
+                                        @if(!Auth::guard('recruiter')->check())
+                                            <option value="recruiter">Recruiter</option>
+                                        @endif
+                                    @endif
+                                    
                                 </select><br/>
                                 <span class="help-block-role"></span>
                             </div>
