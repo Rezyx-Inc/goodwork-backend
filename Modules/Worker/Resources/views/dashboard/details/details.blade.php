@@ -22,7 +22,7 @@
             <div class="ss-apply-on-jb-mmn-dv">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>Explore</h2>
+                        <h2 class="details-title">Explore</h2>
 
                         <!------ Preview ------->
                         <div class="ss-apply-on-jb-mmn-dv-box-divs">
@@ -151,12 +151,17 @@
 
 
                                 {{-- row 5 --}}
-                                <div class="row">
-                                    {{-- <div class="col-6"><h5>Recently Added</h5></div> --}}
-                                    <div class="col-12 d-flex justify-content-end">
+                                <div class="row w-100">
+
+                                    <div class="col-6 d-flex justify-content-start">
+                                        @if ($model->as_soon_as == true)
+                                            <p class="col-12" style="padding-bottom: 0px; padding-top: 8px;">
+                                                As soon as possible</p>
+                                        @endif
+                                    </div>
+                                    <div class="col-6 d-flex justify-content-end">
                                         @if ($model->urgency == 'Auto Offer' || $model->as_soon_as == true)
-                                            <p class="col-2 text-center" style="padding-bottom: 0px; padding-top: 8px;">
-                                                Urgent</p>
+                                            <p class="col-2 text-end" style="padding-bottom: 0px; padding-top: 8px;">Urgent</p>
                                         @endif
                                     </div>
                                 </div>
@@ -208,7 +213,7 @@
                                     <div class="col-6">
                                         <p>Recruiter</p>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-6 text-end">
                                         <span>{{ $model->id }}</span>
                                         <h6>{{ $model->getOfferCount() }} Applied</h6>
                                     </div>
@@ -2180,7 +2185,7 @@
                                 </div>
 
                                 <ul class="ss-s-jb-apl-on-inf-txt-ul">
-                                    <li>
+                                    <li class="row w-100">
                                         <span style="font-size: larger">(*) : Required Fields</span>
                                     </li>
                                 </ul>
