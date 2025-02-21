@@ -2062,9 +2062,10 @@ class WorkerController extends Controller
             } else {
 
                 $offer = Offer::where('id', $request->id)->first();
+                $job_id = $offer->job_id;
                 $time = now()->toDateTimeString();
                 $action = $request->type == 'rejectcounter' ? 'Rejected' : 'Accepted';
-                $message = $full_name . ' has ' . $action . ' the job offer';
+                $message = $full_name . ' has ' . $action . ' the job offer ( Job ID: ' . $job_id . ' )';
                 $idOrganization = $offer->organization_id;
                 $idWorker = $user->id;
                 $recruiter_id = $offer->recruiter_id;
