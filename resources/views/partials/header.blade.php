@@ -32,11 +32,13 @@
 
                                         @if (request()->routeIs('/'))
                                             @if (!auth()->guard('frontend')->check())
-                                                <li>
-                                                    <a href="{{ route('login') }}">Login</a>
+                                                <li class="d-none">
                                                 </li>
                                                 <li>
                                                     <a href="{{ route('signup') }}">Join Goodwork</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('login') }}">Login</a>
                                                 </li>
                                             @else
                                                 <li></li>
