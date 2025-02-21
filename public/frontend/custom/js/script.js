@@ -83,7 +83,6 @@ $('#login-form').submit(function (event) {
             contentType: false,
             data: data,
             success: function (resp) {
-                console.log(resp);
                 ajaxindicatorstop();
                 if (resp.success) {
                     notie.alert({
@@ -106,7 +105,7 @@ $('#login-form').submit(function (event) {
                 ajaxindicatorstop();
                 notie.alert({
                     type: 'error',
-                    text: '<i class="fa fa-check"></i> Wrong email or password' ,
+                    text: '<i class="fa fa-check"></i> ' + resp.responseJSON.msg,
                     time: 5
                 });
             }
