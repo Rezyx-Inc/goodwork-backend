@@ -50,123 +50,208 @@
         document.querySelector("#job_details_modal_for_logout_users .modal-body").innerHTML = `
         <main class="ss-main-body-sec px-1">
             <div class="ss-apply-on-jb-mmn-dv">
-                <div class="row">
+                <div class="row d-flex align-items-center">
 
                     <div class="col-lg-12">
                         <div class="ss-apply-on-jb-mmn-dv-box-divs model_content_width">
                             <div class="ss-job-prfle-sec header_content_width">
-                                <div class="row d-flex align-items-center">
-                                    <p class="col-12 text-end d-sm-none" style="padding-right:20px;">
-                                        <span>+${job.offer_count} Applied</span>
-                                    </p>
-                                    <div class="col-12 d-flex justify-content-between justify-content-sm-start col-sm-10">
-                                        <div class="infos_like_ul">
-                                            <li>
-                                                <a href="#">
-                                                    <svg style="vertical-align: sub;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
-                                                        <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
-                                                    </svg>
-                                                    ${job.profession}
-                                                </a>
-                                            </li>
-                                            </div>
-                                            <div class="infos_like_ul">
-                                            <li><a href="#">${job.preferred_specialty}</a></li>
-                                            </div>
+                                <div class="row mt-2 mt-md-0 d-flex align-items-center">
+                                    <div class="col-9">
+                                       <ul>
+                                            ${(job.profession && job.preferred_specialty) 
+                                                ? `
+                                                    <li>
+                                                        <svg style="vertical-align: text-top;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
+                                                            <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                                                        </svg>
+                                                        ${job.profession}, ${job.preferred_specialty}
+                                                    </li>
+                                                ` : (job.profession 
+                                                    ? `
+                                                        <li>
+                                                            <svg style="vertical-align: text-top;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
+                                                                <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                                                            </svg>
+                                                            ${job.profession}
+                                                        </li>
+                                                    ` : (job.preferred_specialty
+                                                        ? `
+                                                            <li>
+                                                                <svg style="vertical-align: text-top;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
+                                                                    <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                                                                </svg>
+                                                                ${job.preferred_specialty}
+                                                            </li>
+                                                        ` : `
+                                                            <li>
+                                                                <svg style="vertical-align: text-top;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
+                                                                    <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                                                                </svg>
+                                                                No profession or specialty specified
+                                                            </li>
+                                                        `
+                                                    )
+                                                )
+                                            }
+                                        </ul>
                                     </div>
-                                   <p class="d-none d-sm-block col-sm-2 text-center" style="padding-right:20px;">
-                                        <span>+${job.offer_count} Applied</span>
-                                    </p>
+                                    <div class="col-3 d-flex justify-content-center p-0">
+                                        <p class="text-center">
+                                            <span>+${job.offer_count} Applied</span>
+                                        </p>
+                                    </div>
                                 </div>
 
                                 <div class="row mt-2 mt-md-0 d-flex align-items-center">
                                     <div class="col-7">
                                         <ul>
-                                            <li>
-                                                <a href="#">
-                                                    <img class="icon_cards" src="${locationIcon}">
-                                                    ${job.job_city}, ${job.job_state}
-                                                </a>
-                                            </li>
+                                            ${(job.job_city && job.job_state) 
+                                                ? `
+                                                    <li>
+                                                        <a href="#">
+                                                            <img class="icon_cards" src="${locationIcon}">
+                                                            ${job.job_city}, ${job.job_state}
+                                                        </a>
+                                                    </li>
+                                                ` : ''}
                                         </ul>
                                     </div>
                                     <div class="col-5 d-flex justify-content-end">
                                         <ul>
-                                            ${job.preferred_assignment_duration && job.preferred_assignment_duration !== '' && job.terms && job.terms === 'Contract' ? `
+                                            ${(job.preferred_assignment_duration && job.terms && job.terms === 'Contract') 
+                                                ? `
                                                     <li>
-                                                        <img class="icon_cards" src="${calendarIcon}"">
-                                                        ${job.preferred_assignment_duration} wks / assignment
+                                                        <a href="#">
+                                                            <img class="icon_cards" src="${calendarIcon}">
+                                                            ${job.preferred_assignment_duration} wks / assignment
+                                                        </a>
                                                     </li>
                                                 ` : ''}
-                                            ${job.hours_per_week && job.hours_per_week !== '' ? `
+                                            ${job.actual_hourly_rate 
+                                                ? `
                                                     <li>
-                                                        <img class="icon_cards" src="${calendarIcon}">
-                                                        ${job.hours_per_week} hrs/wk
+                                                        $ ${job.actual_hourly_rate.toLocaleString()}/hr
                                                     </li>
                                                 ` : ''}
                                         </ul>
                                     </div>
                                 </div>
 
-                                <div class="row d-flex align-items-center">
-                                    ${job.preferred_shift_duration && job.preferred_shift_duration !== '' ? `
-                                    <div class="col-12 col-lg-6">
-                                        <ul>
-                                            <li>
-                                                ${job.preferred_shift_duration}
-                                            </li>
-                                             ${job.actual_hourly_rate && job.actual_hourly_rate !== '' ? `
-                                                    <li>
-                                                        $ ${(Number(job.actual_hourly_rate) || 0).toFixed(0)}/hr
-                                                    </li>
-                                                ` : ''}
-                                        </ul>
-                                    </div>
-                                    <div class="col-12 col-lg-6 d-flex justify-content-end">
-                                        <ul> 
-                                            ${job.weekly_pay && job.weekly_pay !== '' ? `
-                                                    <li>
-                                                        $ ${(Number(job.weekly_pay) || 0).toFixed(0)}/hr
-                                                    </li>
-                                                ` : ''}
+                                ${job.preferred_shift_duration && job.preferred_shift_duration != '' ?
+                                    `
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-6 d-flex justify-content-between justify-content-md-start">
+                                            <ul>
+                                                <li>
+                                                    ${job.preferred_shift_duration}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <div class="col-6 d-flex justify-content-end">
+                                            <ul>
+                                                ${job.weekly_pay 
+                                                    ? `
+                                                        <li>
+                                                            $ ${job.weekly_pay.toLocaleString()}/wk
+                                                        </li>
+                                                    ` : ''}
+                                            </ul>
+                                        </div>
+                                        
+                                        <div class="col-6 d-flex justify-content-start">
+                                            <ul>
+                                                ${job.hours_per_week 
+                                                    ? `
+                                                        <li>
+                                                            <a href="#">
+                                                                <img class="icon_cards" src="${calendarIcon}">
+                                                                ${job.hours_per_week} hrs/wk
+                                                            </a>
+                                                        </li>
+                                                    ` : ''}
+                                            </ul>
+                                        </div>
 
-                                            ${job.weekly_pay && job.weekly_pay !== '' ? `
-                                                    <li>
-                                                        $ ${(job.weekly_pay * 4 * 12).toFixed(0)}/yr
-                                                    </li>
-                                                ` : ''}
-                                        </ul>
+                                        <div class="col-6 d-flex justify-content-end">
+                                            <ul>
+                                                ${job.weekly_pay 
+                                                    ? `
+                                                        <li style="font-weight: 600;">
+                                                            $ ${(job.weekly_pay * 4 * 12).toFixed(0)}/yr
+                                                        </li>
+                                                    ` : ''}
+                                            </ul>
+                                        </div>
+                                        
                                     </div>
-                                        ` : 
-                                        `
-                                    <div class="col-12 d-flex justify-content-end">
-                                        <ul>
-                                            ${job.actual_hourly_rate && job.actual_hourly_rate !== '' ? `
-                                                    <li>
-                                                        $ ${(Number(job.actual_hourly_rate) || 0).toFixed(0)}/hr
-                                                    </li>
-                                                ` : ''}
-                                                
-                                            ${job.weekly_pay && job.weekly_pay !== '' ? `
-                                                    <li>
-                                                        $ ${(Number(job.weekly_pay) || 0).toFixed(0)}/wk
-                                                    </li>
-                                                ` : ''}
+                                    `
+                                : `
+                                <div class="row d-flex align-items-center">  
+                                        <div class="col-6 d-flex justify-content-start">
+                                            <ul>
+                                                ${job.hours_per_week 
+                                                    ? `
+                                                        <li>
+                                                            <a href="#">
+                                                                <img class="icon_cards" src="${calendarIcon}">
+                                                                ${job.hours_per_week} hrs/wk
+                                                            </a>
+                                                        </li>
+                                                    ` : ''}
+                                            </ul>
+                                        </div>
+                                        <div class="col-6 d-flex justify-content-end">
+                                            <ul>
+                                                ${job.weekly_pay 
+                                                    ? `
+                                                        <li>
+                                                            $ ${job.weekly_pay.toLocaleString()}/wk
+                                                        </li>
+                                                    ` : ''}
+                                            </ul>
+                                        </div>
+                                        
+                                        
 
-                                            ${job.weekly_pay && job.weekly_pay !== '' ? `
-                                                    <li>
-                                                        $ ${(job.weekly_pay * 4 * 12).toFixed(0)}/yr
-                                                    </li>
-                                                ` : ''}
-                                        </ul>
+                                        <div class="col-12 d-flex justify-content-end">
+                                            <ul>
+                                                ${job.weekly_pay 
+                                                    ? `
+                                                        <li style="font-weight: 600;">
+                                                            $ ${(job.weekly_pay * 4 * 12).toFixed(0)}/yr
+                                                        </li>
+                                                    ` : ''}
+                                            </ul>
+                                        </div>
+                                        
                                     </div>
-                                    `}
+                                `}
+
+                                <div class="row w-100">
+                                    <div class="col-6 d-flex justify-content-start">
+                                        ${job.as_soon_as == 1
+                                            ? `
+                                                <p class="col-12" style="padding-bottom: 0px; padding-top: 8px;">
+                                                    As soon as possible
+                                                </p>
+                                            ` : ''}
+                                    </div>
+
+                                    <div class="col-6 d-flex justify-content-end">
+                                        ${job.as_soon_as !== ''
+                                            ? `
+                                                <p class="col-2 text-center" style="padding-bottom: 0px; padding-top: 8px;">
+                                                    Urgent
+                                                </p>
+                                            ` : ''}
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="ss-job-apply-on-view-detls-mn-dv infos_width">
-                                <div class="d-none d-sm-block">
-                                    <div class="ss-job-apply-on-tx-bx-hed-dv">
+                                <div class="d-none d-md-block">
+                                    <div class="ss-job-apply-on-tx-bx-hed-dv d-flex justify-content-between align-items-center">
                                         <ul>
                                             <li>
                                                 <p>${userRole}</p>
@@ -184,14 +269,14 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="d-sm-none">
-                                    <div class="ss-job-apply-on-tx-bx-hed-dv row">
-                                        <div class="col-12 text-end">
+                                <div class="d-md-none">
+                                    <div class="ss-job-apply-on-tx-bx-hed-dv row d-flex justify-content-between align-items-center">
+                                        <div class="col-6">
+                                            <p>${userRole}</p>
+                                        </div>
+                                        <div class="col-6 text-end">
                                             <span>${job.id}</span>
                                              <h6>+${job.offer_count} Applied</h6>
-                                        </div>
-                                        <div class="col-12">
-                                            <p>${userRole}</p>
                                         </div>
                                         <div class="col-12 mt-3 w-100">
                                            <img width="50px" height="50px" src="${recruiterImage ? `${userProfilePath}/${recruiterImage}` : 'frontend/img/account-img.png'}" onerror="this.src='default-image.png';" />   

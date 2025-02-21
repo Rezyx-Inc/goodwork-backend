@@ -70,7 +70,7 @@
         text-align: left;
     }
     
-    #job-item-container .side-show-container {
+    .job-item-container .side-show-container {
         position: relative;
     }
 </style>
