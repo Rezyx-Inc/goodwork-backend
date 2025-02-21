@@ -44,8 +44,7 @@
                                     </div>
 
                                     <div class="col-12">
-                                        <p>You're just a few percent away from revenue. Complete your profile and get 50%.
-                                        </p>
+                                        <p>Complete your profile and get 50%.</p>
                                     </div>
                                 </div>
                                 {{-- if the profile is complete --}}
