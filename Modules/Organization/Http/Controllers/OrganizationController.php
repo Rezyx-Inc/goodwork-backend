@@ -212,6 +212,11 @@ class OrganizationController extends Controller
                                 ],
                             ],
                         ],
+                        [
+                            '$sort' => [
+                                'lastMessage' => -1, 
+                            ],
+                        ],
                     ])
                     ->toArray();
             });
@@ -373,6 +378,11 @@ class OrganizationController extends Controller
                                 ],
                             ],
                         ],
+                        [
+                            '$sort' => [
+                                'lastMessage' => -1, 
+                            ],
+                        ],
                     ])
                     ->toArray();
             });
@@ -515,6 +525,7 @@ class OrganizationController extends Controller
         //return response()->json(['success' => true, 'message' => $message, 'id' => $id, 'idRecruiter' => $idRecruiter, 'idWorker' => $idWorker, 'role' => $role, 'time' => $time, 'type' => $type, 'fileName' => $fileName]);
         event(new NewPrivateMessage($message, $id, $idRecruiter, $idWorker, $role, $time, $type, $fileName));
         event(new NotificationMessage($message, false, $time, $idWorker, $id, $full_name));
+        event(new NotificationMessage($message, false, $time, $idRecruiter, $id, $full_name));
 
         // Send an email notification
         $workerNotificationDetails = User::where('id', $idWorker)->get();

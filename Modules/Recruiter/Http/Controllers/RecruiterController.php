@@ -207,6 +207,11 @@ class RecruiterController extends Controller
                                 ],
                             ],
                         ],
+                        [
+                            '$sort' => [
+                                'lastMessage' => -1, 
+                            ],
+                        ],
                     ])
                     ->toArray();
             });
@@ -362,6 +367,11 @@ class RecruiterController extends Controller
                                 ],
                             ],
                         ],
+                        [
+                            '$sort' => [
+                                'lastMessage' => -1, 
+                            ],
+                        ],
                     ])
                     ->toArray();
             });
@@ -498,6 +508,7 @@ class RecruiterController extends Controller
         $time = now()->toDateTimeString();
         event(new NewPrivateMessage($message, $idOrganization, $id, $idWorker, $role, $time, $type, $fileName));
         event(new NotificationMessage($message, false, $time, $idWorker, $id, $full_name));
+        event(new NotificationMessage($message, false, $time, $idOrganization ,$id, $full_name));
 
         // Send an email notification
         $workerNotificationDetails = User::where('id', $idWorker)->get();
