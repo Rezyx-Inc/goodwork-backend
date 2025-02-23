@@ -225,7 +225,7 @@ function handleJobNotificationClick(event , senderId){
     let message = notification.numOfMessagesStr > 1 ? ' messages' : ' message';
     let li = document.createElement('li');
     let a = document.createElement('a');
-    a.id = notification.sender;
+    a.id = notification.sender + '_notification';
     a.classList.add('dropdown-item');
     a.href = "{{route('recruiter-messages')}}";
     a.setAttribute('onclick', 'handleNotificationClick(event)'); 
@@ -322,7 +322,7 @@ function handleJobNotificationClick(event , senderId){
                           let message = notification.numOfMessagesStr > 1 ? ' messages' : ' message';
                           let li = document.createElement('li');
                           let a = document.createElement('a');
-                          a.id = notification.sender;
+                          a.id = notification.sender + '_notification';
                           a.classList.add('dropdown-item');
                           a.href = "{{route('recruiter-messages')}}";
                           a.setAttribute('onclick', 'handleNotificationClick(event)'); 
