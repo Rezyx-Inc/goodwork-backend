@@ -242,7 +242,7 @@ $(document).ready(function(){
                     notificationMessages.forEach(notification => {
                       
                       if(notification.sender == event.sender){
-                        let notification_list = document.getElementById(notification.sender);
+                        let notification_list = document.getElementById(notification.sender + '_notification');
                         if(notification_list){
                           notification_list.innerHTML = notification.full_name + ' sent you ' + notification.numOfMessagesStr + ' messages.';
                         }else{

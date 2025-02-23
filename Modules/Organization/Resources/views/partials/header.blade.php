@@ -317,7 +317,7 @@ function handleJobNotificationClick(event , senderId){
 
       if(notification.sender == event.sender){
 
-        let notification_list = document.getElementById(notification.sender);
+        let notification_list = document.getElementById(notification.sender + '_notification');
 
         if(notification_list){
 
