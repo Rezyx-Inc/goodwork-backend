@@ -236,7 +236,7 @@
             const idOrganization = urlParams.get('organization_id');
             if (idWorker && nameworker && idOrganization) {
                 getPrivateMessages(idWorker, nameworker, idOrganization).then(() => scrollToBottom('body_room'));
-                toggleActiveClass(idWorker);
+                toggleActiveClass(idWorker + '-' + idOrganization);
             }
 
             $('#body_room').scroll(function() {
@@ -344,7 +344,7 @@
 
                             @if ($data)
                                 @foreach ($data as $room)
-                                    <div id="{{$room['workerId']}}" onclick="getPrivateMessages('{{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['organizationId'] }}').then(() => scrollToBottom('body_room')); toggleActiveClass('{{ $room['workerId'] }}'); " class="ss-mesg-sml-div">
+                                    <div id="{{$room['workerId']}}-{{$room['organizationId']}}" onclick="getPrivateMessages('{{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['organizationId'] }}').then(() => scrollToBottom('body_room')); toggleActiveClass('{{ $room['workerId'] }}-{{$room['organizationId']}}'); " class="ss-mesg-sml-div">
                                         <ul class="ss-msg-user-ul-dv">
                                             @php
                                                 $worker = App\Models\User::find($room['workerId']);  
