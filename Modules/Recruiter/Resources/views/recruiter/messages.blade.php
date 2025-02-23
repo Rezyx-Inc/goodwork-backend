@@ -15,7 +15,12 @@
 
         // functions : getPrivateMessages, createMessageHTML, getSenderClass, getMessageContent, updateRoomLastMessage, updateLastMessageTime, incrementMessageCount, resetMessageCount, updateChatUI, scrollToBottom, focusOnInput, sendMessage, sendAjaxRequest
 
-        function getPrivateMessages(idWorker, fullName, idOrganization) {
+        async function getPrivateMessages(idWorker, fullName, idOrganization) {
+            page = 1;
+            $('.private-messages').html('');
+            scrollToBottom('body_room');
+            await updateChatUI(fullName);
+
             window.Echo.leave(PrivateChannel);
 
             const data = {
@@ -23,20 +28,19 @@
                 _token: $('meta[name="csrf-token"]').attr('content')
             };
 
-            $.ajax({
-                url: 'read-recruiter-message-notification',
-                type: 'POST',
-                data: data,
-                success: function(response) {
-                    console.log('Success:', response);
-                    resetMessageCount(idWorker);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                }
-            });
+            try {
+                await $.ajax({
+                    url: 'read-recruiter-message-notification',
+                    type: 'POST',
+                    data: data
+                });
+                console.log('Success: Notification read');
+                resetMessageCount(idWorker);
+            } catch (error) {
+                console.error('Error:', error);
+            }
 
-            updateChatUI(fullName);
+
             idWorker_Global = idWorker;
             idOrganization_Global = idOrganization;
             let id = @json($id);
@@ -55,10 +59,8 @@
                     scrollToBottom('body_room');
                 });
 
-            $('.private-messages').html('');
-
-            $.get('/recruiter/getMessages?page=1&workerId=' + idWorker_Global + '&organizationId=' + idOrganization_Global,
-                function(data) {
+                try {
+                    const data = await $.get('/recruiter/getMessages?page=1&workerId=' + idWorker_Global + '&organizationId=' + idOrganization_Global);
                     console.log("Receiving data", data);
                     var messages = data.messages;
                     messages.forEach(function(message) {
@@ -66,7 +68,11 @@
                         $('.private-messages').prepend(messageHTML);
                     });
                     focusOnInput();
-                });
+                    page++;
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+
         }
 
         function createMessageHTML(message) {
@@ -131,11 +137,13 @@
             }
         }
 
-        function updateChatUI(fullName) {
+        async function updateChatUI(fullName) {
             document.getElementById('fullName').innerHTML = fullName;
             document.getElementById('empty_room').classList.add("d-none");
             document.getElementById('body_room').classList.remove("d-none");
             document.getElementsByClassName('ss-rply-msg-input')[0].classList.remove("d-none");
+            await new Promise(resolve => setTimeout(resolve, 0));
+            scrollToBottom('body_room');
         }
 
         function scrollToBottom(elementId) {
@@ -183,6 +191,8 @@
         }
 
         function sendAjaxRequest(formData) {
+            document.getElementById('messageEnvoye').value = "";
+            scrollToBottom('body_room');
             $.ajax({
                 url: 'send-message',
                 type: 'POST',
@@ -190,7 +200,6 @@
                 processData: false,
                 contentType: false,
                 success: function() {
-                    document.getElementById('messageEnvoye').value = "";
                     console.log('message envoyé');
                 }
             });
@@ -226,12 +235,13 @@
             const nameworker = urlParams.get('name');
             const idOrganization = urlParams.get('organization_id');
             if (idWorker && nameworker && idOrganization) {
-                getPrivateMessages(idWorker, nameworker, idOrganization);
+                getPrivateMessages(idWorker, nameworker, idOrganization).then(() => scrollToBottom('body_room'));
+                toggleActiveClass(idWorker);
             }
 
-            $('.messages-area').scroll(function() {
-                if ($(this).scrollTop() == 0) {
-                    page++;
+            $('#body_room').scroll(function() {
+                if ($(this).scrollTop() == 0 && page > 1) {
+                    document.getElementById('body_room').scrollTop = 100;
                     $('#loading').removeClass('d-none');
                     $('#login').addClass('d-none');
 
@@ -246,6 +256,7 @@
                             $('#login').removeClass('d-none');
                             $('#loading').addClass('d-none');
                         });
+                        page++;
                 }
             });
 
@@ -298,6 +309,24 @@
             focusOnInput();
         });
 
+        function toggleActiveClass(workerUserId) {
+
+                var element = document.getElementById(workerUserId);
+                element.classList.add('active');
+
+                var allElements = document.getElementsByClassName('ss-mesg-sml-div');
+
+                for (var i = 0; i < allElements.length; i++) {
+                    if (allElements[i].classList.contains('active')) {
+                        allElements[i].classList.remove('active');
+                    }
+                }
+                if (!element.classList.contains('active')) {
+                    element.classList.add('active');
+                }
+
+        }
+
     </script>
 
     <main style="padding-top: 100px" class="ss-main-body-sec">
@@ -315,7 +344,7 @@
 
                             @if ($data)
                                 @foreach ($data as $room)
-                                    <div onclick="getPrivateMessages('{{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['organizationId'] }}')" class="ss-mesg-sml-div">
+                                    <div id="{{$room['workerId']}}" onclick="getPrivateMessages('{{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['organizationId'] }}').then(() => scrollToBottom('body_room')); toggleActiveClass('{{ $room['workerId'] }}'); " class="ss-mesg-sml-div">
                                         <ul class="ss-msg-user-ul-dv">
                                             @php
                                                 $worker = App\Models\User::find($room['workerId']);  
@@ -411,7 +440,7 @@
 
     <style>
         .messages-area {
-            height: 80vh;
+            height: 75vh;
             overflow-y: auto;
         }
 
@@ -486,6 +515,10 @@
         #login,
         #loadSpan {
             color: black;
+        }
+
+        .ss-mesg-sml-div.active {
+            background-color: #ffeeef !important;
         }
     </style>
 @endsection
