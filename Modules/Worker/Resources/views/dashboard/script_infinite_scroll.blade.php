@@ -114,14 +114,7 @@
                 '</div>'+
             '</div>';
 
-            var container = $('#job-item-container');
-
-            if (container.length === 0) {
-                console.error("Job list container not found!");
-                return;
-            }
-
-            container.append(newCard);
+            $('.job-item-container').append(newCard);
 
         }
     }
