@@ -20,9 +20,29 @@
                     <h2>Worker <span class="ss-pink-color">Profile</span></h2>
                 </div>
                 <div class="row">
-                    <div class="col-8">
-                        <div class="ss-profil-complet-div">
-                            <div class="row d-flex justify-content-center align-items-center ">
+                    <div class="col-12 d-md-none">
+                        <div class="ss-my-profil-img-div">
+                            <div class="profile-pic">
+                                <label class="-label" for="file">
+                                    <span class="glyphicon glyphicon-camera"></span>
+                                    <span>Change Image</span>
+                                </label>
+                                <input id="file" type="file" accept=".heic, .png, .jpeg, .gif"
+                                    onchange="loadFile(event)" />
+                                @if (isset($user->image))
+                                    <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200" />
+                                @else
+                                    <img src="{{ URL::asset('frontend/img/account-img.png') }}" id="output"
+                                        width="200" />
+                                @endif
+                            </div>
+                            <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
+                            <p>{{ $worker->id }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="ss-profil-complet-div ">
+                            <div class="row d-flex justify-content-center percentage_div align-items-center ">
                                 <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 m-0 p-0">
                                     <svg viewBox="-25 -25 250 250" version="1.1" xmlns="http://www.w3.org/2000/svg"
                                         style="transform:rotate(-90deg)">
@@ -60,7 +80,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-4 d-none d-md-block">
                         <div class="ss-my-profil-img-div">
                             <div class="profile-pic">
                                 <label class="-label" for="file">
@@ -1600,6 +1620,17 @@
 
 
 <style>
+    @media (max-width: 768px) {
+        .percentage_div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .percentage_div svg{
+            width: 50%;
+        }
+    }
+    
     .file-name {
         height: 30px;
         display: flex;
