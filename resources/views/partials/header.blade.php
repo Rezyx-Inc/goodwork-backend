@@ -32,11 +32,12 @@
 
                                         @if (request()->routeIs('/'))
                                             @if (!auth()->guard('frontend')->check())
-                                                <li>
-                                                    <a href="{{ route('login') }}">Login</a>
-                                                </li>
+                                                <li class="d-none"></li>
                                                 <li>
                                                     <a href="{{ route('signup') }}">Join Goodwork</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('login') }}">Login</a>
                                                 </li>
                                             @else
                                                 <li></li>
@@ -60,11 +61,12 @@
                                             @endif
                                         @elseif (request()->routeIs('for-organizations'))
                                             @if (!auth()->guard('organization')->check())
-                                                <li>
-                                                    <a href="{{ route('login') }}">Login</a>
-                                                </li>
+                                                <li class="d-none"></li>
                                                 <li>
                                                     <a href="{{ route('signup') }}">Join Goodwork</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('login') }}">Login</a>
                                                 </li>
                                             @else
                                                 <li></li>
