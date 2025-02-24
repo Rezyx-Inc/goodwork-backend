@@ -933,7 +933,9 @@
         text-decoration: underline;
     }
 
-
+    ul{
+        margin-bottom: 0px;
+    }
 
 </style>
 
