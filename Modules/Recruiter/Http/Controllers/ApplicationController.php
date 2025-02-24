@@ -635,7 +635,7 @@ class ApplicationController extends Controller
         if ($offer_updated) {
             // send notification to the worker
             $time = now()->toDateTimeString();
-            $message = $full_name . ' has changed the status of your application to ' . $status;
+            $message = $full_name . ' has changed the status of your job application  to ' . $status . ' ( Job ID: ' . $offer->job_id . ' )';
             $idOrganization = $offer->organization_id;
             $idWorker = $offer->worker_user_id;
             $idWorker = Nurse::where('id', $idWorker)->first()->user_id;

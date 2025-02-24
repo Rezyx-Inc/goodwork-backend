@@ -68,7 +68,7 @@
                         {{ $offerdetails->type }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'type', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'type', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endisset
                 </p>
@@ -98,7 +98,7 @@
                         {{ $offerdetails->terms }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'terms', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'terms', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endisset
                 </p>
@@ -126,7 +126,7 @@
                         {{ $offerdetails->profession }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'profession', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'profession', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endisset
                 </p>
@@ -153,7 +153,7 @@
                         {{ $offerdetails->specialty }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'specialty', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'specialty', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -180,7 +180,7 @@
                     {!! isset($offerdetails->actual_hourly_rate)
                         ? '$ ' . number_format($offerdetails->actual_hourly_rate)
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'actual_hourly_rate\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -214,7 +214,7 @@
                     {!! isset($offerdetails->weekly_pay)
                         ? '$ ' . number_format($offerdetails->weekly_pay)
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'weekly_pay\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -246,7 +246,7 @@
                     {!! isset($offerdetails->hours_per_week)
                         ? number_format($offerdetails->hours_per_week) . ($offerdetails->hours_per_week > 1 ? ' hours' : ' hour')
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'hours_per_week\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -281,7 +281,7 @@
                         {{ $offerdetails->state }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'state', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'state', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -309,7 +309,7 @@
                         {{ $offerdetails->city }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'city', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'city', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -339,7 +339,7 @@
                             Required
                         @else
                             <a style="cursor: pointer;"
-                                onclick="askRecruiter(this, 'is_resume_required', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                                onclick="askRecruiter(this, 'is_resume_required', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                                 Recruiter</a>
                         @endif
                     </p>
@@ -383,7 +383,7 @@
                         {{ $offerdetails->preferred_shift_duration }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'preferred_shift_duration', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'preferred_shift_duration', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -408,7 +408,7 @@
                     {!! isset($offerdetails->guaranteed_hours)
                         ? number_format($offerdetails->guaranteed_hours) . ($offerdetails->guaranteed_hours > 1 ? ' hours' : ' hour')
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'guaranteed_hours\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -441,7 +441,7 @@
                     {!! isset($offerdetails->hours_shift)
                         ? number_format($offerdetails->hours_shift) . ($offerdetails->hours_shift > 1 ? ' hours' : ' hour')
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'worker_hours_shift\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -473,7 +473,7 @@
                     {!! isset($offerdetails->weeks_shift)
                         ? number_format($offerdetails->weeks_shift)
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'weeks_shift\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -505,7 +505,7 @@
                     {!! isset($offerdetails->preferred_assignment_duration)
                         ? number_format($offerdetails->preferred_assignment_duration)
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'preferred_assignment_duration\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -583,7 +583,7 @@
                         {{ $offerdetails->end_date }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'worker_end_date', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'worker_end_date', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -612,7 +612,7 @@
                         {{ $offerdetails->rto }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'rto', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'rto', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -651,7 +651,7 @@
                     {!! isset($offerdetails->overtime)
                         ? '$ ' . number_format($offerdetails->overtime)
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'overtime\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -685,7 +685,7 @@
                     {!! isset($offerdetails->on_call_rate)
                         ? '$ ' . number_format($offerdetails->on_call_rate)
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'on_call_rate\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -718,7 +718,7 @@
                     {!! isset($offerdetails->call_back_rate)
                         ? '$ ' . number_format($offerdetails->call_back_rate)
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'call_back_rate\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -752,7 +752,7 @@
                     {!! isset($offerdetails->orientation_rate)
                         ? '$ ' . number_format($offerdetails->orientation_rate)
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'orientation_rate\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -788,7 +788,7 @@
                     {!! isset($offerdetails->weekly_taxable_amount)
                         ? '$ ' . number_format($offerdetails->weekly_taxable_amount)
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'weekly_taxable_amount\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -823,7 +823,7 @@
                     {!! isset($offerdetails->weekly_non_taxable_amount)
                         ? '$ ' . number_format($offerdetails->weekly_non_taxable_amount)
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'weekly_non_taxable_amount\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -860,7 +860,7 @@
                     {!! isset($offerdetails->feels_like_per_hour)
                         ? '$ ' . number_format($offerdetails->feels_like_per_hour)
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'feels_like_per_hour\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -898,7 +898,7 @@
                     {!! isset($offerdetails->referral_bonus)
                         ? '$ ' . number_format($offerdetails->referral_bonus)
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'referral_bonus\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -934,7 +934,7 @@
                     {!! isset($offerdetails->sign_on_bonus)
                         ? '$ ' . number_format($offerdetails->sign_on_bonus)
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'sign_on_bonus\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -969,7 +969,7 @@
                     {!! isset($offerdetails->extension_bonus)
                         ? '$ ' . number_format($offerdetails->extension_bonus)
                         : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'worker_extension_bonus\', \'' .
-                            $userdetails->nurse->id .
+                            $userdetails->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
@@ -1019,7 +1019,7 @@
                         {{ $offerdetails->pay_frequency }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'pay_frequency', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'pay_frequency', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1050,7 +1050,7 @@
                         {{ $offerdetails->benefits }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'benefits', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'benefits', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1094,7 +1094,7 @@
                         {{ $offerdetails->clinical_setting }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'clinical_setting', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'clinical_setting', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1123,7 +1123,7 @@
                         {{ $offerdetails->preferred_work_location }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'preferred_work_location', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'preferred_work_location', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1155,7 +1155,7 @@
                         {{ $offerdetails->facility_name }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'facility_name', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'facility_name', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1186,7 +1186,7 @@
                         {{ $offerdetails->facilitys_parent_system }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'facilitys_parent_system', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'facilitys_parent_system', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1215,7 +1215,7 @@
                         {{ $offerdetails->facility_shift_cancelation_policy }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'facility_shift_cancelation_policy', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'facility_shift_cancelation_policy', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1244,7 +1244,7 @@
                         {{ $offerdetails->contract_termination_policy }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'contract_termination_policy', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'contract_termination_policy', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1274,7 +1274,7 @@
                         {{ $offerdetails->traveler_distance_from_facility }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'traveler_distance_from_facility', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'traveler_distance_from_facility', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1324,7 +1324,7 @@
                         {{ implode(', ', $offerLicenses) }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'job_location', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'job_location', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1354,7 +1354,7 @@
                         {{ implode(', ', $offerCertificates) }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'certificate', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'certificate', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1399,7 +1399,7 @@
                         {{ $offerdetails->description }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'description', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'description', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1431,7 +1431,7 @@
                         {{ $offerdetails->experience }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'experience', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'experience', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1511,12 +1511,12 @@
                             No
                         @else
                             <a style="cursor: pointer;"
-                                onclick="askRecruiter(this, 'on_call', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                                onclick="askRecruiter(this, 'on_call', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                                 Recruiter</a>
                         @endif
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'on_call', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'on_call', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1555,7 +1555,7 @@
                         No
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'block_scheduling', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'block_scheduling', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1591,7 +1591,7 @@
                         No
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'float_requirement', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'float_requirement', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1620,7 +1620,7 @@
                         {{ number_format($offerdetails->Patient_ratio) }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'Patient_ratio', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'Patient_ratio', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1649,7 +1649,7 @@
                         {{ $offerdetails->Emr }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'worker_emr', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'worker_emr', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1677,7 +1677,7 @@
                         {{ $offerdetails->Unit }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'worker_unit', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'worker_unit', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>
@@ -1720,7 +1720,7 @@
                         {{ $offerdetails->nurse_classification }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'nurse_classification', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            onclick="askRecruiter(this, 'nurse_classification', '{{ $userdetails->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Recruiter</a>
                     @endif
                 </p>

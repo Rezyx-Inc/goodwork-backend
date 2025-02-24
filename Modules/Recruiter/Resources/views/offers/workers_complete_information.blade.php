@@ -18,12 +18,12 @@
             </a>
         </li>
         <li>
-            <a onclick="askWorker(this, 'nursing_profession', '{{ $nursedetails['id'] }}', '{{ $offerdetails[0]->recruiter_id }}', '{{ $offerdetails[0]->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')"
+            <a onclick="askWorker(this, 'nursing_profession', '{{ $nursedetails['user_id'] }}', '{{ $offerdetails[0]->recruiter_id }}', '{{ $offerdetails[0]->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')"
                 class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="cursor: pointer;">Chat Now</a>
         </li>
     @else
         <li>
-            <a onclick="askWorker(this, 'nursing_profession', '{{ $nursedetails['id'] }}', '{{ $offerdetails[0]->recruiter_id }}', '{{ $offerdetails[0]->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')"
+            <a onclick="askWorker(this, 'nursing_profession', '{{ $nursedetails['user_id'] }}', '{{ $offerdetails[0]->recruiter_id }}', '{{ $offerdetails[0]->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')"
                 class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="cursor: pointer;">Chat Now</a>
         </li>
     @endif

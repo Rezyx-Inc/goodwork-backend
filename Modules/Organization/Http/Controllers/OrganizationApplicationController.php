@@ -594,7 +594,7 @@ class OrganizationApplicationController extends Controller
 
             if ($offer_updated) {
                 // send notification to the worker
-                $message = $full_name . ' has changed the status of your application to ' . $status;
+                $message = $full_name . ' has changed the status of your application to ' . $status . ' ( Job ID: ' . $jobid . ' )';
                 $recruiter_id = $offer->recruiter_id;
                 $idWorker = $offer->worker_user_id;
                 $idWorker = Nurse::where('id', $idWorker)->first()->user_id;

@@ -226,6 +226,7 @@ class WorkerController extends Controller
         $time = now()->toDateTimeString();
         event(new NewPrivateMessage($message, $idOrganization, $idRecruiter, $id, 'WORKER', $time, $type, $fileName));
         event(new NotificationMessage($message, false, $time, $idRecruiter, $id, $full_name));
+        event(new NotificationMessage($message, false, $time, $idOrganization, $id, $full_name));
 
         // Send an email notification
         $organizationNotificationDetails = User::where('id', $idOrganization)->get();
@@ -432,7 +433,12 @@ class WorkerController extends Controller
                             ]
 
                         ]
-                    ]
+                    ],
+                    [
+                        '$sort' => [
+                            'lastMessage' => -1, 
+                        ],
+                    ],
                 ])->toArray();
             });
 
@@ -540,6 +546,11 @@ class WorkerController extends Controller
                                 'messages' => [
                                     '$slice' => ['$messages', 1],
                                 ],
+                            ],
+                        ],
+                        [
+                            '$sort' => [
+                                'lastMessage' => -1,
                             ],
                         ],
                     ])
@@ -2062,9 +2073,10 @@ class WorkerController extends Controller
             } else {
 
                 $offer = Offer::where('id', $request->id)->first();
+                $job_id = $offer->job_id;
                 $time = now()->toDateTimeString();
                 $action = $request->type == 'rejectcounter' ? 'Rejected' : 'Accepted';
-                $message = $full_name . ' has ' . $action . ' the job offer';
+                $message = $full_name . ' has ' . $action . ' the job offer ( Job ID: ' . $job_id . ' )';
                 $idOrganization = $offer->organization_id;
                 $idWorker = $user->id;
                 $recruiter_id = $offer->recruiter_id;
