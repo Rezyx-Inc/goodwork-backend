@@ -44,6 +44,8 @@ use App\Models\{
     Profession,
     State,
 };
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NotifyEvents;
 
 use App\Models\NotificationMessage as NotificationMessageModel;
 
@@ -224,7 +226,33 @@ class WorkerController extends Controller
         $time = now()->toDateTimeString();
         event(new NewPrivateMessage($message, $idOrganization, $idRecruiter, $id, 'WORKER', $time, $type, $fileName));
         event(new NotificationMessage($message, false, $time, $idRecruiter, $id, $full_name));
+        event(new NotificationMessage($message, false, $time, $idOrganization, $id, $full_name));
 
+        // Send an email notification
+        $organizationNotificationDetails = User::where('id', $idOrganization)->get();
+        $recruiterNotificationDetails = User::where('id', $idRecruiter)->get();
+
+        if($organizationNotificationDetails[0]['email_messages'] == 1){
+
+            $dataToSend = ["message" => $full_name . " Sent you a private message.", "title" => "New Private Message"];
+            try{
+
+                Mail::to($organizationNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+            } catch (\Exception $ex) {
+                return response()->json(["message" => $ex->getMessage()]);
+            }
+        }
+
+        if($recruiterNotificationDetails[0]['email_messages'] == 1){
+
+            $dataToSend = ["message" => $full_name . " Sent you a private message.", "title" => "New Private Message"];
+            try{
+
+                Mail::to($recruiterNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+            } catch (\Exception $ex) {
+                return response()->json(["message" => $ex->getMessage()]);
+            }
+        }
 
         return [$id, $idOrganization];
     }
@@ -405,7 +433,12 @@ class WorkerController extends Controller
                             ]
 
                         ]
-                    ]
+                    ],
+                    [
+                        '$sort' => [
+                            'lastMessage' => -1, 
+                        ],
+                    ],
                 ])->toArray();
             });
 
@@ -513,6 +546,11 @@ class WorkerController extends Controller
                                 'messages' => [
                                     '$slice' => ['$messages', 1],
                                 ],
+                            ],
+                        ],
+                        [
+                            '$sort' => [
+                                'lastMessage' => -1,
                             ],
                         ],
                     ])
@@ -1205,31 +1243,6 @@ class WorkerController extends Controller
             $user_id = $job->created_by;
             $user = User::where('id', $user_id)->first();
 
-            // $data = [
-            //     'offerId' => $offer_id,
-            //     'amount' => '1',
-            //     'stripeId' => $user->stripeAccountId,
-            //     'fullName' => $user->first_name . ' ' . $user->last_name,
-            // ];
-
-            //return response()->json(['message'=>$data]);
-
-            // $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/invoice';
-
-            // return response()->json(['data'=>$data , 'url' => $url]);
-
-            // Make the request
-            // $responseInvoice = Http::post($url, $data);
-            // return response()->json(['message'=>$responseInvoice->json()]);
-            // $responseData = [];
-            // if ($offer) {
-            //     $responseData = [
-            //         'status' => 'success',
-            //         'message' => $responseInvoice->json()['message'],
-            //     ];
-            // }
-
-
             // event offer notification
 
             $id = $offer_id;
@@ -1240,6 +1253,33 @@ class WorkerController extends Controller
             $job_name = Job::where('id', $jobid)->first()->job_name;
 
             event(new NotificationOffer('Hold', false, $time, $receiver, $nurse_id, $full_name, $jobid, $job_name, $id));
+
+            // Send an email notification
+            $organizationNotificationDetails = User::where('id', $idOrganization)->get();
+            $recruiterNotificationDetails = User::where('id', $idRecruiter)->get();
+
+            if($organizationNotificationDetails[0]['email_application_stages'] == 1){
+
+                $dataToSend = ["message" => $full_name . " Accepted the Offer: ". $offer_id, "title" => "Offer Accepted"];
+                try{
+
+                    Mail::to($organizationNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+                } catch (\Exception $ex) {
+                    return response()->json(["message" => $ex->getMessage()]);
+                }
+            }
+
+            if($recruiterNotificationDetails[0]['email_application_stages'] == 1){
+
+                $dataToSend = ["message" => $full_name . " Accepted the Offer: ". $offer_id, "title" => "Offer Accepted"];
+                try{
+
+                    Mail::to($recruiterNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+                } catch (\Exception $ex) {
+                    return response()->json(["message" => $ex->getMessage()]);
+                }
+            }
+
             return response()->json(['msg' => 'offer accepted successfully', 'success' => true]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
@@ -1284,6 +1324,33 @@ class WorkerController extends Controller
                 $job_name = Job::where('id', $jobid)->first()->job_name;
 
                 event(new NotificationOffer('Rejected', false, $time, $receiver, $nurse_id, $full_name, $jobid, $job_name, $id));
+
+                // Send an email notification
+                $organizationNotificationDetails = User::where('id', $idOrganization)->get();
+                $recruiterNotificationDetails = User::where('id', $idRecruiter)->get();
+
+                if($organizationNotificationDetails[0]['email_application_stages'] == 1){
+
+                    $dataToSend = ["message" => $full_name . " Rejected the Offer: ". $offer_id, "title" => "Offer Rejected"];
+                    try{
+
+                        Mail::to($organizationNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+                    } catch (\Exception $ex) {
+                        return response()->json(["message" => $ex->getMessage()]);
+                    }
+                }
+
+                if($recruiterNotificationDetails[0]['email_application_stages'] == 1){
+
+                    $dataToSend = ["message" => $full_name . " Rejected the Offer: ". $offer_id, "title" => "Offer Rejected"];
+                    try{
+
+                        Mail::to($recruiterNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+                    } catch (\Exception $ex) {
+                        return response()->json(["message" => $ex->getMessage()]);
+                    }
+                }
+
                 return response()->json(['msg' => 'Offer rejected successfully', 'success' => true]);
             } else {
                 return response()->json(['msg' => 'offer not rejected', 'success' => false]);
@@ -1900,6 +1967,32 @@ class WorkerController extends Controller
                 $time = now()->toDateTimeString();
                 event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
 
+                // Send an email notification
+                $organizationNotificationDetails = User::where('id', $idOrganization)->get();
+                $recruiterNotificationDetails = User::where('id', $idRecruiter)->get();
+
+                if($organizationNotificationDetails[0]['email_counter_offer'] == 1){
+
+                    $dataToSend = ["message" => $full_name . " Countered the Offer: ". $offer_id, "title" => "Offer Countered"];
+                    try{
+
+                        Mail::to($organizationNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+                    } catch (\Exception $ex) {
+                        return response()->json(["message" => $ex->getMessage()]);
+                    }
+                }
+
+                if($recruiterNotificationDetails[0]['email_counter_offer'] == 1){
+
+                    $dataToSend = ["message" => $full_name . " Countered the Offer: ". $offer_id, "title" => "Offer Countered"];
+                    try{
+
+                        Mail::to($recruiterNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+                    } catch (\Exception $ex) {
+                        return response()->json(["message" => $ex->getMessage()]);
+                    }
+                }
+
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Offer updated successfully',
@@ -1980,9 +2073,10 @@ class WorkerController extends Controller
             } else {
 
                 $offer = Offer::where('id', $request->id)->first();
+                $job_id = $offer->job_id;
                 $time = now()->toDateTimeString();
                 $action = $request->type == 'rejectcounter' ? 'Rejected' : 'Accepted';
-                $message = $full_name . ' has ' . $action . ' the job offer';
+                $message = $full_name . ' has ' . $action . ' the job offer ( Job ID: ' . $job_id . ' )';
                 $idOrganization = $offer->organization_id;
                 $idWorker = $user->id;
                 $recruiter_id = $offer->recruiter_id;
@@ -2010,6 +2104,34 @@ class WorkerController extends Controller
                         $job_name = Job::where('id', $jobid)->first()->job_name;
 
                         event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
+
+                        // Send an email notification
+                        $organizationNotificationDetails = User::where('id', $idOrganization)->get();
+                        $recruiterNotificationDetails = User::where('id', $idRecruiter)->get();
+
+                        if($organizationNotificationDetails[0]['email_counter_offer'] == 1){
+
+                            $dataToSend = ["message" => $full_name . " Rejected the Offer: ". $offer_id, "title" => "Offer Rejected"];
+                            try{
+
+                                Mail::to($organizationNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+                            } catch (\Exception $ex) {
+                                return response()->json(["message" => $ex->getMessage()]);
+                            }
+                        }
+
+                        if($recruiterNotificationDetails[0]['email_counter_offer'] == 1){
+
+                            $dataToSend = ["message" => $full_name . " Rejected the Offer: ". $offer_id, "title" => "Offer Rejected"];
+                            try{
+
+                                Mail::to($recruiterNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+                            } catch (\Exception $ex) {
+                                return response()->json(["message" => $ex->getMessage()]);
+                            }
+                        }
+
+
 
                         //event(new NotificationOffer('Rejected', false, $time, $receiver, $worker_id, $full_name, $jobid, $job_name, $id));
                     }
@@ -2041,6 +2163,33 @@ class WorkerController extends Controller
                         $job_name = Job::where('id', $jobid)->first()->job_name;
 
                         event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
+
+                        // Send an email notification
+                        $organizationNotificationDetails = User::where('id', $idOrganization)->get();
+                        $recruiterNotificationDetails = User::where('id', $idRecruiter)->get();
+
+                        if($organizationNotificationDetails[0]['email_counter_offer'] == 1){
+
+                            $dataToSend = ["message" => $full_name . " Accepted the Offer: ". $offer_id, "title" => "Offer Accepted"];
+                            try{
+
+                                Mail::to($organizationNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+                            } catch (\Exception $ex) {
+                                return response()->json(["message" => $ex->getMessage()]);
+                            }
+                        }
+
+                        if($recruiterNotificationDetails[0]['email_counter_offer'] == 1){
+
+                            $dataToSend = ["message" => $full_name . " Accepted the Offer: ". $offer_id, "title" => "Offer Accepted"];
+                            try{
+
+                                Mail::to($recruiterNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+                            } catch (\Exception $ex) {
+                                return response()->json(["message" => $ex->getMessage()]);
+                            }
+                        }
+
                         //event(new NotificationOffer('Offered', false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $id));
 
                     }

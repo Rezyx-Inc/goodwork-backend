@@ -2,6 +2,7 @@
     <script type="text/javascript" src="{{ URL::asset('frontend/vendor/mask/jquery.mask.min.js') }}"></script>
 
     <script>
+        "use strict";           // TODO :: to remove after ( for debugging )
         var all_files = [];
         let userMatch = @json($matches);
         let workerMatch = [];
@@ -313,7 +314,6 @@
                     minTitle: referenceMinTitle,
                     isLastAssignment: referenceRecency == 1 ? true : false
                 };
-                console.log('*************************referenceInfo', referenceInfo);
 
 
                 var readerPromise;
@@ -1110,8 +1110,8 @@
                         break;
                     }
                 } else {
-                    let fieldValue = dataToSend[requiredField];
-                    if (!fieldValue || workerMatch[requiredField].match == false) {
+                    // let fieldValue = dataToSend[requiredField];
+                    if (workerMatch[requiredField].match == false) {
 
                         notie.alert({
                             type: 'error',
@@ -1178,17 +1178,6 @@
 
             $('input[name="phone[]"]').mask('(999) 999-9999');
         });
-
-        // function init_profile_info_text() {
-        //     // map on matches
-        //     for (const key of Object.keys(matches)) {
-
-        //         if (matches[key].profile_info_text) {
-        //             // console.log(">>>>>>>>>>>>>>>>", key, matches[key].profile_info_text);
-        //             $(`.${key}_item .profile_info_text`).text(matches[key].profile_info_text);
-        //         }
-        //     }
-        // }
 
         function open_file(obj) {
             $(obj).parent().find('input[type="file"]').click();

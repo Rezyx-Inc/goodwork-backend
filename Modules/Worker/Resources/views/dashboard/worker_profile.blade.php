@@ -44,8 +44,7 @@
                                     </div>
 
                                     <div class="col-12">
-                                        <p>You're just a few percent away from revenue. Complete your profile and get 50%.
-                                        </p>
+                                        <p>Complete your profile and get 50%.</p>
                                     </div>
                                 </div>
                                 {{-- if the profile is complete --}}
@@ -232,7 +231,7 @@
                                 <p style="
                                 margin-top: 20px;
                             ">
-                                    Please contact us at <span style="font-weight: 500">support@goodwork.com</span></p>
+                                    Please contact us at <span style="font-weight: 500">techteam@goodwork.world</span></p>
 
                             </div>
 

@@ -34,6 +34,9 @@ Route::middleware(['web'])->group(function () {
     // add exploreJobs root
     Route::get('explore-jobs', ['uses' => 'SiteController@explore_jobs', 'as' => 'explore-jobs']);
 
+    // add load ads root 
+    Route::get('load-ads', ['uses' => 'SiteController@load_ad', 'as' => 'load-ads']);
+
     Route::post('get-states', ['uses' => 'SiteController@get_state', 'as' => 'get-states']);
     Route::post('get-cities', ['uses' => 'SiteController@get_city', 'as' => 'get-cities']);
     Route::post('get-speciality', ['uses' => 'SiteController@get_speciality', 'as' => 'get-speciality']);
@@ -41,11 +44,12 @@ Route::middleware(['web'])->group(function () {
 
     Route::get('clear-cache', 'SiteController@clear_cache');
 
+    Route::get('signup', ['uses' => 'SiteController@signup', 'as' => 'signup']);
+    Route::get('login', ['uses' => 'SiteController@login', 'as' => 'login']);
+    
     Route::middleware(['user_not_logged_in'])->group(function () {
         /* Registration and authentication routes */
-        Route::get('signup', ['uses' => 'SiteController@signup', 'as' => 'signup']);
         Route::post('signup', ['uses' => 'SiteController@post_signup', 'as' => 'signup.store']);
-        Route::get('login', ['uses' => 'SiteController@login', 'as' => 'login']);
         Route::post('login', ['uses' => 'SiteController@post_login', 'as' => 'login.store']);
         Route::get('otp', ['uses' => 'SiteController@otp', 'as' => 'otp']);
         Route::post('otp', ['uses' => 'SiteController@submit_otp', 'as' => 'otp.store']);

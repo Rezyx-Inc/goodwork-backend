@@ -20,6 +20,8 @@ use App\Models\NotificationMessage as NotificationMessageModel;
 use App\Models\NotificationJobModel;
 use App\Models\NotificationOfferModel;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NotifyEvents;
 
 
 class RecruiterController extends Controller
@@ -205,6 +207,11 @@ class RecruiterController extends Controller
                                 ],
                             ],
                         ],
+                        [
+                            '$sort' => [
+                                'lastMessage' => -1, 
+                            ],
+                        ],
                     ])
                     ->toArray();
             });
@@ -308,14 +315,13 @@ class RecruiterController extends Controller
         $recruiter_id = Auth::guard('recruiter')->user()->id;
         $organization_id = $request->input('organization_id');
         if (isset($worker_id) && isset($organization_id)) {
-            $nurse_user_id = Nurse::where('id', $worker_id)->first()->user_id;
             // Check if a room with the given worker_id and recruiter_id already exists
-            $room = DB::connection('mongodb')->collection('chat')->where('workerId', $nurse_user_id)->where('recruiterId', $recruiter_id)->first();
+            $room = DB::connection('mongodb')->collection('chat')->where('workerId', $worker_id)->where('recruiterId', $recruiter_id)->first();
             
             // If the room doesn't exist, create a new one
             if (!$room) {
                 DB::connection('mongodb')->collection('chat')->insert([
-                    'workerId' => $nurse_user_id,
+                    'workerId' => $worker_id,
                     'recruiterId' => $recruiter_id,
                     'organizationId' => $organization_id, // Replace this with the actual organizationId
                     'lastMessage' => $this->timeAgo(now()),
@@ -324,12 +330,12 @@ class RecruiterController extends Controller
                 ]);
 
                 // Call the get_private_messages function
-                $request->query->set('workerId', $nurse_user_id);
+                $request->query->set('workerId', $worker_id);
                 $request->query->set('organizationId', $organization_id); // Replace this with the actual organizationId
 
                 return $this->get_direct_private_messages($request);
             }else{
-                $request->query->set('workerId', $nurse_user_id);
+                $request->query->set('workerId', $worker_id);
                 $request->query->set('organizationId', $organization_id);
                 return $this->get_direct_private_messages($request);
             }
@@ -359,6 +365,11 @@ class RecruiterController extends Controller
                                 'messages' => [
                                     '$slice' => ['$messages', 1],
                                 ],
+                            ],
+                        ],
+                        [
+                            '$sort' => [
+                                'lastMessage' => -1, 
                             ],
                         ],
                     ])
@@ -497,6 +508,20 @@ class RecruiterController extends Controller
         $time = now()->toDateTimeString();
         event(new NewPrivateMessage($message, $idOrganization, $id, $idWorker, $role, $time, $type, $fileName));
         event(new NotificationMessage($message, false, $time, $idWorker, $id, $full_name));
+        event(new NotificationMessage($message, false, $time, $idOrganization ,$id, $full_name));
+
+        // Send an email notification
+        $workerNotificationDetails = User::where('id', $idWorker)->get();
+        if($workerNotificationDetails[0]['email_messages'] == 1){
+
+            $dataToSend = ["message" => $full_name . "(". $user->organization_name .") Sent you a private message.", "title" => "New Private Message"];
+            try{
+
+                Mail::to($workerNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+            } catch (\Exception $ex) {
+                return response()->json(["message" => $ex->getMessage()]);
+            }
+        }
 
         return true;
     }

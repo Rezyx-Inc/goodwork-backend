@@ -15,38 +15,41 @@
 
         // functions : getPrivateMessages, createMessageHTML, getSenderClass, getMessageContent, updateRoomLastMessage, updateLastMessageTime, incrementMessageCount, resetMessageCount, updateChatUI, scrollToBottom, focusOnInput, sendMessage, sendAjaxRequest
 
-        function getPrivateMessages(idWorker, fullName, idRecruiter) {
+        async function getPrivateMessages(idWorker, fullName, idRecruiter) {
+            page = 1;
+            $('.private-messages').html('');
+            scrollToBottom('body_room');
+            await updateChatUI(fullName);
+            
             window.Echo.leave(PrivateChannel);
 
             const data = {
                 sender: idWorker,
                 _token: $('meta[name="csrf-token"]').attr('content')
             };
-
-            $.ajax({
-                url: 'read-organization-message-notification',
-                type: 'POST',
-                data: data,
-                success: function(response) {
-                    console.log('Success:', response);
-                    resetMessageCount(idWorker);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                }
-            });
-
-            updateChatUI(fullName);
+        
+            try {
+                await $.ajax({
+                    url: 'read-organization-message-notification',
+                    type: 'POST',
+                    data: data
+                });
+                console.log('Success: Notification read');
+                resetMessageCount(idWorker);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        
             idWorker_Global = idWorker;
             idRecruiter_Global = idRecruiter;
             let id = @json($id);
             PrivateChannel = 'private-chat.' + id + '.' + idRecruiter + '.' + idWorker_Global;
-
+        
             window.Echo.channel('goodwork_database_messages')
                 .listen('NewMessage', (event) => {
                     console.log('New message:', event.message);
                 });
-
+            
             window.Echo.private(PrivateChannel)
                 .listen('NewPrivateMessage', (event) => {
                     console.log('New private message Organization:', event);
@@ -54,19 +57,21 @@
                     $('.private-messages').append(messageHTML);
                     scrollToBottom('body_room');
                 });
-
-            $('.private-messages').html('');
-
-            $.get('/organization/getMessages?page=1&workerId=' + idWorker_Global + '&recruiterId=' + idRecruiter_Global,
-                function(data) {
-                    console.log("Receiving data", data);
-                    var messages = data.messages;
-                    messages.forEach(function(message) {
-                        var messageHTML = createMessageHTML(message);
-                        $('.private-messages').prepend(messageHTML);
-                    });
-                    focusOnInput();
+            
+            
+            try {
+                const data = await $.get('/organization/getMessages?page=1&workerId=' + idWorker_Global + '&recruiterId=' + idRecruiter_Global);
+                console.log("Receiving data", data);
+                var messages = data.messages;
+                messages.forEach(function(message) {
+                    var messageHTML = createMessageHTML(message);
+                    $('.private-messages').prepend(messageHTML);
                 });
+                focusOnInput();
+                page++;
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
 
         function createMessageHTML(message) {
@@ -131,13 +136,15 @@
             }
         }
 
-        function updateChatUI(fullName) {
+        async function updateChatUI(fullName) {
             document.getElementById('fullName').innerHTML = fullName;
             document.getElementById('empty_room').classList.add("d-none");
             document.getElementById('body_room').classList.remove("d-none");
             document.getElementsByClassName('ss-rply-msg-input')[0].classList.remove("d-none");
+            await new Promise(resolve => setTimeout(resolve, 0));
+            scrollToBottom('body_room');
         }
-
+        
         function scrollToBottom(elementId) {
             var element = document.getElementById(elementId);
             element.scrollTop = element.scrollHeight;
@@ -183,6 +190,8 @@
         }
 
         function sendAjaxRequest(formData) {
+            document.getElementById('messageEnvoye').value = "";
+            scrollToBottom('body_room');
             $.ajax({
                 url: 'send-message',
                 type: 'POST',
@@ -190,7 +199,6 @@
                 processData: false,
                 contentType: false,
                 success: function() {
-                    document.getElementById('messageEnvoye').value = "";
                     console.log('message envoyé');
                 }
             });
@@ -226,12 +234,13 @@
             const nameworker = urlParams.get('name');
             const idRecruiter = urlParams.get('recruiter_id');
             if (idWorker && nameworker && idRecruiter) {
-                getPrivateMessages(idWorker, nameworker, idRecruiter);
+                getPrivateMessages(idWorker, nameworker, idRecruiter).then(() => scrollToBottom('body_room'));
+                toggleActiveClass(idWorker + '-' + idRecruiter);
             }
 
-            $('.messages-area').scroll(function() {
-                if ($(this).scrollTop() == 0) {
-                    page++;
+            $('#body_room').scroll(function() {
+                if ($(this).scrollTop() == 0 && page > 1) {
+                    document.getElementById('body_room').scrollTop = 100;
                     $('#loading').removeClass('d-none');
                     $('#login').addClass('d-none');
 
@@ -246,6 +255,7 @@
                             $('#login').removeClass('d-none');
                             $('#loading').addClass('d-none');
                         });
+                        page++;
                 }
             });
 
@@ -298,6 +308,24 @@
             focusOnInput();
         });
 
+        function toggleActiveClass(workerUserId) {
+
+                var element = document.getElementById(workerUserId);
+                element.classList.add('active');
+
+                var allElements = document.getElementsByClassName('ss-mesg-sml-div');
+
+                for (var i = 0; i < allElements.length; i++) {
+                    if (allElements[i].classList.contains('active')) {
+                        allElements[i].classList.remove('active');
+                    }
+                }
+                if (!element.classList.contains('active')) {
+                    element.classList.add('active');
+                }
+
+        }
+
     </script>
 
     <main style="padding-top: 100px" class="ss-main-body-sec">
@@ -315,7 +343,7 @@
 
                             @if ($data)
                                 @foreach ($data as $room)
-                                    <div onclick="getPrivateMessages('{{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['recruiterId'] }}')" class="ss-mesg-sml-div">
+                                    <div id="{{ $room['workerId'] }}-{{ $room['recruiterId'] }}" onclick="getPrivateMessages('{{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['recruiterId'] }}').then(() => scrollToBottom('body_room')); toggleActiveClass('{{ $room['workerId'] }}-{{ $room['recruiterId'] }}'); " class="ss-mesg-sml-div">
                                         <ul class="ss-msg-user-ul-dv">
                                             @php
                                                 $worker = App\Models\User::find($room['workerId']);  
@@ -419,7 +447,7 @@
         }
 
         .messages-area {
-            height: 80vh;
+            height: 75vh;
             overflow-y: auto;
         }
 
@@ -493,6 +521,10 @@
         #login,
         #loadSpan {
             color: black;
+        }
+
+        .ss-mesg-sml-div.active {
+            background-color: #ffeeef !important;
         }
     </style>
 @endsection

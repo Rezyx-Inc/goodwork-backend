@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="col-12 col-md-3">
-                    <div class="side-ads-container">
+                    <div class="side-ads-banner">
                         <div id="promenade"></div>
 
                         <script>

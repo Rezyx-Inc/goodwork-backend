@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\register;
 use App\Mail\RegisterRecruiter;
 use App\Mail\VerifyNewEmail;
+use App\Mail\NotifyEvents;
 
 
 class OrganizationController extends Controller
@@ -211,6 +212,11 @@ class OrganizationController extends Controller
                                 ],
                             ],
                         ],
+                        [
+                            '$sort' => [
+                                'lastMessage' => -1, 
+                            ],
+                        ],
                     ])
                     ->toArray();
             });
@@ -320,14 +326,13 @@ class OrganizationController extends Controller
 
 
         if (isset($worker_id) && isset($recruiter_id)) {
-            $nurse_user_id = Nurse::where('id', $worker_id)->first()->user_id;
             // Check if a room with the given worker_id and organization_id already exists
-            $room = DB::connection('mongodb')->collection('chat')->where('workerId', $nurse_user_id)->where('organizationId', $organization_id)->first();
+            $room = DB::connection('mongodb')->collection('chat')->where('workerId', $worker_id)->where('organizationId', $organization_id)->first();
 
             // If the room doesn't exist, create a new one
             if (!$room) {
                 DB::connection('mongodb')->collection('chat')->insert([
-                    'workerId' => $nurse_user_id,
+                    'workerId' => $worker_id,
                     'recruiterId' => $recruiter_id,
                     'organizationId' => $organization_id,
                     'lastMessage' => $this->timeAgo(now()),
@@ -336,11 +341,11 @@ class OrganizationController extends Controller
                 ]);
 
                 // Call the get_private_messages function
-                $request->query->set('workerId', $nurse_user_id);
+                $request->query->set('workerId', $worker_id);
                 $request->query->set('organizationId', $organization_id); // Replace this with the actual organizationId
                 return $this->get_direct_private_messages($request);
             }else{
-                $request->query->set('workerId', $nurse_user_id);
+                $request->query->set('workerId', $worker_id);
                 $request->query->set('recruiterId', $recruiter_id);
                 return $this->get_direct_private_messages($request);
             }
@@ -371,6 +376,11 @@ class OrganizationController extends Controller
                                 'messages' => [
                                     '$slice' => ['$messages', 1],
                                 ],
+                            ],
+                        ],
+                        [
+                            '$sort' => [
+                                'lastMessage' => -1, 
                             ],
                         ],
                     ])
@@ -515,6 +525,20 @@ class OrganizationController extends Controller
         //return response()->json(['success' => true, 'message' => $message, 'id' => $id, 'idRecruiter' => $idRecruiter, 'idWorker' => $idWorker, 'role' => $role, 'time' => $time, 'type' => $type, 'fileName' => $fileName]);
         event(new NewPrivateMessage($message, $id, $idRecruiter, $idWorker, $role, $time, $type, $fileName));
         event(new NotificationMessage($message, false, $time, $idWorker, $id, $full_name));
+        event(new NotificationMessage($message, false, $time, $idRecruiter, $id, $full_name));
+
+        // Send an email notification
+        $workerNotificationDetails = User::where('id', $idWorker)->get();
+        if($workerNotificationDetails[0]['email_messages'] == 1){
+
+            $dataToSend = ["message" => $full_name . "(". $user->organization_name .") Sent you a private message.", "title" => "New Private Message"];
+            try{
+
+                Mail::to($workerNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+            } catch (\Exception $ex) {
+                return response()->json(["message" => $ex->getMessage()]);
+            }
+        }
 
         return true;
     }

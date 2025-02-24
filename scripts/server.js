@@ -30,6 +30,7 @@ const integrationsRoute = require('./src/routes/integrations');
 const paymentsRoute = require('./src/routes/Payments');
 const orgsRoute = require('./src/routes/orgs')
 const sheetRoute = require('./src/routes/sheetRoute');
+const discordRoute = require('./src/routes/discord');
 
 const createGlobalRuleFields = require('./src/functions/createGlobalRuleFields.js');
 
@@ -38,7 +39,8 @@ app.use(process.env.FILE_API_BASE_PATH, docsRoute);
 app.use(process.env.INTEGRATIONS_API_BASE_PATH, integrationsRoute);
 app.use(process.env.PAYMENTS_API_BASE_PATH, paymentsRoute);
 app.use(process.env.ORGANIZATIONS_API_BASE_PATH, orgsRoute);
-app.use(process.env.SHEET_API_BASE_PATH, sheetRoute); 
+app.use(process.env.SHEET_API_BASE_PATH, sheetRoute);
+app.use("/discord", discordRoute);
 
 
 // Root Route

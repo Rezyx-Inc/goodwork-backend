@@ -26,6 +26,7 @@ use Illuminate\Support\Arr;
 use Carbon\Carbon;
 use File;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\NotifyEvents;
 use App\Mail\support;
 use Illuminate\Support\Facades\Http;
 use App\Events\NotificationJob;
@@ -628,14 +629,14 @@ class WorkerDashboardController extends Controller
       $request->validate([
         'jid' => 'required',
       ]);
-      $response = [];
+      
       $user = auth()->guard('frontend')->user();
       $job = Job::findOrFail($request->jid);
-      // return $job;
-      //return response()->json(['data'=>$job], 200);
+      
       $rec = Offer::where(['worker_user_id' => $user->nurse->id, 'job_id' => $request->jid])
         ->whereNull('deleted_at')
         ->first();
+
       $input = [
         // Summary
         'job_id' => $request->jid,
@@ -714,24 +715,19 @@ class WorkerDashboardController extends Controller
         'organization_weekly_amount' => $job->organization_weekly_amount,
         'tax_status' => $job->tax_status,
         'status' => 'Apply',
-        'recruiter_id' => $job->recruiter_id,
+        'recruiter_id' => isset($job->recruiter_id)? $job->recruiter_id : $job->organization_id,
         'organization_id' => $job->organization_id,
       ];
 
       if (empty($rec)) {
+
         offer::create($input);
         $message = 'Job saved successfully.';
-        $saved = JobSaved::where(['nurse_id' => $user->id, 'job_id' => $request->jid, 'is_delete' => '0', 'is_save' => '1'])->first();
-        if (empty($rec)) {
-          // $saved->delete();
-        }
+
       } else {
-        // if ($rec->is_save == '1') {
-        //     $message = 'Job unsaved successfully.';
-        // }else{
-        //     $message = 'Job saved successfully.';
-        // }
+
         $rec->update($input);
+
       }
 
       $time = now()->toDateTimeString();
@@ -744,16 +740,55 @@ class WorkerDashboardController extends Controller
       $role = 'ADMIN';
       $type = 'text';
       $fileName = null;
+      
       event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
       //event(new NotificationOffer($status, false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $offer_id));
 
       DB::commit();
 
+      // Send an email notification
+      $organizationNotificationDetails = User::where('id', $idOrganization)->get();
+      $recruiterNotificationDetails = User::where('id', $recruiter_id)->get();
+
+      if($organizationNotificationDetails[0]['email_new_applications'] == 1){
+
+          $dataToSend = ["message" => $user->full_name . " Has applied to " . $request->jid , "title" => "New Application"];
+          try{
+
+              Mail::to($organizationNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+          } catch (\Exception $ex) {
+              return response()->json(["message" => $ex->getMessage()]);
+          }
+      }
+
+      if($recruiterNotificationDetails[0]['email_new_applications'] == 1){
+
+          $dataToSend = ["message" => $user->full_name . " Has applied to " . $request->jid , "title" => "New Application"];
+
+          try{
+
+              Mail::to($recruiterNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+          } catch (\Exception $ex) {
+              return response()->json(["message" => $ex->getMessage()]);
+          }
+      }
+
+      try {
+            $body = "{}";
+
+            $response = Http::withHeaders(['Content-Type' => 'application/json'])
+            ->withBody($body, 'application/json')->post('http://localhost:' . config('app.file_api_port') . '/discord/newApplication');
+
+
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+
       return new JsonResponse(['success' => true, 'msg' => 'Applied to job successfully'], 200);
+
     } catch (\Exception $e) {
       DB::rollBack();
-      // return err :
-      // return new JsonResponse(['success' => false, 'msg' => $e->getMessage()], 500);
+
       Log::error( "code: 03050114 :: " . $e->getMessage() );
       return response()->json(["success" => false,"msg" => "An error occured, please contact the support (code: 03050114)" ] , 500);
     }
@@ -944,7 +979,7 @@ class WorkerDashboardController extends Controller
       $user = Auth::guard('frontend')->user();
       $user_email = $user->email;
       $email_data = ['support_subject_issue' => $request->support_subject_issue, 'support_subject' => $request->support_subject, 'worker_email' => $user_email];
-      Mail::to('support@goodwork.com')->send(new support($email_data));
+      Mail::to('techteam@goodwork.world')->send(new support($email_data));
 
       return response()->json(['status' => true, 'message' => 'Support ticket sent successfully']);
     } catch (ValidationException $e) {
@@ -1115,6 +1150,29 @@ class WorkerDashboardController extends Controller
       $job_name = Job::where('id', $jobid)->first()->job_name;
 
       event(new NotificationOffer('Offered', false, $time, $receiver, $nurse_id, $full_name, $jobid, $job_name, $id));
+
+      if($organizationNotificationDetails[0]['email_counter_offer'] == 1){
+
+        $dataToSend = ["message" => $full_name . " Has Countered " . $offerexist->id , "title" => "Offer Countered"];
+        try{
+
+            Mail::to($organizationNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+        } catch (\Exception $ex) {
+            return response()->json(["message" => $ex->getMessage()]);
+        }
+    }
+
+    if($recruiterNotificationDetails[0]['email_counter_offer'] == 1){
+
+        $dataToSend = ["message" => $full_name . " Has Countered " . $offerexist->id , "title" => "Offer Countered"];
+
+        try{
+
+            Mail::to($recruiterNotificationDetails[0]['email'])->send(new NotifyEvents($dataToSend));
+        } catch (\Exception $ex) {
+            return response()->json(["message" => $ex->getMessage()]);
+        }
+    }
 
       return response()->json(['success' => true, 'msg' => 'Counter offer created successfully']);
     } catch (\Exception $e) {
