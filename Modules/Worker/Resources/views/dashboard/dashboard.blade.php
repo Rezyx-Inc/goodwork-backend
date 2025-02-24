@@ -37,6 +37,12 @@
         main {
             padding-bottom: 0px;
         }
+        @media (min-width: 768px) { /* md breakpoint in Bootstrap */
+    .w-md-75 {
+        width: 75% !important;
+    }
+}
+
     </style>
 </head>
 
@@ -66,7 +72,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-9">
-                    <div class="w-75 ss-job-prfle-sec m-auto p-5">
+                    <div class="w-100 w-md-75 ss-job-prfle-sec m-auto p-5">
                         <h3 class="ss-color-pink font-weight-bold">Application stages</h3>
                         <canvas id="recruiterStats"></canvas>
                     </div>
