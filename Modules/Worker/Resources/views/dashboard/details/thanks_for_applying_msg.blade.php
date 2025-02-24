@@ -95,24 +95,25 @@
     
     <!--Main layout-->
     <main style="padding-top: 170px" class="ss-main-body-sec">
+
         <div class="side-ads-container">
             
-            <div id="promenade"></div>
+            <div class="row mb-5">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h1 class="text-success">Thank you for applying!</h1>
+                            <p class="text-muted">Your application has been submitted successfully. </p>
+                            {{-- link to jobs explore --}}
+                            <a href="{{ route('worker.explore') }}" class="cta-button text-white">Explore more Jobs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <script>
-                (function(cfg) {
-                    var script = document.createElement('script');
-                    script.async = true;
-                    script.src = 'https://api.boardwalk.marketing/promenade/loader/?pid=' + cfg.pid + '&role=' + cfg.role;
-                    document.head.appendChild(script);
-                    window.boardwalk = cfg;
-                }({
-                    pid: 'b720caf4-f5b9-45df-99b7-8d644f4979cf',
-                    role: 'path',
-                    root: 'promenade',
-                    stylesheets: ['https://cdn1.boardwalk.marketing/css/pathcss-light-column-list.css'],
-                }))
-            </script>
+            {{-- ads container --}}
+            @include('worker::components.side_ads' , ['nbr' => 4, 'type' => 'all'])
+            
         </div>
     </main>
     <script type="text/javascript" src="{{ URL::asset('frontend/js/mdb.min.js') }}"></script>

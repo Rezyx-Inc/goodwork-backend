@@ -201,6 +201,8 @@ class AdsEnum
             $ads = self::allHorizontal();
         } elseif ($type === 'vertical') {
             $ads = self::allVertical();
+        }elseif ($type === 'all') {
+            $ads = self::all();
         } else {
             $ads = self::standard();
         }
