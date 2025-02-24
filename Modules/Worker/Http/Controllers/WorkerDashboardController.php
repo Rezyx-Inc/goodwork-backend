@@ -629,14 +629,14 @@ class WorkerDashboardController extends Controller
       $request->validate([
         'jid' => 'required',
       ]);
-      $response = [];
+      
       $user = auth()->guard('frontend')->user();
       $job = Job::findOrFail($request->jid);
-      // return $job;
-      //return response()->json(['data'=>$job], 200);
+      
       $rec = Offer::where(['worker_user_id' => $user->nurse->id, 'job_id' => $request->jid])
         ->whereNull('deleted_at')
         ->first();
+
       $input = [
         // Summary
         'job_id' => $request->jid,
@@ -720,19 +720,14 @@ class WorkerDashboardController extends Controller
       ];
 
       if (empty($rec)) {
+
         offer::create($input);
         $message = 'Job saved successfully.';
-        $saved = JobSaved::where(['nurse_id' => $user->id, 'job_id' => $request->jid, 'is_delete' => '0', 'is_save' => '1'])->first();
-        if (empty($rec)) {
-          // $saved->delete();
-        }
+
       } else {
-        // if ($rec->is_save == '1') {
-        //     $message = 'Job unsaved successfully.';
-        // }else{
-        //     $message = 'Job saved successfully.';
-        // }
+
         $rec->update($input);
+
       }
 
       $time = now()->toDateTimeString();
@@ -745,6 +740,7 @@ class WorkerDashboardController extends Controller
       $role = 'ADMIN';
       $type = 'text';
       $fileName = null;
+      
       event(new NewPrivateMessage($message, $idOrganization, $recruiter_id, $idWorker, $role, $time, $type, $fileName));
       //event(new NotificationOffer($status, false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $offer_id));
 
@@ -792,10 +788,9 @@ class WorkerDashboardController extends Controller
 
     } catch (\Exception $e) {
       DB::rollBack();
-      // return err :
-      // return new JsonResponse(['success' => false, 'msg' => $e->getMessage()], 500);
+
       Log::error( "code: 03050114 :: " . $e->getMessage() );
-      return response()->json(["success" => false,"msg" => $e->getMessage()/*"An error occured, please contact the support (code: 03050114)"*/ ] , 500);
+      return response()->json(["success" => false,"msg" => "An error occured, please contact the support (code: 03050114)" ] , 500);
     }
   }
 
